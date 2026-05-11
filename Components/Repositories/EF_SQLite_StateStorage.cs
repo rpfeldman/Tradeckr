@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Net.WebSockets;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Linq.Expressions;
 using static System.Net.WebRequestMethods;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -48,7 +49,7 @@ namespace Repositories
             return Context.TransactionsTable.Where(t => t.TransactionId == TransactionId).FirstOrDefault();
         }
 
-        public List<TransactionDto> GetTransactions(Func<TransactionDto, bool> predicate)
+        public List<TransactionDto> GetTransactions(Expression<Func<TransactionDto, bool>> predicate)
         {
             return Context.TransactionsTable.Where(predicate).ToList();
         }
@@ -61,7 +62,7 @@ namespace Repositories
             Context.SaveChanges();
         }
 
-        public void DeleteFromRange(Func<TransactionDto, bool> predicate)
+        public void DeleteFromRange(Expression<Func<TransactionDto, bool>> predicate)
         {
             Context.RemoveRange(GetTransactions(predicate));
             Context.SaveChanges();
