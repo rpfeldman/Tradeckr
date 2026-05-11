@@ -33,42 +33,44 @@ namespace Repositories
             return Last != null ? (Last.FixedTransactionId + 1) : 1;
         }
 
-        public void ClearStorage()
+        public async Task<bool> ClearStorageAsync()
         {
             Context.TransactionsTable.RemoveRange(Context.TransactionsTable);
-            Context.SaveChanges();
+            return await Context.SaveChangesAsync() > 0;
         }
 
-        public List<TransactionDto> GetAll()
+        public async Task<List<TransactionDto>> GetAllAsync()
         {
-            return Context.TransactionsTable.ToList();
+            return await Context.TransactionsTable.ToListAsync();
         }
 
-        public TransactionDto? GetTransaction(int TransactionId)
+        public async Task<TransactionDto?> GetTransactionAsync(int TransactionId)
         {
-            return Context.TransactionsTable.Where(t => t.TransactionId == TransactionId).FirstOrDefault();
+            return await Context.TransactionsTable.Where(t => t.TransactionId == TransactionId).FirstOrDefaultAsync();
         }
 
-        public List<TransactionDto> GetTransactions(Expression<Func<TransactionDto, bool>> predicate)
+        public async Task<List<TransactionDto>> GetTransactionsAsync(Expression<Func<TransactionDto, bool>> predicate)
         {
-            return Context.TransactionsTable.Where(predicate).ToList();
+            return await Context.TransactionsTable.Where(predicate).ToListAsync();
         }
 
-        public void Delete(int TransactionId)
+        public async Task<bool> Delete(int TransactionId)
         {
-            var Transaction = GetTransaction(TransactionId) ?? throw new Exception("Unexistent transaction");
+            var Transaction = await GetTransactionAsync(TransactionId) ?? throw new Exception("Unexistent transaction");
 
             Context.TransactionsTable.Remove(Transaction);
-            Context.SaveChanges();
+
+            return await Context.SaveChangesAsync() > 0;
         }
 
-        public void DeleteFromRange(Expression<Func<TransactionDto, bool>> predicate)
+        public async Task<bool> DeleteFromRangeAsync(Expression<Func<TransactionDto, bool>> predicate)
         {
-            Context.RemoveRange(GetTransactions(predicate));
-            Context.SaveChanges();
+            Context.RemoveRange(await GetTransactionsAsync(predicate));
+
+            return await Context.SaveChangesAsync() > 0;
         }
 
-        public void Save(decimal value, DateOnly date, string category, bool depletion, bool isfixed = false, int? duration = null)
+        public async Task<bool> SaveAsync(decimal value, DateOnly date, string category, bool depletion, bool isfixed = false, int? duration = null)
         {
             TransactionDto Transaction;
 
@@ -83,8 +85,8 @@ namespace Repositories
 
                     Context.Add(Transaction);
                 }
-                Context.SaveChanges();
-                return;
+                
+                return await Context.SaveChangesAsync() > 0;
             }
 
             Transaction = new TransactionDto() { Value = value, Date = date, Category = category, Depletion = depletion, Fixed = isfixed };

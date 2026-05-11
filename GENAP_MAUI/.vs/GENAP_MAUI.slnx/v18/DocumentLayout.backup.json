@@ -6,7 +6,7 @@
       "AbsoluteMoniker": "D:0:0:{CCDC75DB-0116-9FCC-5B7F-79AACF97E8C5}|..\\Components\\Repositories\\Repositories.csproj|c:\\users\\ramga\\source\\repos\\genap\\components\\repositories\\istatestorage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CCDC75DB-0116-9FCC-5B7F-79AACF97E8C5}|..\\Components\\Repositories\\Repositories.csproj|c:\\users\\ramga\\source\\repos\\genap\\components\\repositories\\ef_statestoragedbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{CCDC75DB-0116-9FCC-5B7F-79AACF97E8C5}|..\\Components\\Repositories\\Repositories.csproj|c:\\users\\ramga\\source\\repos\\genap\\components\\repositories\\ef_sqlite_statestorage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -33,14 +33,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "EF_StateStorageDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\GENAP\\Components\\Repositories\\EF_StateStorageDbContext.cs",
-              "RelativeDocumentMoniker": "..\\Components\\Repositories\\EF_StateStorageDbContext.cs",
-              "ToolTip": "C:\\Users\\ramga\\source\\repos\\GENAP\\Components\\Repositories\\EF_StateStorageDbContext.cs",
-              "RelativeToolTip": "..\\Components\\Repositories\\EF_StateStorageDbContext.cs",
-              "ViewState": "AgIAAAQAAAAAgsgiTfQcwA4AAABPAAAAAAAAAA==",
+              "Title": "EF_SQLite_StateStorage.cs",
+              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\GENAP\\Components\\Repositories\\EF_SQLite_StateStorage.cs",
+              "RelativeDocumentMoniker": "..\\Components\\Repositories\\EF_SQLite_StateStorage.cs",
+              "ToolTip": "C:\\Users\\ramga\\source\\repos\\GENAP\\Components\\Repositories\\EF_SQLite_StateStorage.cs",
+              "RelativeToolTip": "..\\Components\\Repositories\\EF_SQLite_StateStorage.cs",
+              "ViewState": "AgIAAEEAAAAAhA1Pr3Q6wEgAAACTAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-11T15:49:49.461Z",
+              "WhenOpened": "2026-05-11T15:53:09.012Z",
               "EditorCaption": ""
             },
             {
@@ -51,7 +51,7 @@
               "RelativeDocumentMoniker": "..\\Components\\Repositories\\IStateStorage.cs",
               "ToolTip": "C:\\Users\\ramga\\source\\repos\\GENAP\\Components\\Repositories\\IStateStorage.cs",
               "RelativeToolTip": "..\\Components\\Repositories\\IStateStorage.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAABAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-11T15:47:10.777Z",
               "EditorCaption": ""
