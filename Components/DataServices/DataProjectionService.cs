@@ -2,7 +2,11 @@
 using Repositories;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using static DataServices.DataProjectionService;
 using static System.Net.Mime.MediaTypeNames;
@@ -16,165 +20,112 @@ namespace DataServices
         {
             OrderByDate, OrderByValue
         }
-        public decimal GlobalNet { get { return Income() - Expenses(); } } 
-        public bool GlobalDeficit { get { return GlobalNet < 0; } }
+
+        private async Task<List<TransactionDto>> GetOrdererTransactions(Expression<Func<TransactionDto, bool>> predicate, Order order)
+        {
+            var transactions = await _StateStorage.GetTransactionsAsync(predicate);
+
+            switch (order)
+            {
+                case Order.OrderByDate:
+                    return [.. transactions.OrderBy(t => t.Date)];
+
+                case Order.OrderByValue:
+                    return [.. transactions.OrderBy(t => t.Value)];
+
+                default: return [];
+            }
+        }
+        private static async Task<decimal> GetSummedTransactions(List<TransactionDto> transactions)
+        {
+            decimal result = 0;
+
+            foreach (var item in transactions)
+            {
+                result += item.Value;
+            }
+
+            return result;
+        }
+
+
+        //public decimal GlobalNet { get { return Income() - Expenses(); } } 
+        //public bool GlobalDeficit { get { return GlobalNet < 0; } }
 
     
-
         // All transaction data projection
-   
+
+        public async Task<List<TransactionDto>> GetAll()
+        {
+            return await _StateStorage.GetAllAsync();
+        }
+        public async Task<List<TransactionDto>> GetAllByDate(DateOnly date, Order order = Order.OrderByDate)
+        {
+            return await GetOrdererTransactions(t => t.Date == date, order);
+        }
+        public async Task<List<TransactionDto>> GetAllByMonth(int month, int year, Order order = Order.OrderByDate)
+        {
+            return await GetOrdererTransactions(t => t.Date.Month == month && t.Date.Year == year, order);
+        }
+        public async Task<List<TransactionDto>> GetAllByYear(int year, Order order = Order.OrderByDate)
+        {
+            return await GetOrdererTransactions(t => t.Date.Year == year, order);
+        }
+        public async Task<List<TransactionDto>> GetAllByCategory(string category, Order order = Order.OrderByDate)
+        {
+            return await GetOrdererTransactions(t => t.Category == category, order);
+        }
+        public async Task<List<TransactionDto>> GetAllByPredicate(Expression<Func<TransactionDto, bool>> predicate, Order order = Order.OrderByDate)
+        {
+            return await GetOrdererTransactions(predicate, order);
+        }
+
         // Expenses data projection
 
-
-        // Income data projection
-
-
-        // Expenses financial results
-        public decimal Expenses()
+        public async Task<List<TransactionDto>> GetTransaction(bool IsExpense, Order order = Order.OrderByDate)
         {
-            decimal expenses = 0m;
-
-            foreach (var item in GetExpenses())
-            {
-                expenses += item.Value;
-            }
-
-            return expenses;
+            return await GetOrdererTransactions(t => t.Depletion == IsExpense, order);
         }
-        public decimal ExpensesByCategory(string category)
+        public async Task<List<TransactionDto>> GetTransactionByDate(bool IsExpense, DateOnly date, Order order = Order.OrderByDate)
         {
-            decimal expenses = 0m;
-
-            foreach (var item in GetExpensesByCategory(category))
-            {
-                expenses += item.Value;
-            }
-
-            return expenses;
+            return await GetOrdererTransactions(t => t.Depletion == IsExpense && t.Date == date, order);
         }
-        public decimal ExpensesByDate(DateOnly date)
+        public async Task<List<TransactionDto>> GetTransactionByMonth(bool IsExpense, int month, int year, Order order = Order.OrderByDate)
         {
-            decimal expenses = 0m;
-
-            foreach (var item in GetExpensesByDate(date))
-            {
-                expenses += item.Value;
-            }
-
-            return expenses;
+            return await GetOrdererTransactions(t => t.Depletion == IsExpense && t.Date.Month == month && t.Date.Year == year, order);
         }
-        public decimal ExpensesByMonth(int month, int year)
+        public async Task<List<TransactionDto>> GetTransactionByYear(bool IsExpense, int year, Order order = Order.OrderByDate)
         {
-            decimal expenses = 0m;
-
-            foreach (var item in GetExpensesByMonth(month, year))
-            {
-                expenses += item.Value;
-            }
-
-            return expenses;
+            return await GetOrdererTransactions(t => t.Depletion == IsExpense && t.Date.Year == year, order);
         }
-        public decimal ExpensesByYear(int year)
+        public async Task<List<TransactionDto>> GetTransactionByCategory(bool IsExpense, string category, Order order = Order.OrderByDate)
         {
-            decimal expenses = 0m;
-
-            foreach (var item in GetExpensesByYear(year))
-            {
-                expenses += item.Value;
-            }
-
-            return expenses;
-        }
-
-        // Income financial results
-        public decimal Income()
-        {
-            decimal income = 0m;
-
-            foreach (var item in GetIncome())
-            {
-                income += item.Value;
-            }
-
-            return income;
-        }
-        public decimal IncomeByCategory(string category)
-        {
-            decimal income = 0m;
-
-            foreach (var item in GetIncomeByCategory(category))
-            {
-                income += item.Value;
-            }
-
-            return income;
-        }
-        public decimal IncomeByDate(DateOnly date)
-        {
-            decimal income = 0m;
-
-            foreach (var item in GetIncomeByDate(date))
-            {
-                income += item.Value;
-            }
-
-            return income;
-        }
-        public decimal IncomeByMonth(int month, int year)
-        {
-            decimal income = 0m;
-
-            foreach (var item in GetIncomeByMonth(month, year))
-            {
-                income += item.Value;
-            }
-
-            return income;
-        }
-        public decimal IncomeByYear(int year)
-        {
-            decimal income = 0m;
-
-            foreach (var item in GetIncomeByYear(year))
-            {
-                income += item.Value;
-            }
-
-            return income;
+            return await GetOrdererTransactions(t => t.Depletion == IsExpense && t.Category == category, order);
         }
 
         // General financial results
-        public decimal NetByCategory(string category) 
+        public async Task<decimal> GetGlobalNet()
         {
-            return IncomeByCategory(category) - ExpensesByCategory(category);
+            decimal expenses = await GetTotalAmmount(true);
+            decimal income = await GetTotalAmmount(false);
+
+            return income - expenses;
         }
-        public bool DeficitByCategory(string category)
+        public async Task<bool> GetGlobalDeficit()
         {
-            return NetByCategory(category) < 0;
+            return await GetGlobalNet() > 0;
         }
-        public decimal NetByDate(DateOnly date)
+
+
+        public async Task<decimal> GetTotalAmmount(bool IsExpense)
         {
-            return IncomeByDate(date) - ExpensesByDate(date);
+            var transactions = await GetTransaction(IsExpense);
+            return await GetSummedTransactions(transactions);
         }
-        public bool DeficitByDate(DateOnly date)
+        public async Task<decimal> GetTotalAmmountByPredicate(Expression<Func<TransactionDto, bool>> predicate)
         {
-            return NetByDate(date) < 0;
-        }
-        public decimal NetByMonth(int month, int year)
-        {
-            return IncomeByMonth(month, year) - ExpensesByMonth(month, year);
-        }
-        public bool DeficitByMonth(int month, int year)
-        {
-            return NetByMonth(month, year) < 0;
-        }
-        public decimal NetByYear(int year)
-        {
-            return IncomeByYear(year) - ExpensesByYear(year);
-        }
-        public bool DeficitByYear(int year)
-        {
-            return NetByYear(year) < 0;
+            var transactions = await GetAllByPredicate(predicate);
+            return await GetSummedTransactions(transactions);
         }
     }
 }
