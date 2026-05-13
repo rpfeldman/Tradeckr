@@ -20,11 +20,9 @@ namespace DataServices
         {
             OrderByDate, OrderByValue
         }
-
         private async Task<List<TransactionDto>> GetOrdererTransactions(Expression<Func<TransactionDto, bool>> predicate, Order order)
         {
             var transactions = await _StateStorage.GetTransactionsAsync(predicate);
-
             switch (order)
             {
                 case Order.OrderByDate:
@@ -36,7 +34,7 @@ namespace DataServices
                 default: return [];
             }
         }
-        private static async Task<decimal> GetSummedTransactions(List<TransactionDto> transactions)
+        private decimal GetSummedTransactions(List<TransactionDto> transactions)
         {
             decimal result = 0;
 
@@ -48,12 +46,7 @@ namespace DataServices
             return result;
         }
 
-
-        //public decimal GlobalNet { get { return Income() - Expenses(); } } 
-        //public bool GlobalDeficit { get { return GlobalNet < 0; } }
-
-    
-        // All transaction data projection
+        #region All transactions data projection
 
         public async Task<List<TransactionDto>> GetAll(Order? order = null)
         {
@@ -71,72 +64,61 @@ namespace DataServices
                 default: return Transactions;
             }
         }
-        public async Task<List<TransactionDto>> GetAllByDate(DateOnly date, Order order = Order.OrderByDate)
+
+        public async Task<List<TransactionDto>> GetAllByDate(DateOnly date, bool? IsExpense = null, Order order = Order.OrderByDate) // If you want to get all regardless of whether it's an expense or income, leave 'IsExpense' as null
         {
-            return await GetOrdererTransactions(t => t.Date == date, order);
+            if(IsExpense is null)
+            {
+                return await GetOrdererTransactions(t => t.Date == date, order);
+            }
+
+            return await GetOrdererTransactions(t => t.Date == date && t.Depletion == IsExpense, order);
         }
-        public async Task<List<TransactionDto>> GetAllByMonth(int month, int year, Order order = Order.OrderByDate)
+        public async Task<List<TransactionDto>> GetAllByMonth(int month, int year, bool? IsExpense = null, Order order = Order.OrderByDate)
         {
-            return await GetOrdererTransactions(t => t.Date.Month == month && t.Date.Year == year, order);
+            if(IsExpense is null)
+            {
+                return await GetOrdererTransactions(t => t.Date.Month == month && t.Date.Year == year, order);
+            }
+
+            return await GetOrdererTransactions(t => t.Date.Month == month && t.Date.Year == year && t.Depletion == IsExpense, order);
         }
-        public async Task<List<TransactionDto>> GetAllByYear(int year, Order order = Order.OrderByDate)
+        public async Task<List<TransactionDto>> GetAllByYear(int year, bool? IsExpense = null, Order order = Order.OrderByDate)
         {
-            return await GetOrdererTransactions(t => t.Date.Year == year, order);
+            if(IsExpense is null)
+            {
+                return await GetOrdererTransactions(t => t.Date.Year == year, order);
+            }
+
+            return await GetOrdererTransactions(t => t.Date.Year == year && t.Depletion == IsExpense, order);
         }
-        public async Task<List<TransactionDto>> GetAllByCategory(string category, Order order = Order.OrderByDate)
+        public async Task<List<TransactionDto>> GetAllByCategory(string category, bool? IsExpense = null, Order order = Order.OrderByDate)
         {
-            return await GetOrdererTransactions(t => t.Category == category, order);
+            if(IsExpense is null)
+            {
+                return await GetOrdererTransactions(t => t.Category == category, order);
+            }
+
+            return await GetOrdererTransactions(t => t.Category == category && t.Depletion == IsExpense, order);
         }
         public async Task<List<TransactionDto>> GetAllByPredicate(Expression<Func<TransactionDto, bool>> predicate, Order order = Order.OrderByDate)
         {
             return await GetOrdererTransactions(predicate, order);
         }
 
-        // Expenses data projection
+        #endregion
 
-        public async Task<List<TransactionDto>> GetTransaction(bool IsExpense, Order order = Order.OrderByDate)
-        {
-            return await GetOrdererTransactions(t => t.Depletion == IsExpense, order);
-        }
-        public async Task<List<TransactionDto>> GetTransactionByDate(bool IsExpense, DateOnly date, Order order = Order.OrderByDate)
-        {
-            return await GetOrdererTransactions(t => t.Depletion == IsExpense && t.Date == date, order);
-        }
-        public async Task<List<TransactionDto>> GetTransactionByMonth(bool IsExpense, int month, int year, Order order = Order.OrderByDate)
-        {
-            return await GetOrdererTransactions(t => t.Depletion == IsExpense && t.Date.Month == month && t.Date.Year == year, order);
-        }
-        public async Task<List<TransactionDto>> GetTransactionByYear(bool IsExpense, int year, Order order = Order.OrderByDate)
-        {
-            return await GetOrdererTransactions(t => t.Depletion == IsExpense && t.Date.Year == year, order);
-        }
-        public async Task<List<TransactionDto>> GetTransactionByCategory(bool IsExpense, string category, Order order = Order.OrderByDate)
-        {
-            return await GetOrdererTransactions(t => t.Depletion == IsExpense && t.Category == category, order);
-        }
-
-        // General financial results
+        #region General financial results
         public async Task<decimal> GetNet()
         {
-            decimal expenses = await GetTotalAmmount(true);
-            decimal income = await GetTotalAmmount(false);
-
-            return income - expenses;
+            return 0;
         }
         public async Task<bool> GetDeficit()
         {
-            return await GetNet() < 0;
+            return true;
         }
 
-        public async Task<decimal> GetTotalAmmount(bool IsExpense)
-        {
-            var transactions = await GetTransaction(IsExpense);
-            return await GetSummedTransactions(transactions);
-        }
-        public async Task<decimal> GetTotalAmmountByPredicate(Expression<Func<TransactionDto, bool>> predicate)
-        {
-            var transactions = await GetAllByPredicate(predicate);
-            return await GetSummedTransactions(transactions);
-        }
+     
+        #endregion
     }
 }

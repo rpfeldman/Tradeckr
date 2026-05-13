@@ -20,7 +20,17 @@ namespace ConsoleTest
             var DMS = new DataManagementService(repo);
             var today = DateOnly.FromDateTime(DateTime.Today);
 
-            Console.WriteLine("arranca el for");
+            await DMS.RestartData();
+            await TestTransactions();
+            await DRS.RegistIncome(2000m, today, "Empelo xd");
+            await DRS.RegistExpense(500000m, today, "Silla");
+
+            foreach (var item in await DPS.GetAllByDate(today, true))
+            {
+                Console.WriteLine($"{item.Date}: {item.Value} en {item.Category}\nPerdida: {item.Depletion}");
+            }
+
+            /*
             for (int i = 1; i <= 12; i++)
             {
                 Console.WriteLine($"Balance del mes {i}\n");
@@ -45,6 +55,7 @@ namespace ConsoleTest
                 Console.WriteLine($"Balance final: {(IncomeOfTheMonth - ExpensesOfTheMonth):N2}$");
                 Console.WriteLine("estas en perdida: " +  ((IncomeOfTheMonth-ExpensesOfTheMonth) > 0 ? "no" : "si"));
             }
+            */
 
             Console.WriteLine($"tu balance final es de {await DPS.GetNet():N2}$");
             Console.WriteLine($"estas en perdida: ");
