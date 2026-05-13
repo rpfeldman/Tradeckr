@@ -20,20 +20,9 @@ namespace ConsoleTest
             var DMS = new DataManagementService(repo);
             var today = DateOnly.FromDateTime(DateTime.Today);
 
-            /*
             await DMS.RestartData();
             await TestTransactions();
-            */
 
-            for (int i = 1; i <= 12; i++)
-            {
-                Console.WriteLine($"Los resultados de {new DateOnly(1, i, 1).Month.ToString()} fueron:");
-                decimal MonthResult = await DPS.GetResultsByMonth(i, today.Year);
-                Console.WriteLine($"Balance del mes: {MonthResult:N2}$\n");
-            }
-
-            decimal YearResult = await DPS.GetResultsByYear(today.Year);
-            Console.WriteLine($"El resultado del año fue: {YearResult:N2}$");
 
             async Task TestTransactions()
             {
