@@ -16,7 +16,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -32,28 +32,28 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\GENAP\\ConsoleTest\\Program.cs",
-              "RelativeDocumentMoniker": "..\\ConsoleTest\\Program.cs",
-              "ToolTip": "C:\\Users\\ramga\\source\\repos\\GENAP\\ConsoleTest\\Program.cs*",
-              "RelativeToolTip": "..\\ConsoleTest\\Program.cs*",
-              "ViewState": "AgIAAAsAAAAAAAAAAAA9wBsAAABEAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-13T15:26:48.64Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 1,
               "Title": "DataProjectionService.cs",
               "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\GENAP\\Components\\DataServices\\DataProjectionService.cs",
               "RelativeDocumentMoniker": "..\\Components\\DataServices\\DataProjectionService.cs",
               "ToolTip": "C:\\Users\\ramga\\source\\repos\\GENAP\\Components\\DataServices\\DataProjectionService.cs",
               "RelativeToolTip": "..\\Components\\DataServices\\DataProjectionService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEMAAACJAAAAAAAAAA==",
+              "ViewState": "AgIAAH4AAAAAAAAAAAAIwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-12T15:32:40.219Z",
+              "WhenOpened": "2026-05-13T16:42:44.223Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\GENAP\\ConsoleTest\\Program.cs",
+              "RelativeDocumentMoniker": "..\\ConsoleTest\\Program.cs",
+              "ToolTip": "C:\\Users\\ramga\\source\\repos\\GENAP\\ConsoleTest\\Program.cs",
+              "RelativeToolTip": "..\\ConsoleTest\\Program.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAAgwCMAAABFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-13T15:26:48.64Z",
               "EditorCaption": ""
             }
           ]

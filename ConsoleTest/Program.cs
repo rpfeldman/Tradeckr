@@ -20,47 +20,20 @@ namespace ConsoleTest
             var DMS = new DataManagementService(repo);
             var today = DateOnly.FromDateTime(DateTime.Today);
 
+            /*
             await DMS.RestartData();
             await TestTransactions();
-            await DRS.RegistIncome(2000m, today, "Empelo xd");
-            await DRS.RegistExpense(500000m, today, "Silla");
-
-            foreach (var item in await DPS.GetAllByDate(today, true))
-            {
-                Console.WriteLine($"{item.Date}: {item.Value} en {item.Category}\nPerdida: {item.Depletion}");
-            }
-
-            /*
-            for (int i = 1; i <= 12; i++)
-            {
-                Console.WriteLine($"Balance del mes {i}\n");
-
-                Console.WriteLine("Gastos:");
-                foreach (var item in await DPS.GetTransactionByMonth(true, i, today.Year, DataProjectionService.Order.OrderByDate))
-                {
-                    Console.WriteLine($"Se gasto {item.Value:N2}$ en {item.Category} el {item.Date}");
-                }
-                Console.WriteLine("\n");
-
-                Console.WriteLine("Ingresos:");
-                foreach (var item in await DPS.GetTransactionByMonth(false, i, today.Year, DataProjectionService.Order.OrderByDate))
-                {
-                    Console.WriteLine($"Se gano {item.Value:N2}$ en {item.Category} el {item.Date}");
-                }
-                Console.WriteLine("\n");
-
-                decimal ExpensesOfTheMonth = await DPS.GetTotalAmmountByPredicate(t => t.Depletion == true && t.Date.Month == i && t.Date.Year == today.Year);
-                decimal IncomeOfTheMonth = await DPS.GetTotalAmmountByPredicate(t => t.Depletion == false && t.Date.Month == i && t.Date.Year == today.Year);
-
-                Console.WriteLine($"Balance final: {(IncomeOfTheMonth - ExpensesOfTheMonth):N2}$");
-                Console.WriteLine("estas en perdida: " +  ((IncomeOfTheMonth-ExpensesOfTheMonth) > 0 ? "no" : "si"));
-            }
             */
 
-            Console.WriteLine($"tu balance final es de {await DPS.GetNet():N2}$");
-            Console.WriteLine($"estas en perdida: ");
-            Console.Write(await DPS.GetDeficit() ? "SI" : "NO");
-            
+            for (int i = 1; i <= 12; i++)
+            {
+                Console.WriteLine($"Los resultados de {new DateOnly(1, i, 1).Month.ToString()} fueron:");
+                decimal MonthResult = await DPS.GetResultsByMonth(i, today.Year);
+                Console.WriteLine($"Balance del mes: {MonthResult:N2}$\n");
+            }
+
+            decimal YearResult = await DPS.GetResultsByYear(today.Year);
+            Console.WriteLine($"El resultado del año fue: {YearResult:N2}$");
 
             async Task TestTransactions()
             {
