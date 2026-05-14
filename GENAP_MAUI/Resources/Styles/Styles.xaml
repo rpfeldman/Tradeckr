@@ -131,7 +131,13 @@
         </Setter>
     </Style>
 
-    <Style TargetType="ImageButton">
+    <Style TargetType="VerticalStackLayout">
+        <Setter Property="Padding" Value="5"></Setter>
+        <Setter Property="Spacing" Value="5"></Setter>
+        <Setter Property="HorizontalOptions" Value="Center"></Setter>
+    </Style>
+
+            <Style TargetType="ImageButton">
         <Setter Property="Opacity" Value="1" />
         <Setter Property="BorderColor" Value="Transparent"/>
         <Setter Property="BorderWidth" Value="0"/>

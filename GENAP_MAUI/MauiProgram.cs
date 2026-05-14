@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using GENAP_MAUI.Pages.MainNavigationBarPages;
+using Microsoft.Extensions.Logging;
+using GENAP_MAUI.ViewModels;
 
 namespace GENAP_MAUI
 {
@@ -14,6 +16,10 @@ namespace GENAP_MAUI
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
+
+
+            // ViewModels
+            builder.Services.AddTransient<MainDashboardPageViewModel>();
 
 #if DEBUG
     		builder.Logging.AddDebug();
