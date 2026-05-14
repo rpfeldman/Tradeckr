@@ -17,9 +17,12 @@ namespace GENAP_MAUI
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
+            // Global resources
+            builder.Services.AddSingleton<GlobalResources>();
 
             // ViewModels
             builder.Services.AddTransient<MainDashboardPageViewModel>();
+            builder.Services.AddTransient<RegistTransactionPageViewModel>();
 
 #if DEBUG
     		builder.Logging.AddDebug();

@@ -9,13 +9,9 @@
     <ScrollView>
         <VerticalStackLayout>
             <Label Text="Temporal navigation center"></Label>
-            
             <Button Text="Registrar transaccion" Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:Routes.DefaultTransaction}"></Button>
-
             <Button Text="Registrar transaccion de trading" Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:Routes.TradingTransactions}"></Button>
-
             <Button Text="Ir a la lista de categorias" Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:Routes.Categories}"></Button>
-
             <Button Text="Ir a la seccion de graficos" Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:Routes.Graphs}"></Button>
         </VerticalStackLayout>
     </ScrollView>
