@@ -5,6 +5,8 @@
         public MainPage()
         {
             InitializeComponent();
+
+            Shell.Current.GoToAsync(Routes.Dashboard);
         }
     }
 }

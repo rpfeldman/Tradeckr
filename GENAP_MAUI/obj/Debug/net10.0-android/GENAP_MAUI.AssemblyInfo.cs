@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GENAP_MAUI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+0d18b2206685d64a6ec14531d221c1871469c07a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+0ba3970098d31bf6c40df8c80d3d5c1ccfb2f8fd")]
 [assembly: System.Reflection.AssemblyProductAttribute("GENAP_MAUI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GENAP_MAUI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
