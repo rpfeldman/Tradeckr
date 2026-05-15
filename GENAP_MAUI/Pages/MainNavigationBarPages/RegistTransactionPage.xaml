@@ -9,10 +9,14 @@
         <VerticalStackLayout>
             <Label Text="instrucciones y reglas*"></Label>
 
-            <Entry Placeholder="$" Keyboard="Numeric"></Entry>
+            <HorizontalStackLayout Spacing="3">
+                <Entry Placeholder="$" Keyboard="Numeric" Text="{Binding Value}"></Entry>
+                <Label Text="$"></Label>
+            </HorizontalStackLayout>
+          
  
             <Picker
-            Title="Categoria..."
+            Title="Seleccionar categoria"
             ItemsSource="{Binding GR.GlobalCategories}"
                 SelectedItem="{Binding Category}"/>
 
@@ -21,11 +25,26 @@
                 Format="d/mmm/yyy"
                 />
 
-            <VerticalStackLayout>
-                <Label Text="{Binding Depletion}"></Label>
-                <Button Text="Cambiar" Command="{Binding ChangeDepletionCommand}"></Button>
-            </VerticalStackLayout>
-            
+         
+            <Label Text="{Binding Depletion}"></Label>
+            <Button Text="Cambiar" Command="{Binding ChangeDepletionCommand}"></Button>
+
+            <HorizontalStackLayout Spacing="3">
+                <Label Text="Es un movimiento fijo?"></Label>
+                <CheckBox IsChecked="{Binding IsFixed}"></CheckBox>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout IsVisible="{Binding IsFixed}" Spacing="5">
+                <Label Text="Duracion:"></Label>
+                
+                <HorizontalStackLayout Spacing="3">
+                    <Entry Text="{Binding FixedTransactionDuration}" Keyboard="Numeric" Placeholder="duracion"></Entry>
+                    <Label Text="meses"></Label>
+                </HorizontalStackLayout>
+              
+            </HorizontalStackLayout>
+
+            <Button Text="Registrar movimiento" Command="{Binding RegistTransactionCommand}"></Button>
             
         </VerticalStackLayout>
     </ScrollView>

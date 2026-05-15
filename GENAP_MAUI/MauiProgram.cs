@@ -1,6 +1,8 @@
 ﻿using GENAP_MAUI.Pages.MainNavigationBarPages;
 using Microsoft.Extensions.Logging;
 using GENAP_MAUI.ViewModels;
+using DataServices;
+using Repositories;
 
 namespace GENAP_MAUI
 {
@@ -23,6 +25,10 @@ namespace GENAP_MAUI
             // ViewModels
             builder.Services.AddTransient<MainDashboardPageViewModel>();
             builder.Services.AddTransient<RegistTransactionPageViewModel>();
+
+            // Data services & the repository
+            builder.Services.AddSingleton<IStateStorage, EF_SQLite_StateStorage>(sp => { return new EF_SQLite_StateStorage("TermporalTest.db", [14, 2]); });
+            builder.Services.AddSingleton<DataRegistrationService>();
 
 #if DEBUG
     		builder.Logging.AddDebug();

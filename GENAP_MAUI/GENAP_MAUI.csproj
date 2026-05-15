@@ -76,6 +76,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\Components\DataServices\DataServices.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiXaml Update="Pages\MainNavigationBarPages\GraphsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

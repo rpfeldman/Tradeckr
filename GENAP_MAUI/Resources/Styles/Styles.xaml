@@ -132,8 +132,8 @@
     </Style>
 
     <Style TargetType="VerticalStackLayout">
-        <Setter Property="Padding" Value="5"></Setter>
-        <Setter Property="Spacing" Value="5"></Setter>
+        <Setter Property="Padding" Value="4"></Setter>
+        <Setter Property="Spacing" Value="8"></Setter>
         <Setter Property="HorizontalOptions" Value="Center"></Setter>
     </Style>
 
