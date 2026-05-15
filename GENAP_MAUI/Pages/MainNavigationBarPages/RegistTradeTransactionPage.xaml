@@ -7,6 +7,24 @@
    
     <ScrollView>
         <VerticalStackLayout>
+            <Label Text="instrucciones y reglas*"></Label>
+
+
+            <HorizontalStackLayout Spacing="3">
+                <Label Text="Valor del movimiento:"></Label>
+                <Entry Text="{Binding Value}" Placeholder="$" Keyboard="Numeric"></Entry>
+                <Label Text="$"></Label>
+            </HorizontalStackLayout>
+
+            <DatePicker
+                Date="{Binding PickedDate}"
+                Format="d/mmm/yyy"
+            />
+
+            <Label Text="{Binding Depletion}"></Label>
+            <Button Command="{Binding ChangeDepletionCommand}" Text="Cambiar"></Button>
+
+            <Button Command="{Binding RegistTransactionCommand}" Text="Registrar movimiento"></Button>
 
         </VerticalStackLayout>
     </ScrollView>

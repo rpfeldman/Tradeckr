@@ -10,6 +10,7 @@
             <Label Text="instrucciones y reglas*"></Label>
 
             <HorizontalStackLayout Spacing="3">
+                <Label Text="Valor del movimiento:"></Label>
                 <Entry Placeholder="$" Keyboard="Numeric" Text="{Binding Value}"></Entry>
                 <Label Text="$"></Label>
             </HorizontalStackLayout>
