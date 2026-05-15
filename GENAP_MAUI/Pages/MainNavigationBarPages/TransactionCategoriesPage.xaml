@@ -1,12 +1,34 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:GENAP_MAUI.ViewModels"
              x:Class="GENAP_MAUI.Pages.MainNavigationBarPages.TransactionCategoriesPage"
-             Title="TransactionCategoriesPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             x:DataType="vm:TransactionCategoriesPageViewModel">
+    
+    <ScrollView>
+        <VerticalStackLayout>
+
+            <CollectionView ItemsSource="{Binding Categories}">
+                <CollectionView.ItemTemplate>
+
+                    <DataTemplate x:DataType="x:String">
+                        
+                        <HorizontalStackLayout>
+                            <Entry Text="{Binding .}"></Entry>
+                            <Button Text="Borrar" Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DeleteCategoryCommand}" CommandParameter="{Binding .}"></Button>
+                        </HorizontalStackLayout>
+                        
+                    </DataTemplate>
+                    
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <HorizontalStackLayout>
+                <Entry Text="{Binding NewCategory}"></Entry>
+                <Button Text="Agregar" Command="{Binding AddCategoryCommand}"></Button>
+            </HorizontalStackLayout>
+
+            <Button Text="Guardad" Command="{Binding SaveCommand}"></Button>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
