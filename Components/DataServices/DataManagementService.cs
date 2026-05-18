@@ -12,7 +12,7 @@ namespace DataServices
     {
         private IStateStorage _StateStorage = StateStorage;
 
-        public async Task<bool> UpdateTransaction(int TransactionId, decimal? value = null, DateOnly? date = null, string? category = null, bool? depletion = null)
+        public async Task<bool> UpdateTransactionAsync(int TransactionId, decimal? value = null, DateOnly? date = null, string? category = null, bool? depletion = null)
         {
             try
             {
@@ -29,7 +29,7 @@ namespace DataServices
        
        
 
-        public async Task<bool> RemoveTransaction(int TransactionId)
+        public async Task<bool> RemoveTransactionAsync(int TransactionId)
         {
             try
             {

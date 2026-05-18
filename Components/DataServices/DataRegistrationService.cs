@@ -12,7 +12,7 @@ namespace DataServices
     {
         private IStateStorage _StateStorage = StateStorage;
 
-        public async Task<bool> RegistExpense(decimal value, DateOnly date, string category = "Uncategorized")
+        public async Task<bool> RegistExpenseAsync(decimal value, DateOnly date, string category = "Uncategorized")
         {
             try
             {
@@ -25,7 +25,7 @@ namespace DataServices
          
         }
 
-        public async Task<bool> RegistExpense(decimal value, DateOnly date, int duration, string category = "Uncategorized")
+        public async Task<bool> RegistExpenseAsync(decimal value, DateOnly date, int duration, string category = "Uncategorized")
         {
             try
             {
@@ -38,7 +38,7 @@ namespace DataServices
          
         }
 
-        public async Task<bool> RegistIncome(decimal value, DateOnly date, string category = "Uncategorized")
+        public async Task<bool> RegistIncomeAsync(decimal value, DateOnly date, string category = "Uncategorized")
         {
             try
             {
@@ -49,7 +49,7 @@ namespace DataServices
                 return false;
             }
         }
-        public async Task<bool> RegistIncome(decimal value, DateOnly date, int duration, string category = "Uncategorized")
+        public async Task<bool> RegistIncomeAsync(decimal value, DateOnly date, int duration, string category = "Uncategorized")
         {
             try
             {
