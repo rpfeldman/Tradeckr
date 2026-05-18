@@ -3,6 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\ramga\\source\\repos\\GENAP\\GENAP_MAUI\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{3BB8CF25-951A-48FC-B73F-C90576E3AC8E}|..\\ConsoleTest\\ConsoleTest.csproj|c:\\users\\ramga\\source\\repos\\genap\\consoletest\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{740F01AE-8212-438F-9EC4-B08AF83A3E48}|..\\Components\\DataServices\\DataServices.csproj|c:\\users\\ramga\\source\\repos\\genap\\components\\dataservices\\dataprojectionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|c:\\users\\ramga\\source\\repos\\genap\\genap_maui\\viewmodels\\transactioncategoriespageviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|solutionrelative:viewmodels\\transactioncategoriespageviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -26,7 +32,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -42,7 +48,33 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\GENAP\\ConsoleTest\\Program.cs",
+              "RelativeDocumentMoniker": "..\\ConsoleTest\\Program.cs",
+              "ToolTip": "C:\\Users\\ramga\\source\\repos\\GENAP\\ConsoleTest\\Program.cs",
+              "RelativeToolTip": "..\\ConsoleTest\\Program.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAQwBgAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-18T14:40:07.45Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "DataProjectionService.cs",
+              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\GENAP\\Components\\DataServices\\DataProjectionService.cs",
+              "RelativeDocumentMoniker": "..\\Components\\DataServices\\DataProjectionService.cs",
+              "ToolTip": "C:\\Users\\ramga\\source\\repos\\GENAP\\Components\\DataServices\\DataProjectionService.cs",
+              "RelativeToolTip": "..\\Components\\DataServices\\DataProjectionService.cs",
+              "ViewState": "AgIAADEAAAAAAAAAAAAwwF8AAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-18T13:40:37.038Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "RegistTransactionPageViewModel.cs",
               "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\GENAP\\GENAP_MAUI\\ViewModels\\RegistTransactionPageViewModel.cs",
               "RelativeDocumentMoniker": "ViewModels\\RegistTransactionPageViewModel.cs",
@@ -50,12 +82,11 @@
               "RelativeToolTip": "ViewModels\\RegistTransactionPageViewModel.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-15T16:59:27.791Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-15T16:59:27.791Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "GlobalResources.cs",
               "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\GENAP\\GENAP_MAUI\\GlobalResources.cs",
               "RelativeDocumentMoniker": "GlobalResources.cs",
@@ -63,25 +94,23 @@
               "RelativeToolTip": "GlobalResources.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-15T16:58:59.819Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-15T16:58:59.819Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "TransactionCategoriesPageViewModel.cs",
               "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\GENAP\\GENAP_MAUI\\ViewModels\\TransactionCategoriesPageViewModel.cs",
               "RelativeDocumentMoniker": "ViewModels\\TransactionCategoriesPageViewModel.cs",
               "ToolTip": "C:\\Users\\ramga\\source\\repos\\GENAP\\GENAP_MAUI\\ViewModels\\TransactionCategoriesPageViewModel.cs",
               "RelativeToolTip": "ViewModels\\TransactionCategoriesPageViewModel.cs",
-              "ViewState": "AgIAABYAAAAAAAAAAAAAACoAAAAPAAAAAAAAAA==",
+              "ViewState": "AgIAABMAAAAAAAAAAAAAABgAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-15T16:41:43.745Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-15T16:41:43.745Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "TransactionCategoriesPage.xaml",
               "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\GENAP\\GENAP_MAUI\\Pages\\MainNavigationBarPages\\TransactionCategoriesPage.xaml",
               "RelativeDocumentMoniker": "Pages\\MainNavigationBarPages\\TransactionCategoriesPage.xaml",
@@ -89,8 +118,7 @@
               "RelativeToolTip": "Pages\\MainNavigationBarPages\\TransactionCategoriesPage.xaml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-05-15T16:41:14.508Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-15T16:41:14.508Z"
             }
           ]
         }

@@ -119,38 +119,48 @@ namespace DataServices
         #region General financial results
         public async Task<decimal> GetGlobalResult()
         {
-            var expenses = await GetAll(true);
-            var income = await GetAll(false);
+            var expenses = GetAll(true);
+            var income = GetAll(false);
 
-            return GetSummedTransactions(income) - GetSummedTransactions(expenses);
+            var results = await Task.WhenAll(income, expenses);
+
+            return GetSummedTransactions(results[0]) - GetSummedTransactions(results[1]);
         }
         public async Task<decimal> GetResultsByDate(DateOnly date)
         {
-            var expenses = await GetAllByDate(date, true);
-            var income = await GetAllByDate(date, false);
+            var expenses = GetAllByDate(date, true);
+            var income = GetAllByDate(date, false);
 
-            return GetSummedTransactions(income) - GetSummedTransactions(expenses);
+            var results = await Task.WhenAll(income, expenses);
+
+            return GetSummedTransactions(results[0]) - GetSummedTransactions(results[1]);
         }
         public async Task<decimal> GetResultsByMonth(int month, int year)
         {
-            var expenses = await GetAllByMonth(month, year, true);
-            var income = await GetAllByMonth(month, year, false);
+            var expenses = GetAllByMonth(month, year, true);
+            var income = GetAllByMonth(month, year, false);
 
-            return GetSummedTransactions(income) - GetSummedTransactions(expenses);
+            var results = await Task.WhenAll(income, expenses);
+
+            return GetSummedTransactions(results[0]) - GetSummedTransactions(results[1]);
         }
         public async Task<decimal> GetResultsByYear(int year)
         {
-            var expenses = await GetAllByYear(year, true);
-            var income = await GetAllByYear(year, false);
+            var expenses = GetAllByYear(year, true);
+            var income = GetAllByYear(year, false);
 
-            return GetSummedTransactions(income) - GetSummedTransactions(expenses);
+            var results = await Task.WhenAll(income, expenses);
+
+            return GetSummedTransactions(results[0]) - GetSummedTransactions(results[1]);
         }
         public async Task<decimal> GetResultsByCategory(string category)
         {
-            var expenses = await GetAllByCategory(category, true);
-            var income = await GetAllByCategory(category, false);
+            var expenses = GetAllByCategory(category, true);
+            var income = GetAllByCategory(category, false);
 
-            return GetSummedTransactions(income) - GetSummedTransactions(expenses);
+            var results = await Task.WhenAll(income, expenses);
+
+            return GetSummedTransactions(results[0]) - GetSummedTransactions(results[1]);
         }
         public async Task<decimal> GetResultsByPredicate(Expression<Func<TransactionDto, bool>> predicate)
         {

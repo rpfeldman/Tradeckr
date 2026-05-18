@@ -20,9 +20,9 @@ namespace ConsoleTest
             var DMS = new DataManagementService(repo);
             var today = DateOnly.FromDateTime(DateTime.Today);
 
-            await DMS.RestartData();
-            await TestTransactions();
+            var Result = await DPS.GetGlobalResult();
 
+            Console.Write($"{Result:N2}$");
 
             async Task TestTransactions()
             {
