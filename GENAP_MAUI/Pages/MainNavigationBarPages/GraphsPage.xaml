@@ -2,13 +2,25 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:GENAP_MAUI.ViewModels"
+             xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui"
              x:Class="GENAP_MAUI.Pages.MainNavigationBarPages.GraphsPage"
              x:DataType="vm:GraphsPageViewModel">
-   
+
+
     <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+
+        <lvc:CartesianChart 
+        Series="{Binding Libertadores}" 
+        XAxes="{Binding DecadasEjeX}"
+        LegendPosition="Bottom"
+         HeightRequest="400" />
+
+        <Label Text="Proporcion ingresos vs gastos"/>
+        <Label Text="Proporcion gastos por categoria"></Label>
+        <Label Text="Proporcion ingresos por categoria"></Label>
+        <Label Text="Evolucion balance general"></Label>
+        <Label Text="Evolucion gastos vs ingresos"></Label>
+        <Label Text="Evolucion del gasto"></Label>
+        <Label Text="Evolucion del ingreso"></Label>
     </VerticalStackLayout>
 </ContentPage>

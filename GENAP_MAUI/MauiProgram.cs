@@ -3,6 +3,9 @@ using Microsoft.Extensions.Logging;
 using GENAP_MAUI.ViewModels;
 using DataServices;
 using Repositories;
+using Microcharts.Maui;
+using SkiaSharp.Views.Maui.Controls.Hosting;
+using LiveChartsCore.SkiaSharpView.Maui;
 
 namespace GENAP_MAUI
 {
@@ -12,6 +15,8 @@ namespace GENAP_MAUI
         {
             var builder = MauiApp.CreateBuilder();
             builder
+                .UseSkiaSharp()
+                .UseLiveCharts()
                 .UseMauiApp<App>()
                 .ConfigureFonts(fonts =>
                 {
