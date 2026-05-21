@@ -41715,6 +41715,7 @@
       },
       "frameworks": {
         "net10.0-android36.0": {
+          "framework": "net10.0-android36.0",
           "targetAlias": "net10.0-android",
           "projectReferences": {
             "C:\\Users\\ramga\\source\\repos\\GENAP\\Components\\DataServices\\DataServices.csproj": {
@@ -41723,6 +41724,7 @@
           }
         },
         "net10.0-ios26.4": {
+          "framework": "net10.0-ios26.4",
           "targetAlias": "net10.0-ios",
           "projectReferences": {
             "C:\\Users\\ramga\\source\\repos\\GENAP\\Components\\DataServices\\DataServices.csproj": {
@@ -41731,6 +41733,7 @@
           }
         },
         "net10.0-maccatalyst26.4": {
+          "framework": "net10.0-maccatalyst26.4",
           "targetAlias": "net10.0-maccatalyst",
           "projectReferences": {
             "C:\\Users\\ramga\\source\\repos\\GENAP\\Components\\DataServices\\DataServices.csproj": {
@@ -41739,6 +41742,7 @@
           }
         },
         "net10.0-windows10.0.19041": {
+          "framework": "net10.0-windows10.0.19041",
           "targetAlias": "net10.0-windows10.0.19041.0",
           "projectReferences": {
             "C:\\Users\\ramga\\source\\repos\\GENAP\\Components\\DataServices\\DataServices.csproj": {
@@ -41761,6 +41765,7 @@
     },
     "frameworks": {
       "net10.0-android36.0": {
+        "framework": "net10.0-android36.0",
         "targetAlias": "net10.0-android",
         "dependencies": {
           "CommunityToolkit.Mvvm": {
@@ -42095,6 +42100,7 @@
         }
       },
       "net10.0-ios26.4": {
+        "framework": "net10.0-ios26.4",
         "targetAlias": "net10.0-ios",
         "dependencies": {
           "CommunityToolkit.Mvvm": {
@@ -42429,6 +42435,7 @@
         }
       },
       "net10.0-maccatalyst26.4": {
+        "framework": "net10.0-maccatalyst26.4",
         "targetAlias": "net10.0-maccatalyst",
         "dependencies": {
           "CommunityToolkit.Mvvm": {
@@ -42764,6 +42771,7 @@
         }
       },
       "net10.0-windows10.0.19041": {
+        "framework": "net10.0-windows10.0.19041",
         "targetAlias": "net10.0-windows10.0.19041.0",
         "dependencies": {
           "CommunityToolkit.Mvvm": {
