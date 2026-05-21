@@ -111,8 +111,15 @@ namespace DataServices
         }
         #endregion
         #region General financial results
-        public async Task<decimal> GetGlobalResultAsync()
+        public async Task<decimal> GetGlobalResultAsync(bool? IsExpense = null)
         {
+            if(IsExpense is not null)
+            {
+                var transactions = await GetAllAsync(IsExpense);
+
+                return GetSummedTransactions(transactions);
+            }
+
             var expenses = GetAllAsync(true);
             var income = GetAllAsync(false);
 
@@ -120,8 +127,15 @@ namespace DataServices
 
             return GetSummedTransactions(results[0]) - GetSummedTransactions(results[1]);
         }
-        public async Task<decimal> GetResultsByDate(DateOnly date)
+        public async Task<decimal> GetResultsByDateAsync(DateOnly date, bool? IsExpense = null)
         {
+            if(IsExpense is not null)
+            {
+                var transactions = await GetAllByDateAsync(date, IsExpense);
+
+                return GetSummedTransactions(transactions);
+            }
+
             var expenses = GetAllByDateAsync(date, true);
             var income = GetAllByDateAsync(date, false);
 
@@ -129,8 +143,15 @@ namespace DataServices
 
             return GetSummedTransactions(results[0]) - GetSummedTransactions(results[1]);
         }
-        public async Task<decimal> GetResultsByMonth(int month, int year)
+        public async Task<decimal> GetResultsByMonthAsync(int month, int year, bool? IsExpense = null)
         {
+            if (IsExpense is not null)
+            {
+                var transactions = await GetAllByMonthAsync(month, year, IsExpense);
+
+                return GetSummedTransactions(transactions);
+            }
+
             var expenses = GetAllByMonthAsync(month, year, true);
             var income = GetAllByMonthAsync(month, year, false);
 
@@ -138,8 +159,15 @@ namespace DataServices
 
             return GetSummedTransactions(results[0]) - GetSummedTransactions(results[1]);
         }
-        public async Task<decimal> GetResultsByYear(int year)
+        public async Task<decimal> GetResultsByYearAsync(int year, bool? IsExpense = null)
         {
+            if (IsExpense is not null)
+            {
+                var transactions = await GetAllByYearAsync(year, IsExpense);
+
+                return GetSummedTransactions(transactions);
+            }
+
             var expenses = GetAllByYearAsync(year, true);
             var income = GetAllByYearAsync(year, false);
 
@@ -147,8 +175,15 @@ namespace DataServices
 
             return GetSummedTransactions(results[0]) - GetSummedTransactions(results[1]);
         }
-        public async Task<decimal> GetResultsByCategory(string category)
+        public async Task<decimal> GetResultsByCategoryAsync(string category, bool? IsExpense = null)
         {
+            if (IsExpense is not null)
+            {
+                var transactions = await GetAllByCategoryAsync(category, IsExpense);
+
+                return GetSummedTransactions(transactions);
+            }
+
             var expenses = GetAllByCategoryAsync(category, true);
             var income = GetAllByCategoryAsync(category, false);
 
@@ -156,7 +191,7 @@ namespace DataServices
 
             return GetSummedTransactions(results[0]) - GetSummedTransactions(results[1]);
         }
-        public async Task<decimal> GetResultsByPredicate(Expression<Func<TransactionDto, bool>> predicate)
+        public async Task<decimal> GetResultsByPredicateAsync(Expression<Func<TransactionDto, bool>> predicate)
         {
             var transactions = await GetAllByPredicateAsync(predicate);
             return GetSummedTransactions(transactions);
