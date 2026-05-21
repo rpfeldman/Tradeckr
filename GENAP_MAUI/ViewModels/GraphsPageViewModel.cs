@@ -15,6 +15,10 @@ namespace GENAP_MAUI.ViewModels
 {
     public sealed partial class GraphsPageViewModel : BaseViewModel
     {
-      
+        [ObservableProperty]
+        public partial decimal TestIncome { get; set; } = 15350m;
+
+        [ObservableProperty]
+        public partial decimal TestExpense { get; set; } = 10953.90m;
     }
 }

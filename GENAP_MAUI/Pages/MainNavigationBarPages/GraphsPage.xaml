@@ -2,11 +2,14 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:GENAP_MAUI.ViewModels"
+             xmlns:charts="clr-namespace:GENAP_MAUI.ContentViews.Graphs.BalanceDoughnutChart"
              x:Class="GENAP_MAUI.Pages.MainNavigationBarPages.GraphsPage"
              x:DataType="vm:GraphsPageViewModel">
 
 
     <VerticalStackLayout>
+
+        <charts:BalanceDoughnutChart Income="{Binding TestIncome}" Expenses="{Binding TestExpense}"></charts:BalanceDoughnutChart>
 
         <Label Text="Proporcion gastos por categoria"></Label>
         <Label Text="Proporcion ingresos por categoria"></Label>
@@ -15,7 +18,5 @@
         <Label Text="Evolucion del gasto"></Label>
         <Label Text="Evolucion del ingreso"></Label>
 
-
-        <Button Text="Mostrar" Command="{Binding CargarProporcionGlobalCommand}"></Button>
     </VerticalStackLayout>
 </ContentPage>

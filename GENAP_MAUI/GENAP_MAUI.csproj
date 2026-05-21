@@ -82,7 +82,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="ContentViews\Graphs\BalanceDoughnutChart\BalanceDoughnutChart.xaml">
+	  <MauiXaml Update="ContentViews\Graphs\BalanceDoughnutChart.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\MainNavigationBarPages\GraphsPage.xaml" Inflator="Runtime">
