@@ -18,9 +18,18 @@
         <Label Text="Proporcion ingresos por categoria"></Label>
 
         <Label Text="Evolucion gastos vs ingresos"></Label>
-        <Label Text="Evolucion del gasto"></Label>
-        <Label Text="Evolucion del ingreso"></Label>
 
-    </VerticalStackLayout>
+            <VerticalStackLayout>
+                <Label Text="Ingresos"></Label>
+                <charts:BasicLineChart LineColor="Green" Values="{Binding Income}"></charts:BasicLineChart>
+            </VerticalStackLayout>
+
+
+            <VerticalStackLayout>
+                <Label Text="Gastos"></Label>
+                <charts:BasicLineChart LineColor="Red" Values="{Binding Expenses}"></charts:BasicLineChart>
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
