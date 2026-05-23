@@ -17,7 +17,11 @@
         <Label Text="Proporcion gastos por categoria"></Label>
         <Label Text="Proporcion ingresos por categoria"></Label>
 
-        <Label Text="Evolucion gastos vs ingresos"></Label>
+
+            <VerticalStackLayout>
+                <Label Text="Gastos vs ingresos"></Label>
+                <charts:DoubleComparisonLineChart Values1="{Binding Income}" Values2="{Binding Expenses}" Color1="Green" Color2="Red"></charts:DoubleComparisonLineChart>
+            </VerticalStackLayout>
 
             <VerticalStackLayout>
                 <Label Text="Ingresos"></Label>

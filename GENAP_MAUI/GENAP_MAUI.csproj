@@ -91,6 +91,9 @@
 	  <MauiXaml Update="ContentViews\Graphs\BasicLineChart.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="ContentViews\Graphs\DoubleComparisonLineChart.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\MainNavigationBarPages\GraphsPage.xaml" Inflator="Runtime">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

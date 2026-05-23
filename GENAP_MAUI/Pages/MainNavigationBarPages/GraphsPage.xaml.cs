@@ -12,4 +12,12 @@ public partial class GraphsPage : ContentPage
 		BindingContext = vm;
 	}
 
+    protected override async void OnAppearing()
+    {
+        if (BindingContext is GraphsPageViewModel vm)
+        {
+            await vm.FillGraphsCommand.ExecuteAsync(false);
+        }
+    }
+
 }
