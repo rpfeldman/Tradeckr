@@ -28,11 +28,11 @@ namespace GENAP_MAUI.ViewModels
         public partial List<TransactionDto> TestBalanceEvolve { get; set; } = [];
 
         [ObservableProperty]
-        public partial decimal[] Expenses { get; set; } = { 10m, 21.5m, 29.5m, 31.5m, 31.5m, 31.5m, 50.5m, 80.5m, 90.5m, 96.5m, 105.5m, 125.5m };
+        public partial List<TransactionDto> Expenses { get; set; } = [];
 
 
         [ObservableProperty]
-        public partial decimal[] Income { get; set; } = { 0m, 0m, 0m, 0m, 2500, 2500, 2519m, 2719m, 2719m, 2719m, 2719m, 2719m };
+        public partial List<TransactionDto> Income { get; set; } = [];
 
 
         [RelayCommand]
@@ -47,6 +47,14 @@ namespace GENAP_MAUI.ViewModels
             TestIncome = result[1];
 
             TestBalanceEvolve = await _dataProjectionService.GetAllAsync();
+
+            var getExpensesLineTask = _dataProjectionService.GetAllAsync(true);
+			var getIncomeLineTask = _dataProjectionService.GetAllAsync(false);
+
+			var ComparisonValues = await Task.WhenAll(getExpensesLineTask, getIncomeLineTask);
+
+            Expenses = ComparisonValues[0];
+            Income = ComparisonValues[1];
         }
     }
 }
