@@ -1,9 +1,8 @@
+using DomainModel;
 using LiveChartsCore;
 using LiveChartsCore.Defaults;
 using LiveChartsCore.Kernel.Sketches;
 using LiveChartsCore.SkiaSharpView;
-using LiveChartsCore.SkiaSharpView.Drawing;
-using LiveChartsCore.SkiaSharpView.Maui;
 using LiveChartsCore.SkiaSharpView.Painting;
 using LiveChartsCore.SkiaSharpView.Painting.Effects;
 using SkiaSharp;
@@ -12,194 +11,246 @@ namespace GENAP_MAUI.ContentViews.Graphs;
 
 public partial class BalanceLineChart : ContentView
 {
-    private static readonly SKColor PositiveColor = SKColor.Parse("#16C784");
-    private static readonly SKColor NegativeColor = SKColor.Parse("#EA3943");
+	private static readonly SKColor PositiveColor = SKColor.Parse("#16C784");
+	private static readonly SKColor NegativeColor = SKColor.Parse("#EA3943");
 
-    private static readonly SKColor AxisTextColor = SKColor.Parse("#94A3B8");
-    private static readonly SKColor GridLineColor = SKColor.Parse("#263241");
-    private static readonly SKColor ZeroLineColor = SKColor.Parse("#CBD5E1");
+	private static readonly SKColor AxisTextColor = SKColor.Parse("#94A3B8");
+	private static readonly SKColor GridLineColor = SKColor.Parse("#263241");
+	private static readonly SKColor ZeroLineColor = SKColor.Parse("#CBD5E1");
 
-    public static readonly BindableProperty BalanceHistoryProperty = BindableProperty.Create(
-        nameof(BalanceHistory),
-        typeof(decimal[]),
-        typeof(BalanceLineChart),
-        Array.Empty<decimal>(),
-        propertyChanged: OnDataChanged);
+	private const int MinDaysVisible = 7;
 
-    public decimal[] BalanceHistory
-    {
-        get => (decimal[])GetValue(BalanceHistoryProperty);
-        set => SetValue(BalanceHistoryProperty, value);
-    }
+	public static readonly BindableProperty TransactionsProperty = BindableProperty.Create(
+		nameof(Transactions),
+		typeof(List<TransactionDto>),
+		typeof(BalanceLineChart),
+		new List<TransactionDto>(),
+		propertyChanged: OnDataChanged);
 
-    public ISeries[] LineSeriesCollection { get; private set; }
-    public ICartesianAxis[] XAxes { get; }
-    public ICartesianAxis[] YAxes { get; }
-    public RectangularSection[] ZeroSection { get; }
+	public List<TransactionDto> Transactions
+	{
+		get => (List<TransactionDto>)GetValue(TransactionsProperty);
+		set => SetValue(TransactionsProperty, value);
+	}
 
-    public BalanceLineChart()
-    {
-        LineSeriesCollection =
-        [
-            CreateSegmentSeries(
-                [new ObservablePoint(0, 0)],
-                PositiveColor)
-        ];
+	public ISeries[] LineSeriesCollection { get; private set; }
+	public ICartesianAxis[] XAxes { get; private set; }
+	public ICartesianAxis[] YAxes { get; }
+	public RectangularSection[] ZeroSection { get; }
 
-        XAxes =
-        [
-            new Axis
-            {
-                IsVisible = false
-            }
-        ];
+	private DateOnly[] _dates = [];
 
-        YAxes =
-        [
-            new Axis
-            {
-                Labeler = value => $"{value:N0}$",
-                TextSize = 11,
-                LabelsPaint = new SolidColorPaint(AxisTextColor),
-                SeparatorsPaint = new SolidColorPaint(GridLineColor.WithAlpha(90))
-                {
-                    StrokeThickness = 1
-                }
-            }
-        ];
+	public BalanceLineChart()
+	{
+		LineSeriesCollection =
+		[
+			CreateSegmentSeries([new ObservablePoint(0, 0)], PositiveColor, showGeometry: false)
+		];
 
-        ZeroSection =
-        [
-            new RectangularSection
-            {
-                Yi = 0,
-                Yj = 0,
-                Stroke = new SolidColorPaint(ZeroLineColor.WithAlpha(120))
-                {
-                    StrokeThickness = 1,
-                    PathEffect = new DashEffect([6, 6])
-                }
-            }
-        ];
+		XAxes =
+		[
+			new Axis { IsVisible = false }
+		];
 
-        InitializeComponent();
-    }
+		YAxes =
+		[
+			new Axis
+			{
+				Labeler = value => $"{value:N0}$",
+				TextSize = 11,
+				LabelsPaint = new SolidColorPaint(AxisTextColor),
+				SeparatorsPaint = new SolidColorPaint(GridLineColor.WithAlpha(90))
+				{
+					StrokeThickness = 1
+				}
+			}
+		];
 
-    private static void OnDataChanged(BindableObject bindable, object oldValue, object newValue)
-    {
-        var control = (BalanceLineChart)bindable;
-        control.UpdateChart();
-    }
+		ZeroSection =
+		[
+			new RectangularSection
+			{
+				Yi = 0,
+				Yj = 0,
+				Stroke = new SolidColorPaint(ZeroLineColor.WithAlpha(120))
+				{
+					StrokeThickness = 1,
+					PathEffect = new DashEffect([6, 6])
+				}
+			}
+		];
 
-    private void UpdateChart()
-    {
-        if (BalanceHistory is null || BalanceHistory.Length == 0)
-        {
-            LineSeriesCollection =
-            [
-                CreateSegmentSeries(
-                    [new ObservablePoint(0, 0)],
-                    PositiveColor)
-            ];
+		InitializeComponent();
+	}
 
-            OnPropertyChanged(nameof(LineSeriesCollection));
-            return;
-        }
+	private static void OnDataChanged(BindableObject bindable, object oldValue, object newValue)
+	{
+		var control = (BalanceLineChart)bindable;
+		control.UpdateChart();
+	}
 
-        var values = new double[BalanceHistory.Length];
+	private void UpdateChart()
+	{
+		if (Transactions is null || Transactions.Count == 0)
+		{
+			_dates = [];
+			LineSeriesCollection =
+			[
+				CreateSegmentSeries([new ObservablePoint(0, 0)], PositiveColor, showGeometry: false)
+			];
+			XAxes = [new Axis { IsVisible = false }];
+			OnPropertyChanged(nameof(LineSeriesCollection));
+			OnPropertyChanged(nameof(XAxes));
+			return;
+		}
 
-        for (var i = 0; i < BalanceHistory.Length; i++)
-        {
-            values[i] = (double)BalanceHistory[i];
-        }
+		var (dates, accumulatedValues) = AccumulateByDay(Transactions);
+		_dates = dates;
 
-        LineSeriesCollection = BuildColoredSegments(values).ToArray();
+		var hasFewPoints = accumulatedValues.Length <= 3;
 
-        OnPropertyChanged(nameof(LineSeriesCollection));
-    }
+		LineSeriesCollection = BuildColoredSegments(accumulatedValues, hasFewPoints).ToArray();
+		XAxes = [BuildXAxis()];
 
-    private static List<ISeries> BuildColoredSegments(double[] values)
-    {
-        var result = new List<ISeries>();
+		OnPropertyChanged(nameof(LineSeriesCollection));
+		OnPropertyChanged(nameof(XAxes));
+	}
 
-        if (values.Length == 1)
-        {
-            var color = values[0] >= 0 ? PositiveColor : NegativeColor;
+	private static (DateOnly[] Dates, double[] Values) AccumulateByDay(List<TransactionDto> transactions)
+	{
+		var dailyNet = transactions
+			.GroupBy(t => t.Date)
+			.OrderBy(g => g.Key)
+			.ToDictionary(
+				g => g.Key,
+				g => g.Sum(t => t.Depletion ? -t.Value : t.Value));
 
-            result.Add(CreateSegmentSeries(
-                [new ObservablePoint(0, values[0])],
-                color));
+		var from = dailyNet.Keys.Min();
+		var to = dailyNet.Keys.Max();
 
-            return result;
-        }
+		if (to.DayNumber - from.DayNumber < MinDaysVisible - 1)
+		{
+			from = to.AddDays(-(MinDaysVisible - 1));
+		}
 
-        var currentPoints = new List<ObservablePoint>
-        {
-            new(0, values[0])
-        };
+		var dates = new List<DateOnly>();
+		var values = new List<double>();
+		decimal running = 0;
 
-        var currentColor = values[0] >= 0 ? PositiveColor : NegativeColor;
+		for (var day = from; day <= to; day = day.AddDays(1))
+		{
+			if (dailyNet.TryGetValue(day, out var dayValue))
+			{
+				running += dayValue;
+			}
+			dates.Add(day);
+			values.Add((double)running);
+		}
 
-        for (var i = 1; i < values.Length; i++)
-        {
-            var previousValue = values[i - 1];
-            var currentValue = values[i];
+		return (dates.ToArray(), values.ToArray());
+	}
 
-            var previousIsPositive = previousValue >= 0;
-            var currentIsPositive = currentValue >= 0;
+	private Axis BuildXAxis()
+	{
+		return new Axis
+		{
+			Labeler = value =>
+			{
+				var index = (int)Math.Round(value);
+				if (index < 0 || index >= _dates.Length) return string.Empty;
+				return _dates[index].ToString("dd/MM");
+			},
+			TextSize = 11,
+			LabelsPaint = new SolidColorPaint(AxisTextColor),
+			MinStep = 1,
+			SeparatorsPaint = null
+		};
+	}
 
-            if (previousIsPositive == currentIsPositive)
-            {
-                currentPoints.Add(new ObservablePoint(i, currentValue));
-                continue;
-            }
+	private List<ISeries> BuildColoredSegments(double[] values, bool showGeometry)
+	{
+		var result = new List<ISeries>();
 
-            var crossingX = (i - 1) + ((0 - previousValue) / (currentValue - previousValue));
-            var zeroPoint = new ObservablePoint(crossingX, 0);
+		if (values.Length == 1)
+		{
+			var color = values[0] >= 0 ? PositiveColor : NegativeColor;
+			result.Add(CreateSegmentSeries(
+				[new ObservablePoint(0, values[0])],
+				color,
+				showGeometry: true));
+			return result;
+		}
 
-            currentPoints.Add(zeroPoint);
+		var currentPoints = new List<ObservablePoint>
+		{
+			new(0, values[0])
+		};
 
-            result.Add(CreateSegmentSeries(currentPoints, currentColor));
+		var currentColor = values[0] >= 0 ? PositiveColor : NegativeColor;
 
-            currentColor = currentIsPositive ? PositiveColor : NegativeColor;
+		for (var i = 1; i < values.Length; i++)
+		{
+			var previousValue = values[i - 1];
+			var currentValue = values[i];
 
-            currentPoints =
-            [
-                zeroPoint,
-                new ObservablePoint(i, currentValue)
-            ];
-        }
+			var previousIsPositive = previousValue >= 0;
+			var currentIsPositive = currentValue >= 0;
 
-        result.Add(CreateSegmentSeries(currentPoints, currentColor));
+			if (previousIsPositive == currentIsPositive)
+			{
+				currentPoints.Add(new ObservablePoint(i, currentValue));
+				continue;
+			}
 
-        return result;
-    }
+			var crossingX = (i - 1) + ((0 - previousValue) / (currentValue - previousValue));
+			var zeroPoint = new ObservablePoint(crossingX, 0);
 
-    private static LineSeries<ObservablePoint> CreateSegmentSeries(
-        IEnumerable<ObservablePoint> values,
-        SKColor color)
-    {
-        return new LineSeries<ObservablePoint>
-        {
-            Values = values.ToArray(),
-            GeometrySize = 0,
-            LineSmoothness = 0.35,
-            Stroke = new SolidColorPaint(color)
-            {
-                StrokeThickness = 3
-            },
-            Fill = new LiveChartsCore.SkiaSharpView.Painting.LinearGradientPaint(
-                new[]
-                {
-                    color.WithAlpha(70),
-                    color.WithAlpha(18),
-                    color.WithAlpha(0)
-                },
-                new SKPoint(0.5f, 0),
-                new SKPoint(0.5f, 1)),
-            GeometryFill = null,
-            GeometryStroke = null,
-            YToolTipLabelFormatter = point => $"{point.Coordinate.PrimaryValue:N2}$"
-        };
-    }
+			currentPoints.Add(zeroPoint);
+			result.Add(CreateSegmentSeries(currentPoints, currentColor, showGeometry));
+
+			currentColor = currentIsPositive ? PositiveColor : NegativeColor;
+
+			currentPoints =
+			[
+				zeroPoint,
+				new ObservablePoint(i, currentValue)
+			];
+		}
+
+		result.Add(CreateSegmentSeries(currentPoints, currentColor, showGeometry));
+		return result;
+	}
+
+	private LineSeries<ObservablePoint> CreateSegmentSeries(
+		IEnumerable<ObservablePoint> values,
+		SKColor color,
+		bool showGeometry)
+	{
+		return new LineSeries<ObservablePoint>
+		{
+			Values = values.ToArray(),
+			GeometrySize = showGeometry ? 10 : 0,
+			LineSmoothness = 0.35,
+			Stroke = new SolidColorPaint(color) { StrokeThickness = 3 },
+			Fill = new LiveChartsCore.SkiaSharpView.Painting.LinearGradientPaint(
+				new[]
+				{
+					color.WithAlpha(70),
+					color.WithAlpha(18),
+					color.WithAlpha(0)
+				},
+				new SKPoint(0.5f, 0),
+				new SKPoint(0.5f, 1)),
+			GeometryFill = showGeometry ? new SolidColorPaint(color) : null,
+			GeometryStroke = null,
+			YToolTipLabelFormatter = point =>
+			{
+				var index = (int)Math.Round(point.Coordinate.SecondaryValue);
+				var dateLabel = index >= 0 && index < _dates.Length
+					? _dates[index].ToString("dd/MM/yyyy")
+					: string.Empty;
+				return $"{dateLabel}\n{point.Coordinate.PrimaryValue:N2}$";
+			}
+		};
+	}
 }

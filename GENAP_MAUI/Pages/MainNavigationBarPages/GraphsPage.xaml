@@ -12,7 +12,7 @@
 
         <chart:BalanceDoughnutChart Income="{Binding TestIncome}" Expenses="{Binding TestExpense}"></chart:BalanceDoughnutChart>
 
-        <charts:BalanceLineChart BalanceHistory="{Binding TestBalanceEvolve}"></charts:BalanceLineChart>
+        <charts:BalanceLineChart Transactions="{Binding TestBalanceEvolve}"></charts:BalanceLineChart>
 
         <Label Text="Proporcion gastos por categoria"></Label>
         <Label Text="Proporcion ingresos por categoria"></Label>

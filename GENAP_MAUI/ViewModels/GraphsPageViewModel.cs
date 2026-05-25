@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DataServices;
+using DomainModel;
 using LiveChartsCore;
 using LiveChartsCore.Defaults;
 using LiveChartsCore.SkiaSharpView;
@@ -24,14 +25,14 @@ namespace GENAP_MAUI.ViewModels
         public partial decimal TestExpense { get; set; } = 0m;
 
         [ObservableProperty]
-        public partial decimal[] TestBalanceEvolve { get; set; } = { 1500m, 200000m, 250000m, 237000m, 240000m, 23500m, 23700m, 29000m, 187000m, 190000m, 80000m, -90000m, -11000m, -90000m, -70000m, -40000m, -20000m, -15000m, 1000m, 12000m, -900000m};
+        public partial List<TransactionDto> TestBalanceEvolve { get; set; } = [];
 
         [ObservableProperty]
-        public partial decimal[] Expenses { get; set; } = { 10m, 11.5m, 8m, 2m, 0, 0, 19m, 30m, 10m, 6m, 9m, 20m };
+        public partial decimal[] Expenses { get; set; } = { 10m, 21.5m, 29.5m, 31.5m, 31.5m, 31.5m, 50.5m, 80.5m, 90.5m, 96.5m, 105.5m, 125.5m };
 
 
         [ObservableProperty]
-        public partial decimal[] Income { get; set; } = { 0m, 0m, 0m, 0m, 2500, 0, 19m, 200m, 0m, 0m, 0m, 0m };
+        public partial decimal[] Income { get; set; } = { 0m, 0m, 0m, 0m, 2500, 2500, 2519m, 2719m, 2719m, 2719m, 2719m, 2719m };
 
 
         [RelayCommand]
@@ -44,6 +45,8 @@ namespace GENAP_MAUI.ViewModels
 
             TestExpense = result[0];
             TestIncome = result[1];
+
+            TestBalanceEvolve = await _dataProjectionService.GetAllAsync();
         }
     }
 }
