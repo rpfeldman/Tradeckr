@@ -66,15 +66,20 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <AndroidResource Remove="Pages\GraphsRelatedPages\**" />
+	  <Compile Remove="Pages\GraphsRelatedPages\**" />
+	  <EmbeddedResource Remove="Pages\GraphsRelatedPages\**" />
+	  <MauiCss Remove="Pages\GraphsRelatedPages\**" />
+	  <MauiXaml Remove="Pages\GraphsRelatedPages\**" />
+	  <None Remove="Pages\GraphsRelatedPages\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
 		<PackageReference Include="LiveChartsCore.SkiaSharpView.Maui" Version="2.0.4" />
 		<PackageReference Include="Microcharts.Maui" Version="1.0.1" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.0" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Pages\GraphsRelatedPages\" />
 	</ItemGroup>
 
 	<ItemGroup>
