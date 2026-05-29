@@ -26,6 +26,14 @@
 
             <HorizontalStackLayout>
                 <Entry Text="{Binding NewCategory}"></Entry>
+
+                <Picker
+                    Title="Seleccionar color de la categoria"
+                    ItemsSource="{Binding ColorsList}"
+                    ItemDisplayBinding="{Binding Key}"
+                    SelectedItem="{Binding PickedColor}"
+                    BackgroundColor="{Binding Value}"/>
+
                 <Button Text="Agregar" Command="{Binding AddCategoryCommand}"></Button>
             </HorizontalStackLayout>
 
