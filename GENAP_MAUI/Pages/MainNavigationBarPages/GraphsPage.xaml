@@ -8,49 +8,47 @@
 
 	<ScrollView>
 		<VerticalStackLayout>
-			<Picker
-				Title="Seleccionar periodo de tiempo"
-				ItemsSource="{Binding TimePeriodsList}"
-				ItemDisplayBinding="{Binding Value}"
-				SelectedItem="{Binding PickedTimePeriod}"/>
+            <Picker
+			Title="Seleccionar periodo de tiempo"
+			ItemsSource="{Binding TimePeriodsList}"
+			ItemDisplayBinding="{Binding Value}"
+			SelectedItem="{Binding PickedTimePeriod}"/>
 
-			<Label Text="{Binding Period}"></Label>
-			
-			<charts:BalanceDoughnutChart></charts:BalanceDoughnutChart>
+            <charts:BalanceDoughnutChart Expenses="{Binding Expenses}" Income="{Binding Income}"></charts:BalanceDoughnutChart>
 
-			<VerticalStackLayout>
-				<Label Text="Proporcion gastos"></Label>
-				<charts:ProportionDoughnutChart Categories="{Binding Categories}" Transactions="{Binding ExpensesLog}"></charts:ProportionDoughnutChart>
-			</VerticalStackLayout>
+            <VerticalStackLayout>
+                <Label Text="Proporcion gastos"></Label>
+                <charts:ProportionDoughnutChart Categories="{Binding Categories}" Transactions="{Binding ExpensesLog}"></charts:ProportionDoughnutChart>
+            </VerticalStackLayout>
 
-			<VerticalStackLayout>
-				<Label Text="Proporcion ingresos"></Label>
-				<charts:ProportionDoughnutChart Categories="{Binding Categories}" Transactions="{Binding IncomeLog}"></charts:ProportionDoughnutChart>
-			</VerticalStackLayout>
+            <VerticalStackLayout>
+                <Label Text="Proporcion ingresos"></Label>
+                <charts:ProportionDoughnutChart Categories="{Binding Categories}" Transactions="{Binding IncomeLog}"></charts:ProportionDoughnutChart>
+            </VerticalStackLayout>
 
-			<VerticalStackLayout>
-				<Label Text="Proporcion global"></Label>
-				<charts:ProportionDoughnutChart Categories="{Binding Categories}" Transactions="{Binding TransactionsLog}"></charts:ProportionDoughnutChart>
-			</VerticalStackLayout>
+            <VerticalStackLayout>
+                <Label Text="Proporcion global"></Label>
+                <charts:ProportionDoughnutChart Categories="{Binding Categories}" Transactions="{Binding TransactionsLog}"></charts:ProportionDoughnutChart>
+            </VerticalStackLayout>
 
-			<charts:BalanceLineChart Transactions="{Binding TransactionsLog}"></charts:BalanceLineChart>
+            <charts:BalanceLineChart Transactions="{Binding TransactionsLog}"></charts:BalanceLineChart>
 
-			<VerticalStackLayout>
-				<Label Text="Ingresos vs gastos"></Label>
-				<charts:DoubleComparisonLineChart Transactions1="{Binding IncomeLog}" Color1="Green" Transactions2="{Binding ExpensesLog}" Color2="Red"></charts:DoubleComparisonLineChart>
-			</VerticalStackLayout>
+            <VerticalStackLayout>
+                <Label Text="Ingresos vs gastos"></Label>
+                <charts:DoubleComparisonLineChart Transactions1="{Binding IncomeLog}" Color1="Green" Transactions2="{Binding ExpensesLog}" Color2="Red"></charts:DoubleComparisonLineChart>
+            </VerticalStackLayout>
 
-			<VerticalStackLayout>
-				<Label Text="Evolucion ingresos"></Label>
-				<charts:BasicLineChart Transactions="{Binding IncomeLog}" LineColor="Green"></charts:BasicLineChart>
-			</VerticalStackLayout>
+            <VerticalStackLayout>
+                <Label Text="Evolucion ingresos"></Label>
+                <charts:BasicLineChart Transactions="{Binding IncomeLog}" LineColor="Green"></charts:BasicLineChart>
+            </VerticalStackLayout>
 
-			<VerticalStackLayout>
-				<Label Text="Evolucion gastos"></Label>
-				<charts:BasicLineChart Transactions="{Binding ExpensesLog}" LineColor="Red"></charts:BasicLineChart>
-			</VerticalStackLayout>
+            <VerticalStackLayout>
+                <Label Text="Evolucion gastos"></Label>
+                <charts:BasicLineChart Transactions="{Binding ExpensesLog}" LineColor="Red"></charts:BasicLineChart>
+            </VerticalStackLayout>
 
 
-		</VerticalStackLayout>
+        </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

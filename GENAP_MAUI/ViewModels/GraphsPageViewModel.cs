@@ -65,6 +65,12 @@ namespace GENAP_MAUI.ViewModels
 		[ObservableProperty]
 		public partial List<TransactionDto> TransactionsLog { get; set; } = [];
 
+		[ObservableProperty]
+		public partial decimal Expenses { get; set; }
+
+        [ObservableProperty]
+        public partial decimal Income { get; set; }
+
 
         async partial void OnPickedTimePeriodChanged(KeyValuePair<TimePeriodsEnum, string> value)
         {
@@ -95,7 +101,10 @@ namespace GENAP_MAUI.ViewModels
 			IncomeLog = [.. TaskResults[1]];
 			TransactionsLog = [.. TaskResults[2]];
 
-			return;
+            Expenses = DataProjectionService.GetSummedTransactions(ExpensesLog);
+            Income = DataProjectionService.GetSummedTransactions(IncomeLog);
+
+            return;
 		}
 
 		public async Task ReFillGraphs(TimePeriodsEnum timePeriod)
@@ -211,6 +220,9 @@ namespace GENAP_MAUI.ViewModels
 			ExpensesLog = [.. TaskResults[0]];
 			IncomeLog = [.. TaskResults[1]];
 			TransactionsLog = [.. TaskResults[2]];
+
+			Expenses = DataProjectionService.GetSummedTransactions(ExpensesLog);
+			Income = DataProjectionService.GetSummedTransactions(IncomeLog);
 
 			return;
 		}
