@@ -9,7 +9,7 @@ namespace DomainModel
     public class TransactionDto 
     {
         private decimal _Value;
-        private string _Category = string.Empty;git 
+        private string _Category = string.Empty;
 
         [Key]
         public int TransactionId {  get; set; }

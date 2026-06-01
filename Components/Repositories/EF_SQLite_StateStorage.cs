@@ -95,12 +95,12 @@ namespace Repositories
 
         public async Task<bool> UpdateAsync(int TransactionId, TransactionDto NewTransaction)
         {
-            var Transaction = await GetTransactionAsync(TransactionId) ?? throw new Exception("Unexistent transaction");
+            var Transaction = await Context.TransactionsTable.Where(t => t.TransactionId == TransactionId).FirstOrDefaultAsync() ?? throw new Exception("Unexistent transaction");
 
-            NewTransaction.TransactionId = TransactionId;
-            Transaction = NewTransaction;
+            Transaction.Category = NewTransaction.Category;
+            Transaction.Date = NewTransaction.Date;
+            Transaction.Depletion = NewTransaction.Depletion;
 
-            Context.Update(Transaction);
             return await Context.SaveChangesAsync() > 0;
         }
     }
