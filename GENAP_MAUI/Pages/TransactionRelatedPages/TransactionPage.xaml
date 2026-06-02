@@ -5,9 +5,11 @@
              x:Class="GENAP_MAUI.Pages.TransactionRelatedPages.TransactionPage"
              x:DataType="vm:TransactionPageViewModel">
 
-    <VerticalStackLayout>
+    <VerticalStackLayout Padding="5" Spacing="20" VerticalOptions="Center">
         <Label Text="{Binding Transaction.Value, StringFormat='{0:N2}$'}"></Label>
         <Label Text="{Binding Transaction.Category}"></Label>
+        <Label Text="{Binding Transaction.Date}"></Label>
+        <Label Text="{Binding Transaction.Depletion}"></Label>
     </VerticalStackLayout>
     
 </ContentPage>

@@ -8,7 +8,7 @@ using System.ComponentModel;
 
 namespace GENAP_MAUI.ViewModels
 {
-    [QueryProperty(nameof(Transaction), "TransactionProperty")]
+    [QueryProperty(nameof(TransactionId), "TransactionProperty")]
     public sealed partial class TransactionPageViewModel : BaseViewModel
     {
         private DataProjectionService _dataProjectionService;
@@ -27,7 +27,7 @@ namespace GENAP_MAUI.ViewModels
 
         async partial void OnTransactionIdChanged(int value)
         {
-            
+            Transaction = await _dataProjectionService.GetTransaction(value) ?? Transaction;
         }
     }
 }

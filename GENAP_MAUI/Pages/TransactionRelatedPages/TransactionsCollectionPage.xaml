@@ -18,7 +18,7 @@
                     <Label Text="{Binding Depletion}"></Label>
                     <Label Text="{Binding Category}"></Label>
                     <Label Text="{Binding Date, StringFormat='{0:d}'}"></Label>
-                    <Button Text="Editar" Command="{Binding Source={RelativeSource AncestorType={x:Type vm:TransactionsCollectionPageViewModel}}, Path=NavigateIntoTransactionCommand}" CommandParameter="{Binding .}"></Button>
+                    <Button Text="Editar" Command="{Binding Source={RelativeSource AncestorType={x:Type vm:TransactionsCollectionPageViewModel}}, Path=NavigateIntoTransactionCommand}" CommandParameter="{Binding TransactionId}"></Button>
                 </HorizontalStackLayout>
                 
             </DataTemplate>

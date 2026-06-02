@@ -1,4 +1,4 @@
-﻿using Android.Provider;
+﻿
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DataServices;
@@ -29,11 +29,11 @@ namespace GENAP_MAUI.ViewModels
         }
 
         [RelayCommand]
-        public async Task NavigateIntoTransaction(TransactionDto transaction)
+        public async Task NavigateIntoTransaction(int TransactionId)
         {
             var NavProperty = new Dictionary<string, object>()
             {
-                { "TransactionProperty", transaction }
+                { "TransactionProperty", TransactionId }
             };
 
             await Shell.Current.GoToAsync(Routes.TransactionMenu, parameters: NavProperty);
