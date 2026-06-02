@@ -5,8 +5,10 @@ namespace GENAP_MAUI.Pages.TransactionRelatedPages;
 
 public partial class TransactionPage : ContentPage
 {
-	public TransactionPage()
+	public TransactionPage(TransactionPageViewModel vm)
 	{
 		InitializeComponent();
+
+		BindingContext = vm;
 	}
 }

@@ -46,6 +46,11 @@ namespace DataServices
 
             return result;
         }
+        
+        public async Task<TransactionDto?> GetTransaction(int TransactionId)
+        {
+            return await _StateStorage.GetTransactionAsync(TransactionId);
+        }
 
         #region All transactions data projection
         public async Task<List<TransactionDto>> GetAllAsync(bool? IsExpense = null, Order ? order = null)

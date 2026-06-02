@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Android.Provider;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DataServices;
 using DomainModel;
@@ -25,6 +26,17 @@ namespace GENAP_MAUI.ViewModels
         public async Task FillTransactions()
         {
             Transactions = new(await _dataProjectionService.GetAllAsync());
+        }
+
+        [RelayCommand]
+        public async Task NavigateIntoTransaction(TransactionDto transaction)
+        {
+            var NavProperty = new Dictionary<string, object>()
+            {
+                { "TransactionProperty", transaction }
+            };
+
+            await Shell.Current.GoToAsync(Routes.TransactionMenu, parameters: NavProperty);
         }
     }
 }

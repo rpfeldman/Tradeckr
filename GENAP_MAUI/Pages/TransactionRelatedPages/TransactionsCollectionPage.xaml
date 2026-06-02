@@ -8,16 +8,19 @@
 
 
 
- <CollectionView ItemsSource="{Binding Transactions}">
+     <CollectionView ItemsSource="{Binding Transactions}">
 
         <CollectionView.ItemTemplate>
             <DataTemplate x:DataType="model:TransactionDto">
+                
                 <HorizontalStackLayout Padding="5" Spacing="10">
                     <Label Text="{Binding Value, StringFormat='{0:N2}$'}"></Label>
                     <Label Text="{Binding Depletion}"></Label>
                     <Label Text="{Binding Category}"></Label>
                     <Label Text="{Binding Date, StringFormat='{0:d}'}"></Label>
+                    <Button Text="Editar" Command="{Binding Source={RelativeSource AncestorType={x:Type vm:TransactionsCollectionPageViewModel}}, Path=NavigateIntoTransactionCommand}" CommandParameter="{Binding .}"></Button>
                 </HorizontalStackLayout>
+                
             </DataTemplate>
         </CollectionView.ItemTemplate>
 
