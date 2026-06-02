@@ -13,10 +13,12 @@ namespace GENAP_MAUI.ViewModels
     public sealed partial class TransactionsCollectionPageViewModel : BaseViewModel
     {
         private DataProjectionService _dataProjectionService;
+        private DataManagementService _dataManagementService;
 
-        public TransactionsCollectionPageViewModel(DataProjectionService dataProjectionService)
+        public TransactionsCollectionPageViewModel(DataProjectionService dataProjectionService, DataManagementService dataManagementService)
         {
             _dataProjectionService = dataProjectionService;
+            _dataManagementService = dataManagementService;
         }
 
         [ObservableProperty]
@@ -38,5 +40,16 @@ namespace GENAP_MAUI.ViewModels
 
             await Shell.Current.GoToAsync(Routes.TransactionMenu, parameters: NavProperty);
         }
+
+        [RelayCommand]
+        public async Task RestartData()
+        {
+            var RestartDataSuccess = await _dataManagementService.RestartData();
+
+            await Shell.Current.DisplayAlertAsync("Eliminar", RestartDataSuccess ? "Se han reiniciado los datos" : "No se ha podido reiniciar los datos", "Aceptar");
+
+            await Navigate(Routes.Dashboard);
+        }
+
     }
 }

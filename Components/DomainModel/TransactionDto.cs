@@ -15,7 +15,7 @@ namespace DomainModel
         public int TransactionId {  get; set; }
         public decimal Value { get { return _Value; } set { if (value < 0) { throw new Exception($"property {nameof(Value)} must be a positive number"); } _Value = value; } }
         public DateOnly Date { get; set;  }
-        public string Category { get { return _Category; } set { if (string.IsNullOrWhiteSpace(value)) { throw new Exception($"property {nameof(Category)} must contain a value"); } _Category = value; } }
+        public string Category { get { return _Category; } set { if (string.IsNullOrWhiteSpace(value)) { _Category = "Uncategorized"; } _Category = value; } }
         public bool Fixed { get; set; }
         public bool Depletion { get; set; }
     }

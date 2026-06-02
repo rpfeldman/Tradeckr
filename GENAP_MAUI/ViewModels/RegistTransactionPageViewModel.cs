@@ -13,8 +13,7 @@ namespace GENAP_MAUI.ViewModels
     {
         private DataRegistrationService _RegistrationService = dataRegistrationService;
 
-        [ObservableProperty]
-        public partial GlobalResources GR { get; set; } = globalResources;
+        public GlobalResources GlobalResources { get; set; } = globalResources;
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(RegistTransactionCommand))]
@@ -26,7 +25,7 @@ namespace GENAP_MAUI.ViewModels
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(RegistTransactionCommand))]
-        public partial CategoryDto Category { get; set; } = new(string.Empty, "#94A3B8", 0);
+        public partial CategoryDto Category { get; set; } = globalResources.GlobalCategories.First();
 
         [ObservableProperty]
         public partial DateTime PickedDate { get; set; } = DateTime.Today;

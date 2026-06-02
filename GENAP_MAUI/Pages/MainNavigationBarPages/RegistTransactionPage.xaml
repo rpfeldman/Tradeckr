@@ -19,7 +19,7 @@
  
             <Picker
             Title="Seleccionar categoria"
-            ItemsSource="{Binding GR.GlobalCategories}"
+            ItemsSource="{Binding GlobalResources.GlobalCategories}"
             ItemDisplayBinding="{Binding CategoryName, x:DataType=ic:Category}"
                 SelectedItem="{Binding Category}"/>
 
