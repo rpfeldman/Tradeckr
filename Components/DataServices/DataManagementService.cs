@@ -55,7 +55,7 @@ namespace DataServices
         {
             try
             {
-                return await _StateStorage.DeleteFromRangeAsync(t => t is FixedTransactionDto && (t as FixedTransactionDto)!.FixedTransactionId == CollectionId && (t as FixedTransactionDto)!.Duration < FromDuration);
+                return await _StateStorage.DeleteFromRangeAsync(t => t is FixedTransactionDto && (t as FixedTransactionDto)!.FixedTransactionId == CollectionId && (t as FixedTransactionDto)!.Duration <= FromDuration);
             }
             catch (Exception)
             {

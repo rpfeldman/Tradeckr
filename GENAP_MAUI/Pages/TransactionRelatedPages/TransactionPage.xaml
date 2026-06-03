@@ -21,8 +21,9 @@
 
         <HorizontalStackLayout Spacing="5">
             <Button Text="Eliminar movimiento" Command="{Binding DeleteTransactionCommand}"></Button>
-            <Label Text="Boton de guardar cambios"></Label>
-            <Button Text="Eliminar movimiento fijo completo" Command="{Binding DeleteFixedTransactionCommand}" IsVisible="{Binding Transaction.Fixed}"></Button>
+            <Button Text="Guardar cambios"></Button>
+            <Button Text="Eliminar movimiento fijo completo" Command="{Binding DeleteFixedTransactionCommand}" CommandParameter="{x:Boolean False}" IsVisible="{Binding Transaction.Fixed}"></Button>
+            <Button Text="Eliminar movimiento fijo desde este dia" Command="{Binding DeleteFixedTransactionCommand}" CommandParameter="{x:Boolean True}"></Button>
         </HorizontalStackLayout>
     </VerticalStackLayout>
     

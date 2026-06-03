@@ -38,7 +38,7 @@ namespace GENAP_MAUI.ViewModels
 
         async partial void OnTransactionIdChanged(int value)
         {
-            Transaction = await _dataProjectionService.GetTransaction(value) ?? Transaction;
+            Transaction = await _dataProjectionService.GetTransactionAsync(value) ?? Transaction;
 
             PickedCategory = GlobalResources.GlobalCategories.Where(c => c.CategoryName == Transaction.Category).Count() > 0 ? GlobalResources.GlobalCategories.Where(c => c.CategoryName == Transaction.Category).First() : new CategoryDto(Transaction.Category, "", default);
         }
@@ -54,10 +54,10 @@ namespace GENAP_MAUI.ViewModels
         }
 
         [RelayCommand(CanExecute = nameof(DeleteFixedTransactionCanExecute))]
-        public async Task DeleteFixedTransaction()
+        public async Task DeleteFixedTransaction(bool FromToday)
         {
             var transaction = Transaction as FixedTransactionDto;
-            var DeleteCollectionSuccess = await _dataManagementService.RemoveFixedTransaction(transaction!.FixedTransactionId);
+            var DeleteCollectionSuccess = FromToday ? await _dataManagementService.RemoveFixedTransaction(transaction!.FixedTransactionId, transaction.Duration) : await _dataManagementService.RemoveFixedTransaction(transaction!.FixedTransactionId);
 
             await Shell.Current.DisplayAlertAsync("Eliminar", DeleteCollectionSuccess ? "Movimientos eliminado correctamente" : "No se ha podido eliminar los movimientos", "Aceptar");
 
