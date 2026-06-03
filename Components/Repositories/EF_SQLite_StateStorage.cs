@@ -54,7 +54,7 @@ namespace Repositories
 
         public async Task<bool> DeleteAsync(int TransactionId)
         {
-            var Transaction = await GetTransactionAsync(TransactionId) ?? throw new Exception("Unexistent transaction");
+            var Transaction = await Context.TransactionsTable.Where(t => t.TransactionId == TransactionId).FirstAsync() ?? throw new Exception("Unexistent transaction");
 
             Context.TransactionsTable.Remove(Transaction);
 
@@ -63,7 +63,7 @@ namespace Repositories
 
         public async Task<bool> DeleteFromRangeAsync(Expression<Func<TransactionDto, bool>> predicate)
         {
-            Context.RemoveRange(await GetTransactionsAsync(predicate));
+            Context.RemoveRange(await Context.TransactionsTable.Where(predicate).ToArrayAsync());
 
             return await Context.SaveChangesAsync() > 0;
         }
