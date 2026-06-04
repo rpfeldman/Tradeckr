@@ -16,7 +16,7 @@
             SelectedItem="{Binding PickedCategory}"/>
 
         <DatePicker
-            Date="{Binding Transaction.Date}"
+            Date="{Binding PickedDate}"
             Format="d/mmm/yyy"/>
 
         <HorizontalStackLayout Spacing="5">

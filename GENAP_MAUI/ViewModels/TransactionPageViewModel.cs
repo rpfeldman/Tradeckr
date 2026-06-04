@@ -25,6 +25,7 @@ namespace GENAP_MAUI.ViewModels
             GlobalResources = globalResources;
 
             PickedCategory = GlobalResources.GlobalCategories.First();
+            PickedDate = Transaction.Date.ToDateTime(TimeOnly.MinValue);
         }
 
         [ObservableProperty]
@@ -34,6 +35,9 @@ namespace GENAP_MAUI.ViewModels
         [NotifyCanExecuteChangedFor(nameof(DeleteFixedTransactionCommand))]
         [NotifyCanExecuteChangedFor(nameof(UpdateTransactionCommand))]
         public partial TransactionDto Transaction { get; set; } = new();
+
+        [ObservableProperty]
+        public partial DateTime PickedDate { get; set; } 
 
         [ObservableProperty]
         public partial CategoryDto PickedCategory { get; set; }
@@ -69,7 +73,7 @@ namespace GENAP_MAUI.ViewModels
         [RelayCommand(CanExecute = nameof(UpdateTransactionCanExecute))]
         public async Task UpdateTransaction()
         {
-            var UpdateTransactionSuccess = await _dataManagementService.UpdateTransactionAsync(TransactionId, Transaction.Value, Transaction.Date, PickedCategory.CategoryName, Transaction.Depletion);
+            var UpdateTransactionSuccess = await _dataManagementService.UpdateTransactionAsync(TransactionId, Transaction.Value, DateOnly.FromDateTime(PickedDate), PickedCategory.CategoryName, Transaction.Depletion);
 
             await Shell.Current.DisplayAlertAsync("Editar", UpdateTransactionSuccess ? "Se ha guardado el movimiento correctamente" : "No se ha podido guardar el movimiento", "Aceptar");
         }
