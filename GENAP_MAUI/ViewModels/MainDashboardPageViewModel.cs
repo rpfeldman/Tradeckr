@@ -33,7 +33,7 @@ namespace GENAP_MAUI.ViewModels
 
             var GetMonthExpensesTask = _dataProjectionService.GetAllByMonthAsync(today.Month, today.Year, true);
             var GetMonthIncomeTask = _dataProjectionService.GetAllByMonthAsync(today.Month, today.Year, false);
-            var GetMonthTransactionsTask = _dataProjectionService.GetAllByMonthAsync(today.Month, today.Year);
+            var GetMonthTransactionsTask = _dataProjectionService.GetAllByMonthAsync(today.Month, today.Year, order: DataProjectionService.Order.OrderByDateDescending);
 
             var Transactions = await Task.WhenAll(GetMonthExpensesTask, GetMonthIncomeTask, GetMonthTransactionsTask);
 

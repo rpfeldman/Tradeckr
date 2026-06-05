@@ -19,7 +19,7 @@ namespace DataServices
         private IStateStorage _StateStorage = StateStorage;
         public enum Order
         {
-            OrderByDate, OrderByValue
+            OrderByDate, OrderByDateDescending, OrderByValue
         }
         private async Task<List<TransactionDto>> GetOrdererTransactionsAsync(Expression<Func<TransactionDto, bool>> predicate, Order order)
         {
@@ -31,6 +31,9 @@ namespace DataServices
 
                 case Order.OrderByValue:
                     return [.. transactions.OrderBy(t => t.Value)];
+
+                case Order.OrderByDateDescending:
+                    return [.. transactions.OrderByDescending(t => t.Date)];
 
                 default: return transactions;
             }
