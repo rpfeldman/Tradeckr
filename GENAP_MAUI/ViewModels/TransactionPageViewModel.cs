@@ -25,7 +25,6 @@ namespace GENAP_MAUI.ViewModels
             GlobalResources = globalResources;
 
             PickedCategory = GlobalResources.GlobalCategories.First();
-            PickedDate = Transaction.Date.ToDateTime(TimeOnly.MinValue);
         }
 
         [ObservableProperty]
@@ -47,6 +46,7 @@ namespace GENAP_MAUI.ViewModels
             Transaction = await _dataProjectionService.GetTransactionAsync(value) ?? Transaction;
 
             PickedCategory = GlobalResources.GlobalCategories.Where(c => c.CategoryName == Transaction.Category).Count() > 0 ? GlobalResources.GlobalCategories.Where(c => c.CategoryName == Transaction.Category).First() : new CategoryDto(Transaction.Category, "", default);
+            PickedDate = Transaction.Date.ToDateTime(TimeOnly.MinValue);
         }
 
         [RelayCommand]

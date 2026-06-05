@@ -9,9 +9,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|c:\\users\\ramga\\source\\repos\\project_genap\\genap_maui\\pages\\transactionrelatedpages\\transactionpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|solutionrelative:pages\\transactionrelatedpages\\transactionpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CCDC75DB-0116-9FCC-5B7F-79AACF97E8C5}|..\\Components\\Repositories\\Repositories.csproj|c:\\users\\ramga\\source\\repos\\project_genap\\components\\repositories\\ef_sqlite_statestorage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -21,7 +18,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -34,19 +31,6 @@
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "EF_SQLite_StateStorage.cs",
-              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\Components\\Repositories\\EF_SQLite_StateStorage.cs",
-              "RelativeDocumentMoniker": "..\\Components\\Repositories\\EF_SQLite_StateStorage.cs",
-              "ToolTip": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\Components\\Repositories\\EF_SQLite_StateStorage.cs",
-              "RelativeToolTip": "..\\Components\\Repositories\\EF_SQLite_StateStorage.cs",
-              "ViewState": "AgIAAFAAAAAA4pNOJDwowGUAAAAMAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-04T19:58:13.243Z",
-              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -69,7 +53,7 @@
               "RelativeDocumentMoniker": "ViewModels\\TransactionPageViewModel.cs",
               "ToolTip": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\GENAP_MAUI\\ViewModels\\TransactionPageViewModel.cs",
               "RelativeToolTip": "ViewModels\\TransactionPageViewModel.cs",
-              "ViewState": "AgIAAAYAAABg6xotB54wwBsAAABGAAAAAAAAAA==",
+              "ViewState": "AgIAABcAAAAAAAAAAADwvzAAAABIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-06-04T19:41:51.505Z",
               "EditorCaption": ""
