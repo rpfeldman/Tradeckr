@@ -103,11 +103,15 @@ namespace GENAP_MAUI.ViewModels
                     { MinBound = 7; MaxBound = 12; }
                     else { MinBound = 1; MaxBound = 6; }
 
-                    GetTransactionsTask = _dataProjectionService.GetAllByPredicateAsync(t => t.Date.Month >= MinBound && t.Date.Month <= MaxBound && t.Date.Year == today.Year);
+                    GetTransactionsTask = _dataProjectionService.GetAllByPredicateAsync(t => t.Date.Month >= MinBound && t.Date.Month <= MaxBound && t.Date.Year == today.Year, order: DataProjectionService.Order.OrderByDate);
                     break;
 
                 case GlobalResources.TimePeriodsEnum.Year:
-                    GetTransactionsTask = _dataProjectionService.GetAllByYearAsync(today.Year);
+                    GetTransactionsTask = _dataProjectionService.GetAllByYearAsync(today.Year, order: DataProjectionService.Order.OrderByDate);
+                    break;
+
+                case GlobalResources.TimePeriodsEnum.Today:
+                    GetTransactionsTask = _dataProjectionService.GetAllByDateAsync(today, order: DataProjectionService.Order.OrderByDate);
                     break;
 
                 default:

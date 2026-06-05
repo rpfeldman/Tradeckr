@@ -15,7 +15,7 @@ namespace GENAP_MAUI
 
         // TimePeriod is split in 3: the enum (type-safe id), the display name (what the user sees), and the logic (per consumption point)
         // To add one: extend the enum, map its display name, handle its logic where consumed.
-        public enum TimePeriodsEnum { Historical, HistoricalToday, Month, ThirtyDays, ThreeMonths, Semester, Year };
+        public enum TimePeriodsEnum { Historical, HistoricalToday, Month, ThirtyDays, ThreeMonths, Semester, Year, Today }; 
         public Dictionary<TimePeriodsEnum, string> TimePeriods { get; }
 
         public List<KeyValuePair<TimePeriodsEnum, string>> TimePeriodsList { get; }
@@ -41,11 +41,12 @@ namespace GENAP_MAUI
             {
                 {TimePeriodsEnum.Historical, "Historico"},
                 {TimePeriodsEnum.HistoricalToday, "Historico hasta hoy"},
+                {TimePeriodsEnum.Year, "Ultimo año"},
+                {TimePeriodsEnum.Semester, "Ultimo semestre"},
+                {TimePeriodsEnum.ThreeMonths, "Ultimos 3 meses"},
                 {TimePeriodsEnum.Month, "Este mes"},
                 {TimePeriodsEnum.ThirtyDays, "Ultimos 30 dias"},
-                {TimePeriodsEnum.ThreeMonths, "Ultimos 3 meses"},
-                {TimePeriodsEnum.Semester, "Ultimo semestre"},
-                {TimePeriodsEnum.Year, "Ultimo año"},
+                {TimePeriodsEnum.Today, "Hoy"},
             };
 
             TimePeriodsList = [.. TimePeriods];

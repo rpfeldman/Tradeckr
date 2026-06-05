@@ -182,6 +182,16 @@ namespace GENAP_MAUI.ViewModels
 
 					break;
 
+				case GlobalResources.TimePeriodsEnum.Today:
+                    Predicates =
+                    [
+                        _dataProjectionService.GetAllByDateAsync(today, true),
+                        _dataProjectionService.GetAllByDateAsync(today, false),
+                        _dataProjectionService.GetAllByDateAsync(today),
+                    ];
+
+                    break;
+
 				default:
 					Predicates =
 					[
