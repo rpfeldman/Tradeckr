@@ -20,20 +20,45 @@ namespace GENAP_MAUI
 
         public List<KeyValuePair<TimePeriodsEnum, string>> TimePeriodsList { get; }
 
+        // Same as TimePeriods
+
+        public enum ColorsEnum { SteelBlue, Yellow, Green, Purple, Aqua, Coral, Red, Emerald, Cyan, Indigo, Magenta } 
+
+        public Dictionary<ColorsEnum, ColorDto> Colors { get; }
+
+        public List<KeyValuePair<ColorsEnum, ColorDto>> ColorList { get; }
+
         public GlobalResources()
         {
+            Colors = new()
+            {
+                { ColorsEnum.SteelBlue, new ColorDto("#466C87", "Azul plateado") },
+                { ColorsEnum.Yellow, new ColorDto("#F1C40F", "Amarillo") },
+                { ColorsEnum.Green, new ColorDto("#2ECC71", "Verde") },
+                { ColorsEnum.Purple, new ColorDto("#9B59B6", "Morado") },
+                { ColorsEnum.Aqua, new ColorDto("#1ABC9C", "Verde agua") },
+                { ColorsEnum.Coral, new ColorDto("#E67E22", "Naranja") },
+                { ColorsEnum.Red, new ColorDto("#E74C3C", "Rojo") },
+                { ColorsEnum.Emerald, new ColorDto("#16A085", "Verde esmeralda") },
+                { ColorsEnum.Cyan, new ColorDto("#00BCD4", "Celeste") },
+                { ColorsEnum.Indigo, new ColorDto("#5C6BC0", "Lavanda") },
+                { ColorsEnum.Magenta, new ColorDto("#E84393", "Magenta") },
+            };
+
+            ColorList = [.. Colors];
+
             // This is temporary, GlobalCategories should get the categories from a JSON file
             GlobalCategories =
             [
-                new CategoryDto("Indumentaria", "#466C87", 0),
+                new CategoryDto("Indumentaria", Colors[ColorsEnum.Aqua].HexColor, 0),
 
-                new CategoryDto("Comida", "#F5E727", 1),
+                new CategoryDto("Comida", Colors[ColorsEnum.Yellow].HexColor, 1),
 
-                new CategoryDto("Social", "#43EB28", 2),
+                new CategoryDto("Social", Colors[ColorsEnum.Green].HexColor, 2),
 
-                new CategoryDto("Gaming", "#9028EB", 3),
+                new CategoryDto("Gaming", Colors[ColorsEnum.Purple].HexColor, 3),
 
-                new CategoryDto("Suscripciones", "#28EBB7", 4),
+                new CategoryDto("Suscripciones", Colors[ColorsEnum.Coral].HexColor, 4),
             ];
 
 

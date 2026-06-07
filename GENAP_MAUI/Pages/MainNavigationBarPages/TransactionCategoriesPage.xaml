@@ -29,8 +29,8 @@
 
                 <Picker
                     Title="Seleccionar color de la categoria"
-                    ItemsSource="{Binding ColorsList}"
-                    ItemDisplayBinding="{Binding Key}"
+                    ItemsSource="{Binding GlobalResources.ColorList}"
+                    ItemDisplayBinding="{Binding Value.DisplayName}"
                     SelectedItem="{Binding PickedColor}"/>
 
                 <Button Text="Agregar" Command="{Binding AddCategoryCommand}"></Button>

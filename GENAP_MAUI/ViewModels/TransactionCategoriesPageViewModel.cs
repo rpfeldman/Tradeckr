@@ -11,44 +11,29 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using System.Transactions;
+using static GENAP_MAUI.GlobalResources;
 
 namespace GENAP_MAUI.ViewModels
 {
     public sealed partial class TransactionCategoriesPageViewModel : BaseViewModel
     {
-        private DataProjectionService _dataProjectionService;
         private DataManagementService _dataManagementService;
-        private GlobalResources _GR;
 
-        public TransactionCategoriesPageViewModel(GlobalResources globalResources, DataProjectionService dataProjectionService, DataManagementService dataManagementService)
+        public GlobalResources GlobalResources { get; }
+
+        public TransactionCategoriesPageViewModel(GlobalResources globalResources, DataManagementService dataManagementService)
         {
-            _dataProjectionService = dataProjectionService;
             _dataManagementService = dataManagementService;
-            _GR = globalResources;
+            GlobalResources = globalResources;
 
-            Categories = new(_GR.GlobalCategories.Select(c => new CategoryDto(c.CategoryName, c.Color, c.CategoryId)));
+            Categories = new(GlobalResources.GlobalCategories.Select(c => new CategoryDto(c.CategoryName, c.Color, c.CategoryId)));
         }
 
         [ObservableProperty]
         public partial ObservableCollection<CategoryDto> Categories { get; set; }
 
-        public Dictionary<string, string> CategoryColors = new()
-        {
-            {"Rojo", "#E74C3C"},
-            {"Verde", "#2ECC71"},
-            {"Azul", "#3498DB"},
-            {"Amarillo", "#F1C40F"},
-            {"Naranja", "#E67E22"},
-            {"Turquesa", "#1ABC9C"},
-            {"Celeste", "#5DADE2"},
-            {"Rosa", "#E84393"},
-            {"Lima", "#A3CB38"}
-        };
-
-        public List<KeyValuePair<string, string>> ColorsList => [.. CategoryColors];
-
         [ObservableProperty]
-        public partial KeyValuePair<string, string> PickedColor { get; set; }
+        public partial KeyValuePair<ColorsEnum, ColorDto> PickedColor { get; set; }
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(AddCategoryCommand))]
@@ -64,7 +49,7 @@ namespace GENAP_MAUI.ViewModels
         [RelayCommand(CanExecute = nameof(AddCategoryCanExecute))]
         public async Task AddCategory()
         {
-            Categories.Add(new CategoryDto(NewCategory, PickedColor.Value, _GR.GlobalCategories.Count));
+            Categories.Add(new CategoryDto(NewCategory, PickedColor.Value.HexColor, GlobalResources.GlobalCategories.Count));
 
 			SaveCommand.NotifyCanExecuteChanged();
             NewCategory = string.Empty;
@@ -75,16 +60,16 @@ namespace GENAP_MAUI.ViewModels
         {
             foreach (var item in Categories)
             {
-                if (_GR.GlobalCategories.Where(c => c.CategoryId == item.CategoryId).Count() == 1 && _GR.GlobalCategories.Where(c => c.CategoryId == item.CategoryId).First().CategoryName != item.CategoryName)
+                if (GlobalResources.GlobalCategories.Where(c => c.CategoryId == item.CategoryId).Count() == 1 && GlobalResources.GlobalCategories.Where(c => c.CategoryId == item.CategoryId).First().CategoryName != item.CategoryName)
                 {
-                    var OldName = _GR.GlobalCategories.Where(c => c.CategoryId == item.CategoryId).First().CategoryName;
+                    var OldName = GlobalResources.GlobalCategories.Where(c => c.CategoryId == item.CategoryId).First().CategoryName;
                     var NewName = item.CategoryName;
 
                     await UpdateTransactionsCategories(OldName, NewName);
                 }
             }
 
-            _GR.GlobalCategories = new(Categories);
+            GlobalResources.GlobalCategories = new(Categories);
 
             NewCategory = string.Empty;
 
