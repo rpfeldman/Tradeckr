@@ -16,6 +16,7 @@
                         
                         <HorizontalStackLayout>
                             <Entry Text="{Binding CategoryName}"></Entry>
+
                             <Button Text="Borrar" Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DeleteCategoryCommand}" CommandParameter="{Binding .}"></Button>
                         </HorizontalStackLayout>
                         
@@ -30,7 +31,7 @@
                 <Picker
                     Title="Seleccionar color de la categoria"
                     ItemsSource="{Binding GlobalResources.ColorList}"
-                    ItemDisplayBinding="{Binding Value.DisplayName}"
+                    ItemDisplayBinding="{Binding DisplayName}"
                     SelectedItem="{Binding PickedColor}"/>
 
                 <Button Text="Agregar" Command="{Binding AddCategoryCommand}"></Button>

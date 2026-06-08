@@ -48,7 +48,7 @@ namespace GENAP_MAUI.ViewModels
         {
             Transaction = await _dataProjectionService.GetTransactionAsync(value) ?? Transaction;
 
-            PickedCategory = GlobalResources.GlobalCategories.Where(c => c.CategoryName == Transaction.Category).Count() > 0 ? GlobalResources.GlobalCategories.Where(c => c.CategoryName == Transaction.Category).First() : new CategoryDto(Transaction.Category, "", default);
+            PickedCategory = GlobalResources.GlobalCategories.Where(c => c.CategoryName == Transaction.Category).Count() > 0 ? GlobalResources.GlobalCategories.Where(c => c.CategoryName == Transaction.Category).First() : new CategoryDto(Transaction.Category, GlobalResources.Colors.Values.First(), default);
             PickedDate = Transaction.Date.ToDateTime(TimeOnly.MinValue);
             PickedValue = Transaction.Value;
         }

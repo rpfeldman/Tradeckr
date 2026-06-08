@@ -26,7 +26,7 @@ namespace GENAP_MAUI
 
         public Dictionary<ColorsEnum, ColorDto> Colors { get; }
 
-        public List<KeyValuePair<ColorsEnum, ColorDto>> ColorList { get; }
+        public List <ColorDto> ColorList { get; }
 
         public GlobalResources()
         {
@@ -45,20 +45,20 @@ namespace GENAP_MAUI
                 { ColorsEnum.Magenta, new ColorDto("#E84393", "Magenta") },
             };
 
-            ColorList = [.. Colors];
+            ColorList = [.. Colors.Values];
 
             // This is temporary, GlobalCategories should get the categories from a JSON file
             GlobalCategories =
             [
-                new CategoryDto("Indumentaria", Colors[ColorsEnum.Aqua].HexColor, 0),
+                new CategoryDto("Indumentaria", Colors[ColorsEnum.Aqua], 0),
 
-                new CategoryDto("Comida", Colors[ColorsEnum.Yellow].HexColor, 1),
+                new CategoryDto("Comida", Colors[ColorsEnum.Yellow], 1),
 
-                new CategoryDto("Social", Colors[ColorsEnum.Green].HexColor, 2),
+                new CategoryDto("Social", Colors[ColorsEnum.Green], 2),
 
-                new CategoryDto("Gaming", Colors[ColorsEnum.Purple].HexColor, 3),
+                new CategoryDto("Gaming", Colors[ColorsEnum.Purple], 3),
 
-                new CategoryDto("Suscripciones", Colors[ColorsEnum.Coral].HexColor, 4),
+                new CategoryDto("Suscripciones", Colors[ColorsEnum.Coral], 4),
             ];
 
 

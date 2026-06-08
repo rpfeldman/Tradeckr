@@ -97,32 +97,32 @@ public partial class ProportionDoughnutChart : ContentView
 		OnPropertyChanged(nameof(CenterText));
 	}
 
-	private static Dictionary<string, SKColor> BuildColorMap(ObservableCollection<CategoryDto> categories)
-	{
-		var result = new Dictionary<string, SKColor>(StringComparer.OrdinalIgnoreCase);
+    private static Dictionary<string, SKColor> BuildColorMap(ObservableCollection<CategoryDto> categories)
+    {
+        var result = new Dictionary<string, SKColor>(StringComparer.OrdinalIgnoreCase);
 
-		if (categories is null) return result;
+        if (categories is null) return result;
 
-		foreach (var cat in categories)
-		{
-			if (string.IsNullOrWhiteSpace(cat.CategoryName)) continue;
-			if (string.IsNullOrWhiteSpace(cat.Color)) continue;
+        foreach (var cat in categories)
+        {
+            if (string.IsNullOrWhiteSpace(cat.CategoryName)) continue;
+            if (cat.Color is null) continue;
+            if (string.IsNullOrWhiteSpace(cat.Color.HexColor)) continue;
 
-			try
-			{
-				var hex = cat.Color;
-				result[cat.CategoryName] = SKColor.Parse(hex);
-			}
-			catch
-			{
+            try
+            {
+                var hex = cat.Color.HexColor;
+                result[cat.CategoryName] = SKColor.Parse(hex);
+            }
+            catch
+            {
+            }
+        }
 
-			}
-		}
+        return result;
+    }
 
-		return result;
-	}
-
-	private static PieSeries<ObservableValue> CreatePieSlice(
+    private static PieSeries<ObservableValue> CreatePieSlice(
 		string name,
 		decimal value,
 		decimal totalSum,

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace GENAP_MAUI.InnerComponents
 {
-    public sealed partial class CategoryDto(string name, string Color, int id) : ObservableObject
+    public sealed partial class CategoryDto(string name, ColorDto color, int id) : ObservableObject
     {
         public readonly int CategoryId = id;
 
@@ -13,6 +13,6 @@ namespace GENAP_MAUI.InnerComponents
         public partial string CategoryName { get; set; } = name;
 
 		[ObservableProperty]
-		public partial string Color { get; set; } = Color;
+		public partial ColorDto Color { get; set; } = color;
 	}
 }

@@ -27,13 +27,14 @@ namespace GENAP_MAUI.ViewModels
             GlobalResources = globalResources;
 
             Categories = new(GlobalResources.GlobalCategories.Select(c => new CategoryDto(c.CategoryName, c.Color, c.CategoryId)));
+            PickedColor = GlobalResources.Colors[ColorsEnum.SteelBlue];
         }
 
         [ObservableProperty]
         public partial ObservableCollection<CategoryDto> Categories { get; set; }
 
         [ObservableProperty]
-        public partial KeyValuePair<ColorsEnum, ColorDto> PickedColor { get; set; }
+        public partial ColorDto PickedColor { get; set; } 
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(AddCategoryCommand))]
@@ -49,7 +50,7 @@ namespace GENAP_MAUI.ViewModels
         [RelayCommand(CanExecute = nameof(AddCategoryCanExecute))]
         public async Task AddCategory()
         {
-            Categories.Add(new CategoryDto(NewCategory, PickedColor.Value.HexColor, GlobalResources.GlobalCategories.Count));
+            Categories.Add(new CategoryDto(NewCategory, PickedColor, GlobalResources.GlobalCategories.Count));
 
 			SaveCommand.NotifyCanExecuteChanged();
             NewCategory = string.Empty;
