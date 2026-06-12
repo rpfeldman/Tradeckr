@@ -4,27 +4,75 @@
              xmlns:vm="clr-namespace:GENAP_MAUI.ViewModels"
              xmlns:ic="clr-namespace:GENAP_MAUI.InnerComponents"
              x:Class="GENAP_MAUI.Pages.TransactionRelatedPages.TransactionPage"
-             x:DataType="vm:TransactionPageViewModel">
+             x:DataType="vm:TransactionPageViewModel"
+             BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}">
 
-    <VerticalStackLayout Padding="5" Spacing="20" VerticalOptions="Center">
+    <ScrollView>
+        <VerticalStackLayout Style="{StaticResource FormContainer}">
 
-        <Entry Text="{Binding PickedValue}"  Keyboard="Numeric"></Entry>
+            <VerticalStackLayout Spacing="4">
+                <Label Text="Detalle del movimiento" Style="{StaticResource SubHeadline}" />
+                <Label Style="{StaticResource Caption}"
+                       HorizontalTextAlignment="Center"
+                       Text="Editá los datos y guardá, o eliminá el movimiento." />
+            </VerticalStackLayout>
 
-        <Picker
-            ItemsSource="{Binding GlobalResources.GlobalCategories}"
-            ItemDisplayBinding="{Binding CategoryName, x:DataType=ic:Category}"
-            SelectedItem="{Binding PickedCategory}"/>
+            <VerticalStackLayout>
+                <Label Text="Valor del movimiento" Style="{StaticResource FieldLabel}" />
+                <Border Style="{StaticResource InputField}">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="6">
+                        <Label Grid.Column="0" Text="$"
+                               Style="{StaticResource CurrencyPrefix}"
+                               VerticalOptions="Center" />
+                        <Entry Grid.Column="1"
+                               Style="{StaticResource AmountEntry}"
+                               Keyboard="Numeric"
+                               Text="{Binding PickedValue}" />
+                    </Grid>
+                </Border>
+            </VerticalStackLayout>
+            
+            <VerticalStackLayout>
+                <Label Text="Categoría" Style="{StaticResource FieldLabel}" />
+                <Border Style="{StaticResource InputField}">
+                    <Picker ItemsSource="{Binding GlobalResources.GlobalCategories}"
+                            ItemDisplayBinding="{Binding CategoryName, x:DataType=ic:Category}"
+                            SelectedItem="{Binding PickedCategory}" />
+                </Border>
+            </VerticalStackLayout>
 
-        <DatePicker
-            Date="{Binding PickedDate}"
-            Format="d/mmm/yyy"/>
+            <VerticalStackLayout>
+                <Label Text="Fecha" Style="{StaticResource FieldLabel}" />
+                <Border Style="{StaticResource InputField}">
+                    <DatePicker Date="{Binding PickedDate}" />
+                </Border>
+            </VerticalStackLayout>
 
-        <HorizontalStackLayout Spacing="5">
-            <Button Text="Eliminar movimiento" Command="{Binding DeleteTransactionCommand}"></Button>
-            <Button Text="Guardar cambios" Command="{Binding UpdateTransactionCommand}"></Button>
-            <Button Text="Eliminar movimiento fijo completo" Command="{Binding DeleteFixedTransactionCommand}" CommandParameter="{x:Boolean False}" IsVisible="{Binding Transaction.Fixed}"></Button>
-            <Button Text="Eliminar movimiento fijo desde este dia" Command="{Binding DeleteFixedTransactionCommand}" CommandParameter="{x:Boolean True}" IsVisible="{Binding Transaction.Fixed}"></Button>
-        </HorizontalStackLayout>
-    </VerticalStackLayout>
-    
+            <Button Text="Guardar cambios"
+                    Command="{Binding UpdateTransactionCommand}"
+                    Style="{StaticResource ButtonPrimary}" />
+
+            <Button Text="Eliminar movimiento"
+                    Command="{Binding DeleteTransactionCommand}"
+                    Style="{StaticResource ButtonDestructiveOutline}" />
+            
+            <VerticalStackLayout IsVisible="{Binding Transaction.Fixed}" Spacing="8">
+
+                <Label Text="Movimiento fijo" Style="{StaticResource FieldLabel}" />
+                <Label Style="{StaticResource Caption}"
+                       Text="Este movimiento pertenece a una serie fija. Podés eliminar la serie completa o solo de acá en adelante." />
+
+                <Button Text="Eliminar serie desde este día"
+                        Command="{Binding DeleteFixedTransactionCommand}"
+                        CommandParameter="{x:Boolean True}"
+                        Style="{StaticResource ButtonDestructiveOutline}" />
+
+                <Button Text="Eliminar serie completa"
+                        Command="{Binding DeleteFixedTransactionCommand}"
+                        CommandParameter="{x:Boolean False}"
+                        Style="{StaticResource ButtonDestructiveOutline}" />
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

@@ -46,7 +46,17 @@
     <Style TargetType="BoxView">
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}" />
     </Style>
-
+    
+    <Style x:Key="ButtonDestructiveOutline" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="TextColor" Value="{StaticResource ExpenseRed}" />
+        <Setter Property="BorderColor" Value="{StaticResource ExpenseRed}" />
+        <Setter Property="BorderWidth" Value="1" />
+        <Setter Property="CornerRadius" Value="12" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="HeightRequest" Value="46" />
+    </Style>
+    
     <Style x:Key="ButtonDestructiveGhost" TargetType="Button">
         <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="TextColor" Value="{StaticResource ExpenseRed}" />
