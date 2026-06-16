@@ -46,7 +46,7 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <VerticalStackLayout Grid.Row="2" Spacing="12">
+        <VerticalStackLayout Grid.Row="2" Spacing="12" Margin="0,0,0,100">
 
             <Border Style="{StaticResource CategoryCard}">
                 <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
