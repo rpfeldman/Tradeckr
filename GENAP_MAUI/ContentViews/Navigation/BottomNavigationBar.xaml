@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GENAP_MAUI.ContentViews.Navigation.BottomNavigationBar"
+             x:Name="Root">
+
+    <Grid HeightRequest="92" VerticalOptions="End">
+
+        <Border VerticalOptions="End"
+                HeightRequest="64"
+                BackgroundColor="{AppThemeBinding Light={StaticResource CardLight}, Dark={StaticResource CardDark}}"
+                Stroke="{AppThemeBinding Light={StaticResource BorderLight}, Dark={StaticResource BorderDark}}"
+                StrokeThickness="1"
+                Padding="0">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="20,20,0,0" />
+            </Border.StrokeShape>
+
+            <Grid ColumnDefinitions="*,*,72,*,*">
+
+                <VerticalStackLayout Grid.Column="0" Spacing="2" Padding="0"
+                                     VerticalOptions="Center" HorizontalOptions="Center">
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnCategoriesTapped" />
+                    </VerticalStackLayout.GestureRecognizers>
+                    <Label x:Name="IconCategories" Text="🏷️" FontSize="20" HorizontalOptions="Center" />
+                    <Label x:Name="TextCategories" Text="Categorías" FontSize="10" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Column="1" Spacing="2" Padding="0"
+                                     VerticalOptions="Center" HorizontalOptions="Center">
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnDefaultTapped" />
+                    </VerticalStackLayout.GestureRecognizers>
+                    <Label x:Name="IconDefault" Text="➕" FontSize="20" HorizontalOptions="Center" />
+                    <Label x:Name="TextDefault" Text="Movimiento" FontSize="10" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+
+
+                <VerticalStackLayout Grid.Column="3" Spacing="2" Padding="0"
+                                     VerticalOptions="Center" HorizontalOptions="Center">
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnTradeTapped" />
+                    </VerticalStackLayout.GestureRecognizers>
+                    <Label x:Name="IconTrade" Text="📈" FontSize="20" HorizontalOptions="Center" />
+                    <Label x:Name="TextTrade" Text="Trade" FontSize="10" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Column="4" Spacing="2" Padding="0"
+                                     VerticalOptions="Center" HorizontalOptions="Center">
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnGraphsTapped" />
+                    </VerticalStackLayout.GestureRecognizers>
+                    <Label x:Name="IconGraphs" Text="📊" FontSize="20" HorizontalOptions="Center" />
+                    <Label x:Name="TextGraphs" Text="Gráficos" FontSize="10" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </Grid>
+        </Border>
+
+        <Border x:Name="FabBorder"
+                WidthRequest="60" HeightRequest="60"
+                VerticalOptions="Start" HorizontalOptions="Center"
+                BackgroundColor="{StaticResource BrandViolet}"
+                StrokeThickness="0">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="30" />
+            </Border.StrokeShape>
+            <Border.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnDashboardTapped" />
+            </Border.GestureRecognizers>
+            <Label Text="🏠" FontSize="26" HorizontalOptions="Center" VerticalOptions="Center" />
+        </Border>
+
+    </Grid>
+
+</ContentView>

@@ -5,142 +5,123 @@
              xmlns:local="clr-namespace:GENAP_MAUI"
              xmlns:chart="clr-namespace:GENAP_MAUI.ContentViews.Graphs"
              xmlns:model="clr-namespace:DomainModel;assembly=DomainModel"
+             xmlns:nav="clr-namespace:GENAP_MAUI.ContentViews.Navigation"
              x:Class="GENAP_MAUI.Pages.MainNavigationBarPages.MainDashboardPage"
              x:DataType="vm:MainDashboardPageViewModel"
              BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}">
 
-    <ScrollView>
-        <VerticalStackLayout Style="{StaticResource FormContainer}">
+    <Grid>
+        <ScrollView>
+            <VerticalStackLayout Style="{StaticResource FormContainer}" Padding="20,20,20,110">
 
-            <Grid ColumnDefinitions="*,Auto">
-                <VerticalStackLayout Grid.Column="0" Spacing="4" Padding="0">
-                    <Label FontSize="26" FontAttributes="Bold"
-                           TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}">
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Text="Bienvenido, " />
-                                <Span Text="[usuario]"
-                                      TextColor="{AppThemeBinding Light={StaticResource AccentLight}, Dark={StaticResource AccentDark}}" />
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
-                    <Label Text="Tu plata, bajo tu control."
-                           Style="{StaticResource Caption}" />
-                </VerticalStackLayout>
-
-                <Button Grid.Column="1"
-                        Style="{StaticResource IconButton}"
-                        Text="🌓"
-                        Command="{Binding ChangeThemeCommand}"
-                        VerticalOptions="Start" />
-            </Grid>
-
-            <Border Style="{StaticResource DashboardCard}">
-                <Border.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding NavigateCommand}"
-                                          CommandParameter="{x:Static local:Routes.Graphs}" />
-                </Border.GestureRecognizers>
-
-                <VerticalStackLayout Spacing="4" Padding="0">
-                    <Label Text="Balance de [mes]" Style="{StaticResource ChartTitle}" />
-                    <chart:BalanceDoughnutChart Expenses="{Binding MonthExpenses}"
-                                                Income="{Binding MonthIncome}" />
-                    <Label Text="Ver gráficos ›"
-                           Style="{StaticResource Caption}"
-                           HorizontalOptions="End" />
-                </VerticalStackLayout>
-            </Border>
-
-            <Border Style="{StaticResource DashboardCard}">
-                <Border.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding NavigateCommand}"
-                                          CommandParameter="{x:Static local:Routes.TransactionsList}" />
-                </Border.GestureRecognizers>
-
-                <VerticalStackLayout Spacing="8" Padding="0">
-                    <Label Text="Movimientos del mes" Style="{StaticResource ChartTitle}" />
-
-                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding MonthTransactions}"
-                                         Spacing="0" Padding="0">
-                        <BindableLayout.ItemTemplate>
-                            <DataTemplate x:DataType="model:TransactionDto">
-                                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12"
-                                      Padding="0,8">
-
-                                    <Border Grid.Column="0"
-                                            Style="{StaticResource ColorDot}"
-                                            VerticalOptions="Center">
-                                        <Border.Triggers>
-                                            <DataTrigger TargetType="Border"
-                                                         Binding="{Binding Depletion}" Value="False">
-                                                <Setter Property="BackgroundColor" Value="{StaticResource IncomeGreen}" />
-                                            </DataTrigger>
-                                            <DataTrigger TargetType="Border"
-                                                         Binding="{Binding Depletion}" Value="True">
-                                                <Setter Property="BackgroundColor" Value="{StaticResource ExpenseRed}" />
-                                            </DataTrigger>
-                                        </Border.Triggers>
-                                    </Border>
-
-                                    <VerticalStackLayout Grid.Column="1" Spacing="0" Padding="0"
-                                                         VerticalOptions="Center">
-                                        <Label Text="{Binding Category}"
-                                               Style="{StaticResource FieldLabel}" />
-                                        <Label Text="{Binding Date, StringFormat='{0:d}'}"
-                                               Style="{StaticResource TransactionMeta}" />
-                                    </VerticalStackLayout>
-
-                                    <Label Grid.Column="2"
-                                           Text="{Binding Value, StringFormat='{0:N2}$'}"
-                                           FontAttributes="Bold" FontSize="15"
-                                           VerticalOptions="Center">
-                                        <Label.Triggers>
-                                            <DataTrigger TargetType="Label"
-                                                         Binding="{Binding Depletion}" Value="False">
-                                                <Setter Property="TextColor" Value="{StaticResource IncomeGreen}" />
-                                            </DataTrigger>
-                                            <DataTrigger TargetType="Label"
-                                                         Binding="{Binding Depletion}" Value="True">
-                                                <Setter Property="TextColor" Value="{StaticResource ExpenseRed}" />
-                                            </DataTrigger>
-                                        </Label.Triggers>
-                                    </Label>
-                                </Grid>
-                            </DataTemplate>
-                        </BindableLayout.ItemTemplate>
+                <Grid ColumnDefinitions="*,Auto">
+                    <VerticalStackLayout Grid.Column="0" Spacing="4" Padding="0">
+                        <Label FontSize="26" FontAttributes="Bold"
+                               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="Bienvenido, " />
+                                    <Span Text="[usuario]"
+                                          TextColor="{AppThemeBinding Light={StaticResource AccentLight}, Dark={StaticResource AccentDark}}" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <Label Text="Tu plata, bajo tu control."
+                               Style="{StaticResource Caption}" />
                     </VerticalStackLayout>
 
-                    <Label Text="Ver todos ›"
-                           Style="{StaticResource Caption}"
-                           HorizontalOptions="End" />
-                </VerticalStackLayout>
-            </Border>
+                    <Button Grid.Column="1"
+                            Style="{StaticResource IconButton}"
+                            Text="🌓"
+                            Command="{Binding ChangeThemeCommand}"
+                            VerticalOptions="Start" />
+                </Grid>
 
-            <VerticalStackLayout Spacing="8" Padding="0">
-                <Label Text="Navegación temporal (dev)" Style="{StaticResource Caption}" />
+                <Border Style="{StaticResource DashboardCard}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateCommand}"
+                                              CommandParameter="{x:Static local:Routes.Graphs}" />
+                    </Border.GestureRecognizers>
 
-                <Button Text="Registrar transacción"
-                        Command="{Binding NavigateCommand}"
-                        CommandParameter="{x:Static local:Routes.DefaultTransaction}"
-                        Style="{StaticResource ButtonPrimary}" />
-                <Button Text="Registrar trade"
-                        Command="{Binding NavigateCommand}"
-                        CommandParameter="{x:Static local:Routes.TradingTransactions}"
-                        Style="{StaticResource ButtonPrimary}" />
-                <Button Text="Categorías"
-                        Command="{Binding NavigateCommand}"
-                        CommandParameter="{x:Static local:Routes.Categories}"
-                        Style="{StaticResource ButtonPrimary}" />
-                <Button Text="Gráficos"
-                        Command="{Binding NavigateCommand}"
-                        CommandParameter="{x:Static local:Routes.Graphs}"
-                        Style="{StaticResource ButtonPrimary}" />
-                <Button Text="Lista de movimientos"
-                        Command="{Binding NavigateCommand}"
-                        CommandParameter="{x:Static local:Routes.TransactionsList}"
-                        Style="{StaticResource ButtonPrimary}" />
+                    <VerticalStackLayout Spacing="4" Padding="0">
+                        <Label Text="Balance de [mes]" Style="{StaticResource ChartTitle}" />
+                        <chart:BalanceDoughnutChart Expenses="{Binding MonthExpenses}"
+                                                    Income="{Binding MonthIncome}" />
+                        <Label Text="Ver gráficos ›"
+                               Style="{StaticResource Caption}"
+                               HorizontalOptions="End" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Style="{StaticResource DashboardCard}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateCommand}"
+                                              CommandParameter="{x:Static local:Routes.TransactionsList}" />
+                    </Border.GestureRecognizers>
+
+                    <VerticalStackLayout Spacing="8" Padding="0">
+                        <Label Text="Movimientos del mes" Style="{StaticResource ChartTitle}" />
+
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding MonthTransactions}"
+                                             Spacing="0" Padding="0">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="model:TransactionDto">
+                                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12"
+                                          Padding="0,8">
+
+                                        <Border Grid.Column="0"
+                                                Style="{StaticResource ColorDot}"
+                                                VerticalOptions="Center">
+                                            <Border.Triggers>
+                                                <DataTrigger TargetType="Border"
+                                                             Binding="{Binding Depletion}" Value="False">
+                                                    <Setter Property="BackgroundColor" Value="{StaticResource IncomeGreen}" />
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Border"
+                                                             Binding="{Binding Depletion}" Value="True">
+                                                    <Setter Property="BackgroundColor" Value="{StaticResource ExpenseRed}" />
+                                                </DataTrigger>
+                                            </Border.Triggers>
+                                        </Border>
+
+                                        <VerticalStackLayout Grid.Column="1" Spacing="0" Padding="0"
+                                                             VerticalOptions="Center">
+                                            <Label Text="{Binding Category}"
+                                                   Style="{StaticResource FieldLabel}" />
+                                            <Label Text="{Binding Date, StringFormat='{0:d}'}"
+                                                   Style="{StaticResource TransactionMeta}" />
+                                        </VerticalStackLayout>
+
+                                        <Label Grid.Column="2"
+                                               Text="{Binding Value, StringFormat='{0:N2}$'}"
+                                               FontAttributes="Bold" FontSize="15"
+                                               VerticalOptions="Center">
+                                            <Label.Triggers>
+                                                <DataTrigger TargetType="Label"
+                                                             Binding="{Binding Depletion}" Value="False">
+                                                    <Setter Property="TextColor" Value="{StaticResource IncomeGreen}" />
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Label"
+                                                             Binding="{Binding Depletion}" Value="True">
+                                                    <Setter Property="TextColor" Value="{StaticResource ExpenseRed}" />
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+
+                        <Label Text="Ver todos ›"
+                               Style="{StaticResource Caption}"
+                               HorizontalOptions="End" />
+                    </VerticalStackLayout>
+                </Border>
             </VerticalStackLayout>
+        </ScrollView>
 
-        </VerticalStackLayout>
-    </ScrollView>
+        <nav:BottomNavigationBar />
+
+    </Grid>
+
 </ContentPage>

@@ -20,7 +20,8 @@
 
                 _alreadyNavigated = true;
 
-                await Shell.Current.GoToAsync(Routes.Dashboard);
+                await Task.Yield();
+                await Shell.Current.GoToAsync($"//{Routes.Dashboard}");
 
                 Application.Current.UserAppTheme = AppTheme.Dark;
             }
