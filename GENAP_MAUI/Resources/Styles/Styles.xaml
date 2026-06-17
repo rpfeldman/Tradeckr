@@ -273,6 +273,10 @@
         </Setter>
     </Style>
 
+    <Style x:Key="InlineEntry" TargetType="Entry" BasedOn="{StaticResource BaseEntry}">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+    </Style>
+
     <Style x:Key="AmountEntry" TargetType="Entry" BasedOn="{StaticResource BaseEntry}">
         <Setter Property="FontSize" Value="28" />
         <Setter Property="FontAttributes" Value="Bold" />
