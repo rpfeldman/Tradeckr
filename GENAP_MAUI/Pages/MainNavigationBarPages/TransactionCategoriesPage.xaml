@@ -8,9 +8,9 @@
              x:Class="GENAP_MAUI.Pages.MainNavigationBarPages.TransactionCategoriesPage"
              x:DataType="vm:TransactionCategoriesPageViewModel">
 
-    <Grid RowDefinitions="Auto,*,Auto" Padding="20" RowSpacing="16">
+    <Grid RowDefinitions="Auto,*,Auto" RowSpacing="16">
 
-        <VerticalStackLayout Grid.Row="0" Spacing="4">
+        <VerticalStackLayout Grid.Row="0" Spacing="4" Padding="20,20,20,0">
             <Label Text="Categorías" Style="{StaticResource SubHeadline}" />
             <Label Style="{StaticResource Caption}"
                    HorizontalTextAlignment="Center"
@@ -19,7 +19,8 @@
 
         <CollectionView Grid.Row="1"
                         ItemsSource="{Binding Categories}"
-                        ItemsLayout="VerticalList">
+                        ItemsLayout="VerticalList"
+                        Margin="20,0,20,0">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="ic:CategoryDto">
                     <Border Style="{StaticResource CategoryCard}" Margin="0,0,0,8">
@@ -47,7 +48,7 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <VerticalStackLayout Grid.Row="2" Spacing="12" Margin="0,0,0,100">
+        <VerticalStackLayout Grid.Row="2" Spacing="12" Padding="20,0,20,0" Margin="0,0,0,100">
 
             <Border Style="{StaticResource CategoryCard}">
                 <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
