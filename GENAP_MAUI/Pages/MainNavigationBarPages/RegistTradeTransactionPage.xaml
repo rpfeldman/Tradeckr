@@ -28,7 +28,7 @@
                             <Entry Grid.Column="1"
                                    Style="{StaticResource AmountEntry}"
                                    Placeholder="0" Keyboard="Numeric"
-                                   Text="{Binding Value}" />
+                                   Text="{Binding PickedValue}" />
                         </Grid>
                     </Border>
                 </VerticalStackLayout>

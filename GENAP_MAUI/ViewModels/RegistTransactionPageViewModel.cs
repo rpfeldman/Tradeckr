@@ -27,6 +27,10 @@ namespace GENAP_MAUI.ViewModels
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(RegistTransactionCommand))]
+        public partial string PickedValue { get; set; } = "0";
+
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(RegistTransactionCommand))]
         public partial CategoryDto Category { get; set; } = globalResources.GlobalCategories.First();
 
         [ObservableProperty]
@@ -44,6 +48,17 @@ namespace GENAP_MAUI.ViewModels
         {
             OnPropertyChanged(nameof(IsIncomeSelected));
             OnPropertyChanged(nameof(IsExpenseSelected));
+        }
+
+        partial void OnPickedValueChanged(string value)
+        {
+            if (decimal.TryParse(value, out decimal newValue))
+            {
+                Value = newValue;
+                return;
+            }
+
+            Value = 0m;
         }
 
         [RelayCommand(CanExecute = nameof(RegistTransactionCanExecute))]
@@ -71,6 +86,6 @@ namespace GENAP_MAUI.ViewModels
         [RelayCommand] void SetIncome() => Depletion = false;
         [RelayCommand] void SetExpense() => Depletion = true;
 
-        private bool RegistTransactionCanExecute() => !string.IsNullOrWhiteSpace(Category.CategoryName) && Value > 0m && FixedTransactionDuration >= 1;
+        private bool RegistTransactionCanExecute() => !string.IsNullOrWhiteSpace(Category.CategoryName) && Value > 0m && Value <= 1000000000m && FixedTransactionDuration >= 1;
     }
 }

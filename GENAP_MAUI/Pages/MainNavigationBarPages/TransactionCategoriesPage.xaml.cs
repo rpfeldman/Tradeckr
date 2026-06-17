@@ -6,16 +6,8 @@ public partial class TransactionCategoriesPage : ContentPage
 {
 	public TransactionCategoriesPage(TransactionCategoriesPageViewModel vm)
 	{
-		try
-		{
-            InitializeComponent();
+        InitializeComponent();
 
-            BindingContext = vm;
-        }
-		catch (Exception x)
-		{
-			Shell.Current.DisplayAlertAsync("DEBUG: error", $"{x.Message}\n{x.Data}\n{x.InnerException}\n{x.StackTrace}\n{x.Source}", "pija");
-		}
-		
+        BindingContext = vm;
     }
 }

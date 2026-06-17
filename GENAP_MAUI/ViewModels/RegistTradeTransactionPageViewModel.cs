@@ -17,6 +17,10 @@ namespace GENAP_MAUI.ViewModels
         public partial decimal Value { get; set; } = 0m;
 
         [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(RegistTransactionCommand))]
+        public partial string PickedValue { get; set; } = "0";
+
+        [ObservableProperty]
         public partial DateTime PickedDate { get; set; } = DateTime.Today;
 
         [ObservableProperty]
@@ -28,6 +32,17 @@ namespace GENAP_MAUI.ViewModels
         {
             OnPropertyChanged(nameof(IsIncomeSelected));
             OnPropertyChanged(nameof(IsExpenseSelected));
+        }
+
+        partial void OnPickedValueChanged(string value)
+        {
+            if(decimal.TryParse(value, out decimal newValue))
+            {
+                Value = newValue;
+                return;
+            }
+
+            Value = 0m;
         }
 
         [RelayCommand(CanExecute = nameof(RegistTransactionCanExecute))]
@@ -55,6 +70,6 @@ namespace GENAP_MAUI.ViewModels
         [RelayCommand] void SetIncome() => Depletion = false;
         [RelayCommand] void SetExpense() => Depletion = true;
 
-        private bool RegistTransactionCanExecute() => Value > 0m;
+        private bool RegistTransactionCanExecute() => Value > 0m && Value <= 1000000000m;
     }
 }
