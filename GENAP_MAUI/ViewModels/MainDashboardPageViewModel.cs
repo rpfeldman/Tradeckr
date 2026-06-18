@@ -32,11 +32,11 @@ namespace GENAP_MAUI.ViewModels
         [RelayCommand]
         public void ChangeTheme()
         {
-            Application.Current.UserAppTheme = Application.Current.UserAppTheme == AppTheme.Dark ? AppTheme.Light : AppTheme.Dark;
+            Application.Current?.UserAppTheme = Application.Current.UserAppTheme == AppTheme.Dark ? AppTheme.Light : AppTheme.Dark;
         }
         
         [RelayCommand]
-        public async Task FillResults()
+        public async Task Load()
         {
             var today = DateOnly.FromDateTime(DateTime.Today);
 

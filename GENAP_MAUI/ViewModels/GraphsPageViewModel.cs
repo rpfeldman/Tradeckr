@@ -71,7 +71,9 @@ namespace GENAP_MAUI.ViewModels
 		[RelayCommand]
         public async Task FillGraphs()
         {
-			var GetExpensesTask = _dataProjectionService.GetAllAsync(true);
+            Categories = new(GlobalResources.GlobalCategories);
+
+            var GetExpensesTask = _dataProjectionService.GetAllAsync(true);
 			var GetIncomeTask = _dataProjectionService.GetAllAsync(false);
 			var GetTransactionsTask = _dataProjectionService.GetAllAsync();
 
@@ -89,7 +91,7 @@ namespace GENAP_MAUI.ViewModels
 
 		public async Task ReFillGraphs(GlobalResources.TimePeriodsEnum timePeriod)
 		{
-			Task<List<TransactionDto>>? GetExpensesTask = null;
+            Task<List<TransactionDto>>? GetExpensesTask = null;
 			Task<List<TransactionDto>>? GetIncomeTask = null;
 			Task<List<TransactionDto>>? GetTransactionsTask = null;
 			var today = DateOnly.FromDateTime(DateTime.Today);

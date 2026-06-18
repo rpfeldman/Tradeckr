@@ -83,9 +83,19 @@ namespace GENAP_MAUI.ViewModels
 			return;
         }
 
+        [RelayCommand]
+        public void ReLoad() 
+        {
+            FixedTransactionDuration = 1;
+            Value = 0m;
+            PickedValue = "0";
+            Category = GlobalResources.GlobalCategories.First();
+            PickedDate = DateTime.Today;
+        }
+
         [RelayCommand] void SetIncome() => Depletion = false;
         [RelayCommand] void SetExpense() => Depletion = true;
 
-        private bool RegistTransactionCanExecute() => !string.IsNullOrWhiteSpace(Category.CategoryName) && Value > 0m && Value <= 1000000000m && FixedTransactionDuration >= 1;
+        private bool RegistTransactionCanExecute() => !string.IsNullOrWhiteSpace(Category?.CategoryName) && Value > 0m && Value <= 1000000000m && FixedTransactionDuration >= 1;
     }
 }

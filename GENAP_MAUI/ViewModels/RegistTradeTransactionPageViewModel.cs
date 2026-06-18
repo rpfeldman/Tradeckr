@@ -67,9 +67,17 @@ namespace GENAP_MAUI.ViewModels
             return;
         }
 
+        [RelayCommand]
+        public void ReLoad()
+        {
+            Value = 0m;
+            PickedValue = "0";
+            PickedDate = DateTime.Today;
+            Depletion = true;
+        }
+
         [RelayCommand] void SetIncome() => Depletion = false;
         [RelayCommand] void SetExpense() => Depletion = true;
-
         private bool RegistTransactionCanExecute() => Value > 0m && Value <= 1000000000m;
     }
 }

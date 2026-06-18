@@ -17,7 +17,7 @@ public partial class MainDashboardPage : ContentPage
 
         if (BindingContext is MainDashboardPageViewModel vm)
         {
-            await vm.FillResultsCommand.ExecuteAsync(false);
+            await vm.LoadCommand.ExecuteAsync(false);
         }
     }
 }

@@ -3,20 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\GENAP_MAUI\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|c:\\users\\ramga\\source\\repos\\project_genap\\genap_maui\\pages\\mainnavigationbarpages\\transactioncategoriespage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|solutionrelative:pages\\mainnavigationbarpages\\transactioncategoriespage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|c:\\users\\ramga\\source\\repos\\project_genap\\genap_maui\\viewmodels\\graphspageviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|solutionrelative:viewmodels\\graphspageviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|c:\\users\\ramga\\source\\repos\\project_genap\\genap_maui\\pages\\mainnavigationbarpages\\maindashboardpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|solutionrelative:pages\\mainnavigationbarpages\\maindashboardpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|c:\\users\\ramga\\source\\repos\\project_genap\\genap_maui\\resources\\styles\\styles.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|solutionrelative:resources\\styles\\styles.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|c:\\users\\ramga\\source\\repos\\project_genap\\genap_maui\\symbols.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|solutionrelative:symbols.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|c:\\users\\ramga\\source\\repos\\project_genap\\genap_maui\\pages\\mainnavigationbarpages\\graphspage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|solutionrelative:pages\\mainnavigationbarpages\\graphspage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,7 +18,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -46,54 +38,28 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Styles.xaml",
-              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\GENAP_MAUI\\Resources\\Styles\\Styles.xaml",
-              "RelativeDocumentMoniker": "Resources\\Styles\\Styles.xaml",
-              "ToolTip": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\GENAP_MAUI\\Resources\\Styles\\Styles.xaml",
-              "RelativeToolTip": "Resources\\Styles\\Styles.xaml",
-              "ViewState": "AgIAAHEAAAAAAAAAAAAAAHcAAAAuAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-06-17T17:26:51.455Z",
+              "DocumentIndex": 0,
+              "Title": "GraphsPageViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\GENAP_MAUI\\ViewModels\\GraphsPageViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModels\\GraphsPageViewModel.cs",
+              "ToolTip": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\GENAP_MAUI\\ViewModels\\GraphsPageViewModel.cs",
+              "RelativeToolTip": "ViewModels\\GraphsPageViewModel.cs",
+              "ViewState": "AgIAAFoAAAAAAAAAAAAqwF0AAAA/AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-18T14:46:01.111Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "MainDashboardPage.xaml",
-              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\GENAP_MAUI\\Pages\\MainNavigationBarPages\\MainDashboardPage.xaml",
-              "RelativeDocumentMoniker": "Pages\\MainNavigationBarPages\\MainDashboardPage.xaml",
-              "ToolTip": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\GENAP_MAUI\\Pages\\MainNavigationBarPages\\MainDashboardPage.xaml",
-              "RelativeToolTip": "Pages\\MainNavigationBarPages\\MainDashboardPage.xaml",
-              "ViewState": "AgIAABoAAAAAAAAAAAAAACUAAAAXAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-06-17T17:25:35.772Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Symbols.cs",
-              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\GENAP_MAUI\\Symbols.cs",
-              "RelativeDocumentMoniker": "Symbols.cs",
-              "ToolTip": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\GENAP_MAUI\\Symbols.cs",
-              "RelativeToolTip": "Symbols.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAsAAAAAAAAAA==",
+              "Title": "GraphsPage.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\GENAP_MAUI\\Pages\\MainNavigationBarPages\\GraphsPage.xaml.cs",
+              "RelativeDocumentMoniker": "Pages\\MainNavigationBarPages\\GraphsPage.xaml.cs",
+              "ToolTip": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\GENAP_MAUI\\Pages\\MainNavigationBarPages\\GraphsPage.xaml.cs",
+              "RelativeToolTip": "Pages\\MainNavigationBarPages\\GraphsPage.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-17T17:25:06.292Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "TransactionCategoriesPage.xaml",
-              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\GENAP_MAUI\\Pages\\MainNavigationBarPages\\TransactionCategoriesPage.xaml",
-              "RelativeDocumentMoniker": "Pages\\MainNavigationBarPages\\TransactionCategoriesPage.xaml",
-              "ToolTip": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\GENAP_MAUI\\Pages\\MainNavigationBarPages\\TransactionCategoriesPage.xaml",
-              "RelativeToolTip": "Pages\\MainNavigationBarPages\\TransactionCategoriesPage.xaml",
-              "ViewState": "AgIAAEkAAAAAAAAAAAAAAFEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-06-17T17:24:06.113Z",
+              "WhenOpened": "2026-06-18T14:45:48.789Z",
               "EditorCaption": ""
             }
           ]

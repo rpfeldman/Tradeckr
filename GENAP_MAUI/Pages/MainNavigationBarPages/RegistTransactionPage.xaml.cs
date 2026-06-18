@@ -9,4 +9,14 @@ public partial class RegistTransactionPage : ContentPage
 		InitializeComponent();
 		BindingContext = vm;
 	}
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+
+        if (BindingContext is RegistTransactionPageViewModel vm)
+        {
+            vm.ReLoadCommand.Execute(false);
+        }
+    }
 }

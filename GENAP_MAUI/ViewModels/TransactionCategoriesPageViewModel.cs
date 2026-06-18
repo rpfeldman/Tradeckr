@@ -70,11 +70,24 @@ namespace GENAP_MAUI.ViewModels
                 }
             }
 
-            GlobalResources.GlobalCategories = new(Categories);
+            GlobalResources.GlobalCategories.Clear();
+
+            foreach (var item in Categories)
+            {
+                GlobalResources.GlobalCategories.Add(item);
+            }
 
             NewCategory = string.Empty;
 
             await Shell.Current.DisplayAlertAsync("Categorias", "Se guardaron las categorias","Aceptar");
+        }
+
+        [RelayCommand]
+        public void ReLoad()
+        {
+            Categories = new(GlobalResources.GlobalCategories.Select(c => new CategoryDto(c.CategoryName, c.Color, c.CategoryId)));
+            PickedColor = GlobalResources.Colors[ColorsEnum.SteelBlue];
+            NewCategory = string.Empty;
         }
 
         private async Task UpdateTransactionsCategories(string OldName, string NewName)
