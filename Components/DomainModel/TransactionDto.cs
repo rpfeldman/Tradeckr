@@ -6,16 +6,16 @@ using System.Text;
 
 namespace DomainModel
 {
-    public class TransactionDto 
+    public class TransactionDto : IEntity
     {
         private decimal _Value;
-        private string _Category = string.Empty;
+        private string _Category = "Uncategorized";
 
         [Key]
-        public int TransactionId {  get; set; }
+        public int Id { get; set; }
         public decimal Value { get { return _Value; } set { if (value < 1m || value > 1000000000m) { throw new Exception($"property {nameof(Value)} must be on 1 to 1000000000 bound"); } _Value = value; } }
         public DateOnly Date { get; set;  }
-        public string Category { get { return _Category; } set { if (string.IsNullOrWhiteSpace(value)) { _Category = "Uncategorized"; } _Category = value; } }
+        public string Category { get { return _Category; } set { if (string.IsNullOrWhiteSpace(value)) { _Category = "Uncategorized"; } _Category = value; } } 
         public bool Fixed { get; set; }
         public bool Depletion { get; set; }
     }

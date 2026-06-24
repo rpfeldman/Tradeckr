@@ -1,113 +1,220 @@
 ﻿using DomainModel;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Sqlite;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Net.WebSockets;
 using System.Runtime.CompilerServices;
 using System.Text;
-using System.Linq.Expressions;
 
 namespace Repositories
 {
-    public sealed class EF_SQLite_StateStorage : IStateStorage
+    public sealed class EF_SQLite_StateStorageRepo<T> : IStateStorage<T> where T : class, IEntity
     {
         private StateStorageDbContext Context;
-        public EF_SQLite_StateStorage(string StorageFilePath, int[] DecimalValuePrecision)
+        private readonly DbSet<T> _Table;
+        public EF_SQLite_StateStorageRepo(string StorageFilePath)
         {
             var options = new DbContextOptionsBuilder().UseSqlite($"Data source={StorageFilePath}").Options;
-            Context = new(options, DecimalValuePrecision); // As SQLite save decimal data type as TEXT, 'DecimalValuePrecision' it's irrelevant in this case
+            Context = new(options, [0, 0]);
+
+            _Table = Context.Set<T>();
             Context.Database.EnsureCreated();
+
         }
-
-        /// <summary>
-        /// Generates and ID for fixed transactions collections
-        /// </summary>
-        /// <returns></returns>
-        private int IdSetterForFixedTransactions() // As EF core can't generate values for non-keys properties and multiple instances will have the same ID, I decided make this method
+        public async Task<OperationResult> ClearStorageAsync()
         {
-            FixedTransactionDto? Last = (FixedTransactionDto?)Context.TransactionsTable.Where(t => t is FixedTransactionDto).OrderBy(t => (t as FixedTransactionDto)!.FixedTransactionId).LastOrDefault();
-
-            return Last != null ? (Last.FixedTransactionId + 1) : 1;
-        }
-
-        public async Task<bool> ClearStorageAsync()
-        {
-            Context.TransactionsTable.RemoveRange(Context.TransactionsTable);
-            return await Context.SaveChangesAsync() > 0;
-        }
-
-        public async Task<List<TransactionDto>> GetAllAsync()
-        {
-            return await Context.TransactionsTable.AsNoTracking().ToListAsync();
-        }
-
-        public async Task<TransactionDto?> GetTransactionAsync(int TransactionId)
-        {
-            return await Context.TransactionsTable.AsNoTracking().Where(t => t.TransactionId == TransactionId).FirstOrDefaultAsync();
-        }
-
-        public async Task<List<TransactionDto>> GetTransactionsAsync(Expression<Func<TransactionDto, bool>> predicate)
-        {
-            return await Context.TransactionsTable.AsNoTracking().Where(predicate).ToListAsync();
-        }
-
-        public async Task<bool> DeleteAsync(int TransactionId)
-        {
-            var Transaction = await Context.TransactionsTable.Where(t => t.TransactionId == TransactionId).FirstAsync() ?? throw new Exception("Unexistent transaction");
-
-            Context.TransactionsTable.Remove(Transaction);
-
-            return await Context.SaveChangesAsync() > 0;
-        }
-
-        public async Task<bool> DeleteFromRangeAsync(Expression<Func<TransactionDto, bool>> predicate)
-        {
-            Context.RemoveRange(await Context.TransactionsTable.Where(predicate).ToArrayAsync());
-
-            return await Context.SaveChangesAsync() > 0;
-        }
-
-        public async Task<bool> SaveAsync(decimal value, DateOnly date, string category, bool depletion, bool isfixed = false, int? duration = null)
-        {
-            TransactionDto Transaction;
-
-            if (isfixed && duration != null)
+            try
             {
-                int CollectionId = IdSetterForFixedTransactions();
-             
-                for (int i = 0; i < duration; i++)
-                {
-                    Transaction = new FixedTransactionDto() { Value = value, Date = date, Category = category, Depletion = depletion, Fixed = isfixed, Duration = ((int)duration - i), FixedTransactionId = CollectionId };
-                    date = date.AddMonths(1);
+                _Table.RemoveRange(_Table);
+                await Context.SaveChangesAsync();
 
-                    Context.Add(Transaction);
-                }
+                return OperationResult.SuccessfulOperation();
+            }
+            catch (SqliteException)
+            {
+                return OperationResult.FaultedOperation("An error occurred while trying to connect to the storage system. Please try again");
+            }
+            catch (DbUpdateException)
+            {
+                return OperationResult.FaultedOperation("An error occurred while trying to save the changes. Please try again");
+            }
+            catch (TimeoutException)
+            {
+                return OperationResult.FaultedOperation("The operation took too long. Please try again");
+            }
+        }
 
-                return await Context.SaveChangesAsync() > 0;
+        public async Task<OperationResult> DeleteAsync(int Id)
+        {
+            var Entity = await _Table.Where(e => e.Id == Id).FirstOrDefaultAsync();
+
+            if (Entity is null)
+            {
+                return OperationResult.FaultedOperation("Unexistent entity");
             }
 
-            Transaction = new TransactionDto() { Value = value, Date = date, Category = category, Depletion = depletion, Fixed = isfixed };
+            try
+            {
+                _Table.Remove(Entity);
+                await Context.SaveChangesAsync();
 
-            Context.Add(Transaction);
-            return await Context.SaveChangesAsync() > 0;
+                return OperationResult.SuccessfulOperation();
+            }
+            catch (SqliteException)
+            {
+                return OperationResult.FaultedOperation("An error occurred while trying to connect to the storage system. Please try again");
+            }
+            catch (DbUpdateException)
+            {
+                return OperationResult.FaultedOperation("An error occurred while trying to save the changes. Please try again");
+            }
+            catch (TimeoutException)
+            {
+                return OperationResult.FaultedOperation("The operation took too long. Please try again");
+            }
         }
 
-        public async Task<bool> UpdateAsync(int TransactionId, TransactionDto NewTransaction)
+        public async Task<OperationResult> DeleteFromRangeAsync(Expression<Func<T, bool>> predicate)
         {
-            var Transaction = await Context.TransactionsTable.Where(t => t.TransactionId == TransactionId).FirstOrDefaultAsync() ?? throw new Exception("Unexistent transaction");
+            try
+            {
+                _Table.RemoveRange(await _Table.Where(predicate).ToArrayAsync());
+                await Context.SaveChangesAsync();
 
-            Transaction.Value = NewTransaction.Value;
-            Transaction.Category = NewTransaction.Category;
-            Transaction.Date = NewTransaction.Date;
-            Transaction.Depletion = NewTransaction.Depletion;
-
-            return await Context.SaveChangesAsync() > 0;
+                return OperationResult.SuccessfulOperation();
+            }
+            catch (SqliteException)
+            {
+                return OperationResult.FaultedOperation("An error occurred while trying to connect to the storage system. Please try again");
+            }
+            catch (DbUpdateException)
+            {
+                return OperationResult.FaultedOperation("An error occurred while trying to save the changes. Please try again");
+            }
+            catch (TimeoutException)
+            {
+                return OperationResult.FaultedOperation("The operation took too long. Please try again");
+            }
         }
 
-        public async Task<bool> UpdateRangeByCategory(string OldName, string NewName)
+        public async Task<OperationResult<List<T>>> GetAllAsync()
         {
-            return await Context.TransactionsTable.Where(t => t.Category == OldName).ExecuteUpdateAsync(s => s.SetProperty(t => t.Category, NewName)) > 0;
+            try
+            {
+                return OperationResult<List<T>>.SuccessfulOperation(await _Table.AsNoTracking().ToListAsync());
+            }
+            catch (SqliteException)
+            {
+                return OperationResult<List<T>>.FaultedOperation("An error occurred while trying to connect to the storage system. Please try again");
+            }
+            catch (DbUpdateException)
+            {
+                return OperationResult<List<T>>.FaultedOperation("An error occurred while trying to save the changes. Please try again");
+            }
+            catch (TimeoutException)
+            {
+                return OperationResult<List<T>>.FaultedOperation("The operation took too long. Please try again");
+            }
+        }
+
+        public async Task<OperationResult<List<T>>> GetEntitiesAsync(Expression<Func<T, bool>> predicate)
+        {
+            try
+            {
+                return OperationResult<List<T>>.SuccessfulOperation(await _Table.AsNoTracking().Where(predicate).ToListAsync());
+            }
+            catch (SqliteException)
+            {
+                return OperationResult<List<T>>.FaultedOperation("An error occurred while trying to connect to the storage system. Please try again");
+            }
+            catch (DbUpdateException)
+            {
+                return OperationResult<List<T>>.FaultedOperation("An error occurred while trying to save the changes. Please try again");
+            }
+            catch (TimeoutException)
+            {
+                return OperationResult<List<T>>.FaultedOperation("The operation took too long. Please try again");
+            }
+        }
+
+        public async Task<Option<T>> GetEntityAsync(int Id)
+        {
+            var entity = await _Table.AsNoTracking().Where(e => e.Id == Id).FirstOrDefaultAsync();
+
+            if (entity is null)
+            {
+                return Option<T>.None();
+            }
+
+            return Option<T>.Some(entity);
+        }
+
+        public async Task<OperationResult> SaveAsync(T Entity)
+        {
+            var id = Entity.Id;
+
+            if (await _Table.AnyAsync(e => e.Id == id))
+            {
+                return OperationResult.FaultedOperation("There's alredy an entity with the same Id");
+            }
+
+            try
+            {
+                await _Table.AddAsync(Entity);
+                await Context.SaveChangesAsync();
+
+                return OperationResult.SuccessfulOperation();
+            }
+            catch (SqliteException)
+            {
+                return OperationResult.FaultedOperation("An error occurred while trying to connect to the storage system. Please try again");
+            }
+            catch (DbUpdateException)
+            {
+                return OperationResult.FaultedOperation("An error occurred while trying to save the changes. Please try again");
+            }
+            catch (TimeoutException)
+            {
+                return OperationResult.FaultedOperation("The operation took too long. Please try again");
+            }
+        }
+
+        public async Task<OperationResult> UpdateAsync(T NewEntity)
+        {
+            if (!await _Table.AnyAsync(e => e.Id == NewEntity.Id))
+            {
+                return OperationResult.FaultedOperation("Unexistent entity");
+            }
+
+            try
+            {
+                _Table.Update(NewEntity);
+
+                await Context.SaveChangesAsync();
+
+                return OperationResult.SuccessfulOperation();
+            }
+            catch (SqliteException)
+            {
+                return OperationResult.FaultedOperation("An error occurred while trying to connect to the storage system. Please try again");
+            }
+            catch (DbUpdateException)
+            {
+                return OperationResult.FaultedOperation("An error occurred while trying to save the changes. Please try again");
+            }
+            catch (TimeoutException)
+            {
+                return OperationResult.FaultedOperation("The operation took too long. Please try again");
+            }
+
+        }
+
+        public async Task<OperationResult> UpdateRange(Expression<Func<T, bool>> predicate)
+        {
+            throw new NotImplementedException();
         }
     }
 }

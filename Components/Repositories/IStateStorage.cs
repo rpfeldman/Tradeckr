@@ -6,16 +6,16 @@ using System.Linq.Expressions;
 
 namespace Repositories
 {
-    public interface IStateStorage
+    public interface IStateStorage<TEntity> where TEntity : IEntity
     {
-        public Task<bool> SaveAsync(decimal value, DateOnly date, string category, bool depletion, bool isfixed = false, int? duration = null);
-        public Task<bool> DeleteAsync(int TransactionId);
-        public Task<bool> DeleteFromRangeAsync(Expression<Func<TransactionDto, bool>> predicate);
-        public Task<bool> UpdateAsync(int TransactionId, TransactionDto NewTransaction);
-        public Task<bool> UpdateRangeByCategory(string OldName, string NewName);
-        public Task<bool> ClearStorageAsync();
-        public Task<TransactionDto?> GetTransactionAsync(int TransactionId);
-        public Task<List<TransactionDto>> GetTransactionsAsync(Expression<Func<TransactionDto, bool>> predicate);
-        public Task<List<TransactionDto>> GetAllAsync();
+        public Task<OperationResult> SaveAsync(TEntity Entity);
+        public Task<OperationResult> DeleteAsync(int Id);
+        public Task<OperationResult> DeleteFromRangeAsync(Expression<Func<TEntity, bool>> predicate);
+        public Task<OperationResult> UpdateAsync(TEntity NewEntity);
+        public Task<OperationResult> UpdateRange(Expression<Func<TEntity, bool>> predicate); // Later on I'll see what to do with this
+        public Task<OperationResult> ClearStorageAsync();
+        public Task<Option<TEntity>> GetEntityAsync(int Id);
+        public Task<OperationResult<List<TEntity>>> GetEntitiesAsync(Expression<Func<TEntity, bool>> predicate);
+        public Task<OperationResult<List<TEntity>>> GetAllAsync();
     }
 }
