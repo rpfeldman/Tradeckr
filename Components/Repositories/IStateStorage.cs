@@ -9,6 +9,7 @@ namespace Repositories
     public interface IStateStorage<TEntity> where TEntity : IEntity
     {
         public Task<OperationResult> SaveAsync(TEntity Entity);
+        public Task<OperationResult> SaveRangeAsync(TEntity[] Entities);
         public Task<OperationResult> DeleteAsync(int Id);
         public Task<OperationResult> DeleteFromRangeAsync(Expression<Func<TEntity, bool>> predicate);
         public Task<OperationResult> UpdateAsync(TEntity NewEntity);

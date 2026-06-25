@@ -154,9 +154,12 @@ namespace Repositories
 
         public async Task<OperationResult> SaveAsync(T Entity)
         {
-            var id = Entity.Id;
+            if(Entity is null)
+            {
+                return OperationResult.FaultedOperation("Entity can't be null");
+            }
 
-            if (await _Table.AnyAsync(e => e.Id == id))
+            if (await _Table.AnyAsync(e => e.Id == Entity.Id))
             {
                 return OperationResult.FaultedOperation("There's alredy an entity with the same Id");
             }
@@ -180,6 +183,44 @@ namespace Repositories
             {
                 return OperationResult.FaultedOperation("The operation took too long. Please try again");
             }
+        }
+
+        public async Task<OperationResult> SaveRangeAsync(T[] Entities)
+        {
+            try
+            {
+                foreach (var entity in Entities)
+                {
+                    if (entity is null)
+                    {
+                        return OperationResult.FaultedOperation("Entity can't be null");
+                    }
+
+                    if (await _Table.AnyAsync(e => e.Id == entity.Id))
+                    {
+                        return OperationResult.FaultedOperation("There's alredy an entity with the same Id");
+                    }
+
+                    await _Table.AddAsync(entity);
+                }
+
+                await Context.SaveChangesAsync();
+
+                return OperationResult.SuccessfulOperation();
+            }
+            catch (SqliteException)
+            {
+                return OperationResult.FaultedOperation("An error occurred while trying to connect to the storage system. Please try again");
+            }
+            catch (DbUpdateException)
+            {
+                return OperationResult.FaultedOperation("An error occurred while trying to save the changes. Please try again");
+            }
+            catch (TimeoutException)
+            {
+                return OperationResult.FaultedOperation("The operation took too long. Please try again");
+            }
+
         }
 
         public async Task<OperationResult> UpdateAsync(T NewEntity)
