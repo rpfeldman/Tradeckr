@@ -6,12 +6,12 @@ using System.Text;
 
 namespace DomainModel
 {
-    public class OperationResult
+    public readonly struct OperationResult
     {
-        public readonly bool Success;
-        public readonly string? ErrorMessage;
+        public bool Success { get; }
+        public string? ErrorMessage { get; }
 
-        protected OperationResult(bool success, string? errorMessage)
+        private OperationResult(bool success, string? errorMessage)
         {
             Success = success;
             ErrorMessage = errorMessage;
@@ -27,11 +27,15 @@ namespace DomainModel
             return new OperationResult(false, errorMessage);
         }
     }
-    public sealed class OperationResult<T> : OperationResult
+    public readonly struct OperationResult<T> 
     {
-        public readonly T? Result;
-        private OperationResult(bool success, string? errorMessage, T? value) : base(success, errorMessage)
+        public T? Result { get; }
+        public bool Success { get; }
+        public string? ErrorMessage { get; }
+        private OperationResult(bool success, string? errorMessage, T? value)
         {
+            Success = success;
+            ErrorMessage = errorMessage;
             Result = value;
         }
 
@@ -39,16 +43,16 @@ namespace DomainModel
         {
             return new OperationResult<T>(true, null, result);
         }
-        public static new OperationResult<T> FaultedOperation(string? errorMessage)
+        public static OperationResult<T> FaultedOperation(string? errorMessage)
         {
             return new OperationResult<T>(false, errorMessage, default);
         }
     }
 
-    public sealed class Option<T>
+    public readonly struct Option<T>
     {
-        public readonly bool HasValue;
-        public readonly T? Value;
+        public bool HasValue { get; }
+        public T? Value { get; }
 
         private Option(bool hasValue, T? value)
         {
