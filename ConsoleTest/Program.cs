@@ -5,6 +5,7 @@ using Microsoft.VisualBasic;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using System.Security.Cryptography.X509Certificates;
 using System.Net.WebSockets;
+using DataServices;
 
 namespace ConsoleTest 
 {

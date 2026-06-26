@@ -6,13 +6,7 @@
       "AbsoluteMoniker": "D:0:0:{3BB8CF25-951A-48FC-B73F-C90576E3AC8E}|..\\ConsoleTest\\ConsoleTest.csproj|c:\\users\\ramga\\source\\repos\\project_genap\\consoletest\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{740F01AE-8212-438F-9EC4-B08AF83A3E48}|..\\Components\\DataServices\\DataServices.csproj|c:\\users\\ramga\\source\\repos\\project_genap\\components\\dataservices\\datamanagementservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CCDC75DB-0116-9FCC-5B7F-79AACF97E8C5}|..\\Components\\Repositories\\Repositories.csproj|c:\\users\\ramga\\source\\repos\\project_genap\\components\\repositories\\ef_sqlite_statestorage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CCDC75DB-0116-9FCC-5B7F-79AACF97E8C5}|..\\Components\\Repositories\\Repositories.csproj|c:\\users\\ramga\\source\\repos\\project_genap\\components\\repositories\\istatestorage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{740F01AE-8212-438F-9EC4-B08AF83A3E48}|..\\Components\\DataServices\\DataServices.csproj|c:\\users\\ramga\\source\\repos\\project_genap\\components\\dataservices\\dataregistrationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,7 +16,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Bookmark",
@@ -46,28 +40,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "IStateStorage.cs",
-              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\Components\\Repositories\\IStateStorage.cs",
-              "RelativeDocumentMoniker": "..\\Components\\Repositories\\IStateStorage.cs",
-              "ToolTip": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\Components\\Repositories\\IStateStorage.cs",
-              "RelativeToolTip": "..\\Components\\Repositories\\IStateStorage.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAnAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-26T15:22:47.688Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "DataManagementService.cs",
-              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\Components\\DataServices\\DataManagementService.cs",
-              "RelativeDocumentMoniker": "..\\Components\\DataServices\\DataManagementService.cs",
-              "ToolTip": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\Components\\DataServices\\DataManagementService.cs",
-              "RelativeToolTip": "..\\Components\\DataServices\\DataManagementService.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAAAGEAAAAAAAAAAAAAAA==",
+              "Title": "DataRegistrationService.cs",
+              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\Components\\DataServices\\DataRegistrationService.cs",
+              "RelativeDocumentMoniker": "..\\Components\\DataServices\\DataRegistrationService.cs",
+              "ToolTip": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\Components\\DataServices\\DataRegistrationService.cs",
+              "RelativeToolTip": "..\\Components\\DataServices\\DataRegistrationService.cs",
+              "ViewState": "AgIAAHwAAAAAxhFr8QEcwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-26T14:13:16.82Z",
+              "WhenOpened": "2026-06-26T16:08:48.134Z",
               "EditorCaption": ""
             },
             {
@@ -78,22 +59,9 @@
               "RelativeDocumentMoniker": "..\\ConsoleTest\\Program.cs",
               "ToolTip": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\ConsoleTest\\Program.cs",
               "RelativeToolTip": "..\\ConsoleTest\\Program.cs",
-              "ViewState": "AgIAAAIAAAAAugm+aeIQwA8AAAA+AAAAAAAAAA==",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAiwBAAAAA+AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-26T14:01:24.98Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "EF_SQLite_StateStorage.cs",
-              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\Components\\Repositories\\EF_SQLite_StateStorage.cs",
-              "RelativeDocumentMoniker": "..\\Components\\Repositories\\EF_SQLite_StateStorage.cs",
-              "ToolTip": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\Components\\Repositories\\EF_SQLite_StateStorage.cs",
-              "RelativeToolTip": "..\\Components\\Repositories\\EF_SQLite_StateStorage.cs",
-              "ViewState": "AgIAABAAAADgwp52+HMmwE8AAABFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-25T16:19:16.843Z",
+              "WhenOpened": "2026-06-26T16:08:32.094Z",
               "EditorCaption": ""
             }
           ]

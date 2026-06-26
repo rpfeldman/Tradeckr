@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Components\DataServices\DataServices.csproj" />
     <ProjectReference Include="..\Components\DomainModel\DomainModel.csproj" />
     <ProjectReference Include="..\Components\Repositories\Repositories.csproj" />
   </ItemGroup>
