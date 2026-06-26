@@ -28,17 +28,17 @@ namespace DataServices
 
             FixedTransactionDto? Last = (FixedTransactionDto?)fixedTransactions.Result?.OrderBy(t => (t as FixedTransactionDto)?.FixedTransactionId).LastOrDefault();
 
-            if(Last is null)
+            if (Last is null)
             {
                 return OperationResult<int>.SuccessfulOperation(0);
             }
-         
-            return OperationResult<int>.SuccessfulOperation(Last.FixedTransactionId+1); 
+
+            return OperationResult<int>.SuccessfulOperation(Last.FixedTransactionId + 1);
         }
 
         public async Task<OperationResult> RegistExpenseAsync(decimal value, DateOnly date, string category)
         {
-            if(value < 1m || value > 1000000000m)
+            if (value < 1m || value > 1000000000m)
             {
                 return OperationResult.FaultedOperation($"{nameof(value)} must be in the range of 1 to 1,000,000,000");
             }
@@ -47,12 +47,12 @@ namespace DataServices
                 return OperationResult.FaultedOperation($"{nameof(category)} must have a content");
             }
 
-            var NewTransaction = new TransactionDto() { Value = value, Date = date, Category = category, Depletion = false, Fixed = false };
+            var NewTransaction = new TransactionDto() { Value = value, Date = date, Category = category, Depletion = true, Fixed = false };
 
             return await _StateStorage.SaveAsync(NewTransaction);
         }
 
-        public async Task<OperationResult> RegistFixedExpenseAsync(decimal value, DateOnly date, int duration, string category)
+        public async Task<OperationResult> RegistFixedExpenseAsync(decimal value, DateOnly date, string category, int duration)
         {
             var GetCollectionId = await IdSetterForFixedTransactionsAsync();
 
@@ -68,7 +68,7 @@ namespace DataServices
             {
                 return OperationResult.FaultedOperation($"{nameof(category)} must have a content");
             }
-            if (duration < 1) 
+            if (duration < 1)
             {
                 return OperationResult.FaultedOperation($"{nameof(duration)} must be greater than or equal to 1 ");
             }
@@ -76,7 +76,7 @@ namespace DataServices
             List<FixedTransactionDto> transactions = new();
             for (int i = 0; i < duration; i++)
             {
-                var NewTransaction = new FixedTransactionDto() { Value = value, Date = date, Depletion = true, Fixed = true, Duration = (duration - i), FixedTransactionId = GetCollectionId.Result };
+                var NewTransaction = new FixedTransactionDto() { Value = value, Date = date, Depletion = true, Category = category, Fixed = true, Duration = (duration - i), FixedTransactionId = GetCollectionId.Result };
 
                 transactions.Add(NewTransaction);
             }
@@ -84,27 +84,51 @@ namespace DataServices
             return await _StateStorage.SaveRangeAsync([.. transactions]);
         }
 
-        public async Task<bool> RegistIncomeAsync(decimal value, DateOnly date, string category = "Uncategorized")
+        public async Task<OperationResult> RegistIncomeAsync(decimal value, DateOnly date, string category)
         {
-            try
+            if (value < 1m || value > 1000000000m)
             {
-                return await _StateStorage.SaveAsync(value, date, category, false, false, null);
+                return OperationResult.FaultedOperation($"{nameof(value)} must be in the range of 1 to 1,000,000,000");
             }
-            catch (Exception)
+            if (string.IsNullOrWhiteSpace(category))
             {
-                return false;
+                return OperationResult.FaultedOperation($"{nameof(category)} must have a content");
             }
+
+            var NewTransaction = new TransactionDto() { Value = value, Date = date, Category = category, Depletion = false, Fixed = false };
+
+            return await _StateStorage.SaveAsync(NewTransaction);
         }
-        public async Task<bool> RegistIncomeAsync(decimal value, DateOnly date, int duration, string category = "Uncategorized")
+        public async Task<OperationResult> RegistFixedIncomeAsync(decimal value, DateOnly date, string category, int duration)
         {
-            try
+            var GetCollectionId = await IdSetterForFixedTransactionsAsync();
+
+            if (!GetCollectionId.Success)
             {
-                return await _StateStorage.SaveAsync(value, date, category, false, true, duration);
+                return OperationResult.FaultedOperation(GetCollectionId.ErrorMessage);
             }
-            catch (Exception)
+            if (value < 1m || value > 1000000000m)
             {
-                return false;
+                return OperationResult.FaultedOperation($"{nameof(value)} must be in the range of 1 to 1,000,000,000");
             }
+            if (string.IsNullOrWhiteSpace(category))
+            {
+                return OperationResult.FaultedOperation($"{nameof(category)} must have a content");
+            }
+            if (duration < 1)
+            {
+                return OperationResult.FaultedOperation($"{nameof(duration)} must be greater than or equal to 1 ");
+            }
+
+            List<FixedTransactionDto> transactions = new();
+            for (int i = 0; i < duration; i++)
+            {
+                var NewTransaction = new FixedTransactionDto() { Value = value, Date = date, Depletion = false, Category = category, Fixed = true, Duration = (duration - i), FixedTransactionId = GetCollectionId.Result };
+
+                transactions.Add(NewTransaction);
+            }
+
+            return await _StateStorage.SaveRangeAsync([.. transactions]);
         }
     }
 }
