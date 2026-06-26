@@ -77,6 +77,7 @@ namespace DataServices
             for (int i = 0; i < duration; i++)
             {
                 var NewTransaction = new FixedTransactionDto() { Value = value, Date = date, Depletion = true, Category = category, Fixed = true, Duration = (duration - i), FixedTransactionId = GetCollectionId.Result };
+                date = date.AddMonths(1);
 
                 transactions.Add(NewTransaction);
             }
@@ -124,6 +125,7 @@ namespace DataServices
             for (int i = 0; i < duration; i++)
             {
                 var NewTransaction = new FixedTransactionDto() { Value = value, Date = date, Depletion = false, Category = category, Fixed = true, Duration = (duration - i), FixedTransactionId = GetCollectionId.Result };
+                date = date.AddMonths(1);
 
                 transactions.Add(NewTransaction);
             }
