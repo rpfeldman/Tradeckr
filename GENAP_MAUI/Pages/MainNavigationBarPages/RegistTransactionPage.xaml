@@ -39,7 +39,7 @@
                     <Border Style="{StaticResource InputField}">
                         <Picker Title="Seleccionar categoría"
                                 ItemsSource="{Binding GlobalResources.GlobalCategories}"
-                                ItemDisplayBinding="{Binding CategoryName, x:DataType=ic:Category}"
+                                ItemDisplayBinding="{Binding CategoryName, x:DataType=ic:CategoryDto}"
                                 SelectedItem="{Binding Category}" />
                     </Border>
                 </VerticalStackLayout>

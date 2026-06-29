@@ -91,7 +91,6 @@ namespace GENAP_MAUI.ViewModels
 			{
 				TransactionsLog = TaskResults[2].Result!;
 			}
-
 			// TO-DO regist somewhere if any of the operation results fail
 
             Expenses = DataProjectionService.GetSummedTransactions(ExpensesLog);

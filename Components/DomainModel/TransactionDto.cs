@@ -31,7 +31,7 @@ namespace DomainModel
         public int Duration { get { return _Duration; } set { if (value < 1) { throw new Exception($"property {nameof(Duration)} must be a positive number"); } _Duration = value; }  }
 
         /// <summary>
-        /// /// Works as a parallel identification with the <see cref="TransactionDto.TransactionId"/> from the superclass.. Every fixed transaction has a single identification (<see cref="TransactionDto.TransactionId"/> ) and a identification for its fixed collection
+        /// /// Works as a parallel identification with the <see cref="TransactionDto.Id"/> from the superclass.. Every fixed transaction has a single identification (<see cref="TransactionDto.TransactionId"/> ) and a identification for its fixed collection
         /// </summary>
         public int FixedTransactionId { get { return _FixedTransactionId; } set { _FixedTransactionId = value; }  }
     }

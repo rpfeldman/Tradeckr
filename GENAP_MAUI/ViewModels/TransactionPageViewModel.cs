@@ -46,7 +46,13 @@ namespace GENAP_MAUI.ViewModels
 
         async partial void OnTransactionIdChanged(int value)
         {
-            Transaction = await _dataProjectionService.GetTransactionAsync(value) ?? Transaction;
+            var getTransactionOperation = await _dataProjectionService.GetTransactionAsync(value);
+
+            getTransactionOperation.Match
+            (
+                some: (t) => Transaction = t,
+                none: async () => { await Shell.Current.DisplayAlertAsync("Error", "Transaccion inexistente", "Aceptar"); await DirectNavigate(Routes.TransactionsList); }
+            ); 
 
             PickedCategory = GlobalResources.GlobalCategories.Where(c => c.CategoryName == Transaction.Category).Count() > 0 ? GlobalResources.GlobalCategories.Where(c => c.CategoryName == Transaction.Category).First() : new CategoryDto(Transaction.Category, GlobalResources.Colors.Values.First(), default);
             PickedDate = Transaction.Date.ToDateTime(TimeOnly.MinValue);
@@ -56,9 +62,9 @@ namespace GENAP_MAUI.ViewModels
         [RelayCommand]
         public async Task DeleteTransaction()
         {
-            var DeleteTransactionSuccess = await _dataManagementService.RemoveTransactionAsync(TransactionId);
+            var deleteTransactionOperation = await _dataManagementService.RemoveTransactionAsync(TransactionId);
 
-            await Shell.Current.DisplayAlertAsync("Eliminar", DeleteTransactionSuccess ? "Movimiento eliminado correctamente" : "No se ha podido eliminar el movimiento", "Aceptar");
+            await Shell.Current.DisplayAlertAsync("Eliminar", deleteTransactionOperation.Success ? "Movimiento eliminado correctamente" : deleteTransactionOperation.ErrorMessage, "Aceptar");
 
             await DirectNavigate(Routes.TransactionsList);
         }
@@ -67,9 +73,9 @@ namespace GENAP_MAUI.ViewModels
         public async Task DeleteFixedTransaction(bool FromToday)
         {
             var transaction = Transaction as FixedTransactionDto;
-            var DeleteCollectionSuccess = FromToday ? await _dataManagementService.RemoveFixedTransactionAsync(transaction!.FixedTransactionId, transaction.Duration) : await _dataManagementService.RemoveFixedTransactionAsync(transaction!.FixedTransactionId);
+            var deleteCollectionOperation = FromToday ? await _dataManagementService.RemoveFixedTransactionAsync(transaction!.FixedTransactionId, transaction.Duration) : await _dataManagementService.RemoveFixedTransactionAsync(transaction!.FixedTransactionId);
 
-            await Shell.Current.DisplayAlertAsync("Eliminar", DeleteCollectionSuccess ? "Movimientos eliminado correctamente" : "No se ha podido eliminar los movimientos", "Aceptar");
+            await Shell.Current.DisplayAlertAsync("Eliminar", deleteCollectionOperation.Success ? "Movimientos eliminado correctamente" : deleteCollectionOperation.ErrorMessage, "Aceptar");
 
             await DirectNavigate(Routes.TransactionsList);
         }
@@ -77,9 +83,9 @@ namespace GENAP_MAUI.ViewModels
         [RelayCommand(CanExecute = nameof(UpdateTransactionCanExecute))]
         public async Task UpdateTransaction()
         {
-            var UpdateTransactionSuccess = await _dataManagementService.UpdateTransactionAsync(TransactionId, PickedValue, DateOnly.FromDateTime(PickedDate), PickedCategory.CategoryName, Transaction.Depletion);
+            var updateTransactionOperation = await _dataManagementService.UpdateTransactionAsync(TransactionId, PickedValue, DateOnly.FromDateTime(PickedDate), PickedCategory.CategoryName, Transaction.Depletion);
 
-            await Shell.Current.DisplayAlertAsync("Editar", UpdateTransactionSuccess ? "Se ha guardado el movimiento correctamente" : "No se ha podido guardar el movimiento", "Aceptar");
+            await Shell.Current.DisplayAlertAsync("Editar", updateTransactionOperation.Success ? "Se ha guardado el movimiento correctamente" : updateTransactionOperation.ErrorMessage, "Aceptar");
         }
 
         private bool DeleteFixedTransactionCanExecute => Transaction is FixedTransactionDto;
