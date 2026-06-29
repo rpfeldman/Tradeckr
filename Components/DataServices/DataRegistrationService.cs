@@ -82,7 +82,19 @@ namespace DataServices
                 transactions.Add(NewTransaction);
             }
 
-            return await _StateStorage.SaveRangeAsync([.. transactions]);
+            var saveRangeOperation = await _StateStorage.SaveRangeAsync([.. transactions]);
+
+            if (saveRangeOperation.Success)
+            {
+                if(saveRangeOperation.Result != transactions.Count)
+                {
+                    return OperationResult.FaultedOperation("Some expenses couldn't be saved. A few were registered and others weren't. Please review and try again");
+                }
+
+                return OperationResult.SuccessfulOperation();
+            }
+
+            return OperationResult.FaultedOperation(saveRangeOperation.ErrorMessage);
         }
 
         public async Task<OperationResult> RegistIncomeAsync(decimal value, DateOnly date, string category)
@@ -130,7 +142,19 @@ namespace DataServices
                 transactions.Add(NewTransaction);
             }
 
-            return await _StateStorage.SaveRangeAsync([.. transactions]);
+            var saveRangeOperation = await _StateStorage.SaveRangeAsync([.. transactions]);
+
+            if (saveRangeOperation.Success)
+            {
+                if (saveRangeOperation.Result != transactions.Count)
+                {
+                    return OperationResult.FaultedOperation("Some expenses couldn't be saved. A few were registered and others weren't. Please review and try again");
+                }
+
+                return OperationResult.SuccessfulOperation();
+            }
+
+            return OperationResult.FaultedOperation(saveRangeOperation.ErrorMessage);
         }
     }
 }

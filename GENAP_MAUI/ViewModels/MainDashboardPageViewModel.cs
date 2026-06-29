@@ -27,8 +27,6 @@ namespace GENAP_MAUI.ViewModels
         [ObservableProperty]
         public partial List<TransactionDto> MonthTransactions { get; set; }
 
-        // TEMPORAL, just for testing
-
         [RelayCommand]
         public void ChangeTheme()
         {
@@ -38,8 +36,6 @@ namespace GENAP_MAUI.ViewModels
         [RelayCommand]
         public async Task Load()
         {
-            // TO-DO regist somewhere if any of the operation results fail
-
             var today = DateOnly.FromDateTime(DateTime.Today);
 
             var GetMonthExpensesTask = _dataProjectionService.GetAllByMonthAsync(today.Month, today.Year, true);
@@ -51,15 +47,17 @@ namespace GENAP_MAUI.ViewModels
             if (Transactions[0].Success)
             {
                 MonthExpenses = DataProjectionService.GetSummedTransactions(Transactions[0].Result!);
-            }
+            } else { await Shell.Current.DisplayAlertAsync("Error", Transactions[0].ErrorMessage, "Aceptar"); }
+
             if (Transactions[1].Success)
             {
                 MonthIncome = DataProjectionService.GetSummedTransactions(Transactions[1].Result!);
-            }
+            } else { await Shell.Current.DisplayAlertAsync("Error", Transactions[1].ErrorMessage, "Aceptar"); }
+
             if (Transactions[2].Success)
             {
                 MonthTransactions = Transactions[2].Result!;
-            }
+            } else { await Shell.Current.DisplayAlertAsync("Error", Transactions[2].ErrorMessage, "Aceptar"); }
         }
     }
 }

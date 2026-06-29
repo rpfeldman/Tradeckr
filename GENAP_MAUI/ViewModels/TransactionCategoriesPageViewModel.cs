@@ -66,7 +66,12 @@ namespace GENAP_MAUI.ViewModels
                     var OldName = GlobalResources.GlobalCategories.Where(c => c.CategoryId == item.CategoryId).First().CategoryName;
                     var NewName = item.CategoryName;
 
-                    await UpdateTransactionsCategories(OldName, NewName);
+                    var renameCategoryOperation = await _dataManagementService.RenameCategoryAsync(OldName, NewName);
+
+                    if (!renameCategoryOperation.Success)
+                    {
+                        await Shell.Current.DisplayAlertAsync("Error", renameCategoryOperation.ErrorMessage, "Aceptar");
+                    }
                 }
             }
 
@@ -79,7 +84,7 @@ namespace GENAP_MAUI.ViewModels
 
             NewCategory = string.Empty;
 
-            await Shell.Current.DisplayAlertAsync("Categorias", "Se guardaron las categorias","Aceptar");
+            await Shell.Current.DisplayAlertAsync("Categorias", "Se guardaron las categorias", "Aceptar");
         }
 
         [RelayCommand]
@@ -89,12 +94,6 @@ namespace GENAP_MAUI.ViewModels
             PickedColor = GlobalResources.Colors[ColorsEnum.SteelBlue];
             NewCategory = string.Empty;
         }
-
-        private async Task UpdateTransactionsCategories(string OldName, string NewName)
-        {
-            //await _dataManagementService.RenameCategoryAsync(OldName, NewName); -> todo
-        }
-
         private bool AddCategoryCanExecute() => !string.IsNullOrWhiteSpace(NewCategory) && Categories.Where(c => c.CategoryName == NewCategory).Count() == 0;
         private bool SaveCanExecute() => Categories.Count > 0;
     }

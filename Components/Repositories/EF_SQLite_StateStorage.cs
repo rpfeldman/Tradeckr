@@ -77,14 +77,14 @@ namespace Repositories
             }
         }
 
-        public async Task<OperationResult<int>> DeleteFromRangeAsync(Expression<Func<T, bool>> predicate)
+        public async Task<OperationResult<int>> DeleteFromRangeAsync(Expression<Func<T, bool>> Predicate)
         {
             try
             {
-                _Table.RemoveRange(await _Table.Where(predicate).ToArrayAsync());
-                var AffectedRows = await Context.SaveChangesAsync();
+                _Table.RemoveRange(await _Table.Where(Predicate).ToArrayAsync());
+                var affectedRows = await Context.SaveChangesAsync();
 
-                return OperationResult<int>.SuccessfulOperation(AffectedRows);
+                return OperationResult<int>.SuccessfulOperation(affectedRows);
             }
             catch (SqliteException)
             {
@@ -120,11 +120,11 @@ namespace Repositories
             }
         }
 
-        public async Task<OperationResult<List<T>>> GetEntitiesAsync(Expression<Func<T, bool>> predicate)
+        public async Task<OperationResult<List<T>>> GetEntitiesAsync(Expression<Func<T, bool>> Predicate)
         {
             try
             {
-                return OperationResult<List<T>>.SuccessfulOperation(await _Table.AsNoTracking().Where(predicate).ToListAsync());
+                return OperationResult<List<T>>.SuccessfulOperation(await _Table.AsNoTracking().Where(Predicate).ToListAsync());
             }
             catch (SqliteException)
             {
@@ -185,7 +185,7 @@ namespace Repositories
             }
         }
 
-        public async Task<OperationResult> SaveRangeAsync(T[] Entities)
+        public async Task<OperationResult<int>> SaveRangeAsync(T[] Entities)
         {
             try
             {
@@ -193,32 +193,32 @@ namespace Repositories
                 {
                     if (entity is null)
                     {
-                        return OperationResult.FaultedOperation("Entity can't be null");
+                        return OperationResult<int>.FaultedOperation("Entity can't be null");
                     }
 
                     if (await _Table.AnyAsync(e => e.Id == entity.Id))
                     {
-                        return OperationResult.FaultedOperation("There's alredy an entity with the same Id");
+                        return OperationResult<int>.FaultedOperation("There's alredy an entity with the same Id");
                     }
 
                     await _Table.AddAsync(entity);
                 }
 
-                await Context.SaveChangesAsync();
+                var affectedRows = await Context.SaveChangesAsync();
 
-                return OperationResult.SuccessfulOperation();
+                return OperationResult<int>.SuccessfulOperation(affectedRows);
             }
             catch (SqliteException)
             {
-                return OperationResult.FaultedOperation("An error occurred while trying to connect to the storage system. Please try again");
+                return OperationResult<int>.FaultedOperation("An error occurred while trying to connect to the storage system. Please try again");
             }
             catch (DbUpdateException)
             {
-                return OperationResult.FaultedOperation("An error occurred while trying to save the changes. Please try again");
+                return OperationResult<int>.FaultedOperation("An error occurred while trying to save the changes. Please try again");
             }
             catch (TimeoutException)
             {
-                return OperationResult.FaultedOperation("The operation took too long. Please try again");
+                return OperationResult<int>.FaultedOperation("The operation took too long. Please try again");
             }
 
         }
@@ -250,12 +250,29 @@ namespace Repositories
             {
                 return OperationResult.FaultedOperation("The operation took too long. Please try again");
             }
-
         }
 
-        public async Task<OperationResult> UpdateRange(Expression<Func<T, bool>> predicate)
+        public async Task<OperationResult<int>> UpdateRange(T[] Entities)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _Table.UpdateRange(Entities);
+                var affectedRows = await Context.SaveChangesAsync();
+
+                return OperationResult<int>.SuccessfulOperation(affectedRows);
+            }
+            catch (SqliteException)
+            {
+                return OperationResult<int>.FaultedOperation("An error occurred while trying to connect to the storage system. Please try again");
+            }
+            catch (DbUpdateException)
+            {
+                return OperationResult<int>.FaultedOperation("An error occurred while trying to save the changes. Please try again");
+            }
+            catch (TimeoutException)
+            {
+                return OperationResult<int>.FaultedOperation("The operation took too long. Please try again");
+            }
         }
     }
 }

@@ -1,10 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+﻿using DomainModel;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Repositories;
-using DomainModel;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Text;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
+using System.Xml.Linq;
 
 namespace DataServices
 {
@@ -38,10 +40,38 @@ namespace DataServices
             return await _StateStorage.UpdateAsync(Transaction);
         }
 
-        public async Task<OperationResult> RenameCategoryAsync() // TO - DO
-       {
-            throw new NotImplementedException();
-       }
+        public async Task<OperationResult> RenameCategoryAsync(string OldName, string NewName) 
+        {
+            var getOldTransactionsOperation = await _StateStorage.GetEntitiesAsync(t => t.Category == OldName);
+            
+            if(!getOldTransactionsOperation.Success) { return OperationResult.FaultedOperation(getOldTransactionsOperation.ErrorMessage); }
+
+            var transactions = getOldTransactionsOperation.Result!;
+
+            if(transactions.Count == 0)
+            {
+                return OperationResult.FaultedOperation($"No category with the name {OldName} was found");
+            }
+
+            foreach (var transaction in transactions)
+            {
+                transaction.Category = NewName;
+            }
+
+            var updateRangeOperation = await _StateStorage.UpdateRange(transactions.ToArray());
+
+            if (updateRangeOperation.Success)
+            {
+                if (updateRangeOperation.Result != transactions.Count)
+                {
+                    return OperationResult.FaultedOperation("Some movements couldn't be renamed. A few were renamed and others weren't. Please review and try again");
+                }
+
+                return OperationResult.SuccessfulOperation();
+            }
+
+            return OperationResult.FaultedOperation(updateRangeOperation.ErrorMessage);
+        }
 
         public async Task<OperationResult> RemoveTransactionAsync(int TransactionId)
         {
@@ -67,9 +97,7 @@ namespace DataServices
 
             if (DeleteFromRangeOperation.Success)
             {
-                if (DeleteFromRangeOperation.Result < 1) { return OperationResult.FaultedOperation($"Delete failed: no fixed transaction collection matched CollectionId {CollectionId} (0 rows affected)"); }
-                ;
-
+                if (DeleteFromRangeOperation.Result < 1) { return OperationResult.FaultedOperation($"Delete failed: no fixed transaction collection matched CollectionId {CollectionId} (0 rows affected)"); };
                 return OperationResult.SuccessfulOperation();
             }
 

@@ -56,16 +56,7 @@ namespace GENAP_MAUI.ViewModels
 
         async partial void OnPickedTimePeriodChanged(KeyValuePair<GlobalResources.TimePeriodsEnum, string> value)
         {
-			try
-			{
-				await ReFillGraphs(value.Key);
-			}
-			catch (Exception x)
-			{
-				// FUTURE: Exception managment
-
-				Console.WriteLine(x);
-			}
+            await ReFillGraphs(value.Key);
         }
 
 		[RelayCommand]
@@ -82,16 +73,17 @@ namespace GENAP_MAUI.ViewModels
 			if (TaskResults[0].Success)
 			{
                 ExpensesLog = TaskResults[0].Result!;
-            }
+            } else { await Shell.Current.DisplayAlertAsync("Error", TaskResults[0].ErrorMessage, "Aceptar"); }
+
 			if (TaskResults[1].Success)
 			{
                 IncomeLog = TaskResults[1].Result!;
-            }
-			if (TaskResults[2].Success)
+            } else { await Shell.Current.DisplayAlertAsync("Error", TaskResults[1].ErrorMessage, "Aceptar"); }
+
+            if (TaskResults[2].Success)
 			{
 				TransactionsLog = TaskResults[2].Result!;
-			}
-			// TO-DO regist somewhere if any of the operation results fail
+			} else { await Shell.Current.DisplayAlertAsync("Error", TaskResults[2].ErrorMessage, "Aceptar"); }
 
             Expenses = DataProjectionService.GetSummedTransactions(ExpensesLog);
             Income = DataProjectionService.GetSummedTransactions(IncomeLog);
