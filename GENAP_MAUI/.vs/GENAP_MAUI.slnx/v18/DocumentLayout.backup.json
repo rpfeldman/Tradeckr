@@ -3,10 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\GENAP_MAUI\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{CCDC75DB-0116-9FCC-5B7F-79AACF97E8C5}|..\\Components\\Repositories\\Repositories.csproj|c:\\users\\ramga\\source\\repos\\project_genap\\components\\repositories\\ef_sqlite_statestorage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|c:\\users\\ramga\\source\\repos\\project_genap\\genap_maui\\mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|solutionrelative:mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{740F01AE-8212-438F-9EC4-B08AF83A3E48}|..\\Components\\DataServices\\DataServices.csproj|c:\\users\\ramga\\source\\repos\\project_genap\\components\\dataservices\\datamanagementservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|c:\\users\\ramga\\source\\repos\\project_genap\\genap_maui\\innerservices\\categoriespersistenceservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|solutionrelative:innerservices\\categoriespersistenceservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -16,7 +18,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -35,33 +37,29 @@
               "Name": "ST:1948313171:0:{81164725-9a96-4ece-a4cb-440d8fd285e5}"
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
-            },
-            {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "EF_SQLite_StateStorage.cs",
-              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\Components\\Repositories\\EF_SQLite_StateStorage.cs",
-              "RelativeDocumentMoniker": "..\\Components\\Repositories\\EF_SQLite_StateStorage.cs",
-              "ToolTip": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\Components\\Repositories\\EF_SQLite_StateStorage.cs*",
-              "RelativeToolTip": "..\\Components\\Repositories\\EF_SQLite_StateStorage.cs*",
-              "ViewState": "AgIAAKQAAAAAAAAAAAAuwLAAAAA7AAAAAAAAAA==",
+              "Title": "MauiProgram.cs",
+              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\GENAP_MAUI\\MauiProgram.cs",
+              "RelativeDocumentMoniker": "MauiProgram.cs",
+              "ToolTip": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\GENAP_MAUI\\MauiProgram.cs",
+              "RelativeToolTip": "MauiProgram.cs",
+              "ViewState": "AgIAABQAAAAAAAAAAAAgwCoAAABZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-29T16:29:08.446Z",
+              "WhenOpened": "2026-06-30T16:17:06.866Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "DataManagementService.cs",
-              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\Components\\DataServices\\DataManagementService.cs",
-              "RelativeDocumentMoniker": "..\\Components\\DataServices\\DataManagementService.cs",
-              "ToolTip": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\Components\\DataServices\\DataManagementService.cs",
-              "RelativeToolTip": "..\\Components\\DataServices\\DataManagementService.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAADAAAAAMAAAAAAAAAA==",
+              "Title": "CategoriesPersistenceService.cs",
+              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\GENAP_MAUI\\InnerServices\\CategoriesPersistenceService.cs",
+              "RelativeDocumentMoniker": "InnerServices\\CategoriesPersistenceService.cs",
+              "ToolTip": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\GENAP_MAUI\\InnerServices\\CategoriesPersistenceService.cs",
+              "RelativeToolTip": "InnerServices\\CategoriesPersistenceService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-29T16:31:04.576Z",
+              "WhenOpened": "2026-06-30T16:16:50.086Z",
               "EditorCaption": ""
             }
           ]

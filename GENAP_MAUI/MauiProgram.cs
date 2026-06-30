@@ -6,6 +6,7 @@ using Repositories;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 using LiveChartsCore.SkiaSharpView.Maui;
 using DomainModel;
+using GENAP_MAUI.InnerServices;
 
 namespace GENAP_MAUI
 {
@@ -44,6 +45,9 @@ namespace GENAP_MAUI
             builder.Services.AddSingleton<DataRegistrationService>();
             builder.Services.AddSingleton<DataProjectionService>();
             builder.Services.AddSingleton<DataManagementService>();
+
+            // inner services
+            builder.Services.AddSingleton<CategoriesPersistenceService>();
 
 #if DEBUG
     		builder.Logging.AddDebug();

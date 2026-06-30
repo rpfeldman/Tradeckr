@@ -26,7 +26,7 @@ namespace GENAP_MAUI.ViewModels
             _dataManagementService = dataManagementService;
             GlobalResources = globalResources;
 
-            Categories = new(GlobalResources.GlobalCategories.Select(c => new CategoryDto(c.CategoryName, c.Color, c.CategoryId)));
+            Categories = new(GlobalResources.GlobalCategories.Select(c => new CategoryDto(c.CategoryName, c.Color, c.Id)));
             PickedColor = GlobalResources.Colors[ColorsEnum.SteelBlue];
         }
 
@@ -61,7 +61,7 @@ namespace GENAP_MAUI.ViewModels
         {
             foreach (var item in Categories)
             {
-                CategoryDto? oldCategory = GlobalResources.GlobalCategories.Where(c => c.CategoryId == item.CategoryId).FirstOrDefault();
+                CategoryDto? oldCategory = GlobalResources.GlobalCategories.Where(c => c.Id == item.Id).FirstOrDefault();
 
                 if (oldCategory is not null && oldCategory.CategoryName != item.CategoryName)
                 {
@@ -94,7 +94,7 @@ namespace GENAP_MAUI.ViewModels
         [RelayCommand]
         public void ReLoad()
         {
-            Categories = new(GlobalResources.GlobalCategories.Select(c => new CategoryDto(c.CategoryName, c.Color, c.CategoryId)));
+            Categories = new(GlobalResources.GlobalCategories.Select(c => new CategoryDto(c.CategoryName, c.Color, c.Id)));
             PickedColor = GlobalResources.Colors[ColorsEnum.SteelBlue];
             NewCategory = string.Empty;
         }

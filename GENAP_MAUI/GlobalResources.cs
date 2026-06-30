@@ -47,7 +47,7 @@ namespace GENAP_MAUI
 
             ColorList = [.. Colors.Values];
 
-            // This is temporary, GlobalCategories should get the categories from a JSON file
+            // This is temporary
             GlobalCategories =
             [
                 new CategoryDto("Indumentaria", Colors[ColorsEnum.Aqua], 0),
