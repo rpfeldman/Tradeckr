@@ -13,23 +13,24 @@ namespace Repositories
 {
     public sealed class EF_SQLite_StateStorageRepo<T> : IStateStorage<T> where T : class, IEntity
     {
+        // As SQLite save decimal data type as TEXT, 'DecimalValuePrecision' it's irrelevant in this case
         private StateStorageDbContext Context;
-        private readonly DbSet<T> _Table;
+        private DbContextOptions Options;
         public EF_SQLite_StateStorageRepo(string StorageFilePath)
         {
-            var options = new DbContextOptionsBuilder().UseSqlite($"Data source={StorageFilePath}").Options;
-            Context = new(options, [0, 0]);
+            Options = new DbContextOptionsBuilder().UseSqlite($"Data source={StorageFilePath}").Options; 
+            Context = new(Options); 
 
-            _Table = Context.Set<T>();
             Context.Database.EnsureCreated();
-
         }
         public async Task<OperationResult> ClearStorageAsync()
         {
+            using var context = new StateStorageDbContext(Options);
+
             try
             {
-                _Table.RemoveRange(_Table);
-                await Context.SaveChangesAsync();
+                context.Set<T>().RemoveRange(context.Set<T>());
+                await context.SaveChangesAsync();
 
                 return OperationResult.SuccessfulOperation();
             }
@@ -49,7 +50,9 @@ namespace Repositories
 
         public async Task<OperationResult> DeleteAsync(int Id)
         {
-            var Entity = await _Table.Where(e => e.Id == Id).FirstOrDefaultAsync();
+            using var context = new StateStorageDbContext(Options);
+
+            var Entity = await context.Set<T>().Where(e => e.Id == Id).FirstOrDefaultAsync();
 
             if (Entity is null)
             {
@@ -58,8 +61,8 @@ namespace Repositories
 
             try
             {
-                _Table.Remove(Entity);
-                await Context.SaveChangesAsync();
+                context.Set<T>().Remove(Entity);
+                await context.SaveChangesAsync();
 
                 return OperationResult.SuccessfulOperation();
             }
@@ -79,10 +82,12 @@ namespace Repositories
 
         public async Task<OperationResult<int>> DeleteFromRangeAsync(Expression<Func<T, bool>> Predicate)
         {
+            using var context = new StateStorageDbContext(Options);
+
             try
             {
-                _Table.RemoveRange(await _Table.Where(Predicate).ToArrayAsync());
-                var affectedRows = await Context.SaveChangesAsync();
+                context.Set<T>().RemoveRange(await context.Set<T>().Where(Predicate).ToArrayAsync());
+                var affectedRows = await context.SaveChangesAsync();
 
                 return OperationResult<int>.SuccessfulOperation(affectedRows);
             }
@@ -102,9 +107,11 @@ namespace Repositories
 
         public async Task<OperationResult<List<T>>> GetAllAsync()
         {
+            using var context = new StateStorageDbContext(Options);
+
             try
             {
-                return OperationResult<List<T>>.SuccessfulOperation(await _Table.AsNoTracking().ToListAsync());
+                return OperationResult<List<T>>.SuccessfulOperation(await context.Set<T>().AsNoTracking().ToListAsync());
             }
             catch (SqliteException)
             {
@@ -122,9 +129,11 @@ namespace Repositories
 
         public async Task<OperationResult<List<T>>> GetEntitiesAsync(Expression<Func<T, bool>> Predicate)
         {
+            using var context = new StateStorageDbContext(Options);
+
             try
             {
-                return OperationResult<List<T>>.SuccessfulOperation(await _Table.AsNoTracking().Where(Predicate).ToListAsync());
+                return OperationResult<List<T>>.SuccessfulOperation(await context.Set<T>().AsNoTracking().Where(Predicate).ToListAsync());
             }
             catch (SqliteException)
             {
@@ -142,7 +151,9 @@ namespace Repositories
 
         public async Task<Option<T>> GetEntityAsync(int Id)
         {
-            var entity = await _Table.AsNoTracking().Where(e => e.Id == Id).FirstOrDefaultAsync();
+            using var context = new StateStorageDbContext(Options);
+
+            var entity = await context.Set<T>().AsNoTracking().Where(e => e.Id == Id).FirstOrDefaultAsync();
 
             if (entity is null)
             {
@@ -154,20 +165,22 @@ namespace Repositories
 
         public async Task<OperationResult> SaveAsync(T Entity)
         {
-            if(Entity is null)
+            using var context = new StateStorageDbContext(Options);
+
+            if (Entity is null)
             {
                 return OperationResult.FaultedOperation("Entity can't be null");
             }
 
-            if (await _Table.AnyAsync(e => e.Id == Entity.Id))
+            if (await context.Set<T>().AnyAsync(e => e.Id == Entity.Id))
             {
                 return OperationResult.FaultedOperation("There's alredy an entity with the same Id");
             }
 
             try
             {
-                await _Table.AddAsync(Entity);
-                await Context.SaveChangesAsync();
+                await context.Set<T>().AddAsync(Entity);
+                await context.SaveChangesAsync();
 
                 return OperationResult.SuccessfulOperation();
             }
@@ -187,6 +200,8 @@ namespace Repositories
 
         public async Task<OperationResult<int>> SaveRangeAsync(T[] Entities)
         {
+            using var context = new StateStorageDbContext(Options);
+
             try
             {
                 foreach (var entity in Entities)
@@ -196,15 +211,15 @@ namespace Repositories
                         return OperationResult<int>.FaultedOperation("Entity can't be null");
                     }
 
-                    if (await _Table.AnyAsync(e => e.Id == entity.Id))
+                    if (await context.Set<T>().AnyAsync(e => e.Id == entity.Id))
                     {
                         return OperationResult<int>.FaultedOperation("There's alredy an entity with the same Id");
                     }
 
-                    await _Table.AddAsync(entity);
+                    await context.Set<T>().AddAsync(entity);
                 }
 
-                var affectedRows = await Context.SaveChangesAsync();
+                var affectedRows = await context.SaveChangesAsync();
 
                 return OperationResult<int>.SuccessfulOperation(affectedRows);
             }
@@ -225,16 +240,18 @@ namespace Repositories
 
         public async Task<OperationResult> UpdateAsync(T NewEntity)
         {
-            if (!await _Table.AnyAsync(e => e.Id == NewEntity.Id))
+            using var context = new StateStorageDbContext(Options);
+
+            if (!await context.Set<T>().AnyAsync(e => e.Id == NewEntity.Id))
             {
                 return OperationResult.FaultedOperation("Unexistent entity");
             }
 
             try
             {
-                _Table.Update(NewEntity);
+                context.Set<T>().Update(NewEntity);
 
-                int x = await Context.SaveChangesAsync();
+                int x = await context.SaveChangesAsync();
 
                 return OperationResult.SuccessfulOperation();
             }
@@ -254,10 +271,12 @@ namespace Repositories
 
         public async Task<OperationResult<int>> UpdateRange(T[] Entities)
         {
+            using var context = new StateStorageDbContext(Options);
+
             try
             {
-                _Table.UpdateRange(Entities);
-                var affectedRows = await Context.SaveChangesAsync();
+                context.Set<T>().UpdateRange(Entities);
+                var affectedRows = await context.SaveChangesAsync();
 
                 return OperationResult<int>.SuccessfulOperation(affectedRows);
             }

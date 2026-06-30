@@ -61,17 +61,21 @@ namespace GENAP_MAUI.ViewModels
         {
             foreach (var item in Categories)
             {
-                if (GlobalResources.GlobalCategories.Where(c => c.CategoryId == item.CategoryId).Count() == 1 && GlobalResources.GlobalCategories.Where(c => c.CategoryId == item.CategoryId).First().CategoryName != item.CategoryName)
+                CategoryDto? oldCategory = GlobalResources.GlobalCategories.Where(c => c.CategoryId == item.CategoryId).FirstOrDefault();
+
+                if (oldCategory is not null && oldCategory.CategoryName != item.CategoryName)
                 {
-                    var OldName = GlobalResources.GlobalCategories.Where(c => c.CategoryId == item.CategoryId).First().CategoryName;
+                    var OldName = oldCategory.CategoryName;
                     var NewName = item.CategoryName;
 
                     var renameCategoryOperation = await _dataManagementService.RenameCategoryAsync(OldName, NewName);
 
+                    /*
                     if (!renameCategoryOperation.Success)
                     {
                         await Shell.Current.DisplayAlertAsync("Error", renameCategoryOperation.ErrorMessage, "Aceptar");
                     }
+                    */
                 }
             }
 

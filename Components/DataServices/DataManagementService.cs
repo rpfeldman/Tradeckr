@@ -50,7 +50,7 @@ namespace DataServices
 
             if(transactions.Count == 0)
             {
-                return OperationResult.FaultedOperation($"No category with the name {OldName} was found");
+                return OperationResult.FaultedOperation($"No movements with the category name {OldName} were found");
             }
 
             foreach (var transaction in transactions)
