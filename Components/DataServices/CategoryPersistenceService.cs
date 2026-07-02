@@ -71,7 +71,6 @@ namespace DataServices
             var getCategoriesOperation = await _StateStorage.GetAllAsync();
             return getCategoriesOperation;
         }
-
         public async Task<OperationResult> AddCategoriesAsync(CategoryDto[] categories)
         {
             foreach (var category in categories)
@@ -99,12 +98,13 @@ namespace DataServices
             }
             return OperationResult.FaultedOperation(saveRangeOperation.ErrorMessage);
         }
-
         public async Task<OperationResult<bool>> HasCategories()
         {
-            var anyCategoryOperation = await _StateStorage.AnyAsync();
-
-            return anyCategoryOperation;
+            return await _StateStorage.AnyAsync();
         }  
+        public async Task<OperationResult<bool>> ExistsAsync(int id)
+        {
+            return await _StateStorage.AnyAsync(c => c.Id == id);
+        }
     }
 }

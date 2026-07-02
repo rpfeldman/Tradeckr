@@ -56,9 +56,34 @@ namespace GENAP_MAUI.ViewModels
         [RelayCommand(CanExecute = nameof(SaveCanExecute))]
         public async Task Save()
         {
+
+            // I have to rethink this
+         
             foreach (var category in Categories)
             {
-                
+                var existsOperation = await _categoryPersistenceService.ExistsAsync(category.Id);
+                if (!existsOperation.Success)
+                {
+                    await Shell.Current.DisplayAlertAsync("Error", existsOperation.ErrorMessage, "Aceptar");
+                }
+
+                if (existsOperation.Result)
+                {
+                    var updateCategoryOperation = await _categoryPersistenceService.UpdateCategoryAsync(category.Id, category.Name, category.HexColor);
+                    if (!updateCategoryOperation.Success)
+                    {
+                        await Shell.Current.DisplayAlertAsync("Error", updateCategoryOperation.ErrorMessage, "Aceptar");
+                    }
+                    continue;
+                }
+
+                var saveCategoryOperation = await _categoryPersistenceService.AddCategoryAsync(category.Name, category.HexColor);
+                if (!saveCategoryOperation.Success)
+                {
+                    await Shell.Current.DisplayAlertAsync("Error", saveCategoryOperation.ErrorMessage, "Aceptar");
+                }
+
+                await Shell.Current.DisplayAlertAsync("Categorias", "Categorias guardadas correctamente", "Aceptar");
             }
         }
 
