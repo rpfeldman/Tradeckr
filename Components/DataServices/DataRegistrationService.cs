@@ -19,19 +19,24 @@ namespace DataServices
         /// <returns></returns>
         private async Task<OperationResult<int>> IdSetterForFixedTransactionsAsync() // As EF core can't generate values for non-keys properties and multiple instances will have the same ID, I decided make this method
         {
-            var fixedTransactions = await _StateStorage.GetEntitiesAsync(t => t is FixedTransactionDto);
-
-            if (!fixedTransactions.Success)
+            var anyFixedTransactionOperation = await _StateStorage.AnyAsync(t => t is FixedTransactionDto);
+            if (!anyFixedTransactionOperation.Success)
             {
-                return OperationResult<int>.FaultedOperation($"{fixedTransactions.ErrorMessage}");
+                return OperationResult<int>.FaultedOperation(anyFixedTransactionOperation.ErrorMessage);
             }
-
-            FixedTransactionDto? Last = (FixedTransactionDto?)fixedTransactions.Result?.OrderBy(t => (t as FixedTransactionDto)?.FixedTransactionId).LastOrDefault();
-
-            if (Last is null)
+            if (!anyFixedTransactionOperation.Result)
             {
                 return OperationResult<int>.SuccessfulOperation(0);
             }
+
+            var getFixedTransactionsOperation = await _StateStorage.GetEntitiesAsync(t => t is FixedTransactionDto);
+
+            if (!getFixedTransactionsOperation.Success)
+            {
+                return OperationResult<int>.FaultedOperation($"{getFixedTransactionsOperation.ErrorMessage}");
+            }
+
+            FixedTransactionDto Last = (FixedTransactionDto?)getFixedTransactionsOperation.Result?.OrderBy(t => (t as FixedTransactionDto)?.FixedTransactionId).Last()!;
 
             return OperationResult<int>.SuccessfulOperation(Last.FixedTransactionId + 1);
         }

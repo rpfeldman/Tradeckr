@@ -42,16 +42,22 @@ namespace DataServices
 
         public async Task<OperationResult> RenameCategoryAsync(string OldName, string NewName) 
         {
+            var anyTransactionOperation = await _StateStorage.AnyAsync(t => t.Category == OldName);
+
+            if (!anyTransactionOperation.Success)
+            {
+                return OperationResult.FaultedOperation(anyTransactionOperation.ErrorMessage);
+            }
+            if (!anyTransactionOperation.Result)
+            {
+                return OperationResult.FaultedOperation($"No movements with the category name {OldName} were found");
+            }
+
             var getOldTransactionsOperation = await _StateStorage.GetEntitiesAsync(t => t.Category == OldName);
             
             if(!getOldTransactionsOperation.Success) { return OperationResult.FaultedOperation(getOldTransactionsOperation.ErrorMessage); }
 
             var transactions = getOldTransactionsOperation.Result!;
-
-            if(transactions.Count == 0)
-            {
-                return OperationResult.FaultedOperation($"No movements with the category name {OldName} were found");
-            }
 
             foreach (var transaction in transactions)
             {
