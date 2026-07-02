@@ -33,7 +33,12 @@ namespace GENAP_MAUI
 
                 if (!anyCategoryOperation.Result)
                 {
-                    System.Diagnostics.Debug.WriteLine("no hay categorias xd");
+                    var setDefaultCategoriesOperation = await categoryPersistenService.AddCategoriesAsync(DefaultCategories.DefaultCategoriesList);
+
+                    if(!setDefaultCategoriesOperation.Success)
+                    {
+                        System.Diagnostics.Debug.WriteLine(setDefaultCategoriesOperation.ErrorMessage);
+                    }
                 }
             }
             catch (Exception x)
