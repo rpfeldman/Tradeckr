@@ -9,18 +9,10 @@ using System.Text;
 
 namespace DataServices
 {
-    public sealed class CategoryPersistenceService // I implemented the category management service as a single class because it's much simpler than the Transaction service and doesn't need a multi-class structure.
+    public sealed class CategoryPersistenceService(IStateStorage<CategoryDto> stateStorage) // I implemented the category management service as a single class because it's much simpler than the Transaction service and doesn't need a multi-class structure.
     {
-        private IStateStorage<CategoryDto> _StateStorage;
-
-        public CategoryPersistenceService(IStateStorage<CategoryDto> stateStorage)
-        {
-            _StateStorage = stateStorage;
-
-
-        }
-
-        public async Task<OperationResult> AddCategory(string name, string hexcolor)
+        private IStateStorage<CategoryDto> _StateStorage = stateStorage;
+        public async Task<OperationResult> AddCategoryAsync(string name, string hexcolor)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -44,11 +36,11 @@ namespace DataServices
 
             return await _StateStorage.SaveAsync(new CategoryDto() { Name = name, HexColor = hexcolor });
         }
-        public async Task<OperationResult> RemoveCategory(int  id)
+        public async Task<OperationResult> RemoveCategoryAsync(int  id)
         {
             return await _StateStorage.DeleteAsync(id);
         }
-        public async Task<OperationResult> UpdateCategory(int id, string? name = null, string? hexcolor = null)
+        public async Task<OperationResult> UpdateCategoryAsync(int id, string? name = null, string? hexcolor = null)
         {
             var getCategoryOperation = await _StateStorage.GetEntityAsync(id);
 
@@ -63,21 +55,21 @@ namespace DataServices
 
             return await _StateStorage.UpdateAsync(Category);
         }
-        public async Task<OperationResult<List<CategoryDto>>> GetCategories()
+        public async Task<OperationResult<List<CategoryDto>>> GetCategoriesAsync()
         {
-            var getCategoriesOperation = await _StateStorage.GetAllAsync();
-
-            if (getCategoriesOperation.Success)
+            var anyCategoriesOperation = await _StateStorage.AnyAsync();
+            if (!anyCategoriesOperation.Success)
             {
-                if(getCategoriesOperation.Result!.Count == 0)
-                {
-                    return OperationResult<List<CategoryDto>>.FaultedOperation("There's no categories available. At least one is required.");
-                }
-
-                return getCategoriesOperation;
+                return OperationResult<List<CategoryDto>>.FaultedOperation(anyCategoriesOperation.ErrorMessage);
+            }
+            if (!anyCategoriesOperation.Result)
+            {
+                return OperationResult<List<CategoryDto>>.FaultedOperation("There's no categories available. At least one is required.");
             }
 
+            var getCategoriesOperation = await _StateStorage.GetAllAsync();
             return getCategoriesOperation;
         }
+
     }
 }

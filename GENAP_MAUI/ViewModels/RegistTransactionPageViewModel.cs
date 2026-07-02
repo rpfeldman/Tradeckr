@@ -99,7 +99,7 @@ namespace GENAP_MAUI.ViewModels
             PickedValue = "0";
             PickedDate = DateTime.Today;
 
-            var getCategoryOperation = await _CategoryPersistenceService.GetCategories();
+            var getCategoryOperation = await _CategoryPersistenceService.GetCategoriesAsync();
             if (getCategoryOperation.Success)
             {
                 Categories = new(getCategoryOperation.Result!);

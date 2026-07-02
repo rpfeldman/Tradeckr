@@ -3,13 +3,7 @@
   "WorkspaceRootPath": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\GENAP_MAUI\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{740F01AE-8212-438F-9EC4-B08AF83A3E48}|..\\Components\\DataServices\\DataServices.csproj|c:\\users\\ramga\\source\\repos\\project_genap\\components\\dataservices\\datamanagementservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{740F01AE-8212-438F-9EC4-B08AF83A3E48}|..\\Components\\DataServices\\DataServices.csproj|c:\\users\\ramga\\source\\repos\\project_genap\\components\\dataservices\\dataprojectionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CCDC75DB-0116-9FCC-5B7F-79AACF97E8C5}|..\\Components\\Repositories\\Repositories.csproj|c:\\users\\ramga\\source\\repos\\project_genap\\components\\repositories\\istatestorage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{740F01AE-8212-438F-9EC4-B08AF83A3E48}|..\\Components\\DataServices\\DataServices.csproj|c:\\users\\ramga\\source\\repos\\project_genap\\components\\dataservices\\categorypersistenceservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -40,40 +34,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "DataManagementService.cs",
-              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\Components\\DataServices\\DataManagementService.cs",
-              "RelativeDocumentMoniker": "..\\Components\\DataServices\\DataManagementService.cs",
-              "ToolTip": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\Components\\DataServices\\DataManagementService.cs",
-              "RelativeToolTip": "..\\Components\\DataServices\\DataManagementService.cs",
-              "ViewState": "AgIAACgAAAAAf2lRn2gjwDsAAABDAAAAAAAAAA==",
+              "Title": "CategoryPersistenceService.cs",
+              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\Components\\DataServices\\CategoryPersistenceService.cs",
+              "RelativeDocumentMoniker": "..\\Components\\DataServices\\CategoryPersistenceService.cs",
+              "ToolTip": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\Components\\DataServices\\CategoryPersistenceService.cs*",
+              "RelativeToolTip": "..\\Components\\DataServices\\CategoryPersistenceService.cs*",
+              "ViewState": "AgIAAD4AAAAAAAAAAAAAAEAAAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-02T15:51:26.25Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "DataProjectionService.cs",
-              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\Components\\DataServices\\DataProjectionService.cs",
-              "RelativeDocumentMoniker": "..\\Components\\DataServices\\DataProjectionService.cs",
-              "ToolTip": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\Components\\DataServices\\DataProjectionService.cs",
-              "RelativeToolTip": "..\\Components\\DataServices\\DataProjectionService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAD8AAABYAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-02T15:51:08.517Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "IStateStorage.cs",
-              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\Components\\Repositories\\IStateStorage.cs",
-              "RelativeDocumentMoniker": "..\\Components\\Repositories\\IStateStorage.cs",
-              "ToolTip": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\Components\\Repositories\\IStateStorage.cs",
-              "RelativeToolTip": "..\\Components\\Repositories\\IStateStorage.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAABEAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-02T15:46:21.286Z",
+              "WhenOpened": "2026-07-02T15:54:40.444Z",
               "EditorCaption": ""
             }
           ]

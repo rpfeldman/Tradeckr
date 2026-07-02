@@ -62,7 +62,7 @@ namespace GENAP_MAUI.ViewModels
 		[RelayCommand]
         public async Task FillGraphs()
         {
-			var getCategoriesOperation = await _categoryPersistenceService.GetCategories();
+			var getCategoriesOperation = await _categoryPersistenceService.GetCategoriesAsync();
 
 			if (getCategoriesOperation.Success)
 			{

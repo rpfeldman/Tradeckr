@@ -56,7 +56,7 @@ namespace GENAP_MAUI.ViewModels
                 none: async () => { await Shell.Current.DisplayAlertAsync("Error", "Transaccion inexistente", "Aceptar"); await DirectNavigate(Routes.TransactionsList); }
             );
 
-            var getCategoriesOperation = await _categoryPersistenceService.GetCategories();
+            var getCategoriesOperation = await _categoryPersistenceService.GetCategoriesAsync();
 
             if (!getCategoriesOperation.Success)
             {
