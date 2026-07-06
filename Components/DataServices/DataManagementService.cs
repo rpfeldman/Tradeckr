@@ -64,7 +64,7 @@ namespace DataServices
                 transaction.Category = NewName;
             }
 
-            var updateRangeOperation = await _StateStorage.UpdateRange(transactions.ToArray());
+            var updateRangeOperation = await _StateStorage.UpdateRangeAsync(transactions.ToArray());
 
             if (updateRangeOperation.Success)
             {

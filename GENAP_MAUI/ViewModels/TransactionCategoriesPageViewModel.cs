@@ -28,7 +28,14 @@ namespace GENAP_MAUI.ViewModels
         }
 
         [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
         public partial ObservableCollection<CategoryDto> Categories { get; set; } = new();
+
+        private List<CategoryDto> DeletedCategories { get; set; } = [];
+
+        private List<CategoryDto> AddedCategories { get; set; } = [];
+
+        private CategoryDto[] OldCategories { get; set; } = [];
 
         [ObservableProperty]
         public partial ColorDto PickedColor { get; set; } 
@@ -41,13 +48,23 @@ namespace GENAP_MAUI.ViewModels
         public async Task DeleteCategory(CategoryDto Category)
         {
             Categories.Remove(Category);
+
+            if (OldCategories.Contains(Category))
+            {
+                DeletedCategories.Add(Category);
+            }
+            else { AddedCategories.Remove(Category); }
+            
             SaveCommand.NotifyCanExecuteChanged();
         }
 
         [RelayCommand(CanExecute = nameof(AddCategoryCanExecute))]
         public async Task AddCategory()
         {
-            Categories.Add(new CategoryDto { Name = NewCategory, HexColor = PickedColor.HexColor });
+            var newCategory = new CategoryDto { Name = NewCategory, HexColor = PickedColor.HexColor };
+
+            Categories.Add(newCategory);
+            AddedCategories.Add(newCategory);
 
 			SaveCommand.NotifyCanExecuteChanged();
             NewCategory = string.Empty;
@@ -56,35 +73,20 @@ namespace GENAP_MAUI.ViewModels
         [RelayCommand(CanExecute = nameof(SaveCanExecute))]
         public async Task Save()
         {
+            var Operations = await Task.WhenAll(
+                _categoryPersistenceService.RemoveCategoriesAsync([.. DeletedCategories]),
+                _categoryPersistenceService.AddCategoriesAsync([.. AddedCategories]),
+                _categoryPersistenceService.UpdateCategoriesAsync([.. Categories.Where(c => !DeletedCategories.Contains(c) && !AddedCategories.Contains(c))])
+                );
 
-            // I have to rethink this
-         
-            foreach (var category in Categories)
+            if (Operations.Any(o => !o.Success))
             {
-                var existsOperation = await _categoryPersistenceService.ExistsAsync(category.Id);
-                if (!existsOperation.Success)
-                {
-                    await Shell.Current.DisplayAlertAsync("Error", existsOperation.ErrorMessage, "Aceptar");
-                }
-
-                if (existsOperation.Result)
-                {
-                    var updateCategoryOperation = await _categoryPersistenceService.UpdateCategoryAsync(category.Id, category.Name, category.HexColor);
-                    if (!updateCategoryOperation.Success)
-                    {
-                        await Shell.Current.DisplayAlertAsync("Error", updateCategoryOperation.ErrorMessage, "Aceptar");
-                    }
-                    continue;
-                }
-
-                var saveCategoryOperation = await _categoryPersistenceService.AddCategoryAsync(category.Name, category.HexColor);
-                if (!saveCategoryOperation.Success)
-                {
-                    await Shell.Current.DisplayAlertAsync("Error", saveCategoryOperation.ErrorMessage, "Aceptar");
-                }
-
-                await Shell.Current.DisplayAlertAsync("Categorias", "Categorias guardadas correctamente", "Aceptar");
+                await Shell.Current.DisplayAlertAsync("Error", Operations.Where(o => !o.Success).First().ErrorMessage, "Aceptar");
+                return;
             }
+
+            await Shell.Current.DisplayAlertAsync("Categorias", "Se guardaron las categorias correctamente", "Aceptar");
+            await ReLoad();
         }
 
         [RelayCommand]
@@ -92,15 +94,18 @@ namespace GENAP_MAUI.ViewModels
         {
             PickedColor = GlobalResources.Colors[ColorsEnum.SteelBlue];
             NewCategory = string.Empty;
+            DeletedCategories.Clear();
+            AddedCategories.Clear();
 
             var getCategoryOperation = await _categoryPersistenceService.GetCategoriesAsync();
             if (getCategoryOperation.Success)
             {
                 Categories = new(getCategoryOperation.Result!);
+                OldCategories = [.. getCategoryOperation.Result!];
             }
             else { await Shell.Current.DisplayAlertAsync("Error", getCategoryOperation.ErrorMessage, "Aceptar"); }
         }
         private bool AddCategoryCanExecute() => !string.IsNullOrWhiteSpace(NewCategory) && !Categories.Any(c => c.Name == NewCategory) && PickedColor is not null;
-        private bool SaveCanExecute() => Categories.Count > 0;
+        private bool SaveCanExecute() => Categories.Count > 0 && !Categories.Any(c => string.IsNullOrWhiteSpace(c.Name));
     }
 }

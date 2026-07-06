@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using Repositories;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Security.Principal;
 using System.Text;
@@ -97,6 +98,37 @@ namespace DataServices
                 return OperationResult.SuccessfulOperation();
             }
             return OperationResult.FaultedOperation(saveRangeOperation.ErrorMessage);
+        }
+        public async Task<OperationResult> RemoveCategoriesAsync(CategoryDto[] categories)
+        {
+            return await _StateStorage.DeleteRangeAsync(categories);
+        }
+        public async Task<OperationResult> UpdateCategoriesAsync(CategoryDto[] categories)
+        {
+            foreach (var category in categories)
+            {
+                if (string.IsNullOrWhiteSpace(category.Name))
+                {
+                    return OperationResult.FaultedOperation($"{nameof(category.Name)} must have a content");
+                }
+                if (string.IsNullOrWhiteSpace(category.HexColor))
+                {
+                    return OperationResult.FaultedOperation($"{nameof(category.HexColor)} must have a content");
+                }
+            }
+
+            var updateRangeOperation = await _StateStorage.UpdateRangeAsync(categories);
+
+            if (updateRangeOperation.Success)
+            {
+                if (updateRangeOperation.Result != categories.Length)
+                {
+                    return OperationResult.FaultedOperation("Some categories couldn't be updated. A few were and others weren't. Please review and try again");
+                }
+
+                return OperationResult.SuccessfulOperation();
+            }
+            return OperationResult.FaultedOperation(updateRangeOperation.ErrorMessage);
         }
         public async Task<OperationResult<bool>> HasCategories()
         {

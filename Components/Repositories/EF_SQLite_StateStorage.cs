@@ -106,6 +106,37 @@ namespace Repositories
             }
         }
 
+        public async Task<OperationResult> DeleteRangeAsync(T[] Entities)
+        { 
+            using var context = new StateStorageDbContext(Options);
+
+            try
+            {
+                if(Entities.Any(e => e is null))
+                {
+                    return OperationResult.FaultedOperation($"{typeof(T).Name} can't be null");
+                }
+
+                Context.Set<T>().RemoveRange(Entities);
+
+                var a = await Context.SaveChangesAsync();
+
+                return OperationResult.SuccessfulOperation();
+            }
+            catch (SqliteException)
+            {
+                return OperationResult.FaultedOperation("An error occurred while trying to connect to the storage system. Please try again");
+            }
+            catch (DbUpdateException)
+            {
+                return OperationResult.FaultedOperation("An error occurred while trying to save the changes. Please try again");
+            }
+            catch (TimeoutException)
+            {
+                return OperationResult.FaultedOperation("The operation took too long. Please try again");
+            }
+        }
+
         public async Task<OperationResult<List<T>>> GetAllAsync()
         {
             using var context = new StateStorageDbContext(Options);
@@ -236,7 +267,6 @@ namespace Repositories
             {
                 return OperationResult<int>.FaultedOperation("The operation took too long. Please try again");
             }
-
         }
 
         public async Task<OperationResult> UpdateAsync(T NewEntity)
@@ -269,7 +299,7 @@ namespace Repositories
             }
         }
 
-        public async Task<OperationResult<int>> UpdateRange(T[] Entities)
+        public async Task<OperationResult<int>> UpdateRangeAsync(T[] Entities)
         {
             using var context = new StateStorageDbContext(Options);
 
