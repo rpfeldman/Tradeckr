@@ -1,5 +1,4 @@
 ﻿
-
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DataServices;
@@ -49,7 +48,7 @@ namespace GENAP_MAUI.ViewModels
         {
             Categories.Remove(Category);
 
-            if (OldCategories.Contains(Category))
+            if (OldCategories.Any(c => c.Id == Category.Id))
             {
                 DeletedCategories.Add(Category);
             }
@@ -73,15 +72,27 @@ namespace GENAP_MAUI.ViewModels
         [RelayCommand(CanExecute = nameof(SaveCanExecute))]
         public async Task Save()
         {
+            // I definitely have to review this....
+
+            List<CategoryDto> updatedCategories = [];
+
+            foreach (var item in Categories.Where(c => OldCategories.Where(ca => ca.Id == c.Id).First().Name != c.Name))
+            {
+                var oldName = OldCategories.Where(c => c.Id == item.Id).First().Name;
+                await _dataManagementService.RenameCategoryAsync(oldName, item.Name);
+                updatedCategories.Add(item);
+            }
+
             var Operations = await Task.WhenAll(
                 _categoryPersistenceService.RemoveCategoriesAsync([.. DeletedCategories]),
                 _categoryPersistenceService.AddCategoriesAsync([.. AddedCategories]),
-                _categoryPersistenceService.UpdateCategoriesAsync([.. Categories.Where(c => !DeletedCategories.Contains(c) && !AddedCategories.Contains(c))])
+                _categoryPersistenceService.UpdateCategoriesAsync([.. updatedCategories])
                 );
 
             if (Operations.Any(o => !o.Success))
             {
                 await Shell.Current.DisplayAlertAsync("Error", Operations.Where(o => !o.Success).First().ErrorMessage, "Aceptar");
+                await ReLoad();
                 return;
             }
 
@@ -100,7 +111,7 @@ namespace GENAP_MAUI.ViewModels
             var getCategoryOperation = await _categoryPersistenceService.GetCategoriesAsync();
             if (getCategoryOperation.Success)
             {
-                Categories = new(getCategoryOperation.Result!);
+                Categories = new(getCategoryOperation.Result!.Select(c => new CategoryDto() { Name = c.Name, HexColor = c.HexColor, Id = c.Id }));
                 OldCategories = [.. getCategoryOperation.Result!];
             }
             else { await Shell.Current.DisplayAlertAsync("Error", getCategoryOperation.ErrorMessage, "Aceptar"); }
