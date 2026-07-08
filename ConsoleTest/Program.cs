@@ -13,7 +13,7 @@ namespace ConsoleTest
     {
         static async Task Main(string[] args)
         {
-            EF_SQLite_StateStorageRepo<CategoryDto> repo = new("Test.db");
+            EF_SQLite_StateStorageRepo<TransactionDto> repo = new("Test.db");
             var today = DateOnly.FromDateTime(DateTime.Today);
         }
     }

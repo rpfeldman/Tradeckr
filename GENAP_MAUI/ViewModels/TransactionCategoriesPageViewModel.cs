@@ -74,6 +74,25 @@ namespace GENAP_MAUI.ViewModels
         {
             // I definitely have to review this....
 
+            const string ActionTitle = "Se ha detectado que has borrado una o mas categorias\n¿que desea hacer con los movimiento asociados a las mismas?";
+            const string ActionCancelBtn = "Cancelar";
+            const string ActionDeleteAllBtn = "Eliminar todos los movimientos asociados";
+            const string ActionPreserveBtn = "Mantener los movimientos sin categoria";
+
+            Task<OperationResult> ActionMethod = Task.FromResult(OperationResult.SuccessfulOperation());
+            if (DeletedCategories.Count != 0)
+            {
+                var action = await Shell.Current.DisplayActionSheetAsync(ActionTitle, ActionCancelBtn, ActionDeleteAllBtn, buttons: [ActionPreserveBtn]);
+
+                switch (action)
+                {
+                    case ActionCancelBtn: await ReLoad(); return;
+                    case ActionDeleteAllBtn: ActionMethod = _dataManagementService.RemoveFromCategories([.. DeletedCategories.Select(c => c.Name)]); break;
+                    case ActionPreserveBtn: break;
+                }   
+            }
+
+            // URGENT refactor, sequence contains no elements exception in a common case
             List<CategoryDto> updatedCategories = [];
 
             foreach (var item in Categories.Where(c => OldCategories.Where(ca => ca.Id == c.Id).First().Name != c.Name))
@@ -84,10 +103,11 @@ namespace GENAP_MAUI.ViewModels
             }
 
             var Operations = await Task.WhenAll(
-                _categoryPersistenceService.RemoveCategoriesAsync([.. DeletedCategories]),
-                _categoryPersistenceService.AddCategoriesAsync([.. AddedCategories]),
-                _categoryPersistenceService.UpdateCategoriesAsync([.. updatedCategories])
-                );
+               _categoryPersistenceService.RemoveCategoriesAsync([.. DeletedCategories]),
+               _categoryPersistenceService.AddCategoriesAsync([.. AddedCategories]),
+               _categoryPersistenceService.UpdateCategoriesAsync([.. updatedCategories]),
+               ActionMethod
+               );
 
             if (Operations.Any(o => !o.Success))
             {

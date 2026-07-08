@@ -123,6 +123,17 @@ namespace DataServices
 
             return OperationResult.FaultedOperation(DeleteFromRangeOperation.ErrorMessage);
         }
+        public async Task<OperationResult> RemoveFromCategories(string[] Categories)
+        {
+            var transactionsFromCategories = await _StateStorage.GetEntitiesAsync(t => Categories.Contains(t.Category));
+
+            if (!transactionsFromCategories.Success)
+            {
+                return OperationResult.FaultedOperation(transactionsFromCategories.ErrorMessage);
+            }
+
+            return await _StateStorage.DeleteRangeAsync([.. transactionsFromCategories.Result!]);
+        }
         public async Task<OperationResult> RestartDataAsync()
         {
             return await _StateStorage.ClearStorageAsync();
