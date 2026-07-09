@@ -7,7 +7,6 @@ using LiveChartsCore;
 using LiveChartsCore.Defaults;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
-using Microcharts;
 using Microsoft.Maui.Platform;
 using SkiaSharp;
 using System;
