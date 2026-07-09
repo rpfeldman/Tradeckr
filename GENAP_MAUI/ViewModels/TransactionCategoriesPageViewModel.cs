@@ -92,14 +92,18 @@ namespace GENAP_MAUI.ViewModels
                 }   
             }
 
-            // URGENT refactor, sequence contains no elements exception in a common case
             List<CategoryDto> updatedCategories = [];
-
-            foreach (var item in Categories.Where(c => OldCategories.Where(ca => ca.Id == c.Id).First().Name != c.Name))
+            foreach (var category in Categories.Join(OldCategories, a => a.Id, b => b.Id, (a, b) => new { A = a, B = b }).Where(cat => cat.A.Name != cat.B.Name))
             {
-                var oldName = OldCategories.Where(c => c.Id == item.Id).First().Name;
-                await _dataManagementService.RenameCategoryAsync(oldName, item.Name);
-                updatedCategories.Add(item);
+                updatedCategories.Add(category.A);
+
+                var renameCategoryOperation = await _dataManagementService.RenameCategoryAsync(category.B.Name, category.A.Name);
+
+                if (!renameCategoryOperation.Success)
+                {
+                    await Shell.Current.DisplayAlertAsync("Error", renameCategoryOperation.ErrorMessage, "Aceptar");
+                    return;
+                }
             }
 
             var Operations = await Task.WhenAll(
