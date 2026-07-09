@@ -36,6 +36,7 @@ namespace GENAP_MAUI
             builder.Services.AddTransient<GraphsPageViewModel>();
             builder.Services.AddTransient<TransactionsCollectionPageViewModel>();
             builder.Services.AddTransient<TransactionPageViewModel>();
+            builder.Services.AddTransient<ClearStorageConfirmationPageViewModel>();
 
             // Data services & the repository
             var dbPath = Path.Combine(FileSystem.AppDataDirectory, "Test.db");
