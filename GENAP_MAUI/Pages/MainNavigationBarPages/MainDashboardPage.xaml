@@ -21,7 +21,7 @@
                             <Label.FormattedText>
                                 <FormattedString>
                                     <Span Text="Bienvenido, " />
-                                    <Span Text="[usuario]"
+                                    <Span Text="{x:Static local:GlobalResources.UserName}"
                                           TextColor="{AppThemeBinding Light={StaticResource AccentLight}, Dark={StaticResource AccentDark}}" />
                                 </FormattedString>
                             </Label.FormattedText>
@@ -44,7 +44,15 @@
                     </Border.GestureRecognizers>
 
                     <VerticalStackLayout Spacing="4" Padding="0">
-                        <Label Text="Balance de [mes]" Style="{StaticResource ChartTitle}" />
+                        <Label Style="{StaticResource ChartTitle}">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="Balance de " />
+                                    <Span Text="{Binding Month}"
+                                          TextColor="{AppThemeBinding Light={StaticResource AccentLight}, Dark={StaticResource AccentDark}}" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
                         <chart:BalanceDoughnutChart Expenses="{Binding MonthExpenses}"
                                                     Income="{Binding MonthIncome}" />
                         <Label Text="Ver gráficos ›"

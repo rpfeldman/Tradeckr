@@ -27,6 +27,8 @@ namespace GENAP_MAUI.ViewModels
         [ObservableProperty]
         public partial List<TransactionDto> MonthTransactions { get; set; }
 
+        public string Month { get { return GlobalResources.Months[DateTime.Today.Month]; } }
+
         [RelayCommand]
         public void ChangeTheme()
         {

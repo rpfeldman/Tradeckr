@@ -10,11 +10,16 @@ namespace GENAP_MAUI
 {
     public sealed class GlobalResources
     {
+        // This is currently hardcoded, in the future it should get the name of the user from a JSON file that saves it
+        public const string UserName = "Genaro";
+
+        // Months name are also hardcoded, in the future they will be fetched by a CSV file with the translations
+        public static string[] Months { get => ["Desconocido", "enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]; }
+
         // TimePeriod is split in 3: the enum (type-safe id), the display name (what the user sees), and the logic (per consumption point)
         // To add one: extend the enum, map its display name, handle its logic where consumed.
         public enum TimePeriodsEnum { Historical, HistoricalToday, Month, ThirtyDays, ThreeMonths, Semester, Year, Today }; 
         public Dictionary<TimePeriodsEnum, string> TimePeriods { get; }
-
         public List<KeyValuePair<TimePeriodsEnum, string>> TimePeriodsList { get; }
 
         // Same as TimePeriods
