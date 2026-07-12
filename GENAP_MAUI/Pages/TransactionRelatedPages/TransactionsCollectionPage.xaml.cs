@@ -11,10 +11,13 @@ public partial class TransactionsCollectionPage : ContentPage
 		BindingContext = vm;
 	}
 
-    protected override void OnAppearing()
+    protected override async void OnAppearing()
     {
         base.OnAppearing();
 
-        (BindingContext as TransactionsCollectionPageViewModel)?.ReloadTransactions(GlobalResources.TimePeriodsEnum.Historical);
+        if (BindingContext is TransactionsCollectionPageViewModel vm)
+        {
+            await vm.ReLoadCommand.ExecuteAsync(false);
+        }
     }
 }

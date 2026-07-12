@@ -28,9 +28,6 @@ namespace GENAP_MAUI
                     fonts.AddFont("Symbols.ttf", "Symbols");
                 });
 
-            // Global resources
-            builder.Services.AddSingleton<GlobalResources>();
-
             // ViewModels
             builder.Services.AddTransient<MainDashboardPageViewModel>();
             builder.Services.AddTransient<RegistTransactionPageViewModel>();

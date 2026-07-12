@@ -13,13 +13,9 @@ namespace GENAP_MAUI.ViewModels
     public sealed partial class TransactionsCollectionPageViewModel : BaseViewModel
     {
         private DataProjectionService _dataProjectionService;
-        private DataManagementService _dataManagementService;
-        public TransactionsCollectionPageViewModel(DataProjectionService dataProjectionService, DataManagementService dataManagementService)
+        public TransactionsCollectionPageViewModel(DataProjectionService dataProjectionService)
         {
             _dataProjectionService = dataProjectionService;
-            _dataManagementService = dataManagementService;
-
-            PickedTimePeriod = GlobalResources.TimePeriods.Where(d => d.Key == GlobalResources.TimePeriodsEnum.Month).First();
         }
 
         [ObservableProperty]
@@ -30,16 +26,7 @@ namespace GENAP_MAUI.ViewModels
 
         async partial void OnPickedTimePeriodChanged(KeyValuePair<GlobalResources.TimePeriodsEnum, string> value)
         {
-            try
-            {
-                await ReloadTransactions(value.Key);
-            }
-            catch (Exception x)
-            {
-                // FUTURE: Exception managment
-
-                Console.WriteLine(x);
-            }
+            await ReloadTransactions(value.Key);
         }
 
         [RelayCommand]
@@ -108,8 +95,15 @@ namespace GENAP_MAUI.ViewModels
             if (GetTransactionsOperation.Success)
             {
                 Transactions = new(GetTransactionsOperation.Result!);
-            }else { /* to - do */ }
+            }else  { await Shell.Current.DisplayAlertAsync("Error", GetTransactionsOperation.ErrorMessage, "Aceptar"); }
         }
 
+        [RelayCommand]
+        public async Task ReLoad()
+        {
+            PickedTimePeriod = GlobalResources.TimePeriods.Where(d => d.Key == GlobalResources.TimePeriodsEnum.Month).First();
+
+            await ReloadTransactions(PickedTimePeriod.Key);
+        }
     }
 }
