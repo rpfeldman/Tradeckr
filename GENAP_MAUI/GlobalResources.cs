@@ -19,14 +19,25 @@ namespace GENAP_MAUI
         // TimePeriod is split in 3: the enum (type-safe id), the display name (what the user sees), and the logic (per consumption point)
         // To add one: extend the enum, map its display name, handle its logic where consumed.
         public enum TimePeriodsEnum { Historical, HistoricalToday, Month, ThirtyDays, ThreeMonths, Semester, Year, Today }; 
-        public Dictionary<TimePeriodsEnum, string> TimePeriods { get; }
-        public List<KeyValuePair<TimePeriodsEnum, string>> TimePeriodsList { get; }
+        public static Dictionary<TimePeriodsEnum, string> TimePeriods { get => new()
+            {
+                {TimePeriodsEnum.Historical, "Historico"},
+                {TimePeriodsEnum.HistoricalToday, "Historico hasta hoy"},
+                {TimePeriodsEnum.Year, "Ultimo año"},
+                {TimePeriodsEnum.Semester, "Ultimo semestre"},
+                {TimePeriodsEnum.ThreeMonths, "Ultimos 3 meses"},
+                {TimePeriodsEnum.Month, "Este mes"},
+                {TimePeriodsEnum.ThirtyDays, "Ultimos 30 dias"},
+                {TimePeriodsEnum.Today, "Hoy"},
+            };
+        }
+        public static List<KeyValuePair<TimePeriodsEnum, string>> TimePeriodsList { get => [.. TimePeriods]; }
 
         // Same as TimePeriods
 
         public enum ColorsEnum { SteelBlue, Yellow, Green, Purple, Aqua, Coral, Red, Emerald, Cyan, Indigo, Magenta } 
 
-        public static Dictionary<ColorsEnum, ColorDto> Colors { get; } = new()
+        public static Dictionary<ColorsEnum, ColorDto> Colors { get => new()
         {
             { ColorsEnum.SteelBlue, new ColorDto("#466C87", "Azul plateado") },
             { ColorsEnum.Yellow, new ColorDto("#F1C40F", "Amarillo") },
@@ -39,24 +50,9 @@ namespace GENAP_MAUI
             { ColorsEnum.Cyan, new ColorDto("#00BCD4", "Celeste") },
             { ColorsEnum.Indigo, new ColorDto("#5C6BC0", "Lavanda") },
             { ColorsEnum.Magenta, new ColorDto("#E84393", "Magenta") },
-        };
-
-        public static List<ColorDto> ColorList { get; } = [.. Colors.Values];
-        public GlobalResources()
-        {
-            TimePeriods = new()
-            {
-                {TimePeriodsEnum.Historical, "Historico"},
-                {TimePeriodsEnum.HistoricalToday, "Historico hasta hoy"},
-                {TimePeriodsEnum.Year, "Ultimo año"},
-                {TimePeriodsEnum.Semester, "Ultimo semestre"},
-                {TimePeriodsEnum.ThreeMonths, "Ultimos 3 meses"},
-                {TimePeriodsEnum.Month, "Este mes"},
-                {TimePeriodsEnum.ThirtyDays, "Ultimos 30 dias"},
-                {TimePeriodsEnum.Today, "Hoy"},
-            };
-
-            TimePeriodsList = [.. TimePeriods];
+        }; 
         }
+        
+        public static List<ColorDto> ColorList { get => [.. Colors.Values]; } 
     }
 }

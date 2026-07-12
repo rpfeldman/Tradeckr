@@ -14,17 +14,12 @@ namespace GENAP_MAUI.ViewModels
     {
         private DataProjectionService _dataProjectionService;
         private DataManagementService _dataManagementService;
-
-        public GlobalResources GlobalResources { get; }
-
-        public TransactionsCollectionPageViewModel(DataProjectionService dataProjectionService, DataManagementService dataManagementService, GlobalResources globalResources)
+        public TransactionsCollectionPageViewModel(DataProjectionService dataProjectionService, DataManagementService dataManagementService)
         {
             _dataProjectionService = dataProjectionService;
             _dataManagementService = dataManagementService;
 
-            GlobalResources = globalResources;
-
-            PickedTimePeriod = GlobalResources.TimePeriods.First();
+            PickedTimePeriod = GlobalResources.TimePeriods.Where(d => d.Key == GlobalResources.TimePeriodsEnum.Month).First();
         }
 
         [ObservableProperty]

@@ -20,7 +20,7 @@
 
         <Border Grid.Row="1" Style="{StaticResource InputField}" Margin="20,16,20,8">
             <Picker Title="Seleccionar período de tiempo"
-                    ItemsSource="{Binding GlobalResources.TimePeriodsList}"
+                    ItemsSource="{x:Static local:GlobalResources.TimePeriodsList}"
                     ItemDisplayBinding="{Binding Value}"
                     SelectedItem="{Binding PickedTimePeriod}" />
         </Border>

@@ -19,12 +19,9 @@ namespace GENAP_MAUI.ViewModels
 	{
 		private DataProjectionService _dataProjectionService;
 		private CategoryPersistenceService _categoryPersistenceService;
-		public GlobalResources GlobalResources { get; }
-
-		public GraphsPageViewModel(DataProjectionService dataProjectionService, CategoryPersistenceService categoryPersistenceService, GlobalResources globalResources)
+		public GraphsPageViewModel(DataProjectionService dataProjectionService, CategoryPersistenceService categoryPersistenceService)
 		{
 			_dataProjectionService = dataProjectionService;
-			GlobalResources = globalResources;
 			_categoryPersistenceService = categoryPersistenceService;
 
 			PickedTimePeriod = GlobalResources.TimePeriods.Where(d => d.Key == GlobalResources.TimePeriodsEnum.Month).First();
