@@ -93,7 +93,9 @@ namespace GENAP_MAUI.ViewModels
             }
 
             List<CategoryDto> updatedCategories = [];
-            foreach (var category in Categories.Join(OldCategories, a => a.Id, b => b.Id, (a, b) => new { A = a, B = b }).Where(cat => cat.A.Name != cat.B.Name))
+
+            var updatedCategoriesList = Categories.Join(OldCategories, a => a.Id, b => b.Id, (a, b) => new { A = a, B = b }).Where(cat => cat.A.Name != cat.B.Name);
+            foreach (var category in updatedCategoriesList)
             {
                 updatedCategories.Add(category.A);
 
@@ -101,8 +103,11 @@ namespace GENAP_MAUI.ViewModels
 
                 if (!renameCategoryOperation.Success)
                 {
-                    await Shell.Current.DisplayAlertAsync("Error", renameCategoryOperation.ErrorMessage, "Aceptar");
-                    return;
+                    if(renameCategoryOperation.ErrorMessage != $"No movements with the category name {category.B.Name} were found") // TO-DO: add errorcodes
+                    {
+                        await Shell.Current.DisplayAlertAsync("Error", renameCategoryOperation.ErrorMessage, "Aceptar");
+                        return;
+                    }
                 }
             }
 
