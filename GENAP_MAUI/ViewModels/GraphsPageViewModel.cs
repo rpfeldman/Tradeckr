@@ -53,46 +53,6 @@ namespace GENAP_MAUI.ViewModels
         {
             await ReFillGraphs(value.Key);
         }
-
-		[RelayCommand]
-        public async Task FillGraphs()
-        {
-            PickedTimePeriod = GlobalResources.TimePeriods.Where(d => d.Key == GlobalResources.TimePeriodsEnum.Month).First();
-
-            var getCategoriesOperation = await _categoryPersistenceService.GetCategoriesAsync();
-
-			if (getCategoriesOperation.Success)
-			{
-				Categories = new(getCategoriesOperation.Result!);
-			}else { await Shell.Current.DisplayAlertAsync("Error", getCategoriesOperation.ErrorMessage, "Aceptar"); }
-
-            var GetExpensesTask = _dataProjectionService.GetAllAsync(true);
-			var GetIncomeTask = _dataProjectionService.GetAllAsync(false);
-			var GetTransactionsTask = _dataProjectionService.GetAllAsync();
-
-			var TaskResults = await Task.WhenAll(GetExpensesTask, GetIncomeTask, GetTransactionsTask);
-
-			if (TaskResults[0].Success)
-			{
-                ExpensesLog = TaskResults[0].Result!;
-            } else { await Shell.Current.DisplayAlertAsync("Error", TaskResults[0].ErrorMessage, "Aceptar"); }
-
-			if (TaskResults[1].Success)
-			{
-                IncomeLog = TaskResults[1].Result!;
-            } else { await Shell.Current.DisplayAlertAsync("Error", TaskResults[1].ErrorMessage, "Aceptar"); }
-
-            if (TaskResults[2].Success)
-			{
-				TransactionsLog = TaskResults[2].Result!;
-			} else { await Shell.Current.DisplayAlertAsync("Error", TaskResults[2].ErrorMessage, "Aceptar"); }
-
-            Expenses = DataProjectionService.GetSummedTransactions(ExpensesLog);
-            Income = DataProjectionService.GetSummedTransactions(IncomeLog);
-
-            return;
-		}
-
 		public async Task ReFillGraphs(GlobalResources.TimePeriodsEnum timePeriod)
 		{
             Task<OperationResult<List<TransactionDto>>>? GetExpensesTask = null;
@@ -231,5 +191,13 @@ namespace GENAP_MAUI.ViewModels
 
 			return;
 		}
+
+		[RelayCommand]
+		public async Task ReLoad()
+		{
+            PickedTimePeriod = GlobalResources.TimePeriods.Where(d => d.Key == GlobalResources.TimePeriodsEnum.Month).First();
+
+			await ReFillGraphs(PickedTimePeriod.Key);
+        }
     }
 }

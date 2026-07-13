@@ -16,7 +16,7 @@ public partial class GraphsPage : ContentPage
     {
         if (BindingContext is GraphsPageViewModel vm)
         {
-            await vm.FillGraphsCommand.ExecuteAsync(false);
+            await vm.ReLoadCommand.ExecuteAsync(false);
         }
     }
 
