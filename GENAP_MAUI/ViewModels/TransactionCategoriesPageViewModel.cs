@@ -92,6 +92,12 @@ namespace GENAP_MAUI.ViewModels
                 }   
             }
 
+            if (Categories.DistinctBy(c => c.Name).Count() != Categories.Count)
+            {
+                await Shell.Current.DisplayAlertAsync("Error", "No puede haber 2 categorias con el mismo nombre\n\nNo se guardaron las categorias", "Aceptar");
+                return;
+            }
+
             List<CategoryDto> updatedCategories = [];
 
             var updatedCategoriesList = Categories.Join(OldCategories, a => a.Id, b => b.Id, (a, b) => new { A = a, B = b }).Where(cat => cat.A.Name != cat.B.Name);
