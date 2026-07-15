@@ -19,14 +19,14 @@ public partial class DoubleComparisonLineChart : ContentView
 
     public static readonly BindableProperty Transactions1Property = BindableProperty.Create(
         nameof(Transactions1),
-        typeof(List<TransactionDto>),
+        typeof(IEnumerable<TransactionDto>),
         typeof(DoubleComparisonLineChart),
-        new List<TransactionDto>(),
+        Array.Empty<TransactionDto>(),
         propertyChanged: OnDataChanged);
 
-    public List<TransactionDto> Transactions1
+    public IEnumerable<TransactionDto> Transactions1
     {
-        get => (List<TransactionDto>)GetValue(Transactions1Property);
+        get => (IEnumerable<TransactionDto>)GetValue(Transactions1Property);
         set => SetValue(Transactions1Property, value);
     }
 
@@ -45,14 +45,14 @@ public partial class DoubleComparisonLineChart : ContentView
 
     public static readonly BindableProperty Transactions2Property = BindableProperty.Create(
         nameof(Transactions2),
-        typeof(List<TransactionDto>),
+        typeof(IEnumerable<TransactionDto>),
         typeof(DoubleComparisonLineChart),
-        new List<TransactionDto>(),
+        Array.Empty<TransactionDto>(),
         propertyChanged: OnDataChanged);
 
-    public List<TransactionDto> Transactions2
+    public IEnumerable<TransactionDto> Transactions2
     {
-        get => (List<TransactionDto>)GetValue(Transactions2Property);
+        get => (IEnumerable<TransactionDto>)GetValue(Transactions2Property);
         set => SetValue(Transactions2Property, value);
     }
 
@@ -168,8 +168,11 @@ public partial class DoubleComparisonLineChart : ContentView
 
     private void UpdateChart()
     {
-        var hasAny1 = Transactions1 is not null && Transactions1.Count > 0;
-        var hasAny2 = Transactions2 is not null && Transactions2.Count > 0;
+        var transactions1 = Transactions1?.ToList() ?? [];
+        var transactions2 = Transactions2?.ToList() ?? [];
+
+        var hasAny1 = transactions1.Count > 0;
+        var hasAny2 = transactions2.Count > 0;
 
         if (!hasAny1 && !hasAny2)
         {
@@ -187,8 +190,8 @@ public partial class DoubleComparisonLineChart : ContentView
         HasData = true;
         IsEmpty = false;
 
-        var dailyTotal1 = hasAny1 ? BuildDailyTotal(Transactions1) : new Dictionary<DateOnly, decimal>();
-        var dailyTotal2 = hasAny2 ? BuildDailyTotal(Transactions2) : new Dictionary<DateOnly, decimal>();
+        var dailyTotal1 = hasAny1 ? BuildDailyTotal(transactions1) : new Dictionary<DateOnly, decimal>();
+        var dailyTotal2 = hasAny2 ? BuildDailyTotal(transactions2) : new Dictionary<DateOnly, decimal>();
 
         var (from, to) = ComputeSharedRange(dailyTotal1, dailyTotal2);
         _dates = BuildDateRange(from, to);
@@ -260,7 +263,7 @@ public partial class DoubleComparisonLineChart : ContentView
         }
     }
 
-    private static Dictionary<DateOnly, decimal> BuildDailyTotal(List<TransactionDto> transactions)
+    private static Dictionary<DateOnly, decimal> BuildDailyTotal(IEnumerable<TransactionDto> transactions)
     {
         return transactions
             .GroupBy(t => t.Date)

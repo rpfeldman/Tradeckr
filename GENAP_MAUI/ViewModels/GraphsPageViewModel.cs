@@ -34,13 +34,13 @@ namespace GENAP_MAUI.ViewModels
 		public partial ObservableCollection<CategoryDto> Categories { get; set; } = new();
 
         [ObservableProperty]
-        public partial List<TransactionDto> ExpensesLog { get; set; } = [];
+        public partial IEnumerable<TransactionDto> ExpensesLog { get; set; } = [];
 
 		[ObservableProperty]
-		public partial List<TransactionDto> IncomeLog { get; set; } = [];
+		public partial IEnumerable<TransactionDto> IncomeLog { get; set; } = [];
 
 		[ObservableProperty]
-		public partial List<TransactionDto> TransactionsLog { get; set; } = [];
+		public partial IEnumerable<TransactionDto> TransactionsLog { get; set; } = [];
 
 		[ObservableProperty]
 		public partial decimal Expenses { get; set; }
@@ -175,15 +175,15 @@ namespace GENAP_MAUI.ViewModels
 
             if (TaskResults[0].Success)
             {
-                ExpensesLog = [.. TaskResults[0].Result!];
+                ExpensesLog = TaskResults[0].Result!;
             }
             if (TaskResults[1].Success)
             {
-                IncomeLog = [.. TaskResults[1].Result!];
+                IncomeLog = TaskResults[1].Result!;
             }
             if (TaskResults[2].Success)
             {
-                TransactionsLog = [.. TaskResults[2].Result!];
+                TransactionsLog = TaskResults[2].Result!;
             }
 
             Expenses = DataProjectionService.GetSummedTransactions(ExpensesLog);

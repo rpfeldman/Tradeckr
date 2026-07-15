@@ -23,14 +23,14 @@ public partial class BalanceLineChart : ContentView
 
     public static readonly BindableProperty TransactionsProperty = BindableProperty.Create(
         nameof(Transactions),
-        typeof(List<TransactionDto>),
+        typeof(IEnumerable<TransactionDto>),
         typeof(BalanceLineChart),
-        new List<TransactionDto>(),
+        Array.Empty<TransactionDto>(),
         propertyChanged: OnDataChanged);
 
-    public List<TransactionDto> Transactions
+    public IEnumerable<TransactionDto> Transactions
     {
-        get => (List<TransactionDto>)GetValue(TransactionsProperty);
+        get => (IEnumerable<TransactionDto>)GetValue(TransactionsProperty);
         set => SetValue(TransactionsProperty, value);
     }
 
@@ -147,7 +147,9 @@ public partial class BalanceLineChart : ContentView
 
     private void UpdateChart()
     {
-        if (Transactions is null || Transactions.Count == 0)
+        var transactions = Transactions?.ToList() ?? [];
+
+        if (transactions.Count == 0)
         {
             HasData = false;
             IsEmpty = true;
@@ -166,7 +168,7 @@ public partial class BalanceLineChart : ContentView
         HasData = true;
         IsEmpty = false;
 
-        var (dates, accumulatedValues) = AccumulateByDay(Transactions);
+        var (dates, accumulatedValues) = AccumulateByDay(transactions);
         _dates = dates;
 
         var hasFewPoints = accumulatedValues.Length <= 3;
@@ -178,7 +180,7 @@ public partial class BalanceLineChart : ContentView
         OnPropertyChanged(nameof(XAxes));
     }
 
-    private static (DateOnly[] Dates, double[] Values) AccumulateByDay(List<TransactionDto> transactions)
+    private static (DateOnly[] Dates, double[] Values) AccumulateByDay(IEnumerable<TransactionDto> transactions)
     {
         var dailyNet = transactions
             .GroupBy(t => t.Date)

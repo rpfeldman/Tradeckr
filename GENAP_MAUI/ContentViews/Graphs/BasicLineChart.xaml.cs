@@ -18,14 +18,14 @@ public partial class BasicLineChart : ContentView
 
     public static readonly BindableProperty TransactionsProperty = BindableProperty.Create(
         nameof(Transactions),
-        typeof(List<TransactionDto>),
+        typeof(IEnumerable<TransactionDto>),
         typeof(BasicLineChart),
-        new List<TransactionDto>(),
+        Array.Empty<TransactionDto>(),
         propertyChanged: OnDataChanged);
 
-    public List<TransactionDto> Transactions
+    public IEnumerable<TransactionDto> Transactions
     {
-        get => (List<TransactionDto>)GetValue(TransactionsProperty);
+        get => (IEnumerable<TransactionDto>)GetValue(TransactionsProperty);
         set => SetValue(TransactionsProperty, value);
     }
 
@@ -142,7 +142,9 @@ public partial class BasicLineChart : ContentView
     {
         var color = ToSkColor(LineColor);
 
-        if (Transactions is null || Transactions.Count == 0)
+        var transactions = Transactions?.ToList() ?? [];
+
+        if (transactions.Count == 0)
         {
             HasData = false;
             IsEmpty = true;
@@ -158,7 +160,7 @@ public partial class BasicLineChart : ContentView
         HasData = true;
         IsEmpty = false;
 
-        var (dates, accumulatedValues) = AccumulateByDay(Transactions);
+        var (dates, accumulatedValues) = AccumulateByDay(transactions);
         _dates = dates;
 
         LineSeriesCollection = [CreateSeries(accumulatedValues, color)];
@@ -168,7 +170,7 @@ public partial class BasicLineChart : ContentView
         OnPropertyChanged(nameof(XAxes));
     }
 
-    private static (DateOnly[] Dates, double[] Values) AccumulateByDay(List<TransactionDto> transactions)
+    private static (DateOnly[] Dates, double[] Values) AccumulateByDay(IEnumerable<TransactionDto> transactions)
     {
         var dailyTotal = transactions
             .GroupBy(t => t.Date)
