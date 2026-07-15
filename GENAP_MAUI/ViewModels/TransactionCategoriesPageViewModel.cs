@@ -109,9 +109,9 @@ namespace GENAP_MAUI.ViewModels
 
                 if (!renameCategoryOperation.Success)
                 {
-                    if(renameCategoryOperation.ErrorMessage != $"No movements with the category name {category.B.Name} were found") // TO-DO: add errorcodes
+                    if(renameCategoryOperation.InnerError?.ErrorCode != 9) 
                     {
-                        await Shell.Current.DisplayAlertAsync("Error", renameCategoryOperation.ErrorMessage, "Aceptar");
+                        await Shell.Current.DisplayAlertAsync("Error", renameCategoryOperation.InnerError?.ErrorMessage, "Aceptar");
                         return;
                     }
                 }
@@ -126,7 +126,7 @@ namespace GENAP_MAUI.ViewModels
 
             if (Operations.Any(o => !o.Success))
             {
-                await Shell.Current.DisplayAlertAsync("Error", Operations.Where(o => !o.Success).First().ErrorMessage, "Aceptar");
+                await Shell.Current.DisplayAlertAsync("Error", Operations.Where(o => !o.Success).First().InnerError?.ErrorMessage, "Aceptar");
                 await ReLoad();
                 return;
             }
@@ -149,7 +149,7 @@ namespace GENAP_MAUI.ViewModels
                 Categories = new(getCategoryOperation.Result!.Select(c => new CategoryDto() { Name = c.Name, HexColor = c.HexColor, Id = c.Id }));
                 OldCategories = [.. getCategoryOperation.Result!];
             }
-            else { await Shell.Current.DisplayAlertAsync("Error", getCategoryOperation.ErrorMessage, "Aceptar"); }
+            else { await Shell.Current.DisplayAlertAsync("Error", getCategoryOperation.InnerError?.ErrorMessage, "Aceptar"); }
         }
         private bool AddCategoryCanExecute() => !string.IsNullOrWhiteSpace(NewCategory) && !Categories.Any(c => c.Name == NewCategory) && PickedColor is not null;
         private bool SaveCanExecute() => Categories.Count > 0 && !Categories.Any(c => string.IsNullOrWhiteSpace(c.Name));

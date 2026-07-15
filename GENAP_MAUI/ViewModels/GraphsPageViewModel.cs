@@ -201,7 +201,7 @@ namespace GENAP_MAUI.ViewModels
             {
                 Categories = new(getCategoriesOperation.Result!);
             }
-            else { await Shell.Current.DisplayAlertAsync("Error", getCategoriesOperation.ErrorMessage, "Aceptar"); }
+            else { await Shell.Current.DisplayAlertAsync("Error", getCategoriesOperation.InnerError?.ErrorMessage, "Aceptar"); }
 
             PickedTimePeriod = GlobalResources.TimePeriods.Where(d => d.Key == GlobalResources.TimePeriodsEnum.Month).First();
 

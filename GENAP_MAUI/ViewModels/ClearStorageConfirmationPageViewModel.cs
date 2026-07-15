@@ -21,7 +21,7 @@ namespace GENAP_MAUI.ViewModels
 
             if (!clearStorageOperation.Success)
             {
-                await Shell.Current.DisplayAlertAsync("Error", clearStorageOperation.ErrorMessage, "Aceptar");
+                await Shell.Current.DisplayAlertAsync("Error", clearStorageOperation.InnerError?.ErrorMessage, "Aceptar");
                 return;
             }
 

@@ -19,11 +19,11 @@ namespace DataServices
             var anyCategoriesOperation = await _StateStorage.AnyAsync();
             if (!anyCategoriesOperation.Success)
             {
-                return OperationResult<IEnumerable<CategoryDto>>.FaultedOperation(anyCategoriesOperation.ErrorMessage);
+                return OperationResult<IEnumerable<CategoryDto>>.FaultedOperation(anyCategoriesOperation.InnerError);
             }
             if (!anyCategoriesOperation.Result)
             {
-                return OperationResult<IEnumerable<CategoryDto>>.FaultedOperation("There's no categories available. At least one is required.");
+                return OperationResult<IEnumerable<CategoryDto>>.FaultedOperation(ServiceErrors.NoElementsAvailable("categories"));
             }
 
             var getCategoriesOperation = await _StateStorage.GetAllAsync();
@@ -35,11 +35,11 @@ namespace DataServices
             {
                 if (string.IsNullOrWhiteSpace(category.Name))
                 {
-                    return OperationResult.FaultedOperation($"{nameof(category.Name)} must have a content");
+                    return OperationResult.FaultedOperation(ServiceErrors.EmptyFieldError(nameof(category.Name)));
                 }
                 if (string.IsNullOrWhiteSpace(category.HexColor))
                 {
-                    return OperationResult.FaultedOperation($"{nameof(category.HexColor)} must have a content");
+                    return OperationResult.FaultedOperation(ServiceErrors.EmptyFieldError(nameof(category.HexColor)));
                 }
             }
 
@@ -49,12 +49,12 @@ namespace DataServices
             {
                 if (saveRangeOperation.Result != categories.Length)
                 {
-                    return OperationResult.FaultedOperation("Some categories couldn't be saved. A few were and others weren't. Please review and try again");
+                    return OperationResult.FaultedOperation(ServiceErrors.PartialRegistrationError("categories", "saved"));
                 }
 
                 return OperationResult.SuccessfulOperation();
             }
-            return OperationResult.FaultedOperation(saveRangeOperation.ErrorMessage);
+            return OperationResult.FaultedOperation(saveRangeOperation.InnerError);
         }
         public async Task<OperationResult> RemoveCategoriesAsync(CategoryDto[] categories)
         {
@@ -66,11 +66,11 @@ namespace DataServices
             {
                 if (string.IsNullOrWhiteSpace(category.Name))
                 {
-                    return OperationResult.FaultedOperation($"{nameof(category.Name)} must have a content");
+                    return OperationResult.FaultedOperation(ServiceErrors.EmptyFieldError(nameof(category.Name)));
                 }
                 if (string.IsNullOrWhiteSpace(category.HexColor))
                 {
-                    return OperationResult.FaultedOperation($"{nameof(category.HexColor)} must have a content");
+                    return OperationResult.FaultedOperation(ServiceErrors.EmptyFieldError(nameof(category.HexColor)));
                 }
             }
 
@@ -80,12 +80,12 @@ namespace DataServices
             {
                 if (updateRangeOperation.Result != categories.Length)
                 {
-                    return OperationResult.FaultedOperation("Some categories couldn't be updated. A few were and others weren't. Please review and try again");
+                    return OperationResult.FaultedOperation(ServiceErrors.PartialRegistrationError("categories", "updated"));
                 }
 
                 return OperationResult.SuccessfulOperation();
             }
-            return OperationResult.FaultedOperation(updateRangeOperation.ErrorMessage);
+            return OperationResult.FaultedOperation(updateRangeOperation.InnerError);
         }
         public async Task<OperationResult<bool>> HasCategories()
         {

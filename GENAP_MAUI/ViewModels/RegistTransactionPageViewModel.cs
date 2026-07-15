@@ -77,14 +77,14 @@ namespace GENAP_MAUI.ViewModels
             {
                 var ExpenseRegistrationTask = IsFixed ? await _RegistrationService.RegistFixedExpenseAsync(Value, DateOnly.FromDateTime(PickedDate), Category.Name, FixedTransactionDuration) : await _RegistrationService.RegistExpenseAsync(Value, DateOnly.FromDateTime(PickedDate), Category.Name);
 
-                await Shell.Current.DisplayAlertAsync(DisplayAlertTitle, ExpenseRegistrationTask.Success ? "Gasto registrado con exito" : ExpenseRegistrationTask.ErrorMessage, DisplayAlertButton);
+                await Shell.Current.DisplayAlertAsync(DisplayAlertTitle, ExpenseRegistrationTask.Success ? "Gasto registrado con exito" : ExpenseRegistrationTask.InnerError?.ErrorMessage, DisplayAlertButton);
 
                 return;
             }
 
             var IncomeRegistrationTask = IsFixed ? await _RegistrationService.RegistFixedIncomeAsync(Value, DateOnly.FromDateTime(PickedDate), Category.Name, FixedTransactionDuration) : await _RegistrationService.RegistIncomeAsync(Value, DateOnly.FromDateTime(PickedDate), Category.Name);
 
-            await Shell.Current.DisplayAlertAsync(DisplayAlertTitle, IncomeRegistrationTask.Success ? "Ingreso registrado con exito" : IncomeRegistrationTask.ErrorMessage, DisplayAlertButton);
+            await Shell.Current.DisplayAlertAsync(DisplayAlertTitle, IncomeRegistrationTask.Success ? "Ingreso registrado con exito" : IncomeRegistrationTask.InnerError?.ErrorMessage, DisplayAlertButton);
 
 			return;
         }
@@ -103,7 +103,7 @@ namespace GENAP_MAUI.ViewModels
                 Categories = new(getCategoriesOperation.Result!);
                 Category = getCategoriesOperation.Result!.First();
             }
-            else { await Shell.Current.DisplayAlertAsync("Error", getCategoriesOperation.ErrorMessage, "Aceptar"); }
+            else { await Shell.Current.DisplayAlertAsync("Error", getCategoriesOperation.InnerError?.ErrorMessage, "Aceptar"); }
         }
 
         [RelayCommand] void SetIncome() => Depletion = false;

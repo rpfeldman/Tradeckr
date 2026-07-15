@@ -9,12 +9,12 @@ namespace DomainModel
     public readonly struct OperationResult
     {
         public bool Success { get; }
-        public string? ErrorMessage { get; }
+        public InnerErrorDto? InnerError { get; }
 
-        private OperationResult(bool success, string? errorMessage)
+        private OperationResult(bool success, InnerErrorDto? innerError)
         {
             Success = success;
-            ErrorMessage = errorMessage;
+            InnerError = innerError;
         }
 
         public static OperationResult SuccessfulOperation()
@@ -22,30 +22,30 @@ namespace DomainModel
             return new OperationResult(true, null);
         }
 
-        public static OperationResult FaultedOperation(string? errorMessage)
+        public static OperationResult FaultedOperation(InnerErrorDto? innerError)
         {
-            return new OperationResult(false, errorMessage);
+            return new OperationResult(false, innerError);
         }
     }
     public readonly struct OperationResult<T> 
     {
         public T? Result { get; }
         public bool Success { get; }
-        public string? ErrorMessage { get; }
-        private OperationResult(bool success, string? errorMessage, T? value)
+        public InnerErrorDto? InnerError { get; }
+        private OperationResult(bool success, T? value, InnerErrorDto? innerError)
         {
             Success = success;
-            ErrorMessage = errorMessage;
             Result = value;
+            InnerError = innerError;
         }
 
         public static OperationResult<T> SuccessfulOperation(T result)
         {
-            return new OperationResult<T>(true, null, result);
+            return new OperationResult<T>(true, result, null);
         }
-        public static OperationResult<T> FaultedOperation(string? errorMessage)
+        public static OperationResult<T> FaultedOperation(InnerErrorDto? innerError)
         {
-            return new OperationResult<T>(false, errorMessage, default);
+            return new OperationResult<T>(false, default, innerError);
         }
     }
 

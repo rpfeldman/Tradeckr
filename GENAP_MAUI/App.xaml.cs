@@ -28,7 +28,7 @@ namespace GENAP_MAUI
                 // TO - DO: Apply a log system
                 if (!anyCategoryOperation.Success)
                 {
-                    System.Diagnostics.Debug.WriteLine(anyCategoryOperation.ErrorMessage);
+                    System.Diagnostics.Debug.WriteLine(anyCategoryOperation.InnerError?.ErrorMessage);
                 }
 
                 if (!anyCategoryOperation.Result)
@@ -37,7 +37,7 @@ namespace GENAP_MAUI
 
                     if(!setDefaultCategoriesOperation.Success)
                     {
-                        System.Diagnostics.Debug.WriteLine(setDefaultCategoriesOperation.ErrorMessage);
+                        System.Diagnostics.Debug.WriteLine(setDefaultCategoriesOperation.InnerError?.ErrorMessage);
                     }
                 }
             }

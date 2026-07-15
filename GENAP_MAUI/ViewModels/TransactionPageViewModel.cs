@@ -60,7 +60,7 @@ namespace GENAP_MAUI.ViewModels
 
             if (!getCategoriesOperation.Success)
             {
-                await Shell.Current.DisplayAlertAsync("Error", getCategoriesOperation.ErrorMessage, "Aceptar");
+                await Shell.Current.DisplayAlertAsync("Error", getCategoriesOperation.InnerError?.ErrorMessage, "Aceptar");
                 return;
             }
 
@@ -95,7 +95,7 @@ namespace GENAP_MAUI.ViewModels
         {
             var deleteTransactionOperation = await _dataManagementService.RemoveTransactionAsync(TransactionId);
 
-            await Shell.Current.DisplayAlertAsync("Eliminar", deleteTransactionOperation.Success ? "Movimiento eliminado correctamente" : deleteTransactionOperation.ErrorMessage, "Aceptar");
+            await Shell.Current.DisplayAlertAsync("Eliminar", deleteTransactionOperation.Success ? "Movimiento eliminado correctamente" : deleteTransactionOperation.InnerError?.ErrorMessage, "Aceptar");
 
             await DirectNavigate(Routes.TransactionsList);
         }
@@ -106,7 +106,7 @@ namespace GENAP_MAUI.ViewModels
             var transaction = Transaction as FixedTransactionDto;
             var deleteCollectionOperation = FromToday ? await _dataManagementService.RemoveFixedTransactionAsync(transaction!.FixedTransactionId, transaction.Duration) : await _dataManagementService.RemoveFixedTransactionAsync(transaction!.FixedTransactionId);
 
-            await Shell.Current.DisplayAlertAsync("Eliminar", deleteCollectionOperation.Success ? "Movimientos eliminado correctamente" : deleteCollectionOperation.ErrorMessage, "Aceptar");
+            await Shell.Current.DisplayAlertAsync("Eliminar", deleteCollectionOperation.Success ? "Movimientos eliminado correctamente" : deleteCollectionOperation.InnerError?.ErrorMessage, "Aceptar");
 
             await DirectNavigate(Routes.TransactionsList);
         }
@@ -116,7 +116,7 @@ namespace GENAP_MAUI.ViewModels
         {
             var updateTransactionOperation = await _dataManagementService.UpdateTransactionAsync(TransactionId, PickedValue, DateOnly.FromDateTime(PickedDate), PickedCategory.Name, Transaction.Depletion);
 
-            await Shell.Current.DisplayAlertAsync("Editar", updateTransactionOperation.Success ? "Se ha guardado el movimiento correctamente" : updateTransactionOperation.ErrorMessage, "Aceptar");
+            await Shell.Current.DisplayAlertAsync("Editar", updateTransactionOperation.Success ? "Se ha guardado el movimiento correctamente" : updateTransactionOperation.InnerError?.ErrorMessage, "Aceptar");
         }
 
         private bool DeleteFixedTransactionCanExecute => Transaction is FixedTransactionDto;

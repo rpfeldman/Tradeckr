@@ -49,17 +49,17 @@ namespace GENAP_MAUI.ViewModels
             if (Transactions[0].Success)
             {
                 MonthExpenses = DataProjectionService.GetSummedTransactions(Transactions[0].Result!);
-            } else { await Shell.Current.DisplayAlertAsync("Error", Transactions[0].ErrorMessage, "Aceptar"); }
+            } else { await Shell.Current.DisplayAlertAsync("Error", Transactions[0].InnerError?.ErrorMessage, "Aceptar"); }
 
             if (Transactions[1].Success)
             {
                 MonthIncome = DataProjectionService.GetSummedTransactions(Transactions[1].Result!);
-            } else { await Shell.Current.DisplayAlertAsync("Error", Transactions[1].ErrorMessage, "Aceptar"); }
+            } else { await Shell.Current.DisplayAlertAsync("Error", Transactions[1].InnerError?.ErrorMessage, "Aceptar"); }
 
             if (Transactions[2].Success)
             {
                 MonthTransactions = [.. Transactions[2].Result!];
-            } else { await Shell.Current.DisplayAlertAsync("Error", Transactions[2].ErrorMessage, "Aceptar"); }
+            } else { await Shell.Current.DisplayAlertAsync("Error", Transactions[2].InnerError?.ErrorMessage, "Aceptar"); }
         }
     }
 }

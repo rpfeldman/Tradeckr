@@ -95,7 +95,7 @@ namespace GENAP_MAUI.ViewModels
             if (GetTransactionsOperation.Success)
             {
                 Transactions = new(GetTransactionsOperation.Result!);
-            }else  { await Shell.Current.DisplayAlertAsync("Error", GetTransactionsOperation.ErrorMessage, "Aceptar"); }
+            }else  { await Shell.Current.DisplayAlertAsync("Error", GetTransactionsOperation.InnerError?.ErrorMessage, "Aceptar"); }
         }
 
         [RelayCommand]

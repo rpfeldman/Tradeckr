@@ -37,15 +37,15 @@ namespace Repositories
             }
             catch (SqliteException)
             {
-                return OperationResult.FaultedOperation("An error occurred while trying to connect to the storage system. Please try again");
+                return OperationResult.FaultedOperation(RepositorieErrors.DBProviderError);
             }
             catch (DbUpdateException)
             {
-                return OperationResult.FaultedOperation("An error occurred while trying to save the changes. Please try again");
+                return OperationResult.FaultedOperation(RepositorieErrors.DBUpdateError);
             }
             catch (TimeoutException)
             {
-                return OperationResult.FaultedOperation("The operation took too long. Please try again");
+                return OperationResult.FaultedOperation(RepositorieErrors.TimeoutError);
             }
         }
 
@@ -57,7 +57,7 @@ namespace Repositories
 
             if (Entity is null)
             {
-                return OperationResult.FaultedOperation($"Unexistent {typeof(T).Name}");
+                return OperationResult.FaultedOperation(new InnerErrorDto() { ErrorMessage = $"Unexistent {typeof(T).Name}" });
             }
 
             try
@@ -69,15 +69,15 @@ namespace Repositories
             }
             catch (SqliteException)
             {
-                return OperationResult.FaultedOperation("An error occurred while trying to connect to the storage system. Please try again");
+                return OperationResult.FaultedOperation(RepositorieErrors.DBProviderError);
             }
             catch (DbUpdateException)
             {
-                return OperationResult.FaultedOperation("An error occurred while trying to save the changes. Please try again");
+                return OperationResult.FaultedOperation(RepositorieErrors.DBUpdateError);
             }
             catch (TimeoutException)
             {
-                return OperationResult.FaultedOperation("The operation took too long. Please try again");
+                return OperationResult.FaultedOperation(RepositorieErrors.TimeoutError);
             }
         }
 
@@ -94,15 +94,15 @@ namespace Repositories
             }
             catch (SqliteException)
             {
-                return OperationResult<int>.FaultedOperation("An error occurred while trying to connect to the storage system. Please try again");
+                return OperationResult<int>.FaultedOperation(RepositorieErrors.DBProviderError);
             }
             catch (DbUpdateException)
             {
-                return OperationResult<int>.FaultedOperation("An error occurred while trying to save the changes. Please try again");
+                return OperationResult<int>.FaultedOperation(RepositorieErrors.DBUpdateError);
             }
             catch (TimeoutException)
             {
-                return OperationResult<int>.FaultedOperation("The operation took too long. Please try again");
+                return OperationResult<int>.FaultedOperation(RepositorieErrors.TimeoutError);
             }
         }
 
@@ -114,7 +114,7 @@ namespace Repositories
             {
                 if(Entities.Any(e => e is null))
                 {
-                    return OperationResult.FaultedOperation($"{typeof(T).Name} can't be null");
+                    return OperationResult.FaultedOperation(new InnerErrorDto() { ErrorMessage = $"{typeof(T).Name} can't be null" });
                 }
 
                 Context.Set<T>().RemoveRange(Entities);
@@ -125,15 +125,15 @@ namespace Repositories
             }
             catch (SqliteException)
             {
-                return OperationResult.FaultedOperation("An error occurred while trying to connect to the storage system. Please try again");
+                return OperationResult.FaultedOperation(RepositorieErrors.DBProviderError);
             }
             catch (DbUpdateException)
             {
-                return OperationResult.FaultedOperation("An error occurred while trying to save the changes. Please try again");
+                return OperationResult.FaultedOperation(RepositorieErrors.DBUpdateError);
             }
             catch (TimeoutException)
             {
-                return OperationResult.FaultedOperation("The operation took too long. Please try again");
+                return OperationResult.FaultedOperation(RepositorieErrors.TimeoutError);
             }
         }
 
@@ -148,15 +148,15 @@ namespace Repositories
             }
             catch (SqliteException)
             {
-                return OperationResult<IEnumerable<T>>.FaultedOperation($"An error occurred while trying to connect to the storage system. Please try again");
+                return OperationResult<IEnumerable<T>>.FaultedOperation(RepositorieErrors.DBProviderError);
             }
             catch (DbUpdateException)
             {
-                return OperationResult<IEnumerable<T>>.FaultedOperation("An error occurred while trying to save the changes. Please try again");
+                return OperationResult<IEnumerable<T>>.FaultedOperation(RepositorieErrors.DBUpdateError);
             }
             catch (TimeoutException)
             {
-                return OperationResult<IEnumerable<T>>.FaultedOperation("The operation took too long. Please try again");
+                return OperationResult<IEnumerable<T>>.FaultedOperation(RepositorieErrors.TimeoutError);
             }
         }
 
@@ -172,15 +172,15 @@ namespace Repositories
             }
             catch (SqliteException)
             {
-                return OperationResult<IEnumerable<T>>.FaultedOperation("An error occurred while trying to connect to the storage system. Please try again");
+                return OperationResult<IEnumerable<T>>.FaultedOperation(RepositorieErrors.DBProviderError);
             }
             catch (DbUpdateException)
             {
-                return OperationResult<IEnumerable<T>>.FaultedOperation("An error occurred while trying to save the changes. Please try again");
+                return OperationResult<IEnumerable<T>>.FaultedOperation(RepositorieErrors.DBUpdateError);
             }
             catch (TimeoutException)
             {
-                return OperationResult<IEnumerable<T>>.FaultedOperation("The operation took too long. Please try again");
+                return OperationResult<IEnumerable<T>>.FaultedOperation(RepositorieErrors.TimeoutError);
             }
         }
 
@@ -204,12 +204,12 @@ namespace Repositories
 
             if (Entity is null)
             {
-                return OperationResult.FaultedOperation($"{typeof(T).Name} can't be null");
+                return OperationResult.FaultedOperation(new InnerErrorDto() { ErrorMessage = $"{typeof(T).Name} can't be null" });
             }
 
             if (await context.Set<T>().AnyAsync(e => e.Id == Entity.Id))
             {
-                return OperationResult.FaultedOperation($"Another {typeof(T).Name} with the same Id was found");
+                return OperationResult.FaultedOperation(new InnerErrorDto() { ErrorMessage = $"Another {typeof(T).Name} with the same Id was found" });
             }
 
             try
@@ -221,15 +221,15 @@ namespace Repositories
             }
             catch (SqliteException)
             {
-                return OperationResult.FaultedOperation("An error occurred while trying to connect to the storage system. Please try again");
+                return OperationResult.FaultedOperation(RepositorieErrors.DBProviderError);
             }
             catch (DbUpdateException)
             {
-                return OperationResult.FaultedOperation("An error occurred while trying to save the changes. Please try again");
+                return OperationResult.FaultedOperation(RepositorieErrors.DBUpdateError);
             }
             catch (TimeoutException)
             {
-                return OperationResult.FaultedOperation("The operation took too long. Please try again");
+                return OperationResult.FaultedOperation(RepositorieErrors.TimeoutError);
             }
         }
 
@@ -243,12 +243,12 @@ namespace Repositories
                 {
                     if (entity is null)
                     {
-                        return OperationResult<int>.FaultedOperation($"{typeof(T).Name} can't be null");
+                        return OperationResult<int>.FaultedOperation(new InnerErrorDto() { ErrorMessage = $"{typeof(T).Name} can't be null" });
                     }
 
                     if (await context.Set<T>().AnyAsync(e => e.Id == entity.Id))
                     {
-                        return OperationResult<int>.FaultedOperation($"Another {typeof(T).Name} with the same Id was found");
+                        return OperationResult<int>.FaultedOperation(new InnerErrorDto() { ErrorMessage = $"Another {typeof(T).Name} with the same Id was found" });
                     }
 
                     await context.Set<T>().AddAsync(entity);
@@ -260,15 +260,15 @@ namespace Repositories
             }
             catch (SqliteException)
             {
-                return OperationResult<int>.FaultedOperation("An error occurred while trying to connect to the storage system. Please try again");
+                return OperationResult<int>.FaultedOperation(RepositorieErrors.DBProviderError);
             }
             catch (DbUpdateException)
             {
-                return OperationResult<int>.FaultedOperation("An error occurred while trying to save the changes. Please try again");
+                return OperationResult<int>.FaultedOperation(RepositorieErrors.DBUpdateError);
             }
             catch (TimeoutException)
             {
-                return OperationResult<int>.FaultedOperation("The operation took too long. Please try again");
+                return OperationResult<int>.FaultedOperation(RepositorieErrors.TimeoutError);
             }
         }
 
@@ -286,19 +286,19 @@ namespace Repositories
                     return OperationResult.SuccessfulOperation();
                 }
 
-                return OperationResult.FaultedOperation($"No records were updated. Please verify that the entity with ID { NewEntity.Id} exists");
+                return OperationResult.FaultedOperation(new InnerErrorDto() { ErrorMessage = $"No records were updated. Please verify that the entity with ID {NewEntity.Id} exists" });
             }
             catch (SqliteException)
             {
-                return OperationResult.FaultedOperation("An error occurred while trying to connect to the storage system. Please try again");
+                return OperationResult.FaultedOperation(RepositorieErrors.DBProviderError);
             }
             catch (DbUpdateException)
             {
-                return OperationResult.FaultedOperation("An error occurred while trying to save the changes. Please try again");
+                return OperationResult.FaultedOperation(RepositorieErrors.DBUpdateError);
             }
             catch (TimeoutException)
             {
-                return OperationResult.FaultedOperation("The operation took too long. Please try again");
+                return OperationResult.FaultedOperation(RepositorieErrors.TimeoutError);
             }
         }
 
@@ -315,15 +315,15 @@ namespace Repositories
             }
             catch (SqliteException)
             {
-                return OperationResult<int>.FaultedOperation("An error occurred while trying to connect to the storage system. Please try again");
+                return OperationResult<int>.FaultedOperation(RepositorieErrors.DBProviderError);
             }
             catch (DbUpdateException)
             {
-                return OperationResult<int>.FaultedOperation("An error occurred while trying to save the changes. Please try again");
+                return OperationResult<int>.FaultedOperation(RepositorieErrors.DBUpdateError);
             }
             catch (TimeoutException)
             {
-                return OperationResult<int>.FaultedOperation("The operation took too long. Please try again");
+                return OperationResult<int>.FaultedOperation(RepositorieErrors.TimeoutError);
             }
         }
 
@@ -339,15 +339,15 @@ namespace Repositories
             }
             catch (SqliteException)
             {
-                return OperationResult<bool>.FaultedOperation("An error occurred while trying to connect to the storage system. Please try again");
+                return OperationResult<bool>.FaultedOperation(RepositorieErrors.DBProviderError);
             }
             catch (DbUpdateException)
             {
-                return OperationResult<bool>.FaultedOperation("An error occurred while trying to save the changes. Please try again");
+                return OperationResult<bool>.FaultedOperation(RepositorieErrors.DBUpdateError);
             }
             catch (TimeoutException)
             {
-                return OperationResult<bool>.FaultedOperation("The operation took too long. Please try again");
+                return OperationResult<bool>.FaultedOperation(RepositorieErrors.TimeoutError);
             }
         }
         public async Task<OperationResult<bool>> AnyAsync(Expression<Func<T, bool>> Predicate)
@@ -362,15 +362,15 @@ namespace Repositories
             }
             catch (SqliteException)
             {
-                return OperationResult<bool>.FaultedOperation("An error occurred while trying to connect to the storage system. Please try again");
+                return OperationResult<bool>.FaultedOperation(RepositorieErrors.DBProviderError);
             }
             catch (DbUpdateException)
             {
-                return OperationResult<bool>.FaultedOperation("An error occurred while trying to save the changes. Please try again");
+                return OperationResult<bool>.FaultedOperation(RepositorieErrors.DBUpdateError);
             }
             catch (TimeoutException)
             {
-                return OperationResult<bool>.FaultedOperation("The operation took too long. Please try again");
+                return OperationResult<bool>.FaultedOperation(RepositorieErrors.TimeoutError);
             }
         }
     }

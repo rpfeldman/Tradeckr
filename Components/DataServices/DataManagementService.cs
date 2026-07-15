@@ -17,18 +17,18 @@ namespace DataServices
         {
             if (value < 1m || value > 1000000000m)
             {
-                return OperationResult.FaultedOperation($"{nameof(value)} must be in the range of 1 to 1,000,000,000");
+                return OperationResult.FaultedOperation(ServiceErrors.ValueOutOfRangeError(1, 1_000_000_000));
             }
             if (category is not null && category.IsWhiteSpace())
             {
-                return OperationResult.FaultedOperation($"{nameof(category)} must have a content");
+                return OperationResult.FaultedOperation(ServiceErrors.EmptyFieldError(nameof(category)));
             }
 
             var getTransactionOperation = await _StateStorage.GetEntityAsync(TransactionId);
 
             if (!getTransactionOperation.HasValue)
             {
-                return OperationResult.FaultedOperation($"Unable to find a transaction with the following id: {TransactionId}");
+                return OperationResult.FaultedOperation(ServiceErrors.NotFoundId(TransactionId));
             } 
             TransactionDto Transaction = getTransactionOperation.Value!;
 
@@ -46,16 +46,16 @@ namespace DataServices
 
             if (!anyTransactionOperation.Success)
             {
-                return OperationResult.FaultedOperation(anyTransactionOperation.ErrorMessage);
+                return OperationResult.FaultedOperation(anyTransactionOperation.InnerError);
             }
             if (!anyTransactionOperation.Result)
             {
-                return OperationResult.FaultedOperation($"No movements with the category name {OldName} were found");
+                return OperationResult.FaultedOperation(ServiceErrors.NotFoundCategoryNameError(OldName));
             }
 
             var getOldTransactionsOperation = await _StateStorage.GetEntitiesAsync(t => t.Category == OldName);
             
-            if(!getOldTransactionsOperation.Success) { return OperationResult.FaultedOperation(getOldTransactionsOperation.ErrorMessage); }
+            if(!getOldTransactionsOperation.Success) { return OperationResult.FaultedOperation(getOldTransactionsOperation.InnerError); }
 
             var transactions = getOldTransactionsOperation.Result!;
 
@@ -70,13 +70,13 @@ namespace DataServices
             {
                 if (updateRangeOperation.Result != transactions.Count())
                 {
-                    return OperationResult.FaultedOperation("Some movements couldn't be renamed. A few were renamed and others weren't. Please review and try again");
+                    return OperationResult.FaultedOperation(ServiceErrors.PartialRegistrationError("movements", "renamed"));
                 }
 
                 return OperationResult.SuccessfulOperation();
             }
 
-            return OperationResult.FaultedOperation(updateRangeOperation.ErrorMessage);
+            return OperationResult.FaultedOperation(updateRangeOperation.InnerError);
         }
 
         public async Task<OperationResult> RemoveTransactionAsync(int TransactionId)
@@ -90,12 +90,12 @@ namespace DataServices
 
             if (DeleteFromRangeOperation.Success)
             {
-                if (DeleteFromRangeOperation.Result < 1) { return OperationResult.FaultedOperation($"Delete failed: no transactions matched in fixed transaction collection (CollectionId: {CollectionId}, FromDuration: {FromDuration}) — 0 rows affected"); };
+                if (DeleteFromRangeOperation.Result < 1) { return OperationResult.FaultedOperation(ServiceErrors.NoFixedTransactionsMatchedError(CollectionId, FromDuration)); };
 
                 return OperationResult.SuccessfulOperation();
             }
 
-            return OperationResult.FaultedOperation(DeleteFromRangeOperation.ErrorMessage);
+            return OperationResult.FaultedOperation(DeleteFromRangeOperation.InnerError);
         }
         public async Task<OperationResult> RemoveFixedTransactionAsync(int CollectionId)
         {
@@ -103,11 +103,11 @@ namespace DataServices
 
             if (DeleteFromRangeOperation.Success)
             {
-                if (DeleteFromRangeOperation.Result < 1) { return OperationResult.FaultedOperation($"Delete failed: no fixed transaction collection matched CollectionId {CollectionId} (0 rows affected)"); };
+                if (DeleteFromRangeOperation.Result < 1) { return OperationResult.FaultedOperation(ServiceErrors.NoCollectionMatchedError("Fixed transaction", CollectionId.ToString())); };
                 return OperationResult.SuccessfulOperation();
             }
 
-            return OperationResult.FaultedOperation(DeleteFromRangeOperation.ErrorMessage);
+            return OperationResult.FaultedOperation(DeleteFromRangeOperation.InnerError);
         }
 
         public async Task<OperationResult> RemoveFromCategoryAsync(string category)
@@ -116,12 +116,12 @@ namespace DataServices
 
             if (DeleteFromRangeOperation.Success)
             {
-                if (DeleteFromRangeOperation.Result < 1) { return OperationResult.FaultedOperation($"Delete failed: no transaction collection matched category '{category}' (0 rows affected)"); };
+                if (DeleteFromRangeOperation.Result < 1) { return OperationResult.FaultedOperation(ServiceErrors.NoCollectionMatchedError("category", category)); };
 
                 return OperationResult.SuccessfulOperation();
             }
 
-            return OperationResult.FaultedOperation(DeleteFromRangeOperation.ErrorMessage);
+            return OperationResult.FaultedOperation(DeleteFromRangeOperation.InnerError);
         }
         public async Task<OperationResult> RemoveFromCategories(string[] Categories)
         {
@@ -129,7 +129,7 @@ namespace DataServices
 
             if (!transactionsFromCategories.Success)
             {
-                return OperationResult.FaultedOperation(transactionsFromCategories.ErrorMessage);
+                return OperationResult.FaultedOperation(transactionsFromCategories.InnerError);
             }
 
             return await _StateStorage.DeleteRangeAsync([.. transactionsFromCategories.Result!]);

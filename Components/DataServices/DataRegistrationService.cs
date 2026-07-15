@@ -22,7 +22,7 @@ namespace DataServices
             var anyFixedTransactionOperation = await _StateStorage.AnyAsync(t => t is FixedTransactionDto);
             if (!anyFixedTransactionOperation.Success)
             {
-                return OperationResult<int>.FaultedOperation(anyFixedTransactionOperation.ErrorMessage);
+                return OperationResult<int>.FaultedOperation(anyFixedTransactionOperation.InnerError);
             }
             if (!anyFixedTransactionOperation.Result)
             {
@@ -33,7 +33,7 @@ namespace DataServices
 
             if (!getFixedTransactionsOperation.Success)
             {
-                return OperationResult<int>.FaultedOperation($"{getFixedTransactionsOperation.ErrorMessage}");
+                return OperationResult<int>.FaultedOperation(getFixedTransactionsOperation.InnerError);
             }
 
             FixedTransactionDto Last = (FixedTransactionDto?)getFixedTransactionsOperation.Result?.OrderBy(t => (t as FixedTransactionDto)?.FixedTransactionId).Last()!;
@@ -45,11 +45,11 @@ namespace DataServices
         {
             if (value < 1m || value > 1000000000m)
             {
-                return OperationResult.FaultedOperation($"{nameof(value)} must be in the range of 1 to 1,000,000,000");
+                return OperationResult.FaultedOperation(ServiceErrors.ValueOutOfRangeError(1, 1_000_000_000));
             }
             if (string.IsNullOrWhiteSpace(category))
             {
-                return OperationResult.FaultedOperation($"{nameof(category)} must have a content");
+                return OperationResult.FaultedOperation(ServiceErrors.EmptyFieldError(nameof(category)));
             }
 
             var NewTransaction = new TransactionDto() { Value = value, Date = date, Category = category, Depletion = true, Fixed = false };
@@ -63,19 +63,19 @@ namespace DataServices
 
             if (!GetCollectionId.Success)
             {
-                return OperationResult.FaultedOperation(GetCollectionId.ErrorMessage);
+                return OperationResult.FaultedOperation(GetCollectionId.InnerError);
             }
             if (value < 1m || value > 1000000000m)
             {
-                return OperationResult.FaultedOperation($"{nameof(value)} must be in the range of 1 to 1,000,000,000");
+                return OperationResult.FaultedOperation(ServiceErrors.ValueOutOfRangeError(1, 1_000_000_000));
             }
             if (string.IsNullOrWhiteSpace(category))
             {
-                return OperationResult.FaultedOperation($"{nameof(category)} must have a content");
+                return OperationResult.FaultedOperation(ServiceErrors.EmptyFieldError(nameof(category)));
             }
             if (duration < 1)
             {
-                return OperationResult.FaultedOperation($"{nameof(duration)} must be greater than or equal to 1 ");
+                return OperationResult.FaultedOperation(ServiceErrors.DurationOutOfRangeError);
             }
 
             List<FixedTransactionDto> transactions = new();
@@ -93,24 +93,24 @@ namespace DataServices
             {
                 if(saveRangeOperation.Result != transactions.Count)
                 {
-                    return OperationResult.FaultedOperation("Some expenses couldn't be saved. A few were registered and others weren't. Please review and try again");
+                    return OperationResult.FaultedOperation(ServiceErrors.PartialRegistrationError("expenses", "saved"));
                 }
 
                 return OperationResult.SuccessfulOperation();
             }
 
-            return OperationResult.FaultedOperation(saveRangeOperation.ErrorMessage);
+            return OperationResult.FaultedOperation(saveRangeOperation.InnerError);
         }
 
         public async Task<OperationResult> RegistIncomeAsync(decimal value, DateOnly date, string category)
         {
             if (value < 1m || value > 1000000000m)
             {
-                return OperationResult.FaultedOperation($"{nameof(value)} must be in the range of 1 to 1,000,000,000");
+                return OperationResult.FaultedOperation(ServiceErrors.ValueOutOfRangeError(1, 1_000_000_000));
             }
             if (string.IsNullOrWhiteSpace(category))
             {
-                return OperationResult.FaultedOperation($"{nameof(category)} must have a content");
+                return OperationResult.FaultedOperation(ServiceErrors.EmptyFieldError(nameof(category)));
             }
 
             var NewTransaction = new TransactionDto() { Value = value, Date = date, Category = category, Depletion = false, Fixed = false };
@@ -123,19 +123,19 @@ namespace DataServices
 
             if (!GetCollectionId.Success)
             {
-                return OperationResult.FaultedOperation(GetCollectionId.ErrorMessage);
+                return OperationResult.FaultedOperation(GetCollectionId.InnerError);
             }
             if (value < 1m || value > 1000000000m)
             {
-                return OperationResult.FaultedOperation($"{nameof(value)} must be in the range of 1 to 1,000,000,000");
+                return OperationResult.FaultedOperation(ServiceErrors.ValueOutOfRangeError(1, 1_000_000_000));
             }
             if (string.IsNullOrWhiteSpace(category))
             {
-                return OperationResult.FaultedOperation($"{nameof(category)} must have a content");
+                return OperationResult.FaultedOperation(ServiceErrors.EmptyFieldError(nameof(category)));
             }
             if (duration < 1)
             {
-                return OperationResult.FaultedOperation($"{nameof(duration)} must be greater than or equal to 1 ");
+                return OperationResult.FaultedOperation(ServiceErrors.DurationOutOfRangeError);
             }
 
             List<FixedTransactionDto> transactions = new();
@@ -153,13 +153,13 @@ namespace DataServices
             {
                 if (saveRangeOperation.Result != transactions.Count)
                 {
-                    return OperationResult.FaultedOperation("Some expenses couldn't be saved. A few were registered and others weren't. Please review and try again");
+                    return OperationResult.FaultedOperation(ServiceErrors.PartialRegistrationError("income", "saved"));
                 }
 
                 return OperationResult.SuccessfulOperation();
             }
 
-            return OperationResult.FaultedOperation(saveRangeOperation.ErrorMessage);
+            return OperationResult.FaultedOperation(saveRangeOperation.InnerError);
         }
     }
 }
