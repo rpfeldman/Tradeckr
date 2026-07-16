@@ -6,19 +6,27 @@
     xmlns:local="clr-namespace:GENAP_MAUI"
     xmlns:pages="clr-namespace:GENAP_MAUI.Pages.MainNavigationBarPages"
     xmlns:tpages="clr-namespace:GENAP_MAUI.Pages.TransactionRelatedPages"
+    xmlns:opages="clr-namespace:GENAP_MAUI.Pages.OnboardingPages"
     Title="Tradeckr"
     FlyoutBehavior="Disabled">
 
     <ShellContent Route="{x:Static local:Routes.Dashboard}"
                   ContentTemplate="{DataTemplate pages:MainDashboardPage}" />
+    
     <ShellContent Route="{x:Static local:Routes.DefaultTransaction}"
                   ContentTemplate="{DataTemplate pages:RegistTransactionPage}" />
+    
     <ShellContent Route="{x:Static local:Routes.TradingTransactions}"
                   ContentTemplate="{DataTemplate pages:RegistTradeTransactionPage}" />
+    
     <ShellContent Route="{x:Static local:Routes.Categories}"
                   ContentTemplate="{DataTemplate pages:TransactionCategoriesPage}" />
+    
     <ShellContent Route="{x:Static local:Routes.Graphs}"
                   ContentTemplate="{DataTemplate pages:GraphsPage}" />
+    
+    <ShellContent Route="{x:Static local:Routes.Onboarding}"
+                  ContentTemplate="{DataTemplate opages:OnboardingPage}" />
 
     <ShellContent Route="{x:Static local:Routes.TransactionsList}"
               ContentTemplate="{DataTemplate tpages:TransactionsCollectionPage}" />

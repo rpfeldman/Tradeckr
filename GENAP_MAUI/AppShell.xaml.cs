@@ -15,7 +15,13 @@ namespace GENAP_MAUI
             Routing.RegisterRoute(Routes.ClearStorageConfirmation, typeof(ClearStorageConfirmationPage));
 
 
-            //this.GoToAsync($"//{Routes.Categories}");
+            if (GlobalResources.IsNewUser)
+            {
+                this.GoToAsync($"//{Routes.Onboarding}");
+                return;
+            }
+
+            this.GoToAsync($"//{Routes.Dashboard}");
         }
     }
 }

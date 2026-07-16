@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:GENAP_MAUI.ViewModels"
+             x:Class="GENAP_MAUI.Pages.OnboardingPages.OnboardingPage"
+             x:DataType="vm:OnboardingpageViewModel">
+
+    <VerticalStackLayout>
+        <Label Text="Bienvenido a"></Label>
+        <Label Text="TRADECKR! (en el color de la app)"></Label>
+        <Label Text="Un espacio entre medio"></Label>
+        <Label Text="Donde tu gestion financiera deja de ser un caos y pasa a ser una (realidad) -> en el violeta de la marca"></Label>
+        <Label Text="otro espacio"></Label>
+        <Label Text="Para empezar, escribe tu nombre!"></Label>
+        <Entry Text="{Binding UserName}" Placeholder="tu nombre..."></Entry>
+        <Button Text="Comenzar!" Command="{Binding ContinueCommand}"></Button>
+    </VerticalStackLayout>
+</ContentPage>

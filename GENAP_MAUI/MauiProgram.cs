@@ -37,6 +37,7 @@ namespace GENAP_MAUI
             builder.Services.AddTransient<TransactionsCollectionPageViewModel>();
             builder.Services.AddTransient<TransactionPageViewModel>();
             builder.Services.AddTransient<ClearStorageConfirmationPageViewModel>();
+            builder.Services.AddTransient<OnboardingpageViewModel>();
 
             // Data services & the repository
             var dbPath = Path.Combine(FileSystem.AppDataDirectory, "Tradeckr_Storage.db");
