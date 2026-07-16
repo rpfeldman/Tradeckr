@@ -4,15 +4,69 @@
              xmlns:vm="clr-namespace:GENAP_MAUI.ViewModels"
              x:Class="GENAP_MAUI.Pages.OnboardingPages.OnboardingPage"
              x:DataType="vm:OnboardingpageViewModel">
+    <Grid RowDefinitions="*, Auto, *">
 
-    <VerticalStackLayout>
-        <Label Text="Bienvenido a"></Label>
-        <Label Text="TRADECKR! (en el color de la app)"></Label>
-        <Label Text="Un espacio entre medio"></Label>
-        <Label Text="Donde tu gestion financiera deja de ser un caos y pasa a ser una (realidad) -> en el violeta de la marca"></Label>
-        <Label Text="otro espacio"></Label>
-        <Label Text="Para empezar, escribe tu nombre!"></Label>
-        <Entry Text="{Binding UserName}" Placeholder="tu nombre..."></Entry>
-        <Button Text="Comenzar!" Command="{Binding ContinueCommand}"></Button>
-    </VerticalStackLayout>
+        <VerticalStackLayout Grid.Row="1"
+                             Style="{StaticResource FormContainer}"
+                             Spacing="0"
+                             VerticalOptions="Center">
+
+            <Label Text="Bienvenido a"
+                   Style="{StaticResource OnboardingEyebrow}"
+                   Margin="0,0,0,4" />
+
+            <Label Text="TRADECKR"
+                   Style="{StaticResource OnboardingWordmark}"
+                   Margin="0,0,0,28" />
+
+            <Label Style="{StaticResource OnboardingTagline}"
+                   Margin="0,0,0,48">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Donde tu gestión financiera deja de ser un " />
+                        <Span Text="caos" />
+                        <Span Text=" y pasa a ser una " />
+                        <Span Text="realidad"
+                              TextColor="{AppThemeBinding Light={StaticResource AccentLight}, Dark={StaticResource AccentDark}}"
+                              FontAttributes="Bold" />
+                        <Span Text="." />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+
+            <Label Text="Para empezar, ¿cómo te llamás?"
+                   Style="{StaticResource FieldLabel}"
+                   HorizontalTextAlignment="Center"
+                   HorizontalOptions="Center"
+                   Margin="0,0,0,10" />
+
+            <Border Style="{StaticResource InputFieldBrand}">
+                <Entry Text="{Binding UserName}"
+                       Style="{StaticResource BaseEntry}"
+                       Placeholder="Tu nombre..."
+                       HorizontalTextAlignment="Center"
+                       ReturnType="Done"
+                       ReturnCommand="{Binding ContinueCommand}" />
+            </Border>
+
+        </VerticalStackLayout>
+        
+        <VerticalStackLayout Grid.Row="2"
+                             Style="{StaticResource FormContainer}"
+                             Spacing="0"
+                             VerticalOptions="End">
+
+            <Button Text="Comenzar"
+                    Style="{StaticResource ButtonPrimary}"
+                    Command="{Binding ContinueCommand}"
+                    Margin="0,0,0,12" />
+
+            <Label Text="Tu plata, bajo tu control."
+                   Style="{StaticResource Caption}"
+                   HorizontalTextAlignment="Center"
+                   HorizontalOptions="Center" />
+
+        </VerticalStackLayout>
+
+    </Grid>
 </ContentPage>
