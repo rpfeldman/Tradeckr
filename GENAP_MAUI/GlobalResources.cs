@@ -1,19 +1,15 @@
 ﻿
-using CommunityToolkit.Mvvm.ComponentModel;
 using GENAP_MAUI.InnerComponents;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
+using Microsoft.Maui.Storage;
 
 namespace GENAP_MAUI
 {
-    public sealed class GlobalResources
+    public static class GlobalResources
     {
-        // This is currently hardcoded, in the future it should get the name of the user from a JSON file that saves it
-        public const string UserName = "Genaro";
+        public static string UserName { get => Preferences.Get(PreferenceKeys.UserNameKey, "Unknown"); }
+        public static bool IsNewUser { get => Preferences.Get(PreferenceKeys.NewUserKey, true); }
 
-        // Months name are also hardcoded, in the future they will be fetched by a CSV file with the translations
+        // Months name are hardcoded, in the future they will be fetched by a CSV file with the translations
         public static string[] Months { get => ["Desconocido", "enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]; }
 
         // TimePeriod is split in 3: the enum (type-safe id), the display name (what the user sees), and the logic (per consumption point)

@@ -1,4 +1,5 @@
-﻿using GENAP_MAUI.Pages.ConfirmationPages;
+﻿
+using GENAP_MAUI.Pages.ConfirmationPages;
 using GENAP_MAUI.Pages.MainNavigationBarPages;
 using GENAP_MAUI.Pages.TransactionRelatedPages;
 
@@ -12,6 +13,9 @@ namespace GENAP_MAUI
 
             Routing.RegisterRoute(Routes.TransactionMenu, typeof(TransactionPage));
             Routing.RegisterRoute(Routes.ClearStorageConfirmation, typeof(ClearStorageConfirmationPage));
+
+
+            //this.GoToAsync($"//{Routes.Categories}");
         }
     }
 }

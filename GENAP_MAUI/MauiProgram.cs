@@ -39,7 +39,7 @@ namespace GENAP_MAUI
             builder.Services.AddTransient<ClearStorageConfirmationPageViewModel>();
 
             // Data services & the repository
-            var dbPath = Path.Combine(FileSystem.AppDataDirectory, "Test.db");
+            var dbPath = Path.Combine(FileSystem.AppDataDirectory, "Tradeckr_Storage.db");
 
             builder.Services.AddSingleton<IStateStorage<TransactionDto>, EF_SQLite_StateStorageRepo<TransactionDto>>(sp => { return new EF_SQLite_StateStorageRepo<TransactionDto>(dbPath); });
 
