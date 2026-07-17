@@ -17,7 +17,7 @@ namespace GENAP_MAUI
         public enum TimePeriodsEnum { Historical, HistoricalToday, Month, ThirtyDays, ThreeMonths, Semester, Year, Today }; 
         public static Dictionary<TimePeriodsEnum, string> TimePeriods { get => new()
             {
-                {TimePeriodsEnum.Historical, "Historico"},
+                {TimePeriodsEnum.Historical, "Proyeccion"},
                 {TimePeriodsEnum.HistoricalToday, "Historico hasta hoy"},
                 {TimePeriodsEnum.Year, "Ultimo año"},
                 {TimePeriodsEnum.Semester, "Ultimo semestre"},
