@@ -2,8 +2,10 @@
   <Project Path="../Components/DataServices/DataServices.csproj" Id="740f01ae-8212-438f-9ec4-b08af83a3e48" />
   <Project Path="../Components/DomainModel/DomainModel.csproj" />
   <Project Path="../Components/Repositories/Repositories.csproj" />
-  <Project Path="../ConsoleTest/ConsoleTest.csproj" Id="3bb8cf25-951a-48fc-b73f-c90576e3ac8e" />
+  <Project Path="../ConsoleTest/ConsoleTest.csproj" Id="3bb8cf25-951a-48fc-b73f-c90576e3ac8e">
+    <Build Project="false" />
+  </Project>
   <Project Path="GENAP_MAUI.csproj">
-    <Deploy Solution="Debug|*" />
+    <Deploy />
   </Project>
 </Solution>
