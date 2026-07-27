@@ -1,0 +1,71 @@
+[33mfd4dd2f[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m Refactored 'EF_SQLite_StateStorage' to use AsNoTracking() on query methods
+[33mbb89d03[m Added a feature in Graphspage in wich you can filter and redraw the charts by a specified time period
+[33mbba0b25[m Added the change time period feature to the GraphsPage
+[33me5741b2[m Fixed ProportionDoughuntChart category color binding
+[33m2720602[m Added new default category color
+[33m07fcdf5[m Added ProportionDoughnutChart content view
+[33md155fb9[m Updated BasicLineChart to use TransactionDto as it's bindable property
+[33m7e3a82e[m Updated DoubleComparisonLineChart to use TransactionDTO as it's bindable property
+[33ma80e020[m Updated BalanceLineChart contentview to use as bindable property a list of TransactionDto, I know it's not SOLID perfect, but in this case is the right choice for me
+[33m5d60dfd[m Push test after cloning the repo
+[33mb6afdf7[m Added double comparison line chart to compare double collections
+[33mf1b5cb8[m Added BasicLineChart for single collection tracking
+[33m59a7673[m Fixed appicon
+[33m2813e35[m Added appicon and appiconfg
+[33ma2ca974[m Refactored BalanceLineChart
+[33m336e429[m Added BalanceLineChart contentview
+[33m1476529[m Refactored BalanceDoughnutChart ContentView, now everything is in it's code-behind with no viewmodel coupled
+[33m6cfb844[m DataProjectionService: refactored GetResults methods by adding a depletion filter
+[33m8a94d89[m Added the BalanceDoughnutChart contentview and its viewmodel
+[33mfbd2b15[m Installed and tested LiveCharts package
+[33m529f8d1[m Added GraphsPageViewModel
+[33me6f2088[m Added 'CategoryDTO' in replacement of 'string Category' & functional prototype of 'RegistTransactionPage' completed
+[33m4926dc8[m Renamed every async method to follow the naming convention
+[33mdb7f8a3[m DataProjectionService: refactored for parallel queries
+[33ma0f084b[m TransactionCategoriesPage: added category CRUD system
+[33m1da556d[m Added TransactionCategoriesPage viewmodel
+[33me4bed41[m Functional prototype of 'RegistTradeTransactionPage' completed
+[33m443204c[m Added and binded RegistTradeTransactionPage viewmodel
+[33m6bd7533[m Functional prototype of 'RegistTransactionPage' completed
+[33m849db3c[m Added RegistTransactionPageViewModel
+[33m59362da[m Added temporal navigation center at MainDashboardPage.xaml page
+[33mc805f10[m AppShell: Navigation routes were registered
+[33m0ba3970[m Added routes static class
+[33m0d18b22[m DataProjectionService: added financial results getters methods
+[33mc41c04e[m DataProjectionService: refactored to make it simpler
+[33m5d31a7a[m Stress-tested services perfomance
+[33m979eea2[m Remade whole DataProjectionService: async, expression predicates, centralized ordering
+[33mcb56426[m DataProjectionService cleaned
+[33m82a6c0f[m refactored services and made them async
+[33mc3df9c4[m Made EF_SQLite_StateStorage async
+[33m2336605[m made IStateStorage async
+[33m8a4a8a8[m Added base page infrastructure
+[33m94721e4[m IStateStorage & EF_SQLite_StateStorage: changed Func<t> for Expression<func<t>>
+[33mca2a068[m DataManagementService minor fix at RemoveFixedTransaction from month
+[33m3353a7a[m DataManagementService,: Refactor the service to use method overload
+[33m157a8e8[m DataManagementService & EF_SQLite_StateStorage refactors: now you can delete fixed transactions from a month and every historical transaction, also, now you can't update the duration from a single fixed transaction for protecting state invariants
+[33mc9be11e[m DataProjectionService: refactor, now you can choose how to order the list by a enum. I will refactor this in the future also
+[33mc6163ea[m DataProjectionService: minor fixed at month filter to include year
+[33m15e768a[m TransactionDto: made TransactionDto (and subclasses) possible event arguments
+[33mf3a6f46[m EF_SQLite_StateStorage: minor fix at Save fixed transactions, save changes AFTER the for statement
+[33m4beeb35[m DataManagementService: added delete fixedtransaction collection feature
+[33ma2444c4[m EF_SQLite_StateStorage: Added collection saving for FixedTransactionDto
+[33m429d354[m FixedTransactionDto: added property 'FixedTransactionId' to identify collections of fixed transactions. doesn't replace the PK TransactionId
+[33me214bd1[m DataProjectionService: added filter featuring
+[33m4062225[m Merge branch 'master' of https://github.com/rpfeldman/Project_GENAP
+[33m9ef1351[m Refactored: DataManagementService, TransactioDto, FixedTransactionDto, EF_SQLite_StateStorage
+[33m0a67c14[m Update copyright year and owner in LICENSE file
+[33m85b62f8[m Add Apache License 2.0
+[33ma33bd71[m Added DataManagementService in DataServices layer
+[33m909eb00[m Added DataRegistrationService in the DataServices layer
+[33m6a1908e[m DomainModel: Added subclass of TransactionDto -> FixedTransactionDto
+[33m87be903[m Added README
+[33mcc18c57[m Created: DataServices class library & DataProjectionService
+[33m69a1660[m EF_SQLite_StateStorage: added extra commentaries
+[33m9317944[m StateStorageDbContext: SSDC moved to his own file EF_StateStorageDbContext.cs
+[33mfd03805[m EF_SQLite_StateStorage: Protected database invariant
+[33m9d78af7[m TransactionDTO & IStateStorage & EF_SQLite_StateStorage fixed: Value data type int -> decimal
+[33m1275da8[m TransactionDto property Category: The data type was changed from 'Enum' to 'string'
+[33m39fe180[m DomainModel and Repository created
+[33m78a911d[m initial commit
+[33m4fe580f[m Initial commit

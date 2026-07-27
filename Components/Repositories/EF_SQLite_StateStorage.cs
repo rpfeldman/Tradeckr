@@ -41,17 +41,17 @@ namespace Repositories
 
         public async Task<List<TransactionDto>> GetAllAsync()
         {
-            return await Context.TransactionsTable.ToListAsync();
+            return await Context.TransactionsTable.AsNoTracking().ToListAsync();
         }
 
         public async Task<TransactionDto?> GetTransactionAsync(int TransactionId)
         {
-            return await Context.TransactionsTable.Where(t => t.TransactionId == TransactionId).FirstOrDefaultAsync();
+            return await Context.TransactionsTable.AsNoTracking().Where(t => t.TransactionId == TransactionId).FirstOrDefaultAsync();
         }
 
         public async Task<List<TransactionDto>> GetTransactionsAsync(Expression<Func<TransactionDto, bool>> predicate)
         {
-            return await Context.TransactionsTable.Where(predicate).ToListAsync();
+            return await Context.TransactionsTable.AsNoTracking().Where(predicate).ToListAsync();
         }
 
         public async Task<bool> DeleteAsync(int TransactionId)
