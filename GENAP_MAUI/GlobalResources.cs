@@ -17,14 +17,14 @@ namespace GENAP_MAUI
         public enum TimePeriodsEnum { Historical, HistoricalToday, Month, ThirtyDays, ThreeMonths, Semester, Year, Today }; 
         public static Dictionary<TimePeriodsEnum, string> TimePeriods { get => new()
             {
-                {TimePeriodsEnum.Historical, "Proyeccion"},
-                {TimePeriodsEnum.HistoricalToday, "Historico hasta hoy"},
-                {TimePeriodsEnum.Year, "Ultimo año"},
-                {TimePeriodsEnum.Semester, "Ultimo semestre"},
-                {TimePeriodsEnum.ThreeMonths, "Ultimos 3 meses"},
-                {TimePeriodsEnum.Month, "Este mes"},
-                {TimePeriodsEnum.ThirtyDays, "Ultimos 30 dias"},
                 {TimePeriodsEnum.Today, "Hoy"},
+                {TimePeriodsEnum.ThirtyDays, "Ultimos 30 dias"},
+                {TimePeriodsEnum.Month, "Este mes"},
+                {TimePeriodsEnum.ThreeMonths, "Ultimos 3 meses"},
+                {TimePeriodsEnum.Semester, "Ultimo semestre"},
+                {TimePeriodsEnum.Year, "Ultimo año"},
+                {TimePeriodsEnum.HistoricalToday, "Historico hasta hoy"},
+                {TimePeriodsEnum.Historical, "Proyeccion"},
             };
         }
         public static List<KeyValuePair<TimePeriodsEnum, string>> TimePeriodsList { get => [.. TimePeriods]; }

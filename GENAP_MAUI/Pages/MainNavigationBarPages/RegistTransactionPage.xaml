@@ -53,13 +53,13 @@
 
                 <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
                     <Button Grid.Column="0"
-                    Text="Ganancia"
+                    Text="Ingreso"
                     Style="{StaticResource IncomeChoice}"
                     Command="{Binding SetIncomeCommand}"
                     IsEnabled="{Binding IsExpenseSelected}" />
 
                     <Button Grid.Column="1"
-                    Text="Pérdida"
+                    Text="Gasto"
                     Style="{StaticResource ExpenseChoice}"
                     Command="{Binding SetExpenseCommand}"
                     IsEnabled="{Binding IsIncomeSelected}" />
