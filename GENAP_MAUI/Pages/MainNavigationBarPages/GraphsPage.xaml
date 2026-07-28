@@ -11,7 +11,7 @@
 
     <Grid RowDefinitions="Auto,*">
 
- 
+
         <Border Grid.Row="0"
                 Style="{StaticResource InputField}"
                 Margin="20,16,20,8">
@@ -23,13 +23,13 @@
 
         <ScrollView Grid.Row="1" Padding="20,8,20,20">
             <VerticalStackLayout Spacing="0">
-                
+
                 <VerticalStackLayout Spacing="4">
                     <Label Text="Apartado de graficos" Style="{StaticResource SubHeadline}" />
                     <Label Style="{StaticResource Caption}"
                           HorizontalTextAlignment="Center"
                           Text="Para una mejor visualizacion se recomienda usar el celular en horizontal." />
-                </VerticalStackLayout>  
+                </VerticalStackLayout>
 
                 <Label Text="Balance general" Style="{StaticResource SectionHeader}" />
 
@@ -45,13 +45,21 @@
                     </VerticalStackLayout>
                 </Border>
 
+                <Label Text="Trading" Style="{StaticResource SectionHeader}" />
+
+                <!-- TODO -->
                 <Border Style="{StaticResource ChartCard}">
                     <VerticalStackLayout>
-                        <charts:ProportionDoughnutChart Categories="{Binding Categories}" Transactions="{Binding TransactionsLog}" Title="Proporcion global"/>
                     </VerticalStackLayout>
                 </Border>
 
-                <Label Text="Análisis de gastos" Style="{StaticResource SectionHeader}" />
+                <!-- TODO -->
+                <Border Style="{StaticResource ChartCard}">
+                    <VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Label Text="Análisis de gastos cotidianos" Style="{StaticResource SectionHeader}" />
 
                 <Border Style="{StaticResource ChartCard}">
                     <VerticalStackLayout>
@@ -64,8 +72,8 @@
                         <charts:BasicLineChart Transactions="{Binding ExpensesLog}" LineColor="{StaticResource ExpenseRed}" Title="Evolucion del gasto"/>
                     </VerticalStackLayout>
                 </Border>
-                
-                <Label Text="Análisis de ingresos" Style="{StaticResource SectionHeader}" />
+
+                <Label Text="Análisis de ingresos cotidianos" Style="{StaticResource SectionHeader}" />
 
                 <Border Style="{StaticResource ChartCard}">
                     <VerticalStackLayout>
@@ -94,5 +102,5 @@
 
         <nav:BottomNavigationBar Grid.Row="0" Grid.RowSpan="2" />
     </Grid>
-    
+
 </ContentPage>
