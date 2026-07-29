@@ -96,6 +96,12 @@ namespace DataServices
         }
 
         #region All transactions data projection
+        public async Task<OperationResult<IEnumerable<TResult>>> ProjectTransactions<TResult>(Expression<Func<TransactionDto, TResult>> Selector)
+        {
+            var projectedTransactions = await _StateStorage.ProjectAsync<TResult>(Selector);
+
+            return projectedTransactions;
+        }
         public async Task<OperationResult<IEnumerable<TransactionDto>>> GetAllAsync(bool? IsExpense = null, Order? order = null)
         {
             if(IsExpense is null)

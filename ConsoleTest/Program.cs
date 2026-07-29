@@ -17,24 +17,29 @@ namespace ConsoleTest
             Batteries_V2.Init();
 
             EF_SQLite_StateStorageRepo<TransactionDto> repo = new("Test.db");
+            DataProjectionService dps = new(repo);
             var today = DateOnly.FromDateTime(DateTime.Today);
 
-            var op = await repo.ProjectAsync<OnlyCategoryDto>(t => new() { CategoryName = t.Depletion.ToString() });
+            var AlltransactionsOp = await dps.ProjectTransactions<GraphableTransactionDto>(t => new(t.Depletion ? (t.Value * -1) : t.Value, t.Category, t.Date));
 
-            if (op.Success)
+            foreach (var item in AlltransactionsOp.Result!)
             {
-                foreach (var item in op.Result!)
-                {
-                    Console.WriteLine(item.GetType() + " " + item.CategoryName);
-                }
+                Console.WriteLine($"{item.SignedValue:N2}$ | {item.Category} | {item.Date}");
+            }
+        }
+
+        public readonly struct GraphableTransactionDto
+        {
+            public readonly string Category {  get; }
+            public readonly decimal SignedValue { get; }
+            public readonly DateOnly Date { get; }
+
+            public GraphableTransactionDto(decimal value, string category, DateOnly date)
+            {
+                Category = category;
+                SignedValue = value;
+                Date = date;
             }
         }
     }
-
-    public sealed class OnlyCategoryDto
-    {
-        public string CategoryName { get; set; }
-    }
-
- 
 }
