@@ -102,6 +102,12 @@ namespace DataServices
 
             return projectedTransactions;
         }
+        public async Task<OperationResult<IEnumerable<TResult>>> ProjectTransactions<TResult>(Expression<Func<TransactionDto, TResult>> Selector, Expression<Func<TransactionDto, bool>> Predicate)
+        {
+            var projectedTransactions = await _StateStorage.ProjectByPredicateAsync<TResult>(Selector, Predicate);
+
+            return projectedTransactions;
+        }
         public async Task<OperationResult<IEnumerable<TransactionDto>>> GetAllAsync(bool? IsExpense = null, Order? order = null)
         {
             if(IsExpense is null)
