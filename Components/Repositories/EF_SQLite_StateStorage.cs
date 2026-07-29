@@ -160,6 +160,30 @@ namespace Repositories
             }
         }
 
+        public async Task<OperationResult<IEnumerable<TResult>>> ProjectAsync<TResult>(Expression<Func<T, TResult>> Selector)
+        {
+            using var context = new StateStorageDbContext(Options);
+
+            try
+            {
+                var result = await context.Set<T>().AsNoTracking().Select(Selector).ToListAsync();
+                return OperationResult<IEnumerable<TResult>>.SuccessfulOperation(result);
+            }
+            catch (SqliteException)
+            {
+                return OperationResult<IEnumerable<TResult>>.FaultedOperation(RepositorieErrors.DBProviderError);
+            }
+            catch (DbUpdateException)
+            {
+                return OperationResult<IEnumerable<TResult>>.FaultedOperation(RepositorieErrors.DBUpdateError);
+            }
+            catch (TimeoutException)
+            {
+                return OperationResult<IEnumerable<TResult>>.FaultedOperation(RepositorieErrors.TimeoutError);
+            }
+
+        }
+
         public async Task<OperationResult<IEnumerable<T>>> GetEntitiesAsync(Expression<Func<T, bool>> Predicate)
         {
             using var context = new StateStorageDbContext(Options);

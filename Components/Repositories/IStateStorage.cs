@@ -21,5 +21,6 @@ namespace Repositories
         public Task<Option<TEntity>> GetEntityAsync(int Id);
         public Task<OperationResult<IEnumerable<TEntity>>> GetEntitiesAsync(Expression<Func<TEntity, bool>> Predicate);
         public Task<OperationResult<IEnumerable<TEntity>>> GetAllAsync();
+        public Task<OperationResult<IEnumerable<TResult>>> ProjectAsync<TResult>(Expression<Func<TEntity, TResult>> Predicate);
     }
 }
