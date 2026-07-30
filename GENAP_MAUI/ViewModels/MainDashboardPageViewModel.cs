@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using CommunityToolkit.Mvvm.Input;
+using GENAP_MAUI.InnerComponents;
 
 namespace GENAP_MAUI.ViewModels
 {
@@ -19,13 +20,10 @@ namespace GENAP_MAUI.ViewModels
         }
 
         [ObservableProperty]
-        public partial decimal MonthExpenses { get; set; }
-
-        [ObservableProperty]
-        public partial decimal MonthIncome { get; set; }
-
-        [ObservableProperty]
         public partial TransactionDto[] MonthTransactions { get; set; }
+
+        [ObservableProperty]
+        public partial IEnumerable<GraphableTransactionDto> GraphableTransactions { get; set; } = [];
 
         public string Month { get { return GlobalResources.Months[DateTime.Today.Month]; } }
 
@@ -43,26 +41,16 @@ namespace GENAP_MAUI.ViewModels
         {
             var today = DateOnly.FromDateTime(DateTime.Today);
 
-            var GetMonthExpensesTask = _dataProjectionService.GetAllByMonthAsync(today.Month, today.Year, true);
-            var GetMonthIncomeTask = _dataProjectionService.GetAllByMonthAsync(today.Month, today.Year, false);
-            var GetMonthTransactionsTask = _dataProjectionService.GetAllByMonthAsync(today.Month, today.Year, order: DataProjectionService.Order.OrderByDateDescending);
+            var getMonthTransactions = await _dataProjectionService.GetAllByMonthAsync(today.Month, today.Year);
 
-            var Transactions = await Task.WhenAll(GetMonthExpensesTask, GetMonthIncomeTask, GetMonthTransactionsTask);
-
-            if (Transactions[0].Success)
+            if (!getMonthTransactions.Success)
             {
-                MonthExpenses = DataProjectionService.GetSummedTransactions(Transactions[0].Result!);
-            } else { await Shell.Current.DisplayAlertAsync("Error", Transactions[0].InnerError?.ErrorMessage, "Aceptar"); }
+                await Shell.Current.DisplayAlertAsync("Error", getMonthTransactions.InnerError?.ErrorMessage,"Aceptar");
+                return;
+            }
 
-            if (Transactions[1].Success)
-            {
-                MonthIncome = DataProjectionService.GetSummedTransactions(Transactions[1].Result!);
-            } else { await Shell.Current.DisplayAlertAsync("Error", Transactions[1].InnerError?.ErrorMessage, "Aceptar"); }
-
-            if (Transactions[2].Success)
-            {
-                MonthTransactions = [.. Transactions[2].Result!];
-            } else { await Shell.Current.DisplayAlertAsync("Error", Transactions[2].InnerError?.ErrorMessage, "Aceptar"); }
+            MonthTransactions = [.. getMonthTransactions.Result!];
+            GraphableTransactions = MonthTransactions.Select(t => new GraphableTransactionDto(t.Depletion ? (t.Value * -1) : t.Value, t.Category, t.Date));
         }
     }
 }

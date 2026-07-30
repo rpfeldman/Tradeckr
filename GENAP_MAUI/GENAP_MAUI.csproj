@@ -98,6 +98,9 @@
 	  <MauiXaml Update="ContentViews\Graphs\BasicLineChart.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="ContentViews\Graphs\DailyColumnChart.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="ContentViews\Graphs\DoubleComparisonLineChart.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

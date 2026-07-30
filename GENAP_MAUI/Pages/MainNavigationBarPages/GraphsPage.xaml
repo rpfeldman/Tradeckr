@@ -35,7 +35,7 @@
 
                 <Border Style="{StaticResource ChartCard}">
                     <VerticalStackLayout>
-                        <charts:BalanceDoughnutChart Transactions="{Binding TransactionsLog}" UpTitle="Ingresos - perdidas" DownTitle="Gastos" Title="Dona de balance" SubtractTradingLossFromIncome="True"/>
+                        <charts:BalanceDoughnutChart Transactions="{Binding TransactionsLog}" UpTitle="Ingresos" DownTitle="Gastos" Title="Dona de balance" SubtractTradingLossFromIncome="True"/>
                     </VerticalStackLayout>
                 </Border>
 
@@ -59,9 +59,9 @@
                     </VerticalStackLayout>
                 </Border>
 
-                <!-- TODO -->
                 <Border Style="{StaticResource ChartCard}">
                     <VerticalStackLayout>
+                        <charts:DailyColumnChart Transactions="{Binding TradingLog}" Title="PnL por dia"></charts:DailyColumnChart>
                     </VerticalStackLayout>
                 </Border>
 
@@ -79,17 +79,17 @@
                     </VerticalStackLayout>
                 </Border>
 
-                <Label Text="Análisis de ingresos cotidianos" Style="{StaticResource SectionHeader}" />
+                <Label Text="Análisis de ingreso neto" Style="{StaticResource SectionHeader}" />
 
                 <Border Style="{StaticResource ChartCard}">
                     <VerticalStackLayout>
-                        <charts:ProportionDoughnutChart Categories="{Binding Categories}" Transactions="{Binding IncomeLog}" Title="Ingresos por categoria" />
+                        <charts:ProportionDoughnutChart Categories="{Binding Categories}" Transactions="{Binding IncomeLog}" Title="Ingreso neto por categoria" />
                     </VerticalStackLayout>
                 </Border>
 
                 <Border Style="{StaticResource ChartCard}">
                     <VerticalStackLayout>
-                        <charts:BasicLineChart Transactions="{Binding IncomeLog}" LineColor="{StaticResource IncomeGreen}" Title="Evolucion del ingreso"/>
+                        <charts:BasicLineChart Transactions="{Binding IncomeLog}" LineColor="{StaticResource IncomeGreen}" Title="Evolucion del ingreso neto"/>
                     </VerticalStackLayout>
                 </Border>
 
