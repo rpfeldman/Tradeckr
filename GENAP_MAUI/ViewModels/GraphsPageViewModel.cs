@@ -84,7 +84,7 @@ namespace GENAP_MAUI.ViewModels
 
                         _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Category != DefaultCategories.TradingCategoryName),
                         _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Category == DefaultCategories.TradingCategoryName),
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Category != DefaultCategories.TradingCategoryName),
+                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false),
                         _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Category == DefaultCategories.TradingCategoryName),
                     ];
 
@@ -95,7 +95,7 @@ namespace GENAP_MAUI.ViewModels
                     [
                         _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date <= today && t.Category != DefaultCategories.TradingCategoryName),
                         _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date <= today && t.Category == DefaultCategories.TradingCategoryName),
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date <= today && t.Category != DefaultCategories.TradingCategoryName),
+                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date <= today),
                         _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date <= today && t.Category == DefaultCategories.TradingCategoryName),
                     ];
 
@@ -106,7 +106,7 @@ namespace GENAP_MAUI.ViewModels
                     [
                         _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.Month == today.Month && t.Date.Year == today.Year&& t.Category != DefaultCategories.TradingCategoryName),
                         _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.Month == today.Month && t.Date.Year == today.Year && t.Category == DefaultCategories.TradingCategoryName),
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.Month == today.Month && t.Date.Year == today.Year&& t.Category != DefaultCategories.TradingCategoryName),
+                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.Month == today.Month && t.Date.Year == today.Year),
                         _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.Month == today.Month && t.Date.Year == today.Year && t.Category == DefaultCategories.TradingCategoryName),
                     ];
                     break;
@@ -116,7 +116,7 @@ namespace GENAP_MAUI.ViewModels
 					[
                         _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector,  t => t.Depletion == true && t.Date.DayOfYear >= (today.DayOfYear - 30) && t.Date <= today && t.Date.Year == today.Year && t.Category != DefaultCategories.TradingCategoryName),
                         _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector,  t => t.Depletion == true && t.Date.DayOfYear >= (today.DayOfYear - 30) && t.Date <= today && t.Date.Year == today.Year&& t.Category == DefaultCategories.TradingCategoryName),
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector,  t => t.Depletion == false && t.Date.DayOfYear >= (today.DayOfYear - 30) && t.Date <= today && t.Date.Year == today.Year && t.Category != DefaultCategories.TradingCategoryName),
+                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector,  t => t.Depletion == false && t.Date.DayOfYear >=(today.DayOfYear - 30) && t.Date <= today && t.Date.Year == today.Year),
                         _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector,  t => t.Depletion == false && t.Date.DayOfYear >= (today.DayOfYear - 30) && t.Date <= today && t.Date.Year == today.Year&& t.Category == DefaultCategories.TradingCategoryName),
                     ];
 
@@ -127,7 +127,7 @@ namespace GENAP_MAUI.ViewModels
 					[
                         _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.Month >= (today.Month-3) && t.Date.Month <= today.Month && t.Date.Year == today.Year && t.Category != DefaultCategories.TradingCategoryName),
                         _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.Month >= (today.Month-3) && t.Date.Month <= today.Month && t.Date.Year == today.Year && t.Category == DefaultCategories.TradingCategoryName),
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.Month >= (today.Month-3) && t.Date.Month <= today.Month && t.Date.Year == today.Year && t.Category != DefaultCategories.TradingCategoryName),
+                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.Month >=(today.Month - 3) && t.Date.Month <= today.Month && t.Date.Year == today.Year),
                         _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.Month >= (today.Month-3) && t.Date.Month <= today.Month && t.Date.Year == today.Year && t.Category == DefaultCategories.TradingCategoryName),
                     ];
 
@@ -145,7 +145,7 @@ namespace GENAP_MAUI.ViewModels
 					[
                         _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.Month >= MinBound && t.Date.Month <= MaxBound && t.Date.Year == today.Year && t.Category != DefaultCategories.TradingCategoryName),
                         _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.Month >= MinBound && t.Date.Month <= MaxBound && t.Date.Year == today.Year && t.Category == DefaultCategories.TradingCategoryName),
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.Month >= MinBound && t.Date.Month <= MaxBound && t.Date.Year == today.Year && t.Category != DefaultCategories.TradingCategoryName),
+                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.Month >= MinBound && t.Date.Month <= MaxBound && t.Date.Year == today.Year),
                         _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.Month >= MinBound && t.Date.Month <= MaxBound && t.Date.Year == today.Year && t.Category == DefaultCategories.TradingCategoryName),
                     ];
 
@@ -156,7 +156,7 @@ namespace GENAP_MAUI.ViewModels
 					[
                         _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.Year == today.Year && t.Category != DefaultCategories.TradingCategoryName),
                         _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.Year == today.Year && t.Category == DefaultCategories.TradingCategoryName),
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.Year == today.Year && t.Category != DefaultCategories.TradingCategoryName),
+                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.Year == today.Year),
                         _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.Year == today.Year && t.Category == DefaultCategories.TradingCategoryName),
                     ];
 
@@ -167,7 +167,7 @@ namespace GENAP_MAUI.ViewModels
                     [
                         _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date == today && t.Category != DefaultCategories.TradingCategoryName),
                         _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date == today && t.Category == DefaultCategories.TradingCategoryName),
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date == today && t.Category != DefaultCategories.TradingCategoryName),
+                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date == today),
                         _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date == today && t.Category == DefaultCategories.TradingCategoryName),
                     ];
 
@@ -178,7 +178,7 @@ namespace GENAP_MAUI.ViewModels
                     [
                         _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Category != DefaultCategories.TradingCategoryName),
                         _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Category == DefaultCategories.TradingCategoryName),
-                       _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Category != DefaultCategories.TradingCategoryName),
+                       _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false),
                         _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Category == DefaultCategories.TradingCategoryName),
                     ];
 
@@ -206,7 +206,7 @@ namespace GENAP_MAUI.ViewModels
                 ProfitLog = TaskResults[3].Result!;
             }
 
-            TransactionsLog = ExpensesLog.Concat(LossesLog).Concat(IncomeLog).Concat(ProfitLog);
+            TransactionsLog = ExpensesLog.Concat(LossesLog).Concat(IncomeLog);
             TradingLog = LossesLog.Concat(ProfitLog);
 
 			return;
