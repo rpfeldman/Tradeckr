@@ -1,4 +1,5 @@
 using DomainModel;
+using GENAP_MAUI.InnerComponents;
 using LiveChartsCore;
 using LiveChartsCore.Defaults;
 using LiveChartsCore.Kernel.Sketches;
@@ -23,14 +24,14 @@ public partial class BalanceLineChart : ContentView
 
     public static readonly BindableProperty TransactionsProperty = BindableProperty.Create(
         nameof(Transactions),
-        typeof(IEnumerable<TransactionDto>),
+        typeof(IEnumerable<GraphableTransactionDto>),
         typeof(BalanceLineChart),
-        Array.Empty<TransactionDto>(),
+        Array.Empty<GraphableTransactionDto>(),
         propertyChanged: OnDataChanged);
 
-    public IEnumerable<TransactionDto> Transactions
+    public IEnumerable<GraphableTransactionDto> Transactions
     {
-        get => (IEnumerable<TransactionDto>)GetValue(TransactionsProperty);
+        get => (IEnumerable<GraphableTransactionDto>)GetValue(TransactionsProperty);
         set => SetValue(TransactionsProperty, value);
     }
 
@@ -47,7 +48,6 @@ public partial class BalanceLineChart : ContentView
         set => SetValue(TitleProperty, value);
     }
 
-    // --- Empty state ---
     public static readonly BindableProperty HasDataProperty = BindableProperty.Create(
         nameof(HasData), typeof(bool), typeof(BalanceLineChart), false);
 
@@ -180,14 +180,14 @@ public partial class BalanceLineChart : ContentView
         OnPropertyChanged(nameof(XAxes));
     }
 
-    private static (DateOnly[] Dates, double[] Values) AccumulateByDay(IEnumerable<TransactionDto> transactions)
+    private static (DateOnly[] Dates, double[] Values) AccumulateByDay(IEnumerable<GraphableTransactionDto> transactions)
     {
         var dailyNet = transactions
             .GroupBy(t => t.Date)
             .OrderBy(g => g.Key)
             .ToDictionary(
                 g => g.Key,
-                g => g.Sum(t => t.Depletion ? -t.Value : t.Value));
+                g => g.Sum(t => t.SignedValue));
 
         var from = dailyNet.Keys.Min();
         var to = dailyNet.Keys.Max();

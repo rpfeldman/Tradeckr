@@ -1,3 +1,5 @@
+using DomainModel;
+using GENAP_MAUI.InnerComponents;
 using GENAP_MAUI.ViewModels;
 using LiveChartsCore;
 using LiveChartsCore.Defaults;
@@ -11,31 +13,63 @@ public partial class BalanceDoughnutChart : ContentView
 {
     private static readonly SKColor IncomeColor = SKColor.Parse("#16C784");
     private static readonly SKColor ExpenseColor = SKColor.Parse("#EA3943");
+    private static readonly SKColor NegativeIncomeColor = SKColor.Parse("#F59E0B"); 
 
-    public static readonly BindableProperty IncomeProperty = BindableProperty.Create(
-        nameof(Income),
-        typeof(decimal),
+    private const string TradingCategoryName = DefaultCategories.TradingCategoryName;
+
+    private const string DefaultUpTitle = "Ingresos";
+    private const string DefaultDownTitle = "Gastos";
+
+    public static readonly BindableProperty TransactionsProperty = BindableProperty.Create(
+        nameof(Transactions),
+        typeof(IEnumerable<GraphableTransactionDto>),
         typeof(BalanceDoughnutChart),
-        0m,
+        Array.Empty<GraphableTransactionDto>(),
         propertyChanged: OnDataChanged);
 
-    public decimal Income
+    public IEnumerable<GraphableTransactionDto> Transactions
     {
-        get => (decimal)GetValue(IncomeProperty);
-        set => SetValue(IncomeProperty, value);
+        get => (IEnumerable<GraphableTransactionDto>)GetValue(TransactionsProperty);
+        set => SetValue(TransactionsProperty, value);
     }
 
-    public static readonly BindableProperty ExpensesProperty = BindableProperty.Create(
-        nameof(Expenses),
-        typeof(decimal),
+    public static readonly BindableProperty SubtractTradingLossFromIncomeProperty = BindableProperty.Create(
+        nameof(SubtractTradingLossFromIncome),
+        typeof(bool),
         typeof(BalanceDoughnutChart),
-        0m,
+        true,
         propertyChanged: OnDataChanged);
 
-    public decimal Expenses
+    public bool SubtractTradingLossFromIncome
     {
-        get => (decimal)GetValue(ExpensesProperty);
-        set => SetValue(ExpensesProperty, value);
+        get => (bool)GetValue(SubtractTradingLossFromIncomeProperty);
+        set => SetValue(SubtractTradingLossFromIncomeProperty, value);
+    }
+
+    public static readonly BindableProperty UpTitleProperty = BindableProperty.Create(
+        nameof(UpTitle),
+        typeof(string),
+        typeof(BalanceDoughnutChart),
+        DefaultUpTitle,
+        propertyChanged: OnTitlesChanged);
+
+    public string UpTitle
+    {
+        get => (string)GetValue(UpTitleProperty);
+        set => SetValue(UpTitleProperty, value);
+    }
+
+    public static readonly BindableProperty DownTitleProperty = BindableProperty.Create(
+        nameof(DownTitle),
+        typeof(string),
+        typeof(BalanceDoughnutChart),
+        DefaultDownTitle,
+        propertyChanged: OnTitlesChanged);
+
+    public string DownTitle
+    {
+        get => (string)GetValue(DownTitleProperty);
+        set => SetValue(DownTitleProperty, value);
     }
 
     public static readonly BindableProperty TitleProperty = BindableProperty.Create(
@@ -51,7 +85,6 @@ public partial class BalanceDoughnutChart : ContentView
         set => SetValue(TitleProperty, value);
     }
 
-    // --- Empty state ---
     public static readonly BindableProperty HasDataProperty = BindableProperty.Create(
         nameof(HasData), typeof(bool), typeof(BalanceDoughnutChart), false);
 
@@ -77,7 +110,7 @@ public partial class BalanceDoughnutChart : ContentView
         DoughnutChart = [
             new PieSeries<ObservableValue>
             {
-                Name = "Ingresos",
+                Name = DefaultUpTitle,
                 Values = [new(0)],
                 InnerRadius = 80,
                 Fill = new SolidColorPaint(IncomeColor),
@@ -88,7 +121,7 @@ public partial class BalanceDoughnutChart : ContentView
             },
             new PieSeries<ObservableValue>
             {
-                Name = "Gastos",
+                Name = DefaultDownTitle,
                 Values = [new(0)],
                 InnerRadius = 80,
                 Fill = new SolidColorPaint(ExpenseColor),
@@ -108,6 +141,24 @@ public partial class BalanceDoughnutChart : ContentView
         control.UpdateChart();
     }
 
+    private static void OnTitlesChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        var control = (BalanceDoughnutChart)bindable;
+        control.ApplySeriesNames();
+    }
+
+    private void ApplySeriesNames()
+    {
+        ((PieSeries<ObservableValue>)DoughnutChart[0]).Name =
+            string.IsNullOrWhiteSpace(UpTitle) ? DefaultUpTitle : UpTitle;
+
+        ((PieSeries<ObservableValue>)DoughnutChart[1]).Name =
+            string.IsNullOrWhiteSpace(DownTitle) ? DefaultDownTitle : DownTitle;
+
+        
+        OnPropertyChanged(nameof(DoughnutChart));
+    }
+
     private static void OnTitleChanged(BindableObject bindable, object oldValue, object newValue)
     {
         var control = (BalanceDoughnutChart)bindable;
@@ -118,15 +169,69 @@ public partial class BalanceDoughnutChart : ContentView
 
     private void UpdateChart()
     {
-        // Vacío = no hay ni ingresos ni gastos cargados
-        var empty = Income == 0m && Expenses == 0m;
+        var transactions = Transactions?.ToList() ?? [];
+
+        var empty = transactions.Count == 0;
         HasData = !empty;
         IsEmpty = empty;
 
-        var balance = Income - Expenses;
+        if (empty)
+        {
+            BalanceLabel.Text = "Balance:\n0$";
+            SetIncomeSlice(0m);
+            SetExpenseSlice(0m);
+            return;
+        }
+
+        decimal income = 0m;
+        decimal expenses = 0m;
+
+        foreach (var t in transactions)
+        {
+            if (t.SignedValue >= 0)
+            {
+                income += t.SignedValue;
+            }
+            else if (SubtractTradingLossFromIncome && t.Category == TradingCategoryName)
+            {
+                income += t.SignedValue; 
+            }
+            else
+            {
+                expenses += Math.Abs(t.SignedValue);
+            }
+        }
+
+        var balance = income - expenses;
         BalanceLabel.Text = $"Balance:\n{balance:N0}$";
 
-        ((PieSeries<ObservableValue>)DoughnutChart[0]).Values = [new((double)Income)];
-        ((PieSeries<ObservableValue>)DoughnutChart[1]).Values = [new((double)Expenses)];
+        SetIncomeSlice(income);
+        SetExpenseSlice(expenses);
+    }
+
+    private void SetIncomeSlice(decimal income)
+    {
+        var slice = (PieSeries<ObservableValue>)DoughnutChart[0];
+
+        slice.Values = [new((double)Math.Abs(income))];
+
+        if (income < 0)
+        {
+            slice.Fill = new SolidColorPaint(NegativeIncomeColor);
+            slice.DataLabelsFormatter = _ => ChartFormat.CompactCurrency((double)income);
+            slice.ToolTipLabelFormatter = _ => $"{income:N2}$";
+        }
+        else
+        {
+            slice.Fill = new SolidColorPaint(IncomeColor);
+            slice.DataLabelsFormatter = point => ChartFormat.CompactCurrency(point.Coordinate.PrimaryValue);
+            slice.ToolTipLabelFormatter = point => $"{point.Coordinate.PrimaryValue:N2}$";
+        }
+    }
+
+    private void SetExpenseSlice(decimal expenses)
+    {
+        var slice = (PieSeries<ObservableValue>)DoughnutChart[1];
+        slice.Values = [new((double)expenses)];
     }
 }

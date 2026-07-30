@@ -1,4 +1,5 @@
 using DomainModel;
+using GENAP_MAUI.InnerComponents;
 using LiveChartsCore;
 using LiveChartsCore.Defaults;
 using LiveChartsCore.Kernel.Sketches;
@@ -19,14 +20,14 @@ public partial class DoubleComparisonLineChart : ContentView
 
     public static readonly BindableProperty Transactions1Property = BindableProperty.Create(
         nameof(Transactions1),
-        typeof(IEnumerable<TransactionDto>),
+        typeof(IEnumerable<GraphableTransactionDto>),
         typeof(DoubleComparisonLineChart),
-        Array.Empty<TransactionDto>(),
+        Array.Empty<GraphableTransactionDto>(),
         propertyChanged: OnDataChanged);
 
-    public IEnumerable<TransactionDto> Transactions1
+    public IEnumerable<GraphableTransactionDto> Transactions1
     {
-        get => (IEnumerable<TransactionDto>)GetValue(Transactions1Property);
+        get => (IEnumerable<GraphableTransactionDto>)GetValue(Transactions1Property);
         set => SetValue(Transactions1Property, value);
     }
 
@@ -45,14 +46,14 @@ public partial class DoubleComparisonLineChart : ContentView
 
     public static readonly BindableProperty Transactions2Property = BindableProperty.Create(
         nameof(Transactions2),
-        typeof(IEnumerable<TransactionDto>),
+        typeof(IEnumerable<GraphableTransactionDto>),
         typeof(DoubleComparisonLineChart),
-        Array.Empty<TransactionDto>(),
+        Array.Empty<GraphableTransactionDto>(),
         propertyChanged: OnDataChanged);
 
-    public IEnumerable<TransactionDto> Transactions2
+    public IEnumerable<GraphableTransactionDto> Transactions2
     {
-        get => (IEnumerable<TransactionDto>)GetValue(Transactions2Property);
+        get => (IEnumerable<GraphableTransactionDto>)GetValue(Transactions2Property);
         set => SetValue(Transactions2Property, value);
     }
 
@@ -82,7 +83,6 @@ public partial class DoubleComparisonLineChart : ContentView
         set => SetValue(TitleProperty, value);
     }
 
-    // --- Empty state ---
     public static readonly BindableProperty HasDataProperty = BindableProperty.Create(
         nameof(HasData), typeof(bool), typeof(DoubleComparisonLineChart), false);
 
@@ -263,13 +263,13 @@ public partial class DoubleComparisonLineChart : ContentView
         }
     }
 
-    private static Dictionary<DateOnly, decimal> BuildDailyTotal(IEnumerable<TransactionDto> transactions)
+    private static Dictionary<DateOnly, decimal> BuildDailyTotal(IEnumerable<GraphableTransactionDto> transactions)
     {
         return transactions
             .GroupBy(t => t.Date)
             .ToDictionary(
                 g => g.Key,
-                g => g.Sum(t => t.Value));
+                g => g.Sum(t => t.SignedValue));
     }
 
     private static (DateOnly From, DateOnly To) ComputeSharedRange(

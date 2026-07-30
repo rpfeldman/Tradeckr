@@ -53,8 +53,7 @@
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
-                        <chart:BalanceDoughnutChart Expenses="{Binding MonthExpenses}"
-                                                    Income="{Binding MonthIncome}" />
+                        <chart:BalanceDoughnutChart />
                         <Label Text="Ver gráficos ›"
                                Style="{StaticResource Caption}"
                                HorizontalOptions="End" />

@@ -22,14 +22,14 @@ public partial class ProportionDoughnutChart : ContentView
 
     public static readonly BindableProperty TransactionsProperty = BindableProperty.Create(
         nameof(Transactions),
-        typeof(IEnumerable<TransactionDto>),
+        typeof(IEnumerable<GraphableTransactionDto>),
         typeof(ProportionDoughnutChart),
-        Array.Empty<TransactionDto>(),
+        Array.Empty<GraphableTransactionDto>(),
         propertyChanged: OnDataChanged);
 
-    public IEnumerable<TransactionDto> Transactions
+    public IEnumerable<GraphableTransactionDto> Transactions
     {
-        get => (IEnumerable<TransactionDto>)GetValue(TransactionsProperty);
+        get => (IEnumerable<GraphableTransactionDto>)GetValue(TransactionsProperty);
         set => SetValue(TransactionsProperty, value);
     }
 
@@ -59,7 +59,6 @@ public partial class ProportionDoughnutChart : ContentView
         set => SetValue(TitleProperty, value);
     }
 
-    // --- Empty state ---
     public static readonly BindableProperty HasDataProperty = BindableProperty.Create(
         nameof(HasData), typeof(bool), typeof(ProportionDoughnutChart), false);
 
@@ -124,7 +123,7 @@ public partial class ProportionDoughnutChart : ContentView
             .Select(g => new
             {
                 Name = g.Key,
-                Total = g.Sum(t => t.Value)
+                Total = g.Sum(t => Math.Abs(t.SignedValue))
             })
             .OrderByDescending(g => g.Total)
             .ToList();

@@ -35,7 +35,7 @@
 
                 <Border Style="{StaticResource ChartCard}">
                     <VerticalStackLayout>
-                        <charts:BalanceDoughnutChart Expenses="{Binding Expenses}" Income="{Binding Income}" Title="Dona de balance"/>
+                        <charts:BalanceDoughnutChart Transactions="{Binding TransactionsLog}" UpTitle="Ingresos - perdidas" DownTitle="Gastos" Title="Dona de balance" SubtractTradingLossFromIncome="True"/>
                     </VerticalStackLayout>
                 </Border>
 
@@ -47,9 +47,15 @@
 
                 <Label Text="Trading" Style="{StaticResource SectionHeader}" />
 
-                <!-- TODO -->
                 <Border Style="{StaticResource ChartCard}">
                     <VerticalStackLayout>
+                        <charts:BalanceDoughnutChart Transactions="{Binding TradingLog}" UpTitle="Ganancias" DownTitle="Perdidas" Title="Proporcion PnL" SubtractTradingLossFromIncome="False"/>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Style="{StaticResource ChartCard}">
+                    <VerticalStackLayout>
+                        <charts:BalanceLineChart Transactions="{Binding TradingLog}" Title="Evolucion PnL"></charts:BalanceLineChart>
                     </VerticalStackLayout>
                 </Border>
 
@@ -88,14 +94,6 @@
                 </Border>
 
                 <Label Text="Comparativas" Style="{StaticResource SectionHeader}" />
-
-                <Border Style="{StaticResource ChartCard}">
-                    <VerticalStackLayout>
-                        <charts:DoubleComparisonLineChart Transactions1="{Binding IncomeLog}" Color1="{StaticResource IncomeGreen}"
-                                                          Transactions2="{Binding ExpensesLog}" Color2="{StaticResource ExpenseRed}" 
-                                                          Title="Gastos vs ingresos"/>
-                    </VerticalStackLayout>
-                </Border>
 
             </VerticalStackLayout>
         </ScrollView>
