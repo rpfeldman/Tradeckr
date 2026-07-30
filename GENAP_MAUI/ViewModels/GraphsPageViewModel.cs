@@ -11,6 +11,7 @@ using SkiaSharp;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace GENAP_MAUI.ViewModels
@@ -34,20 +35,16 @@ namespace GENAP_MAUI.ViewModels
 		public partial ObservableCollection<CategoryDto> Categories { get; set; } = new();
 
         [ObservableProperty]
-        public partial IEnumerable<TransactionDto> ExpensesLog { get; set; } = [];
-
-		[ObservableProperty]
-		public partial IEnumerable<TransactionDto> IncomeLog { get; set; } = [];
-
-		[ObservableProperty]
-		public partial IEnumerable<TransactionDto> TransactionsLog { get; set; } = [];
-
-		[ObservableProperty]
-		public partial decimal Expenses { get; set; }
+        public partial IEnumerable<GraphableTransactionDto> ExpensesLog { get; set; } = [];
 
         [ObservableProperty]
-        public partial decimal Income { get; set; }
+        public partial IEnumerable<GraphableTransactionDto> LossesLog { get; set; } = [];
 
+        [ObservableProperty]
+		public partial IEnumerable<GraphableTransactionDto> IncomeLog { get; set; } = [];
+
+		[ObservableProperty]
+		public partial IEnumerable<GraphableTransactionDto> TransactionsLog { get; set; } = [];
 
         async partial void OnPickedTimePeriodChanged(KeyValuePair<GlobalResources.TimePeriodsEnum, string> value)
         {
@@ -55,48 +52,52 @@ namespace GENAP_MAUI.ViewModels
         }
 		public async Task ReFillGraphs(GlobalResources.TimePeriodsEnum timePeriod)
 		{
-            Task<OperationResult<IEnumerable<TransactionDto>>>? GetExpensesTask = null;
-            Task<OperationResult<IEnumerable<TransactionDto>>>? GetIncomeTask = null;
-            Task<OperationResult<IEnumerable<TransactionDto>>>? GetTransactionsTask = null;
+            Task<OperationResult<IEnumerable<GraphableTransactionDto>>>? GetExpensesTask = null;
+            Task<OperationResult<IEnumerable<GraphableTransactionDto>>>? GetIncomeTask = null;
+            Task<OperationResult<IEnumerable<GraphableTransactionDto>>>? GetLossesTask = null;
 			var today = DateOnly.FromDateTime(DateTime.Today);
-			Task<OperationResult<IEnumerable<TransactionDto>>>[] Predicates = [];
+			Task<OperationResult<IEnumerable<GraphableTransactionDto>>>[] Predicates = [];
 
 
-			void SetTasksPointers(Task<OperationResult<IEnumerable<TransactionDto>>> getExpensesTask, Task<OperationResult<IEnumerable<TransactionDto>>> getIncomeTask, Task<OperationResult<IEnumerable<TransactionDto>>> getTransactionsTask) 
+			void SetTasksPointers(Task<OperationResult<IEnumerable<GraphableTransactionDto>>> getExpensesTask, Task<OperationResult<IEnumerable<GraphableTransactionDto>>> getLossesTask, Task< OperationResult<IEnumerable<GraphableTransactionDto>>> getIncomeTask) 
 			{
 				GetExpensesTask = getExpensesTask;
-				GetIncomeTask = getIncomeTask;
-				GetTransactionsTask = getTransactionsTask;
+                GetLossesTask = getLossesTask;
+                GetIncomeTask = getIncomeTask;
 			}
 
-			switch (timePeriod)
+			Expression<Func<TransactionDto, GraphableTransactionDto>> selector = t => new(t.Depletion ? (t.Value * -1) : t.Value, t.Category, t.Date);
+			Predicate<TransactionDto> isExpense = (t) => t.Category != DefaultCategories.TradingCategoryName;
+
+            switch (timePeriod)
 			{
 				case GlobalResources.TimePeriodsEnum.Historical:
 					Predicates =
 					[
-						_dataProjectionService.GetAllAsync(true),
-						_dataProjectionService.GetAllAsync(false),
-						_dataProjectionService.GetAllAsync()
-					];
+						
+                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && isExpense(t)),
+                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && !isExpense(t)),
+                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false),
+                    ];
 
 					break;
 
 				case GlobalResources.TimePeriodsEnum.HistoricalToday:
 					Predicates =
 					[
-						_dataProjectionService.GetAllByPredicateAsync(t => t.Depletion == true && t.Date <= today),
-						_dataProjectionService.GetAllByPredicateAsync(t => t.Depletion == false && t.Date <= today),
-						_dataProjectionService.GetAllByPredicateAsync(t => t.Date <= today)
-					];
+                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date <= today && isExpense(t)),
+                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date <= today && !isExpense(t)),
+                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date <= today),
+                    ];
 
 					break;
 
 				case GlobalResources.TimePeriodsEnum.Month:
 					Predicates =
 					[
-						_dataProjectionService.GetAllByMonthAsync(today.Month, today.Year, true),
-						_dataProjectionService.GetAllByMonthAsync(today.Month, today.Year, false),
-						_dataProjectionService.GetAllByMonthAsync(today.Month, today.Year)
+                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.Month == today.Month && t.Date.Year == today.Year && isExpense(t)),
+                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.Month == today.Month && t.Date.Year == today.Year && !isExpense(t)),
+						_dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.Month == today.Month && t.Date.Year == today.Year),
 					];
 
 					break;
@@ -104,9 +105,9 @@ namespace GENAP_MAUI.ViewModels
 				case GlobalResources.TimePeriodsEnum.ThirtyDays:
 					Predicates =
 					[
-						_dataProjectionService.GetAllByPredicateAsync(t => t.Depletion == true && t.Date.DayOfYear >= (today.DayOfYear - 30) && t.Date <= today && t.Date.Year == today.Year),
-						_dataProjectionService.GetAllByPredicateAsync(t => t.Depletion == false && t.Date.DayOfYear >= (today.DayOfYear - 30) && t.Date <= today && t.Date.Year == today.Year),
-						_dataProjectionService.GetAllByPredicateAsync(t => t.Date.DayOfYear >= (today.DayOfYear - 30) && t.Date <= today && t.Date.Year == today.Year)
+                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector,  t => t.Depletion == true && t.Date.DayOfYear >= (today.DayOfYear - 30) && t.Date <= today && t.Date.Year == today.Year && isExpense(t)),
+                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector,  t => t.Depletion == true && t.Date.DayOfYear >= (today.DayOfYear - 30) && t.Date <= today && t.Date.Year == today.Year && !isExpense(t)),
+                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector,  t => t.Depletion == false && t.Date.DayOfYear >= (today.DayOfYear - 30) && t.Date <= today && t.Date.Year == today.Year),
 					];
 
 					break;
@@ -114,10 +115,10 @@ namespace GENAP_MAUI.ViewModels
 				case GlobalResources.TimePeriodsEnum.ThreeMonths:
 					Predicates =
 					[
-						_dataProjectionService.GetAllByPredicateAsync(t => t.Depletion == true && t.Date.Month >= (today.Month-3) && t.Date.Month <= today.Month && t.Date.Year == today.Year),
-						_dataProjectionService.GetAllByPredicateAsync(t => t.Depletion == false && t.Date.Month >= (today.Month - 3) && t.Date.Month <= today.Month && t.Date.Year == today.Year),
-						_dataProjectionService.GetAllByPredicateAsync(t => t.Date.Month >= (today.Month - 3) && t.Date.Month <= today.Month && t.Date.Year == today.Year)
-					];
+                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.Month >= (today.Month-3) && t.Date.Month <= today.Month && t.Date.Year == today.Year && isExpense(t)),
+                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.Month >= (today.Month-3) && t.Date.Month <= today.Month && t.Date.Year == today.Year && !isExpense(t)),
+                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.Month >= (today.Month-3) && t.Date.Month <= today.Month && t.Date.Year == today.Year),
+                    ];
 
 					break;
 
@@ -131,29 +132,29 @@ namespace GENAP_MAUI.ViewModels
 
 					Predicates =
 					[
-						_dataProjectionService.GetAllByPredicateAsync(t => t.Depletion == true && t.Date.Month >= MinBound && t.Date.Month <= MaxBound && t.Date.Year == today.Year),
-						_dataProjectionService.GetAllByPredicateAsync(t => t.Depletion == false && t.Date.Month >= MinBound && t.Date.Month <= MaxBound && t.Date.Year == today.Year),
-						_dataProjectionService.GetAllByPredicateAsync(t => t.Date.Month >= MinBound && t.Date.Month <= MaxBound && t.Date.Year == today.Year)
-					];
+                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.Month >= MinBound && t.Date.Month <= MaxBound && t.Date.Year == today.Year && isExpense(t)),
+                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.Month >= MinBound && t.Date.Month <= MaxBound && t.Date.Year == today.Year && !isExpense(t)),
+                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.Month >= MinBound && t.Date.Month <= MaxBound && t.Date.Year == today.Year),
+                    ];
 
 					break;
 
 				case GlobalResources.TimePeriodsEnum.Year:
 					Predicates =
 					[
-						_dataProjectionService.GetAllByYearAsync(today.Year, true),
-						_dataProjectionService.GetAllByYearAsync(today.Year, false),
-						_dataProjectionService.GetAllByYearAsync(today.Year)
-					];
+                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.Year == today.Year && isExpense(t)),
+                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.Year == today.Year && !isExpense(t)),
+                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.Year == today.Year),
+                    ];
 
 					break;
 
 				case GlobalResources.TimePeriodsEnum.Today:
                     Predicates =
                     [
-                        _dataProjectionService.GetAllByDateAsync(today, true),
-                        _dataProjectionService.GetAllByDateAsync(today, false),
-                        _dataProjectionService.GetAllByDateAsync(today),
+                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date == today && isExpense(t)),
+                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date == today && !isExpense(t)),
+                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date == today),
                     ];
 
                     break;
@@ -161,17 +162,17 @@ namespace GENAP_MAUI.ViewModels
 				default:
 					Predicates =
 					[
-						_dataProjectionService.GetAllAsync(true),
-						_dataProjectionService.GetAllAsync(false),
-						_dataProjectionService.GetAllAsync()
-					];
+						_dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && isExpense(t)),
+                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && !isExpense(t)),
+                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false),
+                    ];
 
 					break;
 			}
 
 			SetTasksPointers(Predicates[0], Predicates[1], Predicates[2]);
 
-			var TaskResults = await Task.WhenAll(GetExpensesTask ?? throw new InvalidOperationException($"{nameof(GetExpensesTask)} doesn't point to a valid task"), GetIncomeTask ?? throw new InvalidOperationException($"{nameof(GetIncomeTask)} doesn't point to a valid task"), GetTransactionsTask ?? throw new InvalidOperationException($"{nameof(GetTransactionsTask)} doesn't point to a valid task"));
+			var TaskResults = await Task.WhenAll(GetExpensesTask ?? throw new InvalidOperationException($"{nameof(GetExpensesTask)} doesn't point to a valid task"), GetLossesTask ?? throw new InvalidOperationException($"{nameof(GetLossesTask)} doesn't point to a valid task"), GetIncomeTask ?? throw new InvalidOperationException($"{nameof(GetIncomeTask)} doesn't point to a valid task"));
 
             if (TaskResults[0].Success)
             {
@@ -179,15 +180,14 @@ namespace GENAP_MAUI.ViewModels
             }
             if (TaskResults[1].Success)
             {
-                IncomeLog = TaskResults[1].Result!;
+                LossesLog = TaskResults[1].Result!;
             }
             if (TaskResults[2].Success)
             {
-                TransactionsLog = TaskResults[2].Result!;
+                IncomeLog = TaskResults[2].Result!;
             }
 
-            Expenses = DataProjectionService.GetSummedTransactions(ExpensesLog);
-			Income = DataProjectionService.GetSummedTransactions(IncomeLog);
+			TransactionsLog = ExpensesLog.Concat(LossesLog).Concat(IncomeLog);
 
 			return;
 		}
