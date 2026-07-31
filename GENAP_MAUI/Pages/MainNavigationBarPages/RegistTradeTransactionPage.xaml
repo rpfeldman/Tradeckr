@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:GENAP_MAUI.ViewModels"
              xmlns:nav="clr-namespace:GENAP_MAUI.ContentViews.Navigation"
+             xmlns:behaviours="clr-namespace:GENAP_MAUI.ControlBehaviours"
              x:Class="GENAP_MAUI.Pages.MainNavigationBarPages.RegistTradeTransactionPage"
              x:DataType="vm:RegistTradeTransactionPageViewModel"
              BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}">
@@ -25,10 +26,16 @@
                             <Label Grid.Column="0" Text="$"
                                    Style="{StaticResource CurrencyPrefix}"
                                    VerticalOptions="Center" />
+
                             <Entry Grid.Column="1"
                                    Style="{StaticResource AmountEntry}"
                                    Placeholder="0" Keyboard="Numeric"
-                                   Text="{Binding PickedValue}"/>
+                                   Text="{Binding PickedValue}">
+
+                                <Entry.Behaviors>
+                                    <behaviours:MoneyEntryBehaviour/>
+                                </Entry.Behaviors>
+                            </Entry>
                         </Grid>
                     </Border>
                 </VerticalStackLayout>

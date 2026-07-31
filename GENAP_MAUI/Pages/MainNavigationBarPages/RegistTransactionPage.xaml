@@ -4,6 +4,7 @@
              xmlns:vm="clr-namespace:GENAP_MAUI.ViewModels"
              xmlns:model="clr-namespace:DomainModel;assembly=DomainModel"
              xmlns:nav="clr-namespace:GENAP_MAUI.ContentViews.Navigation"
+             xmlns:behaviours="clr-namespace:GENAP_MAUI.ControlBehaviours"
              x:Class="GENAP_MAUI.Pages.MainNavigationBarPages.RegistTransactionPage"
              x:DataType="vm:RegistTransactionPageViewModel"
              BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}">
@@ -29,7 +30,12 @@
                             <Entry Grid.Column="1"
                                    Style="{StaticResource AmountEntry}"
                                    Placeholder="0" Keyboard="Numeric"
-                                   Text="{Binding Value}" />
+                                   Text="{Binding Value}">
+
+                                <Entry.Behaviors>
+                                    <behaviours:MoneyEntryBehaviour/>
+                                </Entry.Behaviors>
+                            </Entry> 
                         </Grid>
                     </Border>
                 </VerticalStackLayout>
