@@ -41,7 +41,7 @@ namespace GENAP_MAUI.ViewModels
                 Value = newValue;
                 return;
             }
-
+        
             Value = 0m;
         }
 
@@ -55,14 +55,14 @@ namespace GENAP_MAUI.ViewModels
             {
                 var ExpenseRegistrationTask = await _RegistrationService.RegistExpenseAsync(Value, DateOnly.FromDateTime(PickedDate), DefaultCategories.TradingCategoryName);
 
-                await Shell.Current.DisplayAlertAsync(DisplayAlertTitle, ExpenseRegistrationTask.Success ? "Gasto registrado con exito" : ExpenseRegistrationTask.InnerError?.ErrorMessage, DisplayAlertButton);
+                await Shell.Current.DisplayAlertAsync(DisplayAlertTitle, ExpenseRegistrationTask.Success ? "Perdida registrada con exito" : ExpenseRegistrationTask.InnerError?.ErrorMessage, DisplayAlertButton);
 
                 return;
             }
 
             var IncomeRegistrationTask = await _RegistrationService.RegistIncomeAsync(Value, DateOnly.FromDateTime(PickedDate), DefaultCategories.TradingCategoryName);
 
-            await Shell.Current.DisplayAlertAsync(DisplayAlertTitle, IncomeRegistrationTask.Success ? "Ingreso registrado con exito" : IncomeRegistrationTask.InnerError?.ErrorMessage, DisplayAlertButton);
+            await Shell.Current.DisplayAlertAsync(DisplayAlertTitle, IncomeRegistrationTask.Success ? "Ganancia registrada con exito" : IncomeRegistrationTask.InnerError?.ErrorMessage, DisplayAlertButton);
 
             return;
         }
