@@ -41,7 +41,7 @@ namespace GENAP_MAUI.ViewModels
         {
             var today = DateOnly.FromDateTime(DateTime.Today);
 
-            var getMonthTransactions = await _dataProjectionService.GetAllByMonthAsync(today.Month, today.Year);
+            var getMonthTransactions = await _dataProjectionService.GetAllByMonthAsync(today.Month, today.Year, order: DataProjectionService.Order.OrderByDateDescending);
 
             if (!getMonthTransactions.Success)
             {

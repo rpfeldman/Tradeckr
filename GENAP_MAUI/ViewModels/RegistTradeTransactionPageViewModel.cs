@@ -36,7 +36,7 @@ namespace GENAP_MAUI.ViewModels
 
         partial void OnPickedValueChanged(string value)
         {
-            if(decimal.TryParse(value, out decimal newValue))
+            if (decimal.TryParse(value, out decimal newValue))
             {
                 Value = newValue;
                 return;
