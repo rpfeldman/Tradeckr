@@ -8,6 +8,7 @@ using System.Net.WebSockets;
 using DataServices;
 using SQLitePCL;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
+using System.Globalization;
 
 namespace ConsoleTest 
 {
