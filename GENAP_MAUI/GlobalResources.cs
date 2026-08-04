@@ -15,7 +15,7 @@ namespace GENAP_MAUI
         // TimePeriod is split in 3: the enum (type-safe id), the display name (what the user sees), and the logic (per consumption point)
         // To add one: extend the enum, map its display name, handle its logic where consumed.
         public enum TimePeriodsEnum { Historical, HistoricalToday, Month, ThirtyDays, ThreeMonths, Semester, Year, Today }; 
-        public static Dictionary<TimePeriodsEnum, string> TimePeriods { get => new()
+        public static Dictionary<TimePeriodsEnum, string> TimePeriods { get => new(8)
             {
                 {TimePeriodsEnum.Today, "Hoy"},
                 {TimePeriodsEnum.ThirtyDays, "Ultimos 30 dias"},
@@ -33,7 +33,7 @@ namespace GENAP_MAUI
 
         public enum ColorsEnum { SteelBlue, Yellow, Green, Purple, Aqua, Coral, Red, Emerald, Cyan, Indigo, Magenta } 
 
-        public static Dictionary<ColorsEnum, ColorDto> Colors { get => new()
+        public static Dictionary<ColorsEnum, ColorDto> Colors { get => new(16)
         {
             { ColorsEnum.SteelBlue, new ColorDto("#466C87", "Azul plateado") },
             { ColorsEnum.Yellow, new ColorDto("#F1C40F", "Amarillo") },

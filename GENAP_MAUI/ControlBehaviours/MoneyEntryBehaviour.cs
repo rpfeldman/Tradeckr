@@ -27,7 +27,7 @@ namespace GENAP_MAUI.ControlBehaviours
             var decimalSeparator = culture.NumberFormat.CurrencyDecimalSeparator[0];
 
             if (string.IsNullOrWhiteSpace(e.NewTextValue)) { return; }
-            if (e.NewTextValue[^1] == ',' || e.NewTextValue[^1] == '.') { return; }
+            if (e.NewTextValue[^1] == decimalSeparator) { return; } // fucking hate samsung keyboard that doesn't recognise ',' as a valid decimal separator
             
             if(!decimal.TryParse(entry.Text, out decimal value))
             {
