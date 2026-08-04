@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
@@ -12,6 +13,12 @@ namespace GENAP_MAUI.ControlBehaviours
             base.OnAttachedTo(bindable);
 
             bindable.TextChanged += Entry_TextChanged;
+
+            // fucking hate samsung keyboard that doesn't recognise ',' as a valid decimal separator
+            if (DeviceInfo.Manufacturer.Equals("Samsung", StringComparison.OrdinalIgnoreCase) && CultureInfo.CurrentCulture.NumberFormat.CurrencyDecimalSeparator[0] == ',')
+            {
+                bindable.Keyboard = Keyboard.Telephone;
+            }
         }
         protected override void OnDetachingFrom(Entry bindable)
         {
@@ -27,7 +34,7 @@ namespace GENAP_MAUI.ControlBehaviours
             var decimalSeparator = culture.NumberFormat.CurrencyDecimalSeparator[0];
 
             if (string.IsNullOrWhiteSpace(e.NewTextValue)) { return; }
-            if (e.NewTextValue[^1] == decimalSeparator) { return; } // fucking hate samsung keyboard that doesn't recognise ',' as a valid decimal separator
+            if (e.NewTextValue[^1] == decimalSeparator) { return; } 
             
             if(!decimal.TryParse(entry.Text, out decimal value))
             {
