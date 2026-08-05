@@ -42,6 +42,16 @@ namespace GENAP_MAUI
                 }
 
                 Application.Current?.UserAppTheme = Preferences.Get(PreferenceKeys.UserThemeKey, Application.Current?.UserAppTheme == AppTheme.Dark) ? AppTheme.Dark : AppTheme.Light;
+
+                var lastDayEntered = Preferences.Get(PreferenceKeys.LastDayEnteredKey, DateTime.Today);
+
+                if(lastDayEntered != DateTime.Today)
+                {
+                    System.Diagnostics.Debug.WriteLine("Is a NEW DAY");
+                }
+                else { System.Diagnostics.Debug.WriteLine("Is NOT a NEW DAY"); }
+
+                Preferences.Set(PreferenceKeys.LastDayEnteredKey, DateTime.Today);
             }
             catch (Exception x)
             {

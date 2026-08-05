@@ -153,6 +153,7 @@
 	  <AndroidSigningStorePass>123456</AndroidSigningStorePass>
 	  <AndroidSigningKeyAlias>Tradeckr</AndroidSigningKeyAlias>
 	  <AndroidSigningKeyPass>123456</AndroidSigningKeyPass>
+	  <EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-android|AnyCPU'">
