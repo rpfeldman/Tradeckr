@@ -31,18 +31,16 @@ namespace GENAP_MAUI.ControlBehaviours
         {
             var entry = (Entry)sender!;
             var culture = CultureInfo.CurrentCulture;
-<<<<<<< HEAD
             var decimalSeparator = culture.NumberFormat.CurrencyDecimalSeparator[0];
 
             if (string.IsNullOrWhiteSpace(e.NewTextValue)) { return; }
             if (e.NewTextValue[^1] == decimalSeparator) { return; } 
             
-=======
+
 
             if (string.IsNullOrWhiteSpace(e.NewTextValue)) { return; }
             if (e.NewTextValue[^1] == culture.NumberFormat.CurrencyDecimalSeparator[0]) { return; }
 
->>>>>>> 268673b31cd5b75a376d713cdfe9eba75fc57df7
             if(!decimal.TryParse(entry.Text, out decimal value))
             {
                 entry.Text = string.Empty;
