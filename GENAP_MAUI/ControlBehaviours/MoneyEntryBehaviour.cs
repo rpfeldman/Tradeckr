@@ -34,14 +34,10 @@ namespace GENAP_MAUI.ControlBehaviours
             var decimalSeparator = culture.NumberFormat.CurrencyDecimalSeparator[0];
 
             if (string.IsNullOrWhiteSpace(e.NewTextValue)) { return; }
-            if (e.NewTextValue[^1] == decimalSeparator) { return; } 
-            
+            if(e.NewTextValue.Length > 15) { entry.Text = string.Empty; return; }
+            if (e.NewTextValue[^1] == decimalSeparator) { return; }
 
-
-            if (string.IsNullOrWhiteSpace(e.NewTextValue)) { return; }
-            if (e.NewTextValue[^1] == culture.NumberFormat.CurrencyDecimalSeparator[0]) { return; }
-
-            if(!decimal.TryParse(entry.Text, out decimal value))
+            if (!decimal.TryParse(entry.Text, out decimal value))
             {
                 entry.Text = string.Empty;
             }
