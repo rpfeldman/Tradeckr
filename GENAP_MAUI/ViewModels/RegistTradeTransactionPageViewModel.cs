@@ -18,7 +18,7 @@ namespace GENAP_MAUI.ViewModels
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(RegistTransactionCommand))]
-        public partial string PickedValue { get; set; } = "0";
+        public partial string PickedValue { get; set; } = string.Empty;
 
         [ObservableProperty]
         public partial DateTime PickedDate { get; set; } = DateTime.Today;
@@ -71,7 +71,7 @@ namespace GENAP_MAUI.ViewModels
         public void ReLoad()
         {
             Value = 0m;
-            PickedValue = "0";
+            PickedValue = string.Empty;
             PickedDate = DateTime.Today;
             Depletion = true;
         }

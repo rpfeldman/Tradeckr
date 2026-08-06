@@ -8,6 +8,8 @@ namespace GENAP_MAUI.ControlBehaviours
 {
     public sealed class MoneyEntryBehaviour : Behavior<Entry>
     {
+        private bool _IsFormatting = false;
+
         protected override void OnAttachedTo(Entry bindable)
         {
             base.OnAttachedTo(bindable);
@@ -28,33 +30,29 @@ namespace GENAP_MAUI.ControlBehaviours
         }
 
         private void Entry_TextChanged(object? sender, TextChangedEventArgs e)
-        {
+        { 
+            if (_IsFormatting) { return; }
+
             var entry = (Entry)sender!;
             var culture = CultureInfo.CurrentCulture;
             var decimalSeparator = culture.NumberFormat.CurrencyDecimalSeparator[0];
+            
+            if (string.IsNullOrWhiteSpace(e.NewTextValue) || e.NewTextValue.Length <= 3 || e.NewTextValue[^1] == decimalSeparator) { return; } // cases in which formatting is not necessary
 
-            if (string.IsNullOrWhiteSpace(e.NewTextValue)) { return; }
-            if(e.NewTextValue.Length > 15) { entry.Text = string.Empty; return; }
-            if (e.NewTextValue[^1] == decimalSeparator) { return; }
+            _IsFormatting = true;
 
             if (!decimal.TryParse(entry.Text, out decimal value))
             {
                 entry.Text = string.Empty;
-            }
-
-            if(value % 1 != 0)
-            {
-                entry.Dispatcher.Dispatch(() =>
-                {
-                    entry.Text = value.ToString("N2", culture);
-                });
+                _IsFormatting = false;
 
                 return;
             }
 
             entry.Dispatcher.Dispatch(() =>
             {
-                entry.Text = value.ToString("N0", culture);
+                entry.Text = value % 1 != 0 ? value.ToString("N2", culture) : value.ToString("N0", culture);
+                _IsFormatting = false;
             });
         }
     }

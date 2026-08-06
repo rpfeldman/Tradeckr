@@ -29,7 +29,7 @@ namespace GENAP_MAUI.ViewModels
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(RegistTransactionCommand))]
-        public partial string PickedValue { get; set; } = "0";
+        public partial string PickedValue { get; set; } = string.Empty;
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(RegistTransactionCommand))]
@@ -94,7 +94,7 @@ namespace GENAP_MAUI.ViewModels
         {
             FixedTransactionDuration = 1;
             Value = 0m;
-            PickedValue = "0";
+            PickedValue = string.Empty;
             PickedDate = DateTime.Today;
 
             var getCategoriesOperation = await _CategoryPersistenceService.GetCategoriesAsync();
