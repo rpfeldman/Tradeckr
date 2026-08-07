@@ -7,6 +7,7 @@ using LiveChartsCore.SkiaSharpView.Painting;
 using SkiaSharp;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using System.Text;
 
 namespace GENAP_MAUI.ContentViews.Graphs;
 
@@ -181,6 +182,33 @@ public partial class ProportionDoughnutChart : ContentView
         return result;
     }
 
+    private static string StripEmojis(string text)
+    {
+        if (string.IsNullOrEmpty(text)) return text;
+
+        var sb = new StringBuilder(text.Length);
+
+        var enumerator = StringInfo.GetTextElementEnumerator(text);
+        while (enumerator.MoveNext())
+        {
+            var element = (string)enumerator.Current;
+            var rune = char.ConvertToUtf32(element, 0);
+
+            var isEmoji =
+                (rune >= 0x1F000 && rune <= 0x1FAFF) ||
+                (rune >= 0x2600 && rune <= 0x27BF) ||
+                (rune >= 0x1F1E6 && rune <= 0x1F1FF) ||
+                (rune >= 0xFE00 && rune <= 0xFE0F) ||
+                rune == 0x200D ||
+                rune == 0x20E3;
+
+            if (!isEmoji)
+                sb.Append(element);
+        }
+
+        return sb.ToString().Trim();
+    }
+
     private static PieSeries<ObservableValue> CreatePieSlice(
         string name,
         decimal value,
@@ -189,6 +217,10 @@ public partial class ProportionDoughnutChart : ContentView
     {
         var percentage = totalSum > 0 ? (double)(value / totalSum) * 100 : 0;
         var showLabel = percentage >= MinLabelPercentage;
+
+        var tooltipName = StripEmojis(name);
+        if (string.IsNullOrWhiteSpace(tooltipName))
+            tooltipName = ""; 
 
         return new PieSeries<ObservableValue>
         {
@@ -201,7 +233,7 @@ public partial class ProportionDoughnutChart : ContentView
             DataLabelsFormatter = point =>
                 $"{percentage.ToString("N1", CultureInfo.InvariantCulture)}%",
             ToolTipLabelFormatter = point =>
-                $"{name}\n{point.Coordinate.PrimaryValue.ToString("N2", CultureInfo.InvariantCulture)}$ ({percentage.ToString("N1", CultureInfo.InvariantCulture)}%)"
+                $"{tooltipName}\n{point.Coordinate.PrimaryValue.ToString("N2", CultureInfo.InvariantCulture)}$ ({percentage.ToString("N1", CultureInfo.InvariantCulture)}%)"
         };
     }
 }
