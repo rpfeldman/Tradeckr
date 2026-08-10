@@ -26,30 +26,33 @@ namespace ConsoleTest
             DataRegistrationService drs = new(repo);
             var today = DateOnly.FromDateTime(DateTime.Today);
 
-            Currency dolar = new() { ConversionRate = 1.61m, CurrencyCode = "USD", Id = 0 };
-            Currency peso = new() { ConversionRate = 2447.2m, CurrencyCode = "ARS", Id = 1 };
-            Currency euro = new() { ConversionRate = 1.395m, CurrencyCode = "EUR", Id = 2 };
+            CurrencyDto peso = new() { ConversionRate = 1498.2540m, CurrencyDisplayName = "Peso argentino", CurrencyId = 0, IsoCode = "ARS" };
+            CurrencyDto dolar = new() { ConversionRate = 1, CurrencyDisplayName = "Dolar estadounidense", CurrencyId = 1, IsoCode = "USD" };
+            CurrencyDto euro = new() { ConversionRate = 0.8662m, CurrencyDisplayName = "Euro", CurrencyId = 2, IsoCode = "EUR" };
+            CurrencyDto yen = new() { ConversionRate = 159.1480m, CurrencyDisplayName = "Yen japones", CurrencyId = 3, IsoCode = "JPY" };
+            CurrencyDto peso_uruguayo = new() { ConversionRate = 40.2576m, CurrencyDisplayName = "Peso urugayo", CurrencyId = 4, IsoCode = "UYU" };
+            CurrencyDto rand = new() { ConversionRate = 16.1912m, CurrencyDisplayName = "Rand sudafricano", CurrencyId = 5, IsoCode = "ZAR" };
+            CurrencyDto real = new() { ConversionRate = 5.1076m, CurrencyDisplayName = "Real brasileño", CurrencyId = 6, IsoCode = "BRL" };
 
-            var MovimientosDolares = await dps.ProjectTransactions<TransactionDto>(t => new() {Category = t.Category, Date = t.Date, Depletion = t.Depletion, Fixed = t.Fixed, Id = t.Id, Value = CurrencyConverter.FtuToCurrency(dolar, t.Value) });
-            var MovimientosEuros = await dps.ProjectTransactions<TransactionDto>(t => new() { Category = t.Category, Date = t.Date, Depletion = t.Depletion, Fixed = t.Fixed, Id = t.Id, Value = CurrencyConverter.FtuToCurrency(euro, t.Value) });
-            var MovimientosPesos = await dps.ProjectTransactions<TransactionDto>(t => new() { Category = t.Category, Date = t.Date, Depletion = t.Depletion, Fixed = t.Fixed, Id = t.Id, Value = CurrencyConverter.FtuToCurrency(peso, t.Value) });
+            CurrencyDto[] Currencies = new CurrencyDto[] { peso, dolar, euro, yen, peso_uruguayo, rand, real };
 
-            Console.WriteLine("Movimientos en pesos: ");
-            foreach (var item in MovimientosPesos.Result!)
-            {
-                Console.WriteLine("un " + (item.Depletion ? "gasto":"ingreso") + $" de {item.Value:N2} ARS$ en {item.Category}");
-            }
-            Console.WriteLine("\n---\nMovimientos en euros:");
-            foreach (var item in MovimientosEuros.Result!)
-            {
-                Console.WriteLine("un " + (item.Depletion ? "gasto" : "ingreso") + $" de {item.Value:N2} EUR$ en {item.Category}");
-            }
-            Console.WriteLine("\n---\nMovimientos en dolares:");
-            foreach (var item in MovimientosDolares.Result!)
-            {
-                Console.WriteLine("un " + (item.Depletion ? "gasto" : "ingreso") + $" de {item.Value:N2} USD$ en {item.Category}");
-            }
 
+            foreach (var item in Currencies)
+            {
+                Console.WriteLine($"Aqui estan tus movimientos representados en {item.CurrencyDisplayName} - {item.IsoCode}$ \n------\n");
+
+                var getoperation = await dps.ProjectTransactions<TransactionDto>(t => new() { Value = CurrencyConverterService.TfuToCurrency(t.Value, item), Category = t.Category, Date = t.Date, Depletion = t.Depletion, Fixed = t.Fixed, Id = t.Id });
+
+                if (getoperation.Success)
+                {
+                    foreach (var transaction in getoperation.Result!)
+                    {
+                        Console.WriteLine("se "+(transaction.Depletion ? "gasto " : "gano ")+$"{transaction.Value:N8} {item.IsoCode}$ en {transaction.Category}");
+                    }
+                }
+
+                Console.WriteLine("\n------\n");
+            }
 
             /*
             while (true)
@@ -59,13 +62,13 @@ namespace ConsoleTest
                 string categoria = Console.ReadLine() ?? "Uncategorized";
                 Console.Write("Escribi el valor en pesos: ");
                 _ = decimal.TryParse(Console.ReadLine(), out decimal value);
-                Console.Write("Decime si es un gasto o un ingreso pibe dale (0/1): ");
+                Console.Write("Decime si es un gasto o un ingreso pibe dale (1/0): ");
                 int.TryParse(Console.ReadLine(), out int Ndepletion);
                 bool depletion = Ndepletion == 1;
 
                 if (depletion)
                 {
-                    var op = await drs.RegistExpenseAsync(CurrencyConverter.CurrencyToFtu(peso, value), today, categoria);
+                    var op = await drs.RegistExpenseAsync(CurrencyConverterService.CurrencyToTfu(value, peso), today, categoria);
 
                     if (op.Success)
                     {
@@ -80,7 +83,7 @@ namespace ConsoleTest
                     continue;
                 }
 
-                var op2 = await drs.RegistIncomeAsync(CurrencyConverter.CurrencyToFtu(peso, value), today, categoria);
+                var op2 = await drs.RegistIncomeAsync(CurrencyConverterService.CurrencyToTfu(value, peso), today, categoria);
 
                 if (op2.Success)
                 {
@@ -94,26 +97,6 @@ namespace ConsoleTest
             }
             */
 
-        }
-
-        public sealed class Currency
-        {
-            public decimal ConversionRate { get; set; }
-            public int Id { get; set; }
-            public string CurrencyCode { get; set; } = string.Empty;
-        }
-
-        public sealed class CurrencyConverter
-        {
-            public static decimal FtuToCurrency(Currency currency, decimal value)
-            {
-                return value * currency.ConversionRate;
-            }
-
-            public static decimal CurrencyToFtu(Currency currency, decimal value)
-            {
-                return value / currency.ConversionRate;
-            }
         }
     }
 }
