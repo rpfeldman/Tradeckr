@@ -1,4 +1,5 @@
 ﻿
+using DomainModel;
 using GENAP_MAUI.InnerComponents;
 using Microsoft.Maui.Storage;
 
@@ -50,5 +51,17 @@ namespace GENAP_MAUI
         }
         
         public static List<ColorDto> ColorList { get => [.. Colors.Values]; } 
+
+        public enum CurrenciesEnum { USD, ARS, EUR }
+
+        public static Dictionary<CurrenciesEnum, CurrencyDto> Currencies { get => new(3)
+        {
+            { CurrenciesEnum.USD, new CurrencyDto() { CurrencyDisplayName = "Dólar Estadounidense", IsoCode = "USD", ConversionRate = 1, CurrencyId = 0 } },
+            { CurrenciesEnum.ARS, new CurrencyDto() { CurrencyDisplayName = "Peso Argentino", IsoCode = "ARS", ConversionRate = 1498.3619m, CurrencyId = 1 } },
+            { CurrenciesEnum.USD, new CurrencyDto() { CurrencyDisplayName = "Euro", IsoCode = "EUR", ConversionRate = 0.8663m, CurrencyId = 2 } }
+        };
+        }
+
+        public static List<CurrencyDto> CurrenciesList { get => [.. Currencies.Values]; }
     }
 }
