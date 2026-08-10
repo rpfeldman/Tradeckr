@@ -13,7 +13,7 @@ namespace DomainModel
 
         [Key]
         public int Id { get; set; }
-        public decimal Value { get { return _Value; } set { if (value < 0.01m || value > 1000000000m) { throw new Exception($"property {nameof(Value)} must be in the range of 0.01 to 1,000,000,000"); } _Value = value; } }
+        public decimal Value { get { return _Value; } set { _Value = value; } }
         public DateOnly Date { get; set;  }
         public string Category { get { return _Category; } set { if (string.IsNullOrWhiteSpace(value)) { _Category = "Uncategorized"; } _Category = value; } } 
         public bool Fixed { get; set; }

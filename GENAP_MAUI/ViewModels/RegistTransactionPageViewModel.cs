@@ -73,7 +73,7 @@ namespace GENAP_MAUI.ViewModels
             var DisplayAlertTitle = "Transaccion";
             var DisplayAlertButton = "Aceptar";
 
-            //Value = CurrencyConverterService.CurrencyToTfu(Value);
+            Value = CurrencyConverterService.CurrencyToTfu(Value, GlobalResources.Currencies[GlobalResources.CurrenciesEnum.ARS]); // TEMPORAL
 
             if (Depletion)
             {

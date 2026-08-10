@@ -43,9 +43,9 @@ namespace DataServices
 
         public async Task<OperationResult> RegistExpenseAsync(decimal value, DateOnly date, string category)
         {
-            if (value < 1m || value > 1000000000m)
+            if (value > 1000000000m)
             {
-                return OperationResult.FaultedOperation(ServiceErrors.ValueOutOfRangeError(1, 1_000_000_000));
+                return OperationResult.FaultedOperation(ServiceErrors.ValueOutOfRangeError(0, 1_000_000_000));
             }
             if (string.IsNullOrWhiteSpace(category))
             {
@@ -65,9 +65,9 @@ namespace DataServices
             {
                 return OperationResult.FaultedOperation(GetCollectionId.InnerError);
             }
-            if (value < 1m || value > 1000000000m)
+            if (value > 1000000000m)
             {
-                return OperationResult.FaultedOperation(ServiceErrors.ValueOutOfRangeError(1, 1_000_000_000));
+                return OperationResult.FaultedOperation(ServiceErrors.ValueOutOfRangeError(0, 1_000_000_000));
             }
             if (string.IsNullOrWhiteSpace(category))
             {
@@ -104,9 +104,9 @@ namespace DataServices
 
         public async Task<OperationResult> RegistIncomeAsync(decimal value, DateOnly date, string category)
         {
-            if (value < 1m || value > 1000000000m)
+            if (value > 1000000000m)
             {
-                return OperationResult.FaultedOperation(ServiceErrors.ValueOutOfRangeError(1, 1_000_000_000));
+                return OperationResult.FaultedOperation(ServiceErrors.ValueOutOfRangeError(0, 1_000_000_000));
             }
             if (string.IsNullOrWhiteSpace(category))
             {
@@ -125,9 +125,9 @@ namespace DataServices
             {
                 return OperationResult.FaultedOperation(GetCollectionId.InnerError);
             }
-            if (value < 1m || value > 1000000000m)
+            if (value > 1000000000m)
             {
-                return OperationResult.FaultedOperation(ServiceErrors.ValueOutOfRangeError(1, 1_000_000_000));
+                return OperationResult.FaultedOperation(ServiceErrors.ValueOutOfRangeError(0, 1_000_000_000));
             }
             if (string.IsNullOrWhiteSpace(category))
             {
