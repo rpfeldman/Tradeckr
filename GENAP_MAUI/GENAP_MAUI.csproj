@@ -86,6 +86,7 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\Components\DataServices\DataServices.csproj" />
+	  <ProjectReference Include="..\Components\NetworkServices\NetworkServices.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
