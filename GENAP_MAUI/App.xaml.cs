@@ -1,4 +1,5 @@
 ﻿using DataServices;
+using NetworkServices;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace GENAP_MAUI
@@ -43,13 +44,14 @@ namespace GENAP_MAUI
 
                 Application.Current?.UserAppTheme = Preferences.Get(PreferenceKeys.UserThemeKey, Application.Current?.UserAppTheme == AppTheme.Dark) ? AppTheme.Dark : AppTheme.Light;
 
+                if (!NetworkMethods.CheckInternetConnection()) { System.Diagnostics.Debug.WriteLine("User does not have internet connection. Advacing without updating the currencies rates"); return; }
+
                 var lastDayEntered = Preferences.Get(PreferenceKeys.LastDayEnteredKey, DateTime.Today);
 
                 if(lastDayEntered != DateTime.Today)
                 {
-                    System.Diagnostics.Debug.WriteLine("Is a NEW DAY");
+                    System.Diagnostics.Debug.WriteLine("Es un nuevo dia");
                 }
-                else { System.Diagnostics.Debug.WriteLine("Is NOT a NEW DAY"); }
 
                 Preferences.Set(PreferenceKeys.LastDayEnteredKey, DateTime.Today);
             }
