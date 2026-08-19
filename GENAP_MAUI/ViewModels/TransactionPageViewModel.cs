@@ -26,7 +26,9 @@ namespace GENAP_MAUI.ViewModels
         }
 
         [ObservableProperty]
-        public partial int TransactionId { get; set; } 
+        public partial int TransactionId { get; set; }
+
+        private decimal _Value = 0m;
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(DeleteFixedTransactionCommand))]
@@ -40,7 +42,8 @@ namespace GENAP_MAUI.ViewModels
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(UpdateTransactionCommand))]
-        public partial decimal PickedValue { get; set; }
+        public partial string PickedValue { get; set; } = string.Empty;
+
 
 
         [ObservableProperty]
@@ -66,7 +69,9 @@ namespace GENAP_MAUI.ViewModels
 
             Categories = new(getCategoriesOperation.Result!);
             PickedDate = Transaction.Date.ToDateTime(TimeOnly.MinValue);
-            PickedValue = CurrencyConverterService.TfuToCurrency(Transaction.Value, GlobalResources.Currencies[GlobalResources.CurrenciesEnum.ARS]);
+
+            decimal mvalue = CurrencyConverterService.TfuToCurrency(Transaction.Value, GlobalResources.Currencies[GlobalResources.CurrenciesEnum.ARS]);
+            PickedValue = mvalue % 1 == 0 ? mvalue.ToString("N0") : mvalue.ToString("N2");
 
             if (Transaction.Category == DefaultCategories.TradingCategoryName) 
             {
@@ -88,6 +93,14 @@ namespace GENAP_MAUI.ViewModels
             var deletedCategory = new CategoryDto() { Name = Transaction.Category, HexColor = GlobalResources.Colors[GlobalResources.ColorsEnum.SteelBlue].HexColor };
             Categories.Add(deletedCategory);
             PickedCategory = deletedCategory;
+        }
+
+        partial void OnPickedValueChanged(string value)
+        {
+            if (decimal.TryParse(value, out decimal mvalue))
+            {
+                _Value = mvalue;
+            }
         }
 
         [RelayCommand]
@@ -114,13 +127,13 @@ namespace GENAP_MAUI.ViewModels
         [RelayCommand(CanExecute = nameof(UpdateTransactionCanExecute))]
         public async Task UpdateTransaction()
         {
-            var updateTransactionOperation = await _dataManagementService.UpdateTransactionAsync(TransactionId, CurrencyConverterService.CurrencyToTfu(PickedValue, GlobalResources.Currencies[GlobalResources.CurrenciesEnum.ARS]), DateOnly.FromDateTime(PickedDate), PickedCategory.Name, Transaction.Depletion);
+            var updateTransactionOperation = await _dataManagementService.UpdateTransactionAsync(TransactionId, CurrencyConverterService.CurrencyToTfu(_Value, GlobalResources.Currencies[GlobalResources.CurrenciesEnum.ARS]), DateOnly.FromDateTime(PickedDate), PickedCategory.Name, Transaction.Depletion);
 
             await Shell.Current.DisplayAlertAsync("Editar", updateTransactionOperation.Success ? "Se ha guardado el movimiento correctamente" : updateTransactionOperation.InnerError?.ErrorMessage, "Aceptar");
         }
 
         private bool DeleteFixedTransactionCanExecute => Transaction is FixedTransactionDto;
 
-        private bool UpdateTransactionCanExecute => PickedValue > 0; 
+        private bool UpdateTransactionCanExecute => _Value > 0; 
     }
 }
