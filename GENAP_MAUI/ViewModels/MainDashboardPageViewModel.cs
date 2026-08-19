@@ -41,7 +41,7 @@ namespace GENAP_MAUI.ViewModels
         {
             var today = DateOnly.FromDateTime(DateTime.Today);
 
-            var getMonthTransactions = await _dataProjectionService.GetAllByMonthAsync(today.Month, today.Year, order: DataProjectionService.Order.OrderByDateDescending);
+            var getMonthTransactions = await _dataProjectionService.GetAllByMonthAsync(today.Month, today.Year, order: DataProjectionService.Order.OrderByDateDescending, currency: GlobalResources.Currencies[GlobalResources.CurrenciesEnum.ARS]); // TEMP hardcoded currency
 
             if (!getMonthTransactions.Success)
             {
@@ -50,7 +50,7 @@ namespace GENAP_MAUI.ViewModels
             }
 
             MonthTransactions = [.. getMonthTransactions.Result!];
-            GraphableTransactions = MonthTransactions.Select(t => new GraphableTransactionDto(t.Depletion ? CurrencyConverterService.TfuToCurrency((t.Value * -1), GlobalResources.Currencies[GlobalResources.CurrenciesEnum.ARS]) : CurrencyConverterService.TfuToCurrency(t.Value, GlobalResources.Currencies[GlobalResources.CurrenciesEnum.ARS]), t.Category, t.Date));
+            GraphableTransactions = MonthTransactions.Select(t => new GraphableTransactionDto(t.Depletion ? (t.Value*-1) : t.Value, t.Category, t.Date));
         }
     }
 }

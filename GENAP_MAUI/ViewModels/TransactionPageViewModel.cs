@@ -66,7 +66,7 @@ namespace GENAP_MAUI.ViewModels
 
             Categories = new(getCategoriesOperation.Result!);
             PickedDate = Transaction.Date.ToDateTime(TimeOnly.MinValue);
-            PickedValue = Transaction.Value;
+            PickedValue = CurrencyConverterService.TfuToCurrency(Transaction.Value, GlobalResources.Currencies[GlobalResources.CurrenciesEnum.ARS]);
 
             if (Transaction.Category == DefaultCategories.TradingCategoryName) 
             {
@@ -114,7 +114,7 @@ namespace GENAP_MAUI.ViewModels
         [RelayCommand(CanExecute = nameof(UpdateTransactionCanExecute))]
         public async Task UpdateTransaction()
         {
-            var updateTransactionOperation = await _dataManagementService.UpdateTransactionAsync(TransactionId, PickedValue, DateOnly.FromDateTime(PickedDate), PickedCategory.Name, Transaction.Depletion);
+            var updateTransactionOperation = await _dataManagementService.UpdateTransactionAsync(TransactionId, CurrencyConverterService.CurrencyToTfu(PickedValue, GlobalResources.Currencies[GlobalResources.CurrenciesEnum.ARS]), DateOnly.FromDateTime(PickedDate), PickedCategory.Name, Transaction.Depletion);
 
             await Shell.Current.DisplayAlertAsync("Editar", updateTransactionOperation.Success ? "Se ha guardado el movimiento correctamente" : updateTransactionOperation.InnerError?.ErrorMessage, "Aceptar");
         }

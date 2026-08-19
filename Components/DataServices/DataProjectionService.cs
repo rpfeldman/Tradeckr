@@ -21,9 +21,11 @@ namespace DataServices
         {
             OrderByDate, OrderByDateDescending, OrderByValue
         }
-        private async Task<OperationResult<IEnumerable<TransactionDto>>> GetOrdererTransactionsAsync(Expression<Func<TransactionDto, bool>> predicate, Order order)
+        private async Task<OperationResult<IEnumerable<TransactionDto>>> GetOrdererTransactionsAsync(Expression<Func<TransactionDto, bool>> predicate, Order order, CurrencyDto? currency = null)
         {
-            var GetEntitiesOperation = await _StateStorage.GetEntitiesAsync(predicate);
+            var GetEntitiesOperation = currency is null ?
+                await _StateStorage.GetEntitiesAsync(predicate) :
+                await _StateStorage.ProjectByPredicateAsync<TransactionDto>(t => new() { Value = CurrencyConverterService.TfuToCurrency(t.Value, currency!), Category = t.Category, Date = t.Date, Depletion = t.Depletion, Fixed = t.Fixed, Id = t.Id }, predicate);
 
             if (!GetEntitiesOperation.Success)
             {
@@ -50,9 +52,12 @@ namespace DataServices
 
             return OperationResult<IEnumerable<TransactionDto>>.SuccessfulOperation(transactions);
         }
-        private async Task<OperationResult<IEnumerable<TransactionDto>>> GetOrdererTransactionsAsync(Order order)
+        private async Task<OperationResult<IEnumerable<TransactionDto>>> GetOrdererTransactionsAsync(Order order, CurrencyDto? currency = null)
         {
-            var GetEntitiesOperation = await _StateStorage.GetAllAsync();
+            var GetEntitiesOperation = currency is null ?
+                await _StateStorage.GetAllAsync() :
+                await _StateStorage.ProjectAsync<TransactionDto>(t => new() { Value = CurrencyConverterService.TfuToCurrency(t.Value, currency!), Category = t.Category, Date = t.Date, Depletion = t.Depletion, Fixed = t.Fixed, Id = t.Id });
+                
 
             if (!GetEntitiesOperation.Success)
             {
@@ -78,17 +83,6 @@ namespace DataServices
             }
 
             return OperationResult<IEnumerable<TransactionDto>>.SuccessfulOperation(transactions);
-        }
-        public static decimal GetSummedTransactions(IEnumerable<TransactionDto> transactions)
-        {
-            decimal result = 0;
-
-            foreach (var item in transactions)
-            {
-                result += item.Value;
-            }
-
-            return result;
         }
         public async Task<Option<TransactionDto>> GetTransactionAsync(int TransactionId)
         {
@@ -108,53 +102,53 @@ namespace DataServices
 
             return projectedTransactions;
         }
-        public async Task<OperationResult<IEnumerable<TransactionDto>>> GetAllAsync(bool? IsExpense = null, Order? order = null)
+        public async Task<OperationResult<IEnumerable<TransactionDto>>> GetAllAsync(bool? IsExpense = null, Order? order = null, CurrencyDto? currency = null)
         {
             if(IsExpense is null)
             {
-                return await GetOrdererTransactionsAsync(order ?? Order.OrderByValue);
+                return await GetOrdererTransactionsAsync(order ?? Order.OrderByValue, currency);
             }
-            return await GetOrdererTransactionsAsync(t => t is TransactionDto && t.Depletion == IsExpense, order ?? Order.OrderByValue);
+            return await GetOrdererTransactionsAsync(t => t is TransactionDto && t.Depletion == IsExpense, order ?? Order.OrderByValue, currency);
         }
-        public async Task<OperationResult<IEnumerable<TransactionDto>>> GetAllByDateAsync(DateOnly date, bool? IsExpense = null, Order order = Order.OrderByDate) // If you want to get all regardless of whether it's an expense or income, leave 'IsExpense' as null
+        public async Task<OperationResult<IEnumerable<TransactionDto>>> GetAllByDateAsync(DateOnly date, bool? IsExpense = null, Order order = Order.OrderByDate, CurrencyDto? currency = null) // If you want to get all regardless of whether it's an expense or income, leave 'IsExpense' as null
         {
             if(IsExpense is null)
             {
-                return await GetOrdererTransactionsAsync(t => t.Date == date, order);
-            }
-
-            return await GetOrdererTransactionsAsync(t => t.Date == date && t.Depletion == IsExpense, order);
-        }
-        public async Task<OperationResult<IEnumerable<TransactionDto>>> GetAllByMonthAsync(int month, int year, bool? IsExpense = null, Order order = Order.OrderByDate)
-        {
-            if(IsExpense is null)
-            {
-                return await GetOrdererTransactionsAsync(t => t.Date.Month == month && t.Date.Year == year, order);
+                return await GetOrdererTransactionsAsync(t => t.Date == date, order, currency);
             }
 
-            return await GetOrdererTransactionsAsync(t => t.Date.Month == month && t.Date.Year == year && t.Depletion == IsExpense, order);
+            return await GetOrdererTransactionsAsync(t => t.Date == date && t.Depletion == IsExpense, order, currency);
         }
-        public async Task<OperationResult<IEnumerable<TransactionDto>>> GetAllByYearAsync(int year, bool? IsExpense = null, Order order = Order.OrderByDate)
+        public async Task<OperationResult<IEnumerable<TransactionDto>>> GetAllByMonthAsync(int month, int year, bool? IsExpense = null, Order order = Order.OrderByDate, CurrencyDto? currency = null)
         {
             if(IsExpense is null)
             {
-                return await GetOrdererTransactionsAsync(t => t.Date.Year == year, order);
+                return await GetOrdererTransactionsAsync(t => t.Date.Month == month && t.Date.Year == year, order, currency);
             }
 
-            return await GetOrdererTransactionsAsync(t => t.Date.Year == year && t.Depletion == IsExpense, order);
+            return await GetOrdererTransactionsAsync(t => t.Date.Month == month && t.Date.Year == year && t.Depletion == IsExpense, order, currency);
         }
-        public async Task<OperationResult<IEnumerable<TransactionDto>>> GetAllByCategoryAsync(string category, bool? IsExpense = null, Order order = Order.OrderByDate)
+        public async Task<OperationResult<IEnumerable<TransactionDto>>> GetAllByYearAsync(int year, bool? IsExpense = null, Order order = Order.OrderByDate, CurrencyDto? currency = null)
         {
             if(IsExpense is null)
             {
-                return await GetOrdererTransactionsAsync(t => t.Category == category, order);
+                return await GetOrdererTransactionsAsync(t => t.Date.Year == year, order, currency);
             }
 
-            return await GetOrdererTransactionsAsync(t => t.Category == category && t.Depletion == IsExpense, order);
+            return await GetOrdererTransactionsAsync(t => t.Date.Year == year && t.Depletion == IsExpense, order, currency);
         }
-        public async Task<OperationResult<IEnumerable<TransactionDto>>> GetAllByPredicateAsync(Expression<Func<TransactionDto, bool>> predicate, Order order = Order.OrderByDate)
+        public async Task<OperationResult<IEnumerable<TransactionDto>>> GetAllByCategoryAsync(string category, bool? IsExpense = null, Order order = Order.OrderByDate, CurrencyDto? currency = null)
         {
-            return await GetOrdererTransactionsAsync(predicate, order);
+            if(IsExpense is null)
+            {
+                return await GetOrdererTransactionsAsync(t => t.Category == category, order, currency);
+            }
+
+            return await GetOrdererTransactionsAsync(t => t.Category == category && t.Depletion == IsExpense, order, currency);
+        }
+        public async Task<OperationResult<IEnumerable<TransactionDto>>> GetAllByPredicateAsync(Expression<Func<TransactionDto, bool>> predicate, Order order = Order.OrderByDate, CurrencyDto? currency = null)
+        {
+            return await GetOrdererTransactionsAsync(predicate, order, currency);
         }
         #endregion
     }

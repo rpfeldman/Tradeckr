@@ -74,7 +74,7 @@ namespace GENAP_MAUI.ViewModels
 				GetProfitTask = getProfitTask;
 			}
 
-			Expression<Func<TransactionDto, GraphableTransactionDto>> selector = t => new(t.Depletion ? (t.Value * -1) : t.Value, t.Category, t.Date);
+			Expression<Func<TransactionDto, GraphableTransactionDto>> selector = t => new(t.Depletion ? CurrencyConverterService.TfuToCurrency(t.Value, GlobalResources.Currencies[GlobalResources.CurrenciesEnum.ARS]) * -1 : CurrencyConverterService.TfuToCurrency(t.Value, GlobalResources.Currencies[GlobalResources.CurrenciesEnum.ARS]), t.Category, t.Date);
 
             switch (timePeriod)
             {
