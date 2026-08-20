@@ -58,8 +58,8 @@ namespace GENAP_MAUI
         public static Dictionary<CurrenciesEnum, CurrencyDto> Currencies { get => new(3) 
         {
             { CurrenciesEnum.USD, new CurrencyDto() { CurrencyDisplayName = "Dólar Estadounidense", IsoCode = "USD", ConversionRate = 1, CurrencyId = 0 } },
-            { CurrenciesEnum.ARS, new CurrencyDto() { CurrencyDisplayName = "Peso Argentino", IsoCode = "ARS", ConversionRate = 1498.3619m, CurrencyId = 1 } },
-            { CurrenciesEnum.EUR, new CurrencyDto() { CurrencyDisplayName = "Euro", IsoCode = "EUR", ConversionRate = 0.8663m, CurrencyId = 2 } }
+            { CurrenciesEnum.ARS, new CurrencyDto() { CurrencyDisplayName = "Peso Argentino", IsoCode = "ARS", ConversionRate = 1497.7240m, CurrencyId = 1 } },
+            { CurrenciesEnum.EUR, new CurrencyDto() { CurrencyDisplayName = "Euro", IsoCode = "EUR", ConversionRate = 0.8565m, CurrencyId = 2 } }
         };
         }
 

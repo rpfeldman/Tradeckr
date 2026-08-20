@@ -41,6 +41,9 @@ namespace GENAP_MAUI.ViewModels
         public partial CategoryDto PickedCategory { get; set; } = new();
 
         [ObservableProperty]
+        public partial CurrencyDto PickedCurrency { get; set; } = GlobalResources.Currencies[GlobalResources.CurrenciesEnum.ARS];
+
+        [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(UpdateTransactionCommand))]
         public partial string PickedValue { get; set; } = string.Empty;
 
@@ -70,7 +73,7 @@ namespace GENAP_MAUI.ViewModels
             Categories = new(getCategoriesOperation.Result!);
             PickedDate = Transaction.Date.ToDateTime(TimeOnly.MinValue);
 
-            decimal mvalue = CurrencyConverterService.TfuToCurrency(Transaction.Value, GlobalResources.Currencies[GlobalResources.CurrenciesEnum.ARS]);
+            decimal mvalue = CurrencyConverterService.TfuToCurrency(Transaction.Value, PickedCurrency);
             PickedValue = mvalue % 1 == 0 ? mvalue.ToString("N0") : mvalue.ToString("N2");
 
             if (Transaction.Category == DefaultCategories.TradingCategoryName) 
@@ -127,7 +130,7 @@ namespace GENAP_MAUI.ViewModels
         [RelayCommand(CanExecute = nameof(UpdateTransactionCanExecute))]
         public async Task UpdateTransaction()
         {
-            var updateTransactionOperation = await _dataManagementService.UpdateTransactionAsync(TransactionId, CurrencyConverterService.CurrencyToTfu(_Value, GlobalResources.Currencies[GlobalResources.CurrenciesEnum.ARS]), DateOnly.FromDateTime(PickedDate), PickedCategory.Name, Transaction.Depletion);
+            var updateTransactionOperation = await _dataManagementService.UpdateTransactionAsync(TransactionId, CurrencyConverterService.CurrencyToTfu(_Value, PickedCurrency), DateOnly.FromDateTime(PickedDate), PickedCategory.Name, Transaction.Depletion);
 
             await Shell.Current.DisplayAlertAsync("Editar", updateTransactionOperation.Success ? "Se ha guardado el movimiento correctamente" : updateTransactionOperation.InnerError?.ErrorMessage, "Aceptar");
         }

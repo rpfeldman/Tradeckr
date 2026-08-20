@@ -31,7 +31,10 @@ namespace GENAP_MAUI.ViewModels
 		[ObservableProperty]
 		public partial KeyValuePair<GlobalResources.TimePeriodsEnum, string> PickedTimePeriod { get; set;  }
 
-		[ObservableProperty]
+        [ObservableProperty]
+        public partial CurrencyDto PickedCurrency { get; set; } = GlobalResources.Currencies[GlobalResources.CurrenciesEnum.ARS];
+
+        [ObservableProperty]
 		public partial ObservableCollection<CategoryDto> Categories { get; set; } = new();
 
         [ObservableProperty]
@@ -74,7 +77,7 @@ namespace GENAP_MAUI.ViewModels
 				GetProfitTask = getProfitTask;
 			}
 
-			Expression<Func<TransactionDto, GraphableTransactionDto>> selector = t => new(t.Depletion ? CurrencyConverterService.TfuToCurrency(t.Value, GlobalResources.Currencies[GlobalResources.CurrenciesEnum.ARS]) * -1 : CurrencyConverterService.TfuToCurrency(t.Value, GlobalResources.Currencies[GlobalResources.CurrenciesEnum.ARS]), t.Category, t.Date);
+			Expression<Func<TransactionDto, GraphableTransactionDto>> selector = t => new(t.Depletion ? CurrencyConverterService.TfuToCurrency(t.Value, PickedCurrency) * -1 : CurrencyConverterService.TfuToCurrency(t.Value, PickedCurrency), t.Category, t.Date);
 
             switch (timePeriod)
             {

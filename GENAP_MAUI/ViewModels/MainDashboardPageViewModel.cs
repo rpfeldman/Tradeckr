@@ -53,4 +53,5 @@ namespace GENAP_MAUI.ViewModels
             GraphableTransactions = MonthTransactions.Select(t => new GraphableTransactionDto(t.Depletion ? (t.Value*-1) : t.Value, t.Category, t.Date));
         }
     }
+
 }

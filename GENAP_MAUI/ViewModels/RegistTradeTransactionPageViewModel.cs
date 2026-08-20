@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DataServices;
+using DomainModel;
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -22,6 +23,9 @@ namespace GENAP_MAUI.ViewModels
 
         [ObservableProperty]
         public partial DateTime PickedDate { get; set; } = DateTime.Today;
+
+        [ObservableProperty]
+        public partial CurrencyDto PickedCurrency { get; set; } = GlobalResources.Currencies[GlobalResources.CurrenciesEnum.USD];
 
         [ObservableProperty]
         public partial bool Depletion { get; set; } = true;
@@ -51,7 +55,7 @@ namespace GENAP_MAUI.ViewModels
             var DisplayAlertTitle = "Transaccion";
             var DisplayAlertButton = "Aceptar";
 
-            Value = CurrencyConverterService.CurrencyToTfu(Value, GlobalResources.Currencies[GlobalResources.CurrenciesEnum.ARS]); // TEMPORAL
+            Value = CurrencyConverterService.CurrencyToTfu(Value, PickedCurrency);  
 
             if (Depletion)
             {
