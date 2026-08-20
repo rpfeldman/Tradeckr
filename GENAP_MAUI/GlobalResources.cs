@@ -63,6 +63,6 @@ namespace GENAP_MAUI
         };
         }
 
-        public static List<CurrencyDto> CurrenciesList { get => [.. Currencies.Values]; }
+        public static List<KeyValuePair<CurrenciesEnum, CurrencyDto>> CurrenciesList { get => [.. Currencies]; }
     }
 }

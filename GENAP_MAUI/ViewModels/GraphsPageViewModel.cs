@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq.Expressions;
 using System.Text;
+using static GENAP_MAUI.GlobalResources;
 
 namespace GENAP_MAUI.ViewModels
 {
@@ -20,19 +21,18 @@ namespace GENAP_MAUI.ViewModels
 	{
 		private DataProjectionService _dataProjectionService;
 		private CategoryPersistenceService _categoryPersistenceService;
+        private bool _IsAlredyFillingGraphs = false;
 		public GraphsPageViewModel(DataProjectionService dataProjectionService, CategoryPersistenceService categoryPersistenceService)
 		{
 			_dataProjectionService = dataProjectionService;
 			_categoryPersistenceService = categoryPersistenceService;
-
-			PickedTimePeriod = GlobalResources.TimePeriods.Where(d => d.Key == GlobalResources.TimePeriodsEnum.Month).First();
-		}
+        }
 
 		[ObservableProperty]
 		public partial KeyValuePair<GlobalResources.TimePeriodsEnum, string> PickedTimePeriod { get; set;  }
 
         [ObservableProperty]
-        public partial CurrencyDto PickedCurrency { get; set; } = GlobalResources.Currencies[GlobalResources.CurrenciesEnum.ARS];
+        public partial KeyValuePair<CurrenciesEnum, CurrencyDto> PickedCurrency { get; set; } 
 
         [ObservableProperty]
 		public partial ObservableCollection<CategoryDto> Categories { get; set; } = new();
@@ -57,9 +57,15 @@ namespace GENAP_MAUI.ViewModels
 
         async partial void OnPickedTimePeriodChanged(KeyValuePair<GlobalResources.TimePeriodsEnum, string> value)
         {
-            await ReFillGraphs(value.Key);
+            await ReFillGraphs(value.Key, PickedCurrency.Value);
         }
-		public async Task ReFillGraphs(GlobalResources.TimePeriodsEnum timePeriod)
+        async partial void OnPickedCurrencyChanged(KeyValuePair<CurrenciesEnum, CurrencyDto> value)
+        {
+            if(_IsAlredyFillingGraphs) { return; }
+            await ReFillGraphs(PickedTimePeriod.Key, value.Value);
+        }
+
+		public async Task ReFillGraphs(GlobalResources.TimePeriodsEnum timePeriod, CurrencyDto currency)
 		{
             Task<OperationResult<IEnumerable<GraphableTransactionDto>>>? GetExpensesTask = null;
             Task<OperationResult<IEnumerable<GraphableTransactionDto>>>? GetIncomeTask = null;
@@ -77,7 +83,7 @@ namespace GENAP_MAUI.ViewModels
 				GetProfitTask = getProfitTask;
 			}
 
-			Expression<Func<TransactionDto, GraphableTransactionDto>> selector = t => new(t.Depletion ? CurrencyConverterService.TfuToCurrency(t.Value, PickedCurrency) * -1 : CurrencyConverterService.TfuToCurrency(t.Value, PickedCurrency), t.Category, t.Date);
+			Expression<Func<TransactionDto, GraphableTransactionDto>> selector = t => new(t.Depletion ? CurrencyConverterService.TfuToCurrency(t.Value, currency) * -1 : CurrencyConverterService.TfuToCurrency(t.Value, currency), t.Category, t.Date);
 
             switch (timePeriod)
             {
@@ -218,6 +224,8 @@ namespace GENAP_MAUI.ViewModels
 		[RelayCommand]
 		public async Task ReLoad()
 		{
+            _IsAlredyFillingGraphs = true;
+
             var getCategoriesOperation = await _categoryPersistenceService.GetCategoriesAsync();
 
             if (getCategoriesOperation.Success)
@@ -226,9 +234,12 @@ namespace GENAP_MAUI.ViewModels
             }
             else { await Shell.Current.DisplayAlertAsync("Error", getCategoriesOperation.InnerError?.ErrorMessage, "Aceptar"); }
 
+            PickedCurrency = GlobalResources.Currencies.First();
             PickedTimePeriod = GlobalResources.TimePeriods.Where(d => d.Key == GlobalResources.TimePeriodsEnum.Month).First();
+            
+            await ReFillGraphs(PickedTimePeriod.Key, PickedCurrency.Value);
 
-			await ReFillGraphs(PickedTimePeriod.Key);
+            _IsAlredyFillingGraphs = false;
         }
     }
 }
