@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using CommunityToolkit.Mvvm.Input;
 using GENAP_MAUI.InnerComponents;
+using System.Security;
 
 namespace GENAP_MAUI.ViewModels
 {
@@ -25,6 +26,9 @@ namespace GENAP_MAUI.ViewModels
         [ObservableProperty]
         public partial IEnumerable<GraphableTransactionDto> GraphableTransactions { get; set; } = [];
 
+        [ObservableProperty]
+        public partial KeyValuePair<GlobalResources.CurrenciesEnum, CurrencyDto> PickedCurrency { get; set; }
+
         public string Month { get { return GlobalResources.Months[DateTime.Today.Month]; } }
 
         [RelayCommand]
@@ -39,18 +43,22 @@ namespace GENAP_MAUI.ViewModels
         [RelayCommand]
         public async Task Load()
         {
-            var today = DateOnly.FromDateTime(DateTime.Today);
+            PickedCurrency = GlobalResources.Currencies.First();
+        }
 
-            var getMonthTransactions = await _dataProjectionService.GetAllByMonthAsync(today.Month, today.Year, order: DataProjectionService.Order.OrderByDateDescending, currency: GlobalResources.Currencies[GlobalResources.CurrenciesEnum.ARS]); // TEMP hardcoded currency
+        async partial void OnPickedCurrencyChanged(KeyValuePair<GlobalResources.CurrenciesEnum, CurrencyDto> value)
+        {
+            var today = DateOnly.FromDateTime(DateTime.Today);
+            var getMonthTransactions = await _dataProjectionService.GetAllByMonthAsync(today.Month, today.Year, order: DataProjectionService.Order.OrderByDateDescending, currency: PickedCurrency.Value);
 
             if (!getMonthTransactions.Success)
             {
-                await Shell.Current.DisplayAlertAsync("Error", getMonthTransactions.InnerError?.ErrorMessage,"Aceptar");
+                await Shell.Current.DisplayAlertAsync("Error", getMonthTransactions.InnerError?.ErrorMessage, "Aceptar");
                 return;
             }
 
             MonthTransactions = [.. getMonthTransactions.Result!];
-            GraphableTransactions = MonthTransactions.Select(t => new GraphableTransactionDto(t.Depletion ? (t.Value*-1) : t.Value, t.Category, t.Date));
+            GraphableTransactions = MonthTransactions.Select(t => new GraphableTransactionDto(t.Depletion ? (t.Value * -1) : t.Value, t.Category, t.Date));
         }
     }
 

@@ -100,12 +100,6 @@
                 <Button Text="Registrar movimiento"
                         Command="{Binding RegistTransactionCommand}"
                         Style="{StaticResource ButtonPrimary}" />
-
-                <Picker Title="Seleccionar moneda"
-                    ItemsSource="{x:Static local:GlobalResources.CurrenciesList}"
-                    ItemDisplayBinding="{Binding Value.CurrencyDisplayName}"
-                    SelectedItem="{Binding PickedCurrency}" />  
-
             </VerticalStackLayout>
         </ScrollView>
 
