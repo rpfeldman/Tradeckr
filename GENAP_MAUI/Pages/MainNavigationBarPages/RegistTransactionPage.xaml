@@ -39,6 +39,19 @@
                             </Entry>
                         </Grid>
                     </Border>
+
+                    <Border Style="{StaticResource CurrencyPickerAttached}">
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                            <Label Grid.Column="0" Text="Moneda"
+                                   Style="{StaticResource CurrencyPickerHint}" />
+                            <Picker Grid.Column="1"
+                                    Style="{StaticResource CurrencyPickerControl}"
+                                    Title="Seleccionar moneda"
+                                    ItemsSource="{x:Static local:GlobalResources.CurrenciesList}"
+                                    ItemDisplayBinding="{Binding Value.CurrencyDisplayName}"
+                                    SelectedItem="{Binding PickedCurrency}" />
+                        </Grid>
+                    </Border>
                 </VerticalStackLayout>
 
                 <VerticalStackLayout>

@@ -18,13 +18,30 @@
                    Text="Tocá un movimiento para ver el detalle o editarlo." />
         </VerticalStackLayout>
 
-        <Border Grid.Row="1" Style="{StaticResource InputField}" Margin="20,16,20,8">
-            <Picker Title="Seleccionar período de tiempo"
-                    ItemsSource="{x:Static local:GlobalResources.TimePeriodsList}"
-                    ItemDisplayBinding="{Binding Value}"
-                    SelectedItem="{Binding PickedTimePeriod}" />
-        </Border>
-        
+        <VerticalStackLayout Grid.Row="1" Spacing="6" Margin="20,16,20,8">
+
+            <Border Style="{StaticResource InputField}">
+                <Picker Title="Seleccionar período de tiempo"
+                        ItemsSource="{x:Static local:GlobalResources.TimePeriodsList}"
+                        ItemDisplayBinding="{Binding Value}"
+                        SelectedItem="{Binding PickedTimePeriod}" />
+            </Border>
+
+            <Border Style="{StaticResource CurrencyPickerField}">
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                    <Label Grid.Column="0" Text="Ver en"
+                           Style="{StaticResource CurrencyPickerHint}" />
+                    <Picker Grid.Column="1"
+                            Style="{StaticResource CurrencyPickerControl}"
+                            Title="Seleccionar moneda"
+                            ItemsSource="{x:Static local:GlobalResources.CurrenciesList}"
+                            ItemDisplayBinding="{Binding Value.CurrencyDisplayName}"
+                            SelectedItem="{Binding PickedCurrency}" />
+                </Grid>
+            </Border>
+
+        </VerticalStackLayout>
+
         <CollectionView Grid.Row="2"
                         ItemsSource="{Binding Transactions}"
                         ItemsLayout="VerticalList"

@@ -30,7 +30,7 @@
 
     <Style x:Key="CurrencyPickerField" TargetType="Border">
         <Setter Property="BackgroundColor"
-            Value="{AppThemeBinding Light={StaticResource AccentLight}, Dark={StaticResource AccentDark}}" />
+            Value="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}" />
         <Setter Property="Stroke"
             Value="{AppThemeBinding Light={StaticResource AccentLight}, Dark={StaticResource AccentDark}}" />
         <Setter Property="StrokeThickness" Value="1" />
@@ -44,7 +44,7 @@
 
     <Style x:Key="CurrencyPickerAttached" TargetType="Border">
         <Setter Property="BackgroundColor"
-            Value="{AppThemeBinding Light={StaticResource AccentLight}, Dark={StaticResource AccentDark}}" />
+            Value="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}" />
         <Setter Property="Stroke"
             Value="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
         <Setter Property="StrokeThickness" Value="1" />
