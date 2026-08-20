@@ -31,6 +31,7 @@ namespace GENAP_MAUI.ViewModels
 
         async partial void OnPickedTimePeriodChanged(KeyValuePair<GlobalResources.TimePeriodsEnum, string> value)
         {
+            if (_IsReloading) { return; }
             await ReloadTransactions(value.Key, PickedCurrency.Value);
         }
         async partial void OnPickedCurrencyChanged(KeyValuePair<GlobalResources.CurrenciesEnum, CurrencyDto> value)
@@ -115,7 +116,8 @@ namespace GENAP_MAUI.ViewModels
 
             PickedCurrency = GlobalResources.Currencies.First();
             PickedTimePeriod = GlobalResources.TimePeriods.Where(d => d.Key == GlobalResources.TimePeriodsEnum.Month).First();
-            
+
+            await ReloadTransactions(PickedTimePeriod.Key, PickedCurrency.Value);
             _IsReloading = false;
         }
     }

@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:GENAP_MAUI.ViewModels"
              xmlns:model="clr-namespace:DomainModel;assembly=DomainModel"
+             xmlns:local="clr-namespace:GENAP_MAUI"
              xmlns:behaviours="clr-namespace:GENAP_MAUI.ControlBehaviours"
              x:Class="GENAP_MAUI.Pages.TransactionRelatedPages.TransactionPage"
              x:DataType="vm:TransactionPageViewModel"
@@ -36,6 +37,11 @@
                         </Entry>
                     </Grid>
                 </Border>
+
+                <Picker Title="Seleccionar moneda"
+                 ItemsSource="{x:Static local:GlobalResources.CurrenciesList}"
+                 ItemDisplayBinding="{Binding Value.CurrencyDisplayName}"
+                 SelectedItem="{Binding PickedCurrency}" />
             </VerticalStackLayout>
             
             <VerticalStackLayout>
