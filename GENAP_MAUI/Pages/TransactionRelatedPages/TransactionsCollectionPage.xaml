@@ -24,7 +24,7 @@
                     ItemDisplayBinding="{Binding Value}"
                     SelectedItem="{Binding PickedTimePeriod}" />
         </Border>
-
+        
         <CollectionView Grid.Row="2"
                         ItemsSource="{Binding Transactions}"
                         ItemsLayout="VerticalList"

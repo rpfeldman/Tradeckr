@@ -13,6 +13,8 @@ namespace GENAP_MAUI.ViewModels
     public sealed partial class TransactionsCollectionPageViewModel : BaseViewModel
     {
         private DataProjectionService _dataProjectionService;
+
+        private bool _IsReloading; 
         public TransactionsCollectionPageViewModel(DataProjectionService dataProjectionService)
         {
             _dataProjectionService = dataProjectionService;
@@ -25,11 +27,16 @@ namespace GENAP_MAUI.ViewModels
         public partial KeyValuePair<GlobalResources.TimePeriodsEnum, string> PickedTimePeriod { get; set; }
 
         [ObservableProperty]
-        public partial CurrencyDto PickedCurrency { get; set; } = GlobalResources.Currencies[GlobalResources.CurrenciesEnum.ARS];
+        public partial KeyValuePair<GlobalResources.CurrenciesEnum, CurrencyDto> PickedCurrency { get; set; }
 
         async partial void OnPickedTimePeriodChanged(KeyValuePair<GlobalResources.TimePeriodsEnum, string> value)
         {
-            await ReloadTransactions(value.Key);
+            await ReloadTransactions(value.Key, PickedCurrency.Value);
+        }
+        async partial void OnPickedCurrencyChanged(KeyValuePair<GlobalResources.CurrenciesEnum, CurrencyDto> value)
+        {
+            if(_IsReloading) { return; }
+            await ReloadTransactions(PickedTimePeriod.Key, value.Value);
         }
 
         [RelayCommand]
@@ -42,7 +49,7 @@ namespace GENAP_MAUI.ViewModels
 
             await Shell.Current.GoToAsync(Routes.TransactionMenu, parameters: NavProperty);
         }
-        public async Task ReloadTransactions(GlobalResources.TimePeriodsEnum timePeriod)
+        public async Task ReloadTransactions(GlobalResources.TimePeriodsEnum timePeriod, CurrencyDto currency)
         {
             Task<OperationResult<IEnumerable<TransactionDto>>>? getTransactionsTask;
             var today = DateOnly.FromDateTime(DateTime.Today);
@@ -50,23 +57,23 @@ namespace GENAP_MAUI.ViewModels
             switch (timePeriod)
             {
                 case GlobalResources.TimePeriodsEnum.Historical:
-                    getTransactionsTask = _dataProjectionService.GetAllAsync(order: DataProjectionService.Order.OrderByDate, currency: PickedCurrency);
+                    getTransactionsTask = _dataProjectionService.GetAllAsync(order: DataProjectionService.Order.OrderByDate, currency: currency);
                     break;
 
                 case GlobalResources.TimePeriodsEnum.HistoricalToday:
-                    getTransactionsTask = _dataProjectionService.GetAllByPredicateAsync(t => t.Date <= today, order: DataProjectionService.Order.OrderByDate, currency: PickedCurrency);
+                    getTransactionsTask = _dataProjectionService.GetAllByPredicateAsync(t => t.Date <= today, order: DataProjectionService.Order.OrderByDate, currency: currency);
                     break;
 
                 case GlobalResources.TimePeriodsEnum.Month:
-                    getTransactionsTask = _dataProjectionService.GetAllByMonthAsync(today.Month, today.Year, order:DataProjectionService.Order.OrderByDate, currency: PickedCurrency);
+                    getTransactionsTask = _dataProjectionService.GetAllByMonthAsync(today.Month, today.Year, order:DataProjectionService.Order.OrderByDate, currency: currency);
                     break;
 
                 case GlobalResources.TimePeriodsEnum.ThirtyDays:
-                    getTransactionsTask = _dataProjectionService.GetAllByPredicateAsync(t => t.Date.DayOfYear >= (today.DayOfYear - 30) && t.Date <= today && t.Date.Year == today.Year, order: DataProjectionService.Order.OrderByDate, currency: PickedCurrency);
+                    getTransactionsTask = _dataProjectionService.GetAllByPredicateAsync(t => t.Date.DayOfYear >= (today.DayOfYear - 30) && t.Date <= today && t.Date.Year == today.Year, order: DataProjectionService.Order.OrderByDate, currency: currency);
                     break;
 
                 case GlobalResources.TimePeriodsEnum.ThreeMonths:
-                    getTransactionsTask = _dataProjectionService.GetAllByPredicateAsync(t => t.Date.Month >= (today.Month - 3) && t.Date.Month <= today.Month && t.Date.Year == today.Year, order: DataProjectionService.Order.OrderByDate, currency: PickedCurrency);
+                    getTransactionsTask = _dataProjectionService.GetAllByPredicateAsync(t => t.Date.Month >= (today.Month - 3) && t.Date.Month <= today.Month && t.Date.Year == today.Year, order: DataProjectionService.Order.OrderByDate, currency: currency);
                     break;
 
                 case GlobalResources.TimePeriodsEnum.Semester:
@@ -77,19 +84,19 @@ namespace GENAP_MAUI.ViewModels
                     { MinBound = 7; MaxBound = 12; }
                     else { MinBound = 1; MaxBound = 6; }
 
-                    getTransactionsTask = _dataProjectionService.GetAllByPredicateAsync(t => t.Date.Month >= MinBound && t.Date.Month <= MaxBound && t.Date.Year == today.Year, order: DataProjectionService.Order.OrderByDate, currency: PickedCurrency);
+                    getTransactionsTask = _dataProjectionService.GetAllByPredicateAsync(t => t.Date.Month >= MinBound && t.Date.Month <= MaxBound && t.Date.Year == today.Year, order: DataProjectionService.Order.OrderByDate, currency: currency);
                     break;
 
                 case GlobalResources.TimePeriodsEnum.Year:
-                    getTransactionsTask = _dataProjectionService.GetAllByYearAsync(today.Year, order: DataProjectionService.Order.OrderByDate, currency: PickedCurrency);
+                    getTransactionsTask = _dataProjectionService.GetAllByYearAsync(today.Year, order: DataProjectionService.Order.OrderByDate, currency: currency);
                     break;
 
                 case GlobalResources.TimePeriodsEnum.Today:
-                    getTransactionsTask = _dataProjectionService.GetAllByDateAsync(today, order: DataProjectionService.Order.OrderByDate, currency: PickedCurrency);
+                    getTransactionsTask = _dataProjectionService.GetAllByDateAsync(today, order: DataProjectionService.Order.OrderByDate, currency: currency);
                     break;
 
                 default:
-                    getTransactionsTask = _dataProjectionService.GetAllAsync(order: DataProjectionService.Order.OrderByDate, currency: PickedCurrency);
+                    getTransactionsTask = _dataProjectionService.GetAllAsync(order: DataProjectionService.Order.OrderByDate, currency: currency);
                     break;
             }
 
@@ -104,9 +111,12 @@ namespace GENAP_MAUI.ViewModels
         [RelayCommand]
         public async Task ReLoad()
         {
-            PickedTimePeriod = GlobalResources.TimePeriods.Where(d => d.Key == GlobalResources.TimePeriodsEnum.Month).First();
+            _IsReloading = true;
 
-            await ReloadTransactions(PickedTimePeriod.Key);
+            PickedCurrency = GlobalResources.Currencies.First();
+            PickedTimePeriod = GlobalResources.TimePeriods.Where(d => d.Key == GlobalResources.TimePeriodsEnum.Month).First();
+            
+            _IsReloading = false;
         }
     }
 }

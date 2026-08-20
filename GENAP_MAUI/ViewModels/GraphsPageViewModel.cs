@@ -237,8 +237,6 @@ namespace GENAP_MAUI.ViewModels
             PickedCurrency = GlobalResources.Currencies.First();
             PickedTimePeriod = GlobalResources.TimePeriods.Where(d => d.Key == GlobalResources.TimePeriodsEnum.Month).First();
             
-            await ReFillGraphs(PickedTimePeriod.Key, PickedCurrency.Value);
-
             _IsAlredyFillingGraphs = false;
         }
     }
