@@ -15,6 +15,7 @@ namespace GENAP_MAUI.ViewModels
     [QueryProperty(nameof(TransactionId), "TransactionProperty")]
     public sealed partial class TransactionPageViewModel : BaseViewModel
     {
+        private bool _IsLoading;
         private DataProjectionService _dataProjectionService;
         private DataManagementService _dataManagementService;
         private CategoryPersistenceService _categoryPersistenceService;
@@ -54,6 +55,8 @@ namespace GENAP_MAUI.ViewModels
 
         async partial void OnTransactionIdChanged(int value)
         {
+            _IsLoading = true;
+
             var getTransactionOperation = await _dataProjectionService.GetTransactionAsync(value);
 
             getTransactionOperation.Match
@@ -83,6 +86,8 @@ namespace GENAP_MAUI.ViewModels
 
                 Categories.Add(tradingCategory); 
                 PickedCategory = tradingCategory;
+
+                _IsLoading = false;
                 return;
             }
 
@@ -91,12 +96,24 @@ namespace GENAP_MAUI.ViewModels
             if(transactionCategory is not null)
             {
                 PickedCategory = transactionCategory;
+                _IsLoading = false;
                 return;
             }
 
             var deletedCategory = new CategoryDto() { Name = Transaction.Category, HexColor = GlobalResources.Colors[GlobalResources.ColorsEnum.SteelBlue].HexColor };
             Categories.Add(deletedCategory);
             PickedCategory = deletedCategory;
+
+            _IsLoading = false;
+        }
+
+        partial void OnPickedCurrencyChanged(KeyValuePair<GlobalResources.CurrenciesEnum, CurrencyDto> oldValue, KeyValuePair<GlobalResources.CurrenciesEnum, CurrencyDto> newValue)
+        {
+            if(_IsLoading) { return; }
+
+            var oldTfuValue = CurrencyConverterService.CurrencyToTfu(_Value, oldValue.Value);
+
+            PickedValue = CurrencyConverterService.TfuToCurrency(oldTfuValue, newValue.Value).ToString();
         }
 
         partial void OnPickedValueChanged(string value)
