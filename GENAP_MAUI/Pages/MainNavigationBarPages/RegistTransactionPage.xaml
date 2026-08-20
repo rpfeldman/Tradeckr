@@ -5,6 +5,7 @@
              xmlns:model="clr-namespace:DomainModel;assembly=DomainModel"
              xmlns:nav="clr-namespace:GENAP_MAUI.ContentViews.Navigation"
              xmlns:behaviours="clr-namespace:GENAP_MAUI.ControlBehaviours"
+             xmlns:local="clr-namespace:GENAP_MAUI"
              x:Class="GENAP_MAUI.Pages.MainNavigationBarPages.RegistTransactionPage"
              x:DataType="vm:RegistTransactionPageViewModel"
              BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}">
@@ -35,7 +36,7 @@
                                 <Entry.Behaviors>
                                     <behaviours:MoneyEntryBehaviour/>
                                 </Entry.Behaviors>
-                            </Entry> 
+                            </Entry>
                         </Grid>
                     </Border>
                 </VerticalStackLayout>
@@ -99,6 +100,11 @@
                 <Button Text="Registrar movimiento"
                         Command="{Binding RegistTransactionCommand}"
                         Style="{StaticResource ButtonPrimary}" />
+
+                <Picker Title="Seleccionar moneda"
+                    ItemsSource="{x:Static local:GlobalResources.CurrenciesList}"
+                    ItemDisplayBinding="{Binding Value.CurrencyDisplayName}"
+                    SelectedItem="{Binding PickedCurrency}" />  
 
             </VerticalStackLayout>
         </ScrollView>
