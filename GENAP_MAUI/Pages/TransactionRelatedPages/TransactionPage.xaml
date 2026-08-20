@@ -29,7 +29,7 @@
                         <Entry Grid.Column="1"
                             Style="{StaticResource AmountEntry}"
                             Placeholder="0" Keyboard="Numeric"
-                            Text="{Binding PickedValue}">    
+                            Text="{Binding PickedValue}">
 
                             <Entry.Behaviors>
                                 <behaviours:MoneyEntryBehaviour/>
@@ -37,11 +37,6 @@
                         </Entry>
                     </Grid>
                 </Border>
-
-                <Picker Title="Seleccionar moneda"
-                 ItemsSource="{x:Static local:GlobalResources.CurrenciesList}"
-                 ItemDisplayBinding="{Binding Value.CurrencyDisplayName}"
-                 SelectedItem="{Binding PickedCurrency}" />
             </VerticalStackLayout>
             
             <VerticalStackLayout>
