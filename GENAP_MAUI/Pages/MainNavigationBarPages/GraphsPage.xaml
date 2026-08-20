@@ -21,15 +21,6 @@
                     SelectedItem="{Binding PickedTimePeriod}" />
         </Border>
         
-        <Border Grid.Row="0"
-         Style="{StaticResource InputField}"
-         Margin="20,16,20,8">
-            <Picker Title="Seleccionar moneda"
-             ItemsSource="{x:Static local:GlobalResources.CurrenciesList}"
-             ItemDisplayBinding="{Binding Value.CurrencyDisplayName}"
-             SelectedItem="{Binding PickedCurrency}" />
-        </Border>
-
         <ScrollView Grid.Row="1" Padding="20,8,20,20">
             <VerticalStackLayout Spacing="0">
 

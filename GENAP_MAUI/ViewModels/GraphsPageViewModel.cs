@@ -21,7 +21,7 @@ namespace GENAP_MAUI.ViewModels
 	{
 		private DataProjectionService _dataProjectionService;
 		private CategoryPersistenceService _categoryPersistenceService;
-        private bool _IsAlredyFillingGraphs = false;
+        private bool _IsAlredyFillingGraphs;
 		public GraphsPageViewModel(DataProjectionService dataProjectionService, CategoryPersistenceService categoryPersistenceService)
 		{
 			_dataProjectionService = dataProjectionService;
