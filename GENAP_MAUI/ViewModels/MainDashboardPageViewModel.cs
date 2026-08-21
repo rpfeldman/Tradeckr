@@ -13,6 +13,7 @@ namespace GENAP_MAUI.ViewModels
     public sealed partial class MainDashboardPageViewModel : BaseViewModel
     {
         private DataProjectionService _dataProjectionService;
+        private bool _IsLoading;
 
         public MainDashboardPageViewModel(DataProjectionService dataProjectionService)
         {
@@ -41,13 +42,15 @@ namespace GENAP_MAUI.ViewModels
         }
         
         [RelayCommand]
-        public async Task Load()
+        public async Task Load(bool reload = false)
         {
-            PickedCurrency = GlobalResources.Currencies.First();
-        }
+            _IsLoading = true;
 
-        async partial void OnPickedCurrencyChanged(KeyValuePair<GlobalResources.CurrenciesEnum, CurrencyDto> value)
-        {
+            if(!reload)
+            {
+                PickedCurrency = GlobalResources.Currencies.First();
+            }
+
             var today = DateOnly.FromDateTime(DateTime.Today);
             var getMonthTransactions = await _dataProjectionService.GetAllByMonthAsync(today.Month, today.Year, order: DataProjectionService.Order.OrderByDateDescending, currency: PickedCurrency.Value);
 
@@ -59,6 +62,14 @@ namespace GENAP_MAUI.ViewModels
 
             MonthTransactions = [.. getMonthTransactions.Result!];
             GraphableTransactions = MonthTransactions.Select(t => new GraphableTransactionDto(t.Depletion ? (t.Value * -1) : t.Value, t.Category, t.Date));
+
+            _IsLoading = false;
+        }
+
+        async partial void OnPickedCurrencyChanged(KeyValuePair<GlobalResources.CurrenciesEnum, CurrencyDto> value)
+        {
+            if (_IsLoading) { return; }
+            await Load(true);
         }
     }
 
