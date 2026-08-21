@@ -235,7 +235,7 @@ namespace GENAP_MAUI.ViewModels
             }
             else { await Shell.Current.DisplayAlertAsync("Error", getCategoriesOperation.InnerError?.ErrorMessage, "Aceptar"); }
 
-            PickedCurrency = GlobalResources.Currencies.First();
+            PickedCurrency = GlobalResources.DefaultCommonCurrency;
             PickedTimePeriod = GlobalResources.TimePeriods.Where(d => d.Key == GlobalResources.TimePeriodsEnum.Month).First();
 
             await ReFillGraphs(PickedTimePeriod.Key, PickedCurrency.Value);

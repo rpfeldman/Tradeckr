@@ -114,7 +114,7 @@ namespace GENAP_MAUI.ViewModels
         {
             _IsReloading = true;
 
-            PickedCurrency = GlobalResources.Currencies.First();
+            PickedCurrency = GlobalResources.DefaultCommonCurrency;
             PickedTimePeriod = GlobalResources.TimePeriods.Where(d => d.Key == GlobalResources.TimePeriodsEnum.Month).First();
 
             await ReloadTransactions(PickedTimePeriod.Key, PickedCurrency.Value);

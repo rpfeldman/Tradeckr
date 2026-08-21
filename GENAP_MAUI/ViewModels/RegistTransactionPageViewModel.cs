@@ -21,28 +21,28 @@ namespace GENAP_MAUI.ViewModels
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(RegistTransactionCommand))]
-        public partial int FixedTransactionDuration { get; set; } = 1;
+        public partial int FixedTransactionDuration { get; set; }
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(RegistTransactionCommand))]
-        public partial decimal Value { get; set; } = 0m;
+        public partial decimal Value { get; set; } 
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(RegistTransactionCommand))]
-        public partial string PickedValue { get; set; } = string.Empty;
+        public partial string PickedValue { get; set; } 
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(RegistTransactionCommand))]
         public partial CategoryDto Category { get; set; }
 
         [ObservableProperty]
-        public partial DateTime PickedDate { get; set; } = DateTime.Today;
+        public partial DateTime PickedDate { get; set; }
 
         [ObservableProperty]
         public partial KeyValuePair<GlobalResources.CurrenciesEnum, CurrencyDto> PickedCurrency { get; set; }
 
         [ObservableProperty]
-        public partial bool Depletion { get; set; } = true;
+        public partial bool Depletion { get; set; }
 
         [ObservableProperty]
         public partial ObservableCollection<CategoryDto> Categories { get; set; } = [];
@@ -101,7 +101,7 @@ namespace GENAP_MAUI.ViewModels
             Value = 0m;
             PickedValue = string.Empty;
             PickedDate = DateTime.Today;
-            PickedCurrency = GlobalResources.Currencies.First();
+            PickedCurrency = GlobalResources.DefaultCommonCurrency;
 
             var getCategoriesOperation = await _CategoryPersistenceService.GetCategoriesAsync();
             if (getCategoriesOperation.Success)

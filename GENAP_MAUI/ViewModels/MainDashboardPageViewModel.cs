@@ -48,7 +48,7 @@ namespace GENAP_MAUI.ViewModels
 
             if(!reload)
             {
-                PickedCurrency = GlobalResources.Currencies.First();
+                PickedCurrency = GlobalResources.DefaultCommonCurrency;
             }
 
             var today = DateOnly.FromDateTime(DateTime.Today);

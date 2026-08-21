@@ -75,7 +75,7 @@ namespace GENAP_MAUI.ViewModels
 
             Categories = new(getCategoriesOperation.Result!);
             PickedDate = Transaction.Date.ToDateTime(TimeOnly.MinValue);
-            PickedCurrency = Transaction.Category == DefaultCategories.TradingCategoryName ? GlobalResources.Currencies.Where(c => c.Value.IsoCode == "USD").First() : GlobalResources.Currencies.Where(c => c.Value.IsoCode == "ARS").First();
+            PickedCurrency = Transaction.Category == DefaultCategories.TradingCategoryName ? GlobalResources.DefaultTradingCurrency : GlobalResources.DefaultCommonCurrency;
 
             decimal mvalue = CurrencyConverterService.TfuToCurrency(Transaction.Value, PickedCurrency.Value);
             PickedValue = mvalue % 1 == 0 ? mvalue.ToString("N0") : mvalue.ToString("N2");

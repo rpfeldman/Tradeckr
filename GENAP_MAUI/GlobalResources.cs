@@ -10,6 +10,9 @@ namespace GENAP_MAUI
         public static string UserName { get => Preferences.Get(PreferenceKeys.UserNameKey, "Unknown"); }
         public static bool IsNewUser { get => Preferences.Get(PreferenceKeys.NewUserKey, true); }
 
+        public static KeyValuePair<CurrenciesEnum, CurrencyDto> DefaultCommonCurrency { get => CurrenciesList[Preferences.Get(PreferenceKeys.CommonCurrencyKey, 0)]; }
+        public static KeyValuePair<CurrenciesEnum, CurrencyDto> DefaultTradingCurrency { get => CurrenciesList[Preferences.Get(PreferenceKeys.TradingCurrencyKey, 0)]; }
+
         // Months name are hardcoded, in the future they will be fetched by a CSV file with the translations
         public static string[] Months { get => ["Desconocido", "enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]; }
 
@@ -51,14 +54,31 @@ namespace GENAP_MAUI
        
         public static List<ColorDto> ColorList { get => [.. Colors.Values]; } 
 
-        public enum CurrenciesEnum { USD, ARS, EUR }
+        public enum CurrenciesEnum { USD, ARS, EUR, GBP, JPY, CHF, BRL, CLP, UYU, MXN }
 
         // Display names are temporal
-        public readonly static Dictionary<CurrenciesEnum, CurrencyDto> Currencies = new(3)
+        // ConversionRates are also hardcoded from google finance values at 21/08/2026
+        public readonly static Dictionary<CurrenciesEnum, CurrencyDto> Currencies = new(10)
         {
-            { CurrenciesEnum.USD, new CurrencyDto() { CurrencyDisplayName = "Dólar Estadounidense", IsoCode = "USD", ConversionRate = 1, CurrencyId = 0 } },
-            { CurrenciesEnum.ARS, new CurrencyDto() { CurrencyDisplayName = "Peso Argentino", IsoCode = "ARS", ConversionRate = 1494.2437m, CurrencyId = 1 } },
-            { CurrenciesEnum.EUR, new CurrencyDto() { CurrencyDisplayName = "Euro", IsoCode = "EUR", ConversionRate = 0.8555m, CurrencyId = 2 } }
+            { CurrenciesEnum.USD, new CurrencyDto() { CurrencyDisplayName = "Dólar Estadounidense", IsoCode = "USD", ConversionRate = 1 } },
+
+            { CurrenciesEnum.ARS, new CurrencyDto() { CurrencyDisplayName = "Peso Argentino", IsoCode = "ARS", ConversionRate = 1494.2437m } },
+
+            { CurrenciesEnum.UYU, new CurrencyDto() { CurrencyDisplayName = "Peso uruguayo", IsoCode = "UYU", ConversionRate = 40.2120m } },
+
+            { CurrenciesEnum.MXN, new CurrencyDto() { CurrencyDisplayName = "Peso mexicano", IsoCode = "MXN", ConversionRate = 19.9070m } },
+
+            { CurrenciesEnum.CLP, new CurrencyDto() { CurrencyDisplayName = "Peso chileno", IsoCode = "CLP", ConversionRate = 917.4312m } },
+
+            { CurrenciesEnum.EUR, new CurrencyDto() { CurrencyDisplayName = "Euro", IsoCode = "EUR", ConversionRate = 0.8555m } },
+
+            { CurrenciesEnum.GBP, new CurrencyDto() { CurrencyDisplayName = "Libra esterlina", IsoCode = "GBP", ConversionRate = 0.7340m } },
+
+            { CurrenciesEnum.JPY, new CurrencyDto() { CurrencyDisplayName = "Yen japonés", IsoCode = "JPY", ConversionRate = 158.9775m } },
+
+            { CurrenciesEnum.CHF, new CurrencyDto() { CurrencyDisplayName = "Franco suizo", IsoCode = "CHF", ConversionRate = 0.8014m } },
+
+            { CurrenciesEnum.BRL, new CurrencyDto() { CurrencyDisplayName = "Real brasileño", IsoCode = "BRL", ConversionRate = 5.1623m } },
         };
         
 
