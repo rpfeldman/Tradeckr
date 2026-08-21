@@ -16,8 +16,8 @@ namespace GENAP_MAUI
         // TimePeriod is split in 3: the enum (type-safe id), the display name (what the user sees), and the logic (per consumption point)
         // To add one: extend the enum, map its display name, handle its logic where consumed.
         public enum TimePeriodsEnum { Historical, HistoricalToday, Month, ThirtyDays, ThreeMonths, Semester, Year, Today }; 
-        public static Dictionary<TimePeriodsEnum, string> TimePeriods { get => new(8)
-            {
+        public readonly static Dictionary<TimePeriodsEnum, string> TimePeriods = new(8)
+         {
                 {TimePeriodsEnum.Today, "Hoy"},
                 {TimePeriodsEnum.ThirtyDays, "Ultimos 30 dias"},
                 {TimePeriodsEnum.Month, "Este mes"},
@@ -26,15 +26,15 @@ namespace GENAP_MAUI
                 {TimePeriodsEnum.Year, "Ultimo año"},
                 {TimePeriodsEnum.HistoricalToday, "Historico hasta hoy"},
                 {TimePeriodsEnum.Historical, "Proyeccion"},
-            };
-        }
+         };
+        
         public static List<KeyValuePair<TimePeriodsEnum, string>> TimePeriodsList { get => [.. TimePeriods]; }
 
         // Same as TimePeriods
 
         public enum ColorsEnum { SteelBlue, Yellow, Green, Purple, Aqua, Coral, Red, Emerald, Cyan, Indigo, Magenta } 
 
-        public static Dictionary<ColorsEnum, ColorDto> Colors { get => new(16)
+        public readonly static Dictionary<ColorsEnum, ColorDto> Colors = new(16)
         {
             { ColorsEnum.SteelBlue, new ColorDto("#466C87", "Azul plateado") },
             { ColorsEnum.Yellow, new ColorDto("#F1C40F", "Amarillo") },
@@ -48,20 +48,19 @@ namespace GENAP_MAUI
             { ColorsEnum.Indigo, new ColorDto("#5C6BC0", "Lavanda") },
             { ColorsEnum.Magenta, new ColorDto("#E84393", "Magenta") },
         }; 
-        }
-        
+       
         public static List<ColorDto> ColorList { get => [.. Colors.Values]; } 
 
         public enum CurrenciesEnum { USD, ARS, EUR }
 
         // Display names are temporal
-        public static Dictionary<CurrenciesEnum, CurrencyDto> Currencies { get => new(3) 
+        public readonly static Dictionary<CurrenciesEnum, CurrencyDto> Currencies = new(3)
         {
             { CurrenciesEnum.USD, new CurrencyDto() { CurrencyDisplayName = "Dólar Estadounidense", IsoCode = "USD", ConversionRate = 1, CurrencyId = 0 } },
-            { CurrenciesEnum.ARS, new CurrencyDto() { CurrencyDisplayName = "Peso Argentino", IsoCode = "ARS", ConversionRate = 1497.7240m, CurrencyId = 1 } },
-            { CurrenciesEnum.EUR, new CurrencyDto() { CurrencyDisplayName = "Euro", IsoCode = "EUR", ConversionRate = 0.8565m, CurrencyId = 2 } }
+            { CurrenciesEnum.ARS, new CurrencyDto() { CurrencyDisplayName = "Peso Argentino", IsoCode = "ARS", ConversionRate = 1494.2437m, CurrencyId = 1 } },
+            { CurrenciesEnum.EUR, new CurrencyDto() { CurrencyDisplayName = "Euro", IsoCode = "EUR", ConversionRate = 0.8555m, CurrencyId = 2 } }
         };
-        }
+        
 
         public static List<KeyValuePair<CurrenciesEnum, CurrencyDto>> CurrenciesList { get => [.. Currencies]; }
     }
