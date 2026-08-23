@@ -50,22 +50,32 @@
                        ReturnCommand="{Binding ContinueCommand}" />
             </Border>
 
-            <Picker
-        Title="¿Cual es la moneda que utilizas para tus gastos/ingresos cotidianos?"
-        Style="{StaticResource CurrencyPickerControl}"
-        ItemsSource="{x:Static local:GlobalResources.CurrenciesList}"
-        ItemDisplayBinding="{Binding Value.CurrencyDisplayName}"
-        SelectedItem="{Binding PickedCommonCurrency}" />
+            <VerticalStackLayout Spacing="8" Margin="0,28,0,0">
+                <Label Text="¿Qué moneda usás en tu día a día?"
+                       Style="{StaticResource PreferencePickerLabel}" />
+                <Border Style="{StaticResource PreferencePickerField}">
+                    <Picker Style="{StaticResource PreferencePickerControl}"
+                            Title="Elegí tu moneda cotidiana"
+                            ItemsSource="{x:Static local:GlobalResources.CurrenciesList}"
+                            ItemDisplayBinding="{Binding Value.CurrencyDisplayName}"
+                            SelectedItem="{Binding PickedCommonCurrency}" />
+                </Border>
+            </VerticalStackLayout>
 
-            <Picker
-        Title="¿Cual es la moneda que utilizas para operar?"
-        Style="{StaticResource CurrencyPickerControl}"
-        ItemsSource="{x:Static local:GlobalResources.CurrenciesList}"
-        ItemDisplayBinding="{Binding Value.CurrencyDisplayName}"
-        SelectedItem="{Binding PickedTradingCurrency}" />
+            <VerticalStackLayout Spacing="8" Margin="0,18,0,0">
+                <Label Text="¿Y con qué moneda operás?"
+                       Style="{StaticResource PreferencePickerLabel}" />
+                <Border Style="{StaticResource PreferencePickerField}">
+                    <Picker Style="{StaticResource PreferencePickerControl}"
+                            Title="Elegí tu moneda de trading"
+                            ItemsSource="{x:Static local:GlobalResources.CurrenciesList}"
+                            ItemDisplayBinding="{Binding Value.CurrencyDisplayName}"
+                            SelectedItem="{Binding PickedTradingCurrency}" />
+                </Border>
+            </VerticalStackLayout>
 
         </VerticalStackLayout>
-        
+
         <VerticalStackLayout Grid.Row="2"
                              Style="{StaticResource FormContainer}"
                              Spacing="0"

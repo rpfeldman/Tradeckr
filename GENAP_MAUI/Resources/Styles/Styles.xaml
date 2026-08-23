@@ -28,6 +28,21 @@
         </Setter>
     </Style>
 
+    <Style x:Key="PreferencePickerField" TargetType="Border">
+        <Setter Property="BackgroundColor"
+            Value="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundLight}}" />
+        <Setter Property="Stroke"
+            Value="{AppThemeBinding Light={StaticResource AccentLight}, Dark={StaticResource AccentDark}}" />
+        <Setter Property="StrokeThickness" Value="1.5" />
+        <Setter Property="Padding" Value="16,2" />
+        <Setter Property="HorizontalOptions" Value="Fill" />
+        <Setter Property="StrokeShape">
+            <Setter.Value>
+                <RoundRectangle CornerRadius="14" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="CurrencyPickerField" TargetType="Border">
         <Setter Property="BackgroundColor"
             Value="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}" />
@@ -376,6 +391,15 @@
         </Setter>
     </Style>
 
+    <Style x:Key="PreferencePickerLabel" TargetType="Label">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="TextColor"
+            Value="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+    </Style>
+
     <Style x:Key="CurrencyPickerHint" TargetType="Label">
         <Setter Property="FontSize" Value="12" />
         <Setter Property="TextColor"
@@ -527,6 +551,15 @@
         <Setter Property="Margin" Value="0,0,0,12" />
     </Style>
 
+    <Style x:Key="PreferencePickerControl" TargetType="Picker">
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="TextColor"
+            Value="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+        <Setter Property="TitleColor"
+            Value="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+        <Setter Property="HorizontalOptions" Value="Fill" />
+    </Style>
 
     <Style TargetType="Picker">
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
