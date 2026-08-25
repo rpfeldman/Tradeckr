@@ -60,25 +60,25 @@ namespace GENAP_MAUI
         // ConversionRates are also hardcoded from google finance values at 21/08/2026
         public readonly static Dictionary<CurrenciesEnum, CurrencyDto> Currencies = new(10)
         {
-            { CurrenciesEnum.USD, new CurrencyDto() { CurrencyDisplayName = "Dólar Estadounidense", IsoCode = "USD", ConversionRate = 1 } },
+            { CurrenciesEnum.USD, new CurrencyDto() { CurrencyDisplayName = "Dólar Estadounidense", IsoCode = "usd", ConversionRate = 1 } },
 
-            { CurrenciesEnum.ARS, new CurrencyDto() { CurrencyDisplayName = "Peso Argentino", IsoCode = "ARS", ConversionRate = 1494.2437m } },
+            { CurrenciesEnum.ARS, new CurrencyDto() { CurrencyDisplayName = "Peso Argentino", IsoCode = "ars", ConversionRate = 1494.2437m } },
 
-            { CurrenciesEnum.UYU, new CurrencyDto() { CurrencyDisplayName = "Peso uruguayo", IsoCode = "UYU", ConversionRate = 40.2120m } },
+            { CurrenciesEnum.UYU, new CurrencyDto() { CurrencyDisplayName = "Peso uruguayo", IsoCode = "uyu", ConversionRate = 40.2120m } },
 
-            { CurrenciesEnum.MXN, new CurrencyDto() { CurrencyDisplayName = "Peso mexicano", IsoCode = "MXN", ConversionRate = 19.9070m } },
+            { CurrenciesEnum.MXN, new CurrencyDto() { CurrencyDisplayName = "Peso mexicano", IsoCode = "mxn", ConversionRate = 19.9070m } },
 
-            { CurrenciesEnum.CLP, new CurrencyDto() { CurrencyDisplayName = "Peso chileno", IsoCode = "CLP", ConversionRate = 917.4312m } },
+            { CurrenciesEnum.CLP, new CurrencyDto() { CurrencyDisplayName = "Peso chileno", IsoCode = "clp", ConversionRate = 917.4312m } },
 
-            { CurrenciesEnum.EUR, new CurrencyDto() { CurrencyDisplayName = "Euro", IsoCode = "EUR", ConversionRate = 0.8555m } },
+            { CurrenciesEnum.EUR, new CurrencyDto() { CurrencyDisplayName = "Euro", IsoCode = "eur", ConversionRate = 0.8555m } },
 
-            { CurrenciesEnum.GBP, new CurrencyDto() { CurrencyDisplayName = "Libra esterlina", IsoCode = "GBP", ConversionRate = 0.7340m } },
+            { CurrenciesEnum.GBP, new CurrencyDto() { CurrencyDisplayName = "Libra esterlina", IsoCode = "gbp", ConversionRate = 0.7340m } },
 
-            { CurrenciesEnum.JPY, new CurrencyDto() { CurrencyDisplayName = "Yen japonés", IsoCode = "JPY", ConversionRate = 158.9775m } },
+            { CurrenciesEnum.JPY, new CurrencyDto() { CurrencyDisplayName = "Yen japonés", IsoCode = "jpy", ConversionRate = 158.9775m } },
 
-            { CurrenciesEnum.CHF, new CurrencyDto() { CurrencyDisplayName = "Franco suizo", IsoCode = "CHF", ConversionRate = 0.8014m } },
+            { CurrenciesEnum.CHF, new CurrencyDto() { CurrencyDisplayName = "Franco suizo", IsoCode = "chf", ConversionRate = 0.8014m } },
 
-            { CurrenciesEnum.BRL, new CurrencyDto() { CurrencyDisplayName = "Real brasileño", IsoCode = "BRL", ConversionRate = 5.1623m } },
+            { CurrenciesEnum.BRL, new CurrencyDto() { CurrencyDisplayName = "Real brasileño", IsoCode = "brl", ConversionRate = 5.1623m } },
         };
         
 
