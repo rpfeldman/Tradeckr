@@ -26,22 +26,45 @@ namespace ConsoleTest
             DataManagementService dms = new(repo);
             DataRegistrationService drs = new(repo);
 
-            string isocode = "sxo";
+            var today = DateOnly.FromDateTime(DateTime.Today);
+            string isocode = "usd";
 
             CurrenciesRatesService crs = new(isocode);
-            
-            var today = DateOnly.FromDateTime(DateTime.Today);
 
-            var getratesop = await crs.GetRatesAsync(today);
 
-            if (getratesop.Success)
+            CurrencyDto[] currencies =
+            [
+                 new CurrencyDto() { CurrencyDisplayName = "Dólar Estadounidense", IsoCode = "usd", ConversionRate = 1 },
+                 new CurrencyDto() { CurrencyDisplayName = "Peso Argentino", IsoCode = "ars", ConversionRate = 1494.2437m },
+                 new CurrencyDto() { CurrencyDisplayName = "Peso uruguayo", IsoCode = "uyu", ConversionRate = 40.2120m },
+                 new CurrencyDto() { CurrencyDisplayName = "Peso mexicano", IsoCode = "mxn", ConversionRate = 19.9070m },
+                 new CurrencyDto() { CurrencyDisplayName = "Peso chileno", IsoCode = "clp", ConversionRate = 917.4312m },
+                 new CurrencyDto() { CurrencyDisplayName = "Euro", IsoCode = "eur", ConversionRate = 0.8555m },
+                 new CurrencyDto() { CurrencyDisplayName = "Libra esterlina", IsoCode = "gbp", ConversionRate = 0.7340m },
+                 new CurrencyDto() { CurrencyDisplayName = "Yen japonés", IsoCode = "jpy", ConversionRate = 158.9775m },
+                 new CurrencyDto() { CurrencyDisplayName = "Franco suizo", IsoCode = "chf", ConversionRate = 0.8014m },
+                 new CurrencyDto() { CurrencyDisplayName = "Real brasileño", IsoCode = "brl", ConversionRate = 5.1623m }
+            ];
+
+            Console.WriteLine("Old values"+Environment.NewLine);
+            foreach (var item in currencies)
             {
-                foreach (var item in getratesop.Result!)
+                Console.WriteLine($"1 {item.CurrencyDisplayName} equivale a {item.ConversionRate:N3} usd$");
+            }
+
+            var updatecurrenciesop = await crs.UpdateCurrenciesRate(currencies, today);
+
+            if (updatecurrenciesop.Success)
+            {
+                Console.WriteLine(Environment.NewLine+"Current values"+Environment.NewLine);
+
+                foreach (var item in currencies)
                 {
-                    Console.WriteLine($"{isocode} vs {item.Key}: 1 : {item.Value:N3}");
+                    Console.WriteLine($"1 {item.CurrencyDisplayName} equivale a {item.ConversionRate:N3} usd$");
                 }
             }
-            else { Console.WriteLine(getratesop.InnerError!.ErrorMessage); }
+            else { Console.WriteLine(updatecurrenciesop.InnerError!.ErrorMessage); }
+           
         }
     }
 }

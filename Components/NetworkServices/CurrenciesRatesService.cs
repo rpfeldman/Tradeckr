@@ -5,6 +5,7 @@ using DomainModel;
 using System.Text.Json.Serialization;
 using System.Reflection.Metadata;
 using System.Net.Mime;
+using System.Security;
 
 namespace NetworkServices
 {
@@ -13,6 +14,7 @@ namespace NetworkServices
         private string _RootCurrencyIsoCode = rootCurrencyIsoCode;
         private HttpClient _httpClient = new();
 
+        //trycatch pending
         public async Task<OperationResult<Dictionary<string, decimal>>> GetRatesAsync(DateOnly date)
         {
             if (!NetworkMethods.CheckInternetConnection())
@@ -35,6 +37,31 @@ namespace NetworkServices
 
             var result = JsonSerializer.Deserialize<CurrencyJsonDto>(content)?.Rates;
             return OperationResult<Dictionary<string, decimal>>.SuccessfulOperation(result!);
+        }
+
+        public async Task<OperationResult> UpdateCurrenciesRate(CurrencyDto[] currencies, DateOnly date)
+        {
+            var getRatesOperation = await GetRatesAsync(date);
+
+            if(!getRatesOperation.Success)
+            {
+                return OperationResult.FaultedOperation(getRatesOperation.InnerError);
+            }
+
+            var rates = getRatesOperation.Result!;
+
+            for (int i = 0; i < currencies.Length; i++)
+            {
+                if (!rates.TryGetValue(currencies[i].IsoCode, out decimal value))
+                {
+                    return OperationResult.FaultedOperation(new InnerErrorDto()); // TO-DO
+                }
+
+                var updatedCurrency = new CurrencyDto() { CurrencyDisplayName =  currencies[i].CurrencyDisplayName, IsoCode = currencies[i].IsoCode, ConversionRate = value };
+                currencies[i] = updatedCurrency; 
+            }
+
+            return OperationResult.SuccessfulOperation();
         }
     }
 
