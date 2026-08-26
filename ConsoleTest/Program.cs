@@ -43,7 +43,8 @@ namespace ConsoleTest
                  new CurrencyDto() { CurrencyDisplayName = "Libra esterlina", IsoCode = "gbp", ConversionRate = 0.7340m },
                  new CurrencyDto() { CurrencyDisplayName = "Yen japonés", IsoCode = "jpy", ConversionRate = 158.9775m },
                  new CurrencyDto() { CurrencyDisplayName = "Franco suizo", IsoCode = "chf", ConversionRate = 0.8014m },
-                 new CurrencyDto() { CurrencyDisplayName = "Real brasileño", IsoCode = "brl", ConversionRate = 5.1623m }
+                 new CurrencyDto() { CurrencyDisplayName = "Real brasileño", IsoCode = "brl", ConversionRate = 5.1623m },
+                 new CurrencyDto() { CurrencyDisplayName = "El osurero", IsoCode = "osu", ConversionRate = 120m }
             ];
 
             Console.WriteLine("Old values"+Environment.NewLine);
@@ -56,6 +57,7 @@ namespace ConsoleTest
 
             if (updatecurrenciesop.Success)
             {
+                Console.WriteLine($"Se actualizaron {updatecurrenciesop.Result} de {currencies.Length}");
                 Console.WriteLine(Environment.NewLine+"Current values"+Environment.NewLine);
 
                 foreach (var item in currencies)
