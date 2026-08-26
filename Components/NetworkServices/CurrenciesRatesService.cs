@@ -9,10 +9,20 @@ using System.Security;
 
 namespace NetworkServices
 {
-    public sealed class CurrenciesRatesService(string rootCurrencyIsoCode)
+    public sealed class CurrenciesRatesService
     {
-        private string _RootCurrencyIsoCode = rootCurrencyIsoCode;
-        private HttpClient _httpClient = new();
+        private string _RootCurrencyIsoCode;
+        private HttpClient _httpClient;
+
+        public CurrenciesRatesService(string rootCurrencyIsoCode)
+        {
+            _RootCurrencyIsoCode = rootCurrencyIsoCode;
+
+            _httpClient = new()
+            {
+                Timeout = TimeSpan.FromSeconds(15)
+            };
+        }
 
         //trycatch pending
         public async Task<OperationResult<Dictionary<string, decimal>>> GetRatesAsync(DateOnly date)
