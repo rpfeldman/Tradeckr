@@ -30,6 +30,11 @@ namespace NetworkServices
         {
             try
             {
+                if (date > DateOnly.FromDateTime(DateTime.Today) || date < new DateOnly(2024, 3, 2))
+                {
+                    throw new ArgumentException($"{nameof(date)} cannot be in the future or before March 2, 2024");
+                }
+
                 if (!NetworkMethods.CheckInternetConnection())
                 {
                     return OperationResult<Dictionary<string, decimal>>.FaultedOperation(NetworkErrors.InternetConnectionError); 
@@ -71,10 +76,6 @@ namespace NetworkServices
             if(currencies is null)
             {
                 throw new ArgumentNullException(nameof(currencies));
-            }
-            if(date > DateOnly.FromDateTime(DateTime.Today))
-            {
-                throw new ArgumentException($"{nameof(date)} cannot be in the future");
             }
 
             int invalidCurrencies = 0;
