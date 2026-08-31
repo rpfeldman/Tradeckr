@@ -17,6 +17,7 @@ namespace Repositories
         private int[]? DecimalValuePrecision;
         public DbSet<TransactionDto> TransactionsTable { get; set; }
         public DbSet<CategoryDto> CategoryTable { get; set; }
+        public DbSet<CategoryDto> CurrencyTable { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -31,6 +32,7 @@ namespace Repositories
             }
 
             modelBuilder.Entity<CategoryDto>().HasKey(c => c.Id);
+            modelBuilder.Entity<CurrencyDto>().HasKey(c => c.Id);
         }
     }
 }
