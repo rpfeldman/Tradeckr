@@ -51,7 +51,7 @@ namespace GENAP_MAUI
 
                 if(lastDayEntered != DateTime.Today)
                 {
-                    System.Diagnostics.Debug.WriteLine("Is a NEW DAY");
+                    // TO - DO 
                 }
 
                 Preferences.Set(PreferenceKeys.LastDayEnteredKey, DateTime.Today);
