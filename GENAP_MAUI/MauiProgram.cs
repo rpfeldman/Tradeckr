@@ -52,6 +52,10 @@ namespace GENAP_MAUI
             builder.Services.AddSingleton<IStateStorage<CategoryDto>, EF_SQLite_StateStorageRepo<CategoryDto>>(sp => { return new EF_SQLite_StateStorageRepo<CategoryDto>(dbPath); });
             builder.Services.AddSingleton<CategoryPersistenceService>();
 
+            // Currency persistence service & repository
+            builder.Services.AddSingleton<IStateStorage<CurrencyDto>, EF_SQLite_StateStorageRepo<CurrencyDto>>(sp => { return new EF_SQLite_StateStorageRepo<CurrencyDto>(dbPath); });
+            builder.Services.AddSingleton<CurrencyPersistenceService>();
+
 #if DEBUG
             builder.Logging.AddDebug();
 #endif

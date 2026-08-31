@@ -18,6 +18,7 @@ namespace DataServices
         public static InnerErrorDto NoFixedTransactionsMatchedError(int id, int duration) => new() {ErrorMessage = $"Delete failed: no transactions matched in fixed transaction collection (CollectionId: {id}, FromDuration: {duration}) — 0 rows affected",  ErrorCode = 10};
         public static InnerErrorDto NoCollectionMatchedError(string entity, string identifier) => new() { ErrorMessage = $"Delete failed: no transaction collection matched '{entity}' '{identifier}' (0 rows affected)", ErrorCode = 11 };
         public static InnerErrorDto EmptyFieldError(string field) => new() { ErrorMessage = $"{field} must have a content", ErrorCode = 5 };
+        public static InnerErrorDto GenericArgumentError(string argument) => new() { ErrorMessage = $"{argument} is not valid", ErrorCode = 18 };
         public static InnerErrorDto NoElementsAvailable(string pluralEntity) => new() { ErrorMessage = $"There's no {pluralEntity} available. At least one is required.", ErrorCode = 12 };
         public static InnerErrorDto DurationOutOfRangeError => new() { ErrorMessage = "Duration must be greater than or equal to 1", ErrorCode = 6 }; 
     }
