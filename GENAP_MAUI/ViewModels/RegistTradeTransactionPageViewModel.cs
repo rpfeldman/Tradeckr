@@ -25,7 +25,7 @@ namespace GENAP_MAUI.ViewModels
         public partial DateTime PickedDate { get; set; }
 
         [ObservableProperty]
-        public partial KeyValuePair<GlobalResources.CurrenciesEnum, CurrencyDto> PickedCurrency { get; set; }
+        public partial CurrencyDto PickedCurrency { get; set; }
 
         [ObservableProperty]
         public partial bool Depletion { get; set; }
@@ -55,7 +55,7 @@ namespace GENAP_MAUI.ViewModels
             var DisplayAlertTitle = "Transaccion";
             var DisplayAlertButton = "Aceptar";
 
-            Value = CurrencyConverterService.CurrencyToTfu(Value, PickedCurrency.Value);  
+            Value = CurrencyConverterService.CurrencyToTfu(Value, PickedCurrency);  
 
             if (Depletion)
             {

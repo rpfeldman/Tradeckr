@@ -33,8 +33,8 @@
                            Style="{StaticResource CurrencyPickerHint}" />
                     <Picker Grid.Column="1"
                             Style="{StaticResource CurrencyPickerControl}"
-                            ItemsSource="{x:Static local:GlobalResources.CurrenciesList}"
-                            ItemDisplayBinding="{Binding Value.CurrencyDisplayName}"
+                            ItemsSource="{x:Static local:GlobalResources.Currencies}"
+                            ItemDisplayBinding="{Binding CurrencyDisplayName}"
                             SelectedItem="{Binding PickedCurrency}" />
                 </Grid>
             </Border>

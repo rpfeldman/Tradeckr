@@ -27,17 +27,18 @@ namespace GENAP_MAUI.ViewModels
         public partial KeyValuePair<GlobalResources.TimePeriodsEnum, string> PickedTimePeriod { get; set; }
 
         [ObservableProperty]
-        public partial KeyValuePair<GlobalResources.CurrenciesEnum, CurrencyDto> PickedCurrency { get; set; }
+        public partial CurrencyDto PickedCurrency { get; set; }
 
         async partial void OnPickedTimePeriodChanged(KeyValuePair<GlobalResources.TimePeriodsEnum, string> value)
         {
             if (_IsReloading) { return; }
-            await ReloadTransactions(value.Key, PickedCurrency.Value);
+            await ReloadTransactions(value.Key, PickedCurrency);
         }
-        async partial void OnPickedCurrencyChanged(KeyValuePair<GlobalResources.CurrenciesEnum, CurrencyDto> value)
+
+        async partial void OnPickedCurrencyChanged(CurrencyDto value)
         {
-            if(_IsReloading) { return; }
-            await ReloadTransactions(PickedTimePeriod.Key, value.Value);
+            if (_IsReloading) { return; }
+            await ReloadTransactions(PickedTimePeriod.Key, value);
         }
 
         [RelayCommand]
@@ -117,7 +118,7 @@ namespace GENAP_MAUI.ViewModels
             PickedCurrency = GlobalResources.DefaultCommonCurrency;
             PickedTimePeriod = GlobalResources.TimePeriods.Where(d => d.Key == GlobalResources.TimePeriodsEnum.Month).First();
 
-            await ReloadTransactions(PickedTimePeriod.Key, PickedCurrency.Value);
+            await ReloadTransactions(PickedTimePeriod.Key, PickedCurrency);
             _IsReloading = false;
         }
     }

@@ -56,8 +56,8 @@
                 <Border Style="{StaticResource PreferencePickerField}">
                     <Picker Style="{StaticResource PreferencePickerControl}"
                             Title="Elegí tu moneda cotidiana"
-                            ItemsSource="{x:Static local:GlobalResources.CurrenciesList}"
-                            ItemDisplayBinding="{Binding Value.CurrencyDisplayName}"
+                            ItemsSource="{x:Static local:GlobalResources.Currencies}"
+                            ItemDisplayBinding="{Binding CurrencyDisplayName}"
                             SelectedItem="{Binding PickedCommonCurrency}" />
                 </Border>
             </VerticalStackLayout>
@@ -68,8 +68,8 @@
                 <Border Style="{StaticResource PreferencePickerField}">
                     <Picker Style="{StaticResource PreferencePickerControl}"
                             Title="Elegí tu moneda de trading"
-                            ItemsSource="{x:Static local:GlobalResources.CurrenciesList}"
-                            ItemDisplayBinding="{Binding Value.CurrencyDisplayName}"
+                            ItemsSource="{x:Static local:GlobalResources.Currencies}"
+                            ItemDisplayBinding="{Binding CurrencyDisplayName}"
                             SelectedItem="{Binding PickedTradingCurrency}" />
                 </Border>
             </VerticalStackLayout>

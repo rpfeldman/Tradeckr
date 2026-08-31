@@ -15,18 +15,18 @@ namespace GENAP_MAUI.ViewModels
         public partial string UserName { get; set; }
 
         [ObservableProperty]
-        public partial KeyValuePair<CurrenciesEnum, CurrencyDto> PickedCommonCurrency { get; set; } = GlobalResources.Currencies.First();
+        public partial CurrencyDto PickedCommonCurrency { get; set; } = GlobalResources.Currencies.First();
 
         [ObservableProperty]
-        public partial KeyValuePair<CurrenciesEnum, CurrencyDto> PickedTradingCurrency { get; set; } = GlobalResources.Currencies.First();
+        public partial CurrencyDto PickedTradingCurrency { get; set; } = GlobalResources.Currencies.First();
 
         [RelayCommand(CanExecute = nameof(ContinueCanExecute))]
         public async Task Continue()
         {
             Preferences.Set(PreferenceKeys.NewUserKey, false);
             Preferences.Set(PreferenceKeys.UserNameKey, UserName);
-            Preferences.Set(PreferenceKeys.CommonCurrencyKey, GlobalResources.CurrenciesList.IndexOf(PickedCommonCurrency));
-            Preferences.Set(PreferenceKeys.TradingCurrencyKey, GlobalResources.CurrenciesList.IndexOf(PickedTradingCurrency));
+            Preferences.Set(PreferenceKeys.CommonCurrencyKey, GlobalResources.Currencies.IndexOf(PickedCommonCurrency));
+            Preferences.Set(PreferenceKeys.TradingCurrencyKey, GlobalResources.Currencies.IndexOf(PickedTradingCurrency));
 
             await DirectNavigate(Routes.Dashboard);
         }

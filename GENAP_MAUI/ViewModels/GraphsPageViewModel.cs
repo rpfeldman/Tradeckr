@@ -32,7 +32,7 @@ namespace GENAP_MAUI.ViewModels
 		public partial KeyValuePair<GlobalResources.TimePeriodsEnum, string> PickedTimePeriod { get; set;  }
 
         [ObservableProperty]
-        public partial KeyValuePair<CurrenciesEnum, CurrencyDto> PickedCurrency { get; set; } 
+        public partial CurrencyDto PickedCurrency { get; set; } 
 
         [ObservableProperty]
 		public partial ObservableCollection<CategoryDto> Categories { get; set; } = new();
@@ -58,12 +58,13 @@ namespace GENAP_MAUI.ViewModels
         async partial void OnPickedTimePeriodChanged(KeyValuePair<GlobalResources.TimePeriodsEnum, string> value)
         {
             if (_IsAlredyFillingGraphs) { return; }
-            await ReFillGraphs(value.Key, PickedCurrency.Value);
+            await ReFillGraphs(value.Key, PickedCurrency);
         }
-        async partial void OnPickedCurrencyChanged(KeyValuePair<CurrenciesEnum, CurrencyDto> value)
-        {
-            if(_IsAlredyFillingGraphs) { return; }
-            await ReFillGraphs(PickedTimePeriod.Key, value.Value);
+
+        async partial void OnPickedCurrencyChanged(CurrencyDto value)
+        { 
+            if (_IsAlredyFillingGraphs) { return; }
+            await ReFillGraphs(PickedTimePeriod.Key, value);
         }
 
 		public async Task ReFillGraphs(GlobalResources.TimePeriodsEnum timePeriod, CurrencyDto currency)
@@ -238,7 +239,7 @@ namespace GENAP_MAUI.ViewModels
             PickedCurrency = GlobalResources.DefaultCommonCurrency;
             PickedTimePeriod = GlobalResources.TimePeriods.Where(d => d.Key == GlobalResources.TimePeriodsEnum.Month).First();
 
-            await ReFillGraphs(PickedTimePeriod.Key, PickedCurrency.Value);
+            await ReFillGraphs(PickedTimePeriod.Key, PickedCurrency);
             
             _IsAlredyFillingGraphs = false;
         }

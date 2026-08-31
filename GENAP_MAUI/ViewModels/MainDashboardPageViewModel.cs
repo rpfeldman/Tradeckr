@@ -28,7 +28,7 @@ namespace GENAP_MAUI.ViewModels
         public partial IEnumerable<GraphableTransactionDto> GraphableTransactions { get; set; } = [];
 
         [ObservableProperty]
-        public partial KeyValuePair<GlobalResources.CurrenciesEnum, CurrencyDto> PickedCurrency { get; set; }
+        public partial CurrencyDto PickedCurrency { get; set; }
 
         public string Month { get { return GlobalResources.Months[DateTime.Today.Month]; } }
 
@@ -52,7 +52,7 @@ namespace GENAP_MAUI.ViewModels
             }
 
             var today = DateOnly.FromDateTime(DateTime.Today);
-            var getMonthTransactions = await _dataProjectionService.GetAllByMonthAsync(today.Month, today.Year, order: DataProjectionService.Order.OrderByDateDescending, currency: PickedCurrency.Value);
+            var getMonthTransactions = await _dataProjectionService.GetAllByMonthAsync(today.Month, today.Year, order: DataProjectionService.Order.OrderByDateDescending, currency: PickedCurrency);
 
             if (!getMonthTransactions.Success)
             {
@@ -66,7 +66,7 @@ namespace GENAP_MAUI.ViewModels
             _IsLoading = false;
         }
 
-        async partial void OnPickedCurrencyChanged(KeyValuePair<GlobalResources.CurrenciesEnum, CurrencyDto> value)
+        async partial void OnPickedCurrencyChanged(CurrencyDto value)
         {
             if (_IsLoading) { return; }
             await Load(true);

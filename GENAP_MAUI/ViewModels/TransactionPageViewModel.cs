@@ -42,7 +42,7 @@ namespace GENAP_MAUI.ViewModels
         public partial CategoryDto PickedCategory { get; set; } = new();
 
         [ObservableProperty]
-        public partial KeyValuePair<GlobalResources.CurrenciesEnum, CurrencyDto> PickedCurrency { get; set; }
+        public partial CurrencyDto PickedCurrency { get; set; }
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(UpdateTransactionCommand))]
@@ -77,7 +77,7 @@ namespace GENAP_MAUI.ViewModels
             PickedDate = Transaction.Date.ToDateTime(TimeOnly.MinValue);
             PickedCurrency = Transaction.Category == DefaultCategories.TradingCategoryName ? GlobalResources.DefaultTradingCurrency : GlobalResources.DefaultCommonCurrency;
 
-            decimal mvalue = CurrencyConverterService.TfuToCurrency(Transaction.Value, PickedCurrency.Value);
+            decimal mvalue = CurrencyConverterService.TfuToCurrency(Transaction.Value, PickedCurrency);
             PickedValue = mvalue % 1 == 0 ? mvalue.ToString("N0") : mvalue.ToString("N2");
 
             if (Transaction.Category == DefaultCategories.TradingCategoryName) 
@@ -107,13 +107,13 @@ namespace GENAP_MAUI.ViewModels
             _IsLoading = false;
         }
 
-        partial void OnPickedCurrencyChanged(KeyValuePair<GlobalResources.CurrenciesEnum, CurrencyDto> oldValue, KeyValuePair<GlobalResources.CurrenciesEnum, CurrencyDto> newValue)
+        partial void OnPickedCurrencyChanged(CurrencyDto oldValue, CurrencyDto newValue)
         {
-            if(_IsLoading) { return; }
+            if (_IsLoading) { return; }
 
-            var oldTfuValue = CurrencyConverterService.CurrencyToTfu(_Value, oldValue.Value);
+            var oldTfuValue = CurrencyConverterService.CurrencyToTfu(_Value, oldValue);
 
-            PickedValue = CurrencyConverterService.TfuToCurrency(oldTfuValue, newValue.Value).ToString();
+            PickedValue = CurrencyConverterService.TfuToCurrency(oldTfuValue, newValue).ToString();
         }
 
         partial void OnPickedValueChanged(string value)
@@ -148,7 +148,7 @@ namespace GENAP_MAUI.ViewModels
         [RelayCommand(CanExecute = nameof(UpdateTransactionCanExecute))]
         public async Task UpdateTransaction()
         {
-            var updateTransactionOperation = await _dataManagementService.UpdateTransactionAsync(TransactionId, CurrencyConverterService.CurrencyToTfu(_Value, PickedCurrency.Value), DateOnly.FromDateTime(PickedDate), PickedCategory.Name, Transaction.Depletion);
+            var updateTransactionOperation = await _dataManagementService.UpdateTransactionAsync(TransactionId, CurrencyConverterService.CurrencyToTfu(_Value, PickedCurrency), DateOnly.FromDateTime(PickedDate), PickedCategory.Name, Transaction.Depletion);
 
             await Shell.Current.DisplayAlertAsync("Editar", updateTransactionOperation.Success ? "Se ha guardado el movimiento correctamente" : updateTransactionOperation.InnerError?.ErrorMessage, "Aceptar");
         }
