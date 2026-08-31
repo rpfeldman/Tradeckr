@@ -71,7 +71,7 @@ namespace NetworkServices
             }
         }
 
-        public async Task<OperationResult<int>> UpdateCurrenciesRate(CurrencyDto[] currencies, DateOnly date)
+        public async Task<OperationResult<int>> UpdateCurrenciesRatesAsync(CurrencyDto[] currencies, DateOnly date)
         {
             if(currencies is null)
             {

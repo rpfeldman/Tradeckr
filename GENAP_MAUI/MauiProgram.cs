@@ -7,6 +7,7 @@ using SkiaSharp.Views.Maui.Controls.Hosting;
 using LiveChartsCore.SkiaSharpView.Maui;
 using DomainModel;
 using SQLitePCL;
+using NetworkServices;
 
 namespace GENAP_MAUI
 {
@@ -52,7 +53,7 @@ namespace GENAP_MAUI
             builder.Services.AddSingleton<IStateStorage<CategoryDto>, EF_SQLite_StateStorageRepo<CategoryDto>>(sp => { return new EF_SQLite_StateStorageRepo<CategoryDto>(dbPath); });
             builder.Services.AddSingleton<CategoryPersistenceService>();
 
-            // Currency persistence service & repository
+            // Currencies services & repository
             builder.Services.AddSingleton<IStateStorage<CurrencyDto>, EF_SQLite_StateStorageRepo<CurrencyDto>>(sp => { return new EF_SQLite_StateStorageRepo<CurrencyDto>(dbPath); });
             builder.Services.AddSingleton<CurrencyPersistenceService>();
 
