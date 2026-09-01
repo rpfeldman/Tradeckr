@@ -90,5 +90,10 @@ namespace DataServices
         {
             return await _StateStorage.GetAllAsync();
         }
+
+        public async Task<OperationResult<bool>> HasCurrencies()
+        {
+            return await _StateStorage.AnyAsync();
+        }
     }
 }

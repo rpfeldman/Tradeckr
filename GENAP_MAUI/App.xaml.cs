@@ -29,14 +29,15 @@ namespace GENAP_MAUI
                 {
                     CategoryPersistenceService categoryPersistenService = IPlatformApplication.Current!.Services.GetRequiredService<CategoryPersistenceService>();
 
-                    var checkExistingCategoriesOperation = await categoryPersistenService.HasCategories();
+                    var checkCategoriesOperation = await categoryPersistenService.HasCategories();
 
-                    if (!checkExistingCategoriesOperation.Success)
+                    if (!checkCategoriesOperation.Success)
                     {
-                        System.Diagnostics.Debug.WriteLine(checkExistingCategoriesOperation.InnerError?.ErrorMessage);
+                        System.Diagnostics.Debug.WriteLine(checkCategoriesOperation.InnerError?.ErrorMessage);
                         return;
                     }
-                    if (!checkExistingCategoriesOperation.Result)
+
+                    if (!checkCategoriesOperation.Result)
                     {
                         var setDefaultCategoriesOperation = await categoryPersistenService.AddCategoriesAsync(DefaultCategories.DefaultCategoriesList);
 
