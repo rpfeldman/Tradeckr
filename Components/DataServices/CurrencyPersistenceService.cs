@@ -85,5 +85,10 @@ namespace DataServices
         {
             return await _StateStorage.DeleteRangeAsync(currencies);
         }
+
+        public async Task<OperationResult<IEnumerable<CurrencyDto>>> GetAllAsync()
+        {
+            return await _StateStorage.GetAllAsync();
+        }
     }
 }
