@@ -31,6 +31,7 @@ namespace GENAP_MAUI.ViewModels
             Preferences.Set(PreferenceKeys.UserNameKey, UserName);
             Preferences.Set(PreferenceKeys.CommonCurrencyKey, GlobalResources.Currencies.IndexOf(PickedCommonCurrency));
             Preferences.Set(PreferenceKeys.TradingCurrencyKey, GlobalResources.Currencies.IndexOf(PickedTradingCurrency));
+            Preferences.Set(PreferenceKeys.LastDayEnteredKey, DateTime.Today);
 
             var currenciesRatesService = new CurrenciesRatesService(PickedTradingCurrency.IsoCode);
 
@@ -44,7 +45,7 @@ namespace GENAP_MAUI.ViewModels
                 return;
             }
 
-            var saveCurrenciesOperation = await _CurrencyPersistenceService.AddRangeAsync(GlobalResources.Currencies);
+            var saveCurrenciesOperation = await _CurrencyPersistenceService.UpdateRangeAsync(GlobalResources.Currencies);
 
             if (!saveCurrenciesOperation.Success)
             {

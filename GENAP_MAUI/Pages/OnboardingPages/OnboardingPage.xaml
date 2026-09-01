@@ -58,7 +58,9 @@
                             Title="Elegí tu moneda cotidiana"
                             ItemsSource="{x:Static local:GlobalResources.Currencies}"
                             ItemDisplayBinding="{Binding CurrencyDisplayName}"
-                            SelectedItem="{Binding PickedCommonCurrency}" />
+                            SelectedItem="{Binding PickedCommonCurrency}" 
+                            TextColor="{AppThemeBinding Light={StaticResource AccentLight}, Dark={StaticResource AccentDark}}"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}"/>
                 </Border>
             </VerticalStackLayout>
 
@@ -70,7 +72,9 @@
                             Title="Elegí tu moneda de trading"
                             ItemsSource="{x:Static local:GlobalResources.Currencies}"
                             ItemDisplayBinding="{Binding CurrencyDisplayName}"
-                            SelectedItem="{Binding PickedTradingCurrency}" />
+                            SelectedItem="{Binding PickedTradingCurrency}" 
+                            TextColor="{AppThemeBinding Light={StaticResource AccentLight}, Dark={StaticResource AccentDark}}"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}"/>
                 </Border>
             </VerticalStackLayout>
 
