@@ -23,24 +23,33 @@ namespace GENAP_MAUI
 
             try
             {
-                CategoryPersistenceService categoryPersistenService = IPlatformApplication.Current!.Services.GetRequiredService<CategoryPersistenceService>();
-
-                var anyCategoryOperation = await categoryPersistenService.HasCategories();
-
                 // TO - DO: Apply a log system
-                if (!anyCategoryOperation.Success)
-                {
-                    System.Diagnostics.Debug.WriteLine(anyCategoryOperation.InnerError?.ErrorMessage);
-                }
 
-                if (!anyCategoryOperation.Result)
+                if (GlobalResources.IsNewUser)
                 {
-                    var setDefaultCategoriesOperation = await categoryPersistenService.AddCategoriesAsync(DefaultCategories.DefaultCategoriesList);
+                    CategoryPersistenceService categoryPersistenService = IPlatformApplication.Current!.Services.GetRequiredService<CategoryPersistenceService>();
 
-                    if(!setDefaultCategoriesOperation.Success)
+                    var checkExistingCategoriesOperation = await categoryPersistenService.HasCategories();
+
+                    if (!checkExistingCategoriesOperation.Success)
                     {
-                        System.Diagnostics.Debug.WriteLine(setDefaultCategoriesOperation.InnerError?.ErrorMessage);
+                        System.Diagnostics.Debug.WriteLine(checkExistingCategoriesOperation.InnerError?.ErrorMessage);
+                        return;
                     }
+                    if (!checkExistingCategoriesOperation.Result)
+                    {
+                        var setDefaultCategoriesOperation = await categoryPersistenService.AddCategoriesAsync(DefaultCategories.DefaultCategoriesList);
+
+                        if (!setDefaultCategoriesOperation.Success)
+                        {
+                            System.Diagnostics.Debug.WriteLine(setDefaultCategoriesOperation.InnerError?.ErrorMessage);
+                            return;
+                        }
+                    }
+
+                    
+
+                    return;
                 }
 
                 Application.Current?.UserAppTheme = Preferences.Get(PreferenceKeys.UserThemeKey, Application.Current?.UserAppTheme == AppTheme.Dark) ? AppTheme.Dark : AppTheme.Light;
