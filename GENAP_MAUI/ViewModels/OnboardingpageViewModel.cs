@@ -34,12 +34,7 @@ namespace GENAP_MAUI.ViewModels
             Preferences.Set(PreferenceKeys.CommonCurrencyKey, GlobalResources.Currencies.IndexOf(PickedCommonCurrency));
             Preferences.Set(PreferenceKeys.TradingCurrencyKey, GlobalResources.Currencies.IndexOf(PickedTradingCurrency));
             Preferences.Set(PreferenceKeys.LastDayEnteredKey, DateTime.Today);
-            Preferences.Set(PreferenceKeys.UserThemeKey, Application.Current?.RequestedTheme == AppTheme.Dark); 
 
-            // I had to force users to use the dark theme as the default theme
-            // because at the first start of the application the theme won't be 'dark' or 'light'
-            // for some reason it will be 'unspecified'
-            // so it's impossible to know which theme the user is really using on their device.
             Preferences.Set(PreferenceKeys.UserThemeKey, Application.Current?.RequestedTheme == AppTheme.Dark); 
 
             var currenciesRatesService = new CurrenciesRatesService(PickedTradingCurrency.IsoCode);
