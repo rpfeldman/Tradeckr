@@ -96,7 +96,7 @@ namespace NetworkServices
                     continue;
                 }
 
-                var updatedCurrency = new CurrencyDto() { CurrencyDisplayName = currencies[i].CurrencyDisplayName, IsoCode = currencies[i].IsoCode, ConversionRate = value };
+                var updatedCurrency = new CurrencyDto() { CurrencyDisplayName = currencies[i].CurrencyDisplayName, IsoCode = currencies[i].IsoCode, Id = currencies[i].Id, ConversionRate = value };
                 currencies[i] = updatedCurrency;
             }
 

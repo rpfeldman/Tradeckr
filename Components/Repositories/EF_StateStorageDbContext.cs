@@ -32,7 +32,7 @@ namespace Repositories
             }
 
             modelBuilder.Entity<CategoryDto>().HasKey(c => c.Id);
-            modelBuilder.Entity<CurrencyDto>().HasKey(c => c.IsoCode);
+            modelBuilder.Entity<CurrencyDto>().HasKey(c => c.Id);
         }
     }
 }
