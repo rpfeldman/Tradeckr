@@ -70,7 +70,7 @@ namespace GENAP_MAUI
                     return;
                 }
 
-                Application.Current?.UserAppTheme = Preferences.Get(PreferenceKeys.UserThemeKey, Application.Current?.UserAppTheme == AppTheme.Dark) ? AppTheme.Dark : AppTheme.Light;
+                Application.Current?.UserAppTheme = Preferences.Get(PreferenceKeys.UserThemeKey, true) ? AppTheme.Dark : AppTheme.Light;
 
                 if (!NetworkMethods.CheckInternetConnection()) 
                 { 
