@@ -1,12 +1,15 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DataServices;
 using DomainModel;
 using NetworkServices;
 using System;
 using System.Collections.Generic;
+using System.Runtime.Intrinsics.X86;
 using System.Text;
 using static GENAP_MAUI.GlobalResources;
+
 
 namespace GENAP_MAUI.ViewModels
 {
@@ -27,11 +30,16 @@ namespace GENAP_MAUI.ViewModels
         [RelayCommand(CanExecute = nameof(ContinueCanExecute))]
         public async Task Continue()
         {
-            Preferences.Set(PreferenceKeys.NewUserKey, false);
             Preferences.Set(PreferenceKeys.UserNameKey, UserName);
             Preferences.Set(PreferenceKeys.CommonCurrencyKey, GlobalResources.Currencies.IndexOf(PickedCommonCurrency));
             Preferences.Set(PreferenceKeys.TradingCurrencyKey, GlobalResources.Currencies.IndexOf(PickedTradingCurrency));
             Preferences.Set(PreferenceKeys.LastDayEnteredKey, DateTime.Today);
+
+            // I had to force users to use the dark theme as the default theme
+            // because at the first start of the application the theme won't be 'dark' or 'light'
+            // for some reason it will be 'unspecified'
+            // so it's impossible to know which theme the user is really using on their device.
+            Preferences.Set(PreferenceKeys.UserThemeKey, Application.Current?.RequestedTheme == AppTheme.Dark); 
 
             var currenciesRatesService = new CurrenciesRatesService(PickedTradingCurrency.IsoCode);
 
@@ -40,8 +48,6 @@ namespace GENAP_MAUI.ViewModels
             if (!updateCurrenciesRatesOperation.Success)
             {
                 await Shell.Current.DisplayAlertAsync("Error", updateCurrenciesRatesOperation.InnerError!.ErrorMessage, "Aceptar");
-                Preferences.Set(PreferenceKeys.NewUserKey, true);
-
                 return;
             }
 
@@ -50,11 +56,10 @@ namespace GENAP_MAUI.ViewModels
             if (!saveCurrenciesOperation.Success)
             {
                 await Shell.Current.DisplayAlertAsync("Error", saveCurrenciesOperation.InnerError!.ErrorMessage, "Aceptar");
-                Preferences.Set(PreferenceKeys.NewUserKey, true);
-
                 return;
             }
 
+            Preferences.Set(PreferenceKeys.NewUserKey, false);
             await DirectNavigate(Routes.Dashboard);
         }
 
