@@ -1,4 +1,5 @@
 ﻿using GENAP_MAUI.Pages.ConfirmationPages;
+using GENAP_MAUI.Pages.IntermediaryPages;
 using GENAP_MAUI.Pages.MainNavigationBarPages;
 using GENAP_MAUI.Pages.OnboardingPages;
 using GENAP_MAUI.Pages.TransactionRelatedPages;
@@ -19,5 +20,7 @@ namespace GENAP_MAUI
         public const string TransactionsList = nameof(TransactionsCollectionPage);
         public const string ClearStorageConfirmation = nameof(ClearStorageConfirmationPage);
         public const string Onboarding = nameof(OnboardingPage);
+
+        public const string Loading = nameof(LoadingPage);
     }
 }

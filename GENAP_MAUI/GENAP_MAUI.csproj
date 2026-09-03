@@ -114,6 +114,9 @@
 	  <MauiXaml Update="Pages\ConfirmationPages\ClearStorageConfirmationPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Pages\IntermediaryPages\LoadingPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\MainNavigationBarPages\GraphsPage.xaml" Inflator="Runtime">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -142,6 +145,12 @@
 
 	<ItemGroup>
 	  <Folder Include="Resources\Images\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="Pages\IntermediaryPages\LoadingPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </None>
 	</ItemGroup>
 
 	<PropertyGroup Condition="$(TargetFramework.Contains('-android')) and '$(Configuration)' == 'Release'">

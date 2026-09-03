@@ -14,14 +14,7 @@ namespace GENAP_MAUI
             Routing.RegisterRoute(Routes.TransactionMenu, typeof(TransactionPage));
             Routing.RegisterRoute(Routes.ClearStorageConfirmation, typeof(ClearStorageConfirmationPage));
 
-
-            if (GlobalResources.IsNewUser)
-            {
-                this.GoToAsync($"//{Routes.Onboarding}");
-                return;
-            }
-
-            this.GoToAsync($"//{Routes.Dashboard}");
+            this.GoToAsync($"//{Routes.Loading}");
         }
     }
 }
