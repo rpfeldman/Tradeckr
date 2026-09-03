@@ -6,13 +6,8 @@ public partial class LoadingPage : ContentPage
 	{
 		InitializeComponent();
 	}
-
-    protected override async void OnAppearing()
+    private async void MediaElement_MediaEnded(object sender, EventArgs e)
     {
-        base.OnAppearing();
-
-        await Task.Delay(1000); // this is temporary 
-
         if (GlobalResources.IsNewUser)
         {
             await Shell.Current.GoToAsync($"//{Routes.Onboarding}");

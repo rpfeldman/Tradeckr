@@ -8,6 +8,7 @@ using LiveChartsCore.SkiaSharpView.Maui;
 using DomainModel;
 using SQLitePCL;
 using NetworkServices;
+using CommunityToolkit.Maui;
 
 namespace GENAP_MAUI
 {
@@ -22,6 +23,7 @@ namespace GENAP_MAUI
                 .UseSkiaSharp()
                 .UseLiveCharts()
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkitMediaElement(false)
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
