@@ -5,6 +5,7 @@
              x:Class="GENAP_MAUI.Pages.IntermediaryPages.LoadingPage">
     <Grid>
         <toolkit:MediaElement 
+            x:Name="SplashAnimation"
             Source="embed://SplashAnimation.mp4"
             ShouldAutoPlay="True"
             ShouldShowPlaybackControls="False"

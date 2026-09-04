@@ -6,8 +6,11 @@ public partial class LoadingPage : ContentPage
 	{
 		InitializeComponent();
 	}
+
     private async void MediaElement_MediaEnded(object sender, EventArgs e)
     {
+        // TO-DO an awaiter for the app.xaml.cs
+
         if (GlobalResources.IsNewUser)
         {
             await Shell.Current.GoToAsync($"//{Routes.Onboarding}");
