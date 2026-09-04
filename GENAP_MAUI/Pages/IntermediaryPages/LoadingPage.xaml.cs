@@ -1,3 +1,5 @@
+using CommunityToolkit.Maui.Views;
+
 namespace GENAP_MAUI.Pages.IntermediaryPages;
 
 public partial class LoadingPage : ContentPage
@@ -11,12 +13,31 @@ public partial class LoadingPage : ContentPage
     {
         // TO-DO an awaiter for the app.xaml.cs
 
-        if (GlobalResources.IsNewUser)
+        await Dispatcher.DispatchAsync(async () =>
         {
-            await Shell.Current.GoToAsync($"//{Routes.Onboarding}");
-            return;
-        }
+            if (GlobalResources.IsNewUser)
+            {
+                await Shell.Current.GoToAsync($"//{Routes.Onboarding}");
+                return;
+            }
 
-        await Shell.Current.GoToAsync($"//{Routes.Dashboard}");
+            await Shell.Current.GoToAsync($"//{Routes.Dashboard}");
+        });
+    }
+
+    private void SplashAnimation_MediaOpened(object sender, EventArgs e)
+    {
+        if (sender is not MediaElement mediaElement)
+            return;
+
+        mediaElement.Dispatcher.Dispatch(() =>
+        {
+            mediaElement.Play();
+        });
+    }
+
+    private void SplashAnimation_MediaFailed(object sender, CommunityToolkit.Maui.Core.MediaFailedEventArgs e)
+    {
+        System.Diagnostics.Debug.WriteLine($"Media failed: {e.ErrorMessage}");
     }
 }

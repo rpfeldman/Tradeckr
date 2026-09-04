@@ -7,9 +7,11 @@
         <toolkit:MediaElement 
             x:Name="SplashAnimation"
             Source="embed://SplashAnimation.mp4"
-            ShouldAutoPlay="True"
             ShouldShowPlaybackControls="False"
             Aspect="AspectFill"
+            ShouldAutoPlay="False"
+            MediaFailed="SplashAnimation_MediaFailed"
+            MediaOpened="SplashAnimation_MediaOpened"
             MediaEnded="MediaElement_MediaEnded">
         </toolkit:MediaElement>
         </Grid>
