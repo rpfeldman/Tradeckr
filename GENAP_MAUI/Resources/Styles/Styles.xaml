@@ -28,6 +28,22 @@
         </Setter>
     </Style>
 
+    <Style x:Key="NoticeBox" TargetType="Border">
+        <Setter Property="BackgroundColor"
+            Value="{AppThemeBinding Light={StaticResource NoticeAmberBgLight}, Dark={StaticResource NoticeAmberBgDark}}" />
+        <Setter Property="Stroke"
+            Value="{AppThemeBinding Light={StaticResource NoticeAmberBorderLight}, Dark={StaticResource NoticeAmberBorderDark}}" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="Padding" Value="14,12" />
+        <Setter Property="HorizontalOptions" Value="Fill" />
+        <Setter Property="StrokeShape">
+            <Setter.Value>
+                <RoundRectangle CornerRadius="10" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
     <Style x:Key="PreferencePickerField" TargetType="Border">
         <Setter Property="BackgroundColor"
             Value="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}" />
@@ -389,6 +405,22 @@
                 </VisualStateGroup>
             </VisualStateGroupList>
         </Setter>
+    </Style>
+
+    <Style x:Key="NoticeText" TargetType="Label">
+        <Setter Property="TextColor"
+            Value="{AppThemeBinding Light={StaticResource NoticeAmberLight}, Dark={StaticResource NoticeAmberDark}}" />
+        <Setter Property="FontFamily" Value="OpenSansRegular" />
+        <Setter Property="FontSize" Value="12.5" />
+        <Setter Property="LineHeight" Value="1.35" />
+    </Style>
+
+    <Style x:Key="InlineWarning" TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource DangerRed}" />
+        <Setter Property="FontFamily" Value="OpenSansRegular" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+        <Setter Property="HorizontalOptions" Value="Center" />
     </Style>
 
     <Style x:Key="PreferencePickerLabel" TargetType="Label">

@@ -43,9 +43,17 @@
     <Color x:Key="Gray600">#404040</Color>
     <Color x:Key="Gray900">#212121</Color>
     <Color x:Key="Gray950">#141414</Color>
-
-
     
+    <Color x:Key="NoticeAmberLight">#B45309</Color>
+    <Color x:Key="NoticeAmberDark">#FCD34D</Color>
+
+    <Color x:Key="NoticeAmberBgLight">#FEF3C7</Color>
+    <Color x:Key="NoticeAmberBgDark">#2A2410</Color>
+
+    <Color x:Key="NoticeAmberBorderLight">#F59E0B</Color>
+    <Color x:Key="NoticeAmberBorderDark">#B7860B</Color>
+
+
     <SolidColorBrush x:Key="BrandVioletBrush" Color="{StaticResource BrandViolet}"/>
     <SolidColorBrush x:Key="WhiteBrush" Color="{StaticResource White}"/>
     <SolidColorBrush x:Key="BlackBrush" Color="{StaticResource Black}"/>

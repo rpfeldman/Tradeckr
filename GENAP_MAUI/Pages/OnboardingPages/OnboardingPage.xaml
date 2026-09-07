@@ -5,93 +5,115 @@
              xmlns:local="clr-namespace:GENAP_MAUI"
              x:Class="GENAP_MAUI.Pages.OnboardingPages.OnboardingPage"
              x:DataType="vm:OnboardingpageViewModel">
-    <Grid RowDefinitions="*, Auto, *">
 
-        <VerticalStackLayout Grid.Row="1"
-                             Style="{StaticResource FormContainer}"
-                             Spacing="0"
-                             VerticalOptions="Center">
+    <ScrollView>
+        <Grid RowDefinitions="*, Auto, *"
+              MinimumHeightRequest="{Binding Height, Source={RelativeSource AncestorType={x:Type ContentPage}}}">
 
-            <Label Text="Bienvenido a"
-                   Style="{StaticResource OnboardingEyebrow}"
-                   Margin="0,0,0,4" />
+            <VerticalStackLayout Grid.Row="1"
+                                 Style="{StaticResource FormContainer}"
+                                 Spacing="0"
+                                 VerticalOptions="Center">
 
-            <Label Text="TRADECKR"
-                   Style="{StaticResource OnboardingWordmark}"
-                   Margin="0,0,0,28" />
+                <Label Text="Bienvenido a"
+                       Style="{StaticResource OnboardingEyebrow}"
+                       Margin="0,0,0,4" />
 
-            <Label Style="{StaticResource OnboardingTagline}"
-                   Margin="0,0,0,48">
-                <Label.FormattedText>
-                    <FormattedString>
-                        <Span Text="Donde tu gestión financiera deja de ser un " />
-                        <Span Text="caos" />
-                        <Span Text=" y pasa a ser una " />
-                        <Span Text="realidad"
-                              TextColor="{AppThemeBinding Light={StaticResource AccentLight}, Dark={StaticResource AccentDark}}"
-                              FontAttributes="Bold" />
-                        <Span Text="." />
-                    </FormattedString>
-                </Label.FormattedText>
-            </Label>
+                <Label Text="TRADECKR"
+                       Style="{StaticResource OnboardingWordmark}"
+                       Margin="0,0,0,28" />
 
-            <Label Text="Para empezar, ¿cómo te llamás?"
-                   Style="{StaticResource FieldLabel}"
-                   HorizontalTextAlignment="Center"
-                   HorizontalOptions="Center"
-                   Margin="0,0,0,10" />
+                <Label Style="{StaticResource OnboardingTagline}"
+                       Margin="0,0,0,48">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="Donde tu gestión financiera deja de ser un " />
+                            <Span Text="caos" />
+                            <Span Text=" y pasa a ser una " />
+                            <Span Text="realidad"
+                                  TextColor="{AppThemeBinding Light={StaticResource AccentLight}, Dark={StaticResource AccentDark}}"
+                                  FontAttributes="Bold" />
+                            <Span Text="." />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
 
-            <Border Style="{StaticResource InputFieldBrand}">
-                <Entry Text="{Binding UserName}"
-                       Style="{StaticResource BaseEntry}"
-                       Placeholder="Tu nombre..."
+                <Label Text="Para empezar, ¿cómo te llamás?"
+                       Style="{StaticResource FieldLabel}"
                        HorizontalTextAlignment="Center"
-                       ReturnType="Done"
-                       ReturnCommand="{Binding ContinueCommand}" />
-            </Border>
+                       HorizontalOptions="Center"
+                       Margin="0,0,0,10" />
 
-            <VerticalStackLayout Spacing="8" Margin="0,28,0,0">
-                <Label Text="¿Qué moneda usás en tu día a día?"
-                       Style="{StaticResource PreferencePickerLabel}" />
-                <Border Style="{StaticResource PreferencePickerField}">
-                    <Picker Style="{StaticResource PreferencePickerControl}"
-                            Title="Elegí tu moneda cotidiana"
-                            ItemsSource="{x:Static local:GlobalResources.Currencies}"
-                            ItemDisplayBinding="{Binding CurrencyDisplayName}"
-                            SelectedItem="{Binding PickedCommonCurrency}" />
+                <Border Style="{StaticResource InputFieldBrand}">
+                    <Entry Text="{Binding UserName}"
+                           Style="{StaticResource BaseEntry}"
+                           Placeholder="Tu nombre..."
+                           HorizontalTextAlignment="Center"
+                           ReturnType="Done"
+                           ReturnCommand="{Binding ContinueCommand}" />
                 </Border>
+
+                <VerticalStackLayout Spacing="8" Margin="0,28,0,0">
+                    <Label Text="¿Qué moneda usás en tu día a día?"
+                           Style="{StaticResource PreferencePickerLabel}" />
+                    <Border Style="{StaticResource PreferencePickerField}">
+                        <Picker Style="{StaticResource PreferencePickerControl}"
+                                Title="Elegí tu moneda cotidiana"
+                                ItemsSource="{x:Static local:GlobalResources.Currencies}"
+                                ItemDisplayBinding="{Binding CurrencyDisplayName}"
+                                SelectedItem="{Binding PickedCommonCurrency}" />
+                    </Border>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="8" Margin="0,18,0,0">
+                    <Label Text="¿Y con qué moneda operás?"
+                           Style="{StaticResource PreferencePickerLabel}" />
+                    <Border Style="{StaticResource PreferencePickerField}">
+                        <Picker Style="{StaticResource PreferencePickerControl}"
+                                Title="Elegí tu moneda de trading"
+                                ItemsSource="{x:Static local:GlobalResources.Currencies}"
+                                ItemDisplayBinding="{Binding CurrencyDisplayName}"
+                                SelectedItem="{Binding PickedTradingCurrency}" />
+                    </Border>
+
+                    <Border Style="{StaticResource NoticeBox}" Margin="0,6,0,0">
+                        <Label Style="{StaticResource NoticeText}">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="IMPORTANTE: " FontAttributes="Bold" />
+                                    <Span Text="La moneda que elijas como tu moneda operativa va a convertirse en tu " />
+                                    <Span Text="moneda raíz" FontAttributes="Bold" />
+                                    <Span Text=". Esto significa que el resto de monedas van a adaptar su conversión a esta moneda. Podés cambiar esto en cualquier momento desde los ajustes." />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </Border>
+                </VerticalStackLayout>
+
             </VerticalStackLayout>
 
-            <VerticalStackLayout Spacing="8" Margin="0,18,0,0">
-                <Label Text="¿Y con qué moneda operás?"
-                       Style="{StaticResource PreferencePickerLabel}" />
-                <Border Style="{StaticResource PreferencePickerField}">
-                    <Picker Style="{StaticResource PreferencePickerControl}"
-                            Title="Elegí tu moneda de trading"
-                            ItemsSource="{x:Static local:GlobalResources.Currencies}"
-                            ItemDisplayBinding="{Binding CurrencyDisplayName}"
-                            SelectedItem="{Binding PickedTradingCurrency}" />
-                </Border>
+            <VerticalStackLayout Grid.Row="2"
+                                 Style="{StaticResource FormContainer}"
+                                 Spacing="0"
+                                 VerticalOptions="End">
+
+                <Button Text="Comenzar"
+                        Style="{StaticResource ButtonPrimary}"
+                        Command="{Binding ContinueCommand}"
+                        Margin="0,0,0,10" />
+
+                <Label Text="Es necesario estar conectado a internet la primera vez que ingresás a la aplicación."
+                       Style="{StaticResource InlineWarning}"
+                       Margin="0,0,0,10" />
+
+                <Label Text="Tu plata, bajo tu control."
+                       Style="{StaticResource Caption}"
+                       HorizontalTextAlignment="Center"
+                       HorizontalOptions="Center" />
+
             </VerticalStackLayout>
 
-        </VerticalStackLayout>
+        </Grid>
+    </ScrollView>
 
-        <VerticalStackLayout Grid.Row="2"
-                             Style="{StaticResource FormContainer}"
-                             Spacing="0"
-                             VerticalOptions="End">
-
-            <Button Text="Comenzar"
-                    Style="{StaticResource ButtonPrimary}"
-                    Command="{Binding ContinueCommand}"
-                    Margin="0,0,0,12" />
-
-            <Label Text="Tu plata, bajo tu control."
-                   Style="{StaticResource Caption}"
-                   HorizontalTextAlignment="Center"
-                   HorizontalOptions="Center" />
-
-        </VerticalStackLayout>
-
-    </Grid>
 </ContentPage>
