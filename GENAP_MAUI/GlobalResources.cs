@@ -7,8 +7,7 @@ namespace GENAP_MAUI
 {
     public static class GlobalResources
     {
-        public static ManualResetEventSlim AppLoadingResetEvent { get; } = new(false); 
-
+        public static ManualResetEventSlim AppLoadingResetEvent { get; } = new(false);
         public static string UserName { get => Preferences.Get(PreferenceKeys.UserNameKey, "Unknown"); }
         public static bool IsNewUser { get => Preferences.Get(PreferenceKeys.NewUserKey, true); }
 

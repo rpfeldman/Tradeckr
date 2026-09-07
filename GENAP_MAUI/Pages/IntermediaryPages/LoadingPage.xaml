@@ -10,7 +10,6 @@
             ShouldShowPlaybackControls="False"
             Aspect="AspectFill"
             ShouldAutoPlay="False"
-            ShouldLoopPlayback="True"
             MediaFailed="SplashAnimation_MediaFailed"
             MediaOpened="SplashAnimation_MediaOpened"
             MediaEnded="MediaElement_MediaEnded">

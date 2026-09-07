@@ -11,12 +11,10 @@ public partial class LoadingPage : ContentPage
 
     private async void MediaElement_MediaEnded(object sender, EventArgs e)
     {
-        // TO-DO an awaiter for the app.xaml.cs
+        GlobalResources.AppLoadingResetEvent.Wait();
 
         await Dispatcher.DispatchAsync(async () =>
         {
-            GlobalResources.AppLoadingResetEvent.Wait();
-
             if (GlobalResources.IsNewUser)
             {
                 GlobalResources.AppLoadingResetEvent.Dispose();
