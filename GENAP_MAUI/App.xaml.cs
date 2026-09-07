@@ -24,12 +24,12 @@ namespace GENAP_MAUI
             try
             {
                 // TO - DO: Apply a log system
+
                 CurrencyPersistenceService currencyPersistenceService = IPlatformApplication.Current!.Services.GetRequiredService<CurrencyPersistenceService>();
 
                 if (GlobalResources.IsNewUser)
                 {
                     CategoryPersistenceService categoryPersistenService = IPlatformApplication.Current!.Services.GetRequiredService<CategoryPersistenceService>();
-                    
 
                     var checkCategoriesOperation = await categoryPersistenService.HasCategories();
 
@@ -67,6 +67,8 @@ namespace GENAP_MAUI
                         }
                     }
 
+                    GlobalResources.AppLoadingResetEvent.Set();
+
                     return;
                 }
 
@@ -85,6 +87,8 @@ namespace GENAP_MAUI
                     }
 
                     GlobalResources.Currencies = [.. getCurrenciesOperation.Result!];
+
+                    GlobalResources.AppLoadingResetEvent.Set();
 
                     return; 
                 }
@@ -121,6 +125,8 @@ namespace GENAP_MAUI
                         System.Diagnostics.Debug.WriteLine(updateCurrenciesOperation.InnerError!.ErrorMessage);
                         return;
                     }
+
+                    GlobalResources.AppLoadingResetEvent.Set();
                 }
                 else
                 {
@@ -133,6 +139,8 @@ namespace GENAP_MAUI
                     }
 
                     GlobalResources.Currencies = [.. getCurrenciesOperation.Result!];
+
+                    GlobalResources.AppLoadingResetEvent.Set();
                 }
 
                 Preferences.Set(PreferenceKeys.LastDayEnteredKey, DateTime.Today);

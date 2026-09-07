@@ -15,11 +15,17 @@ public partial class LoadingPage : ContentPage
 
         await Dispatcher.DispatchAsync(async () =>
         {
+            GlobalResources.AppLoadingResetEvent.Wait();
+
             if (GlobalResources.IsNewUser)
             {
+                GlobalResources.AppLoadingResetEvent.Dispose();
+
                 await Shell.Current.GoToAsync($"//{Routes.Onboarding}");
                 return;
             }
+
+            GlobalResources.AppLoadingResetEvent.Dispose();
 
             await Shell.Current.GoToAsync($"//{Routes.Dashboard}");
         });
