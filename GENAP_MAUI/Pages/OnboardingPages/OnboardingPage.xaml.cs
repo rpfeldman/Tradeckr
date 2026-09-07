@@ -10,4 +10,14 @@ public partial class OnboardingPage : ContentPage
 
 		BindingContext = vm;
 	}
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+
+        if (BindingContext is OnboardingpageViewModel vm)
+        {
+            await vm.PingerCommand.ExecuteAsync(false);
+        }
+    }
 }

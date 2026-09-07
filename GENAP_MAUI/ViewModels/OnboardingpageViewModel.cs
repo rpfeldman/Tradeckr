@@ -17,6 +17,12 @@ namespace GENAP_MAUI.ViewModels
     {
         private CurrencyPersistenceService _CurrencyPersistenceService = currencyPersistenceService;
 
+        private bool IsPingerActive { get; set; }
+
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(ContinueCommand))]
+        public partial bool IsConnected { get; set; }
+
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(ContinueCommand))]
         public partial string UserName { get; set; }
@@ -56,9 +62,25 @@ namespace GENAP_MAUI.ViewModels
             }
 
             Preferences.Set(PreferenceKeys.NewUserKey, false);
+
+            IsPingerActive = false;
             await DirectNavigate(Routes.Dashboard);
         }
 
-        private bool ContinueCanExecute() => !string.IsNullOrWhiteSpace(UserName) && UserName.Length < 20;
+        [RelayCommand]
+        public async Task Pinger()
+        {
+            IsPingerActive = true;
+
+            while (IsPingerActive)
+            { 
+                IsConnected = NetworkMethods.CheckInternetConnection();
+                System.Diagnostics.Debug.WriteLine("Ping: " + (IsConnected ? "correctly connected" : "the connection could not be established")); 
+
+                await Task.Delay(3500);
+            }
+        }
+
+        private bool ContinueCanExecute() => !string.IsNullOrWhiteSpace(UserName) && UserName.Length < 20 && IsConnected;
     }
 }
