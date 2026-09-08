@@ -65,6 +65,7 @@ namespace GENAP_MAUI.ViewModels
             }
 
             Preferences.Set(PreferenceKeys.NewUserKey, false);
+            Preferences.Set(PreferenceKeys.LastRateUpdateKey, DateTime.Today);
 
             IsPingerActive = false;
             await DirectNavigate(Routes.Dashboard);

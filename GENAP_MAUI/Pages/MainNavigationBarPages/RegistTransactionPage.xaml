@@ -51,6 +51,18 @@
                                     SelectedItem="{Binding PickedCurrency}" />
                         </Grid>
                     </Border>
+
+                    <Border Style="{StaticResource NoticeBox}" Margin="0,8,0,20">
+                        <Label Style="{StaticResource NoticeText}">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="Monedas actualizadas al " />
+                                    <Span Text="{x:Static local:GlobalResources.LastRateUpdateFormatted}"
+                                          FontAttributes="Bold" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </Border>
                 </VerticalStackLayout>
 
                 <VerticalStackLayout>

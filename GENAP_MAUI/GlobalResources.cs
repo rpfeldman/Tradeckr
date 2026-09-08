@@ -12,6 +12,7 @@ namespace GENAP_MAUI
         public static string UserName { get => Preferences.Get(PreferenceKeys.UserNameKey, "Unknown"); }
         public static bool IsNewUser { get => Preferences.Get(PreferenceKeys.NewUserKey, true); }
         public static DateTime LastRateUpdate { get => Preferences.Get(PreferenceKeys.LastRateUpdateKey, DateTime.Now); }
+        public static string LastRateUpdateFormatted => LastRateUpdate.ToString("dd/MM/yyyy");
 
         public static CurrencyDto DefaultCommonCurrency { get => Currencies[Preferences.Get(PreferenceKeys.CommonCurrencyKey, 0)]; }
         public static CurrencyDto DefaultTradingCurrency { get => Currencies[Preferences.Get(PreferenceKeys.TradingCurrencyKey, 0)]; }
