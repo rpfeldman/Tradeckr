@@ -8,11 +8,13 @@ namespace GENAP_MAUI
     public static class GlobalResources
     {
         public static ManualResetEventSlim AppLoadingResetEvent { get; } = new(false);
+
         public static string UserName { get => Preferences.Get(PreferenceKeys.UserNameKey, "Unknown"); }
         public static bool IsNewUser { get => Preferences.Get(PreferenceKeys.NewUserKey, true); }
+        public static DateTime LastRateUpdate { get => Preferences.Get(PreferenceKeys.LastRateUpdateKey, DateTime.Now); }
 
-         public static CurrencyDto DefaultCommonCurrency { get => Currencies[Preferences.Get(PreferenceKeys.CommonCurrencyKey, 0)]; }
-         public static CurrencyDto DefaultTradingCurrency { get => Currencies[Preferences.Get(PreferenceKeys.TradingCurrencyKey, 0)]; }
+        public static CurrencyDto DefaultCommonCurrency { get => Currencies[Preferences.Get(PreferenceKeys.CommonCurrencyKey, 0)]; }
+        public static CurrencyDto DefaultTradingCurrency { get => Currencies[Preferences.Get(PreferenceKeys.TradingCurrencyKey, 0)]; }
 
         // Months name are hardcoded, in the future they will be fetched by a CSV file with the translations
         public static string[] Months { get => ["Desconocido", "enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]; }

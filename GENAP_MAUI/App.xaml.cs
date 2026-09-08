@@ -126,6 +126,8 @@ namespace GENAP_MAUI
                         return;
                     }
 
+                    Preferences.Set(PreferenceKeys.LastRateUpdateKey, DateTime.Today);
+
                     GlobalResources.AppLoadingResetEvent.Set();
                 }
                 else
