@@ -112,9 +112,15 @@
                                         </VerticalStackLayout>
 
                                         <Label Grid.Column="2"
-                                               Text="{Binding Value, StringFormat='{0:N2}$'}"
                                                FontAttributes="Bold" FontSize="15"
                                                VerticalOptions="Center">
+                                            <Label.Text>
+                                                <MultiBinding StringFormat="{}{0:N2} {1}$">
+                                                    <Binding Path="Value" />
+                                                    <Binding Path="BindingContext.PickedCurrency.IsoCode"
+                                                        Source="{RelativeSource AncestorType={x:Type ContentPage}}" />
+                                                </MultiBinding>
+                                            </Label.Text>
                                             <Label.Triggers>
                                                 <DataTrigger TargetType="Label"
                                                              Binding="{Binding Depletion}" Value="False">

@@ -57,25 +57,25 @@ namespace GENAP_MAUI
 
         public static CurrencyDto[] Currencies { get; set; } =
             [
-                new CurrencyDto() { CurrencyDisplayName = "Dólar Estadounidense", IsoCode = "usd", ConversionRate = 1, Id = 1 },
+                new CurrencyDto() { CurrencyDisplayName = "Dólar Estadounidense", IsoCode = "USD", ConversionRate = 1, Id = 1 },
 
-                new CurrencyDto() { CurrencyDisplayName = "Peso Argentino", IsoCode = "ars", ConversionRate = 1, Id = 2 },
+                new CurrencyDto() { CurrencyDisplayName = "Peso Argentino", IsoCode = "ARS", ConversionRate = 1, Id = 2 },
 
-                new CurrencyDto() { CurrencyDisplayName = "Peso uruguayo", IsoCode = "uyu", ConversionRate = 1, Id = 3 },
+                new CurrencyDto() { CurrencyDisplayName = "Peso uruguayo", IsoCode = "UYU", ConversionRate = 1, Id = 3 },
 
-                new CurrencyDto() { CurrencyDisplayName = "Peso mexicano", IsoCode = "mxn", ConversionRate = 1, Id = 4 },
+                new CurrencyDto() { CurrencyDisplayName = "Peso mexicano", IsoCode = "MXN", ConversionRate = 1, Id = 4 },
 
-                new CurrencyDto() { CurrencyDisplayName = "Peso chileno", IsoCode = "clp", ConversionRate = 1, Id = 5 },
+                new CurrencyDto() { CurrencyDisplayName = "Peso chileno", IsoCode = "CLP", ConversionRate = 1, Id = 5 },
 
-                new CurrencyDto() { CurrencyDisplayName = "Euro", IsoCode = "eur", ConversionRate = 1, Id = 6 },
+                new CurrencyDto() { CurrencyDisplayName = "Euro", IsoCode = "EUR", ConversionRate = 1, Id = 6 },
 
-                new CurrencyDto() { CurrencyDisplayName = "Libra esterlina", IsoCode = "gbp", ConversionRate = 1, Id = 7 },
+                new CurrencyDto() { CurrencyDisplayName = "Libra esterlina", IsoCode = "GBP", ConversionRate = 1, Id = 7 },
 
-                new CurrencyDto() { CurrencyDisplayName = "Yen japonés", IsoCode = "jpy", ConversionRate = 1, Id = 8 },
+                new CurrencyDto() { CurrencyDisplayName = "Yen japonés", IsoCode = "JPY", ConversionRate = 1, Id = 8 },
 
-                new CurrencyDto() { CurrencyDisplayName = "Franco suizo", IsoCode = "chf", ConversionRate = 1, Id = 9 },
+                new CurrencyDto() { CurrencyDisplayName = "Franco suizo", IsoCode = "CHF", ConversionRate = 1, Id = 9 },
 
-                new CurrencyDto() { CurrencyDisplayName = "Real brasileño", IsoCode = "brl", ConversionRate = 1, Id = 10 }
+                new CurrencyDto() { CurrencyDisplayName = "Real brasileño", IsoCode = "BRL", ConversionRate = 1, Id = 10 }
             ];
     }
 }

@@ -18,7 +18,7 @@ namespace NetworkServices
 
         public CurrenciesRatesService(string rootCurrencyIsoCode)
         {
-            _RootCurrencyIsoCode = rootCurrencyIsoCode;
+            _RootCurrencyIsoCode = rootCurrencyIsoCode.ToLower();
 
             _httpClient = new()
             {
@@ -90,7 +90,7 @@ namespace NetworkServices
 
             for (int i = 0; i < currencies.Length; i++)
             {
-                if (!rates.TryGetValue(currencies[i].IsoCode, out decimal value))
+                if (!rates.TryGetValue(currencies[i].IsoCode.ToLower(), out decimal value))
                 {
                     invalidCurrencies++;
                     continue;
