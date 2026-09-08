@@ -24,6 +24,9 @@ namespace GENAP_MAUI.ViewModels
         public partial bool IsConnected { get; set; }
 
         [ObservableProperty]
+        public partial bool InlineWarningVisibily { get; set; }
+
+        [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(ContinueCommand))]
         public partial string UserName { get; set; }
 
@@ -75,6 +78,8 @@ namespace GENAP_MAUI.ViewModels
             while (IsPingerActive)
             { 
                 IsConnected = NetworkMethods.CheckInternetConnection();
+                InlineWarningVisibily = !IsConnected;
+
                 System.Diagnostics.Debug.WriteLine("Ping: " + (IsConnected ? "correctly connected" : "the connection could not be established")); 
 
                 await Task.Delay(3500);

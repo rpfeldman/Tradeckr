@@ -104,7 +104,8 @@
 
                 <Label Text="Es necesario estar conectado a internet la primera vez que ingresás a la aplicación."
                        Style="{StaticResource InlineWarning}"
-                       Margin="0,0,0,10" />
+                       Margin="0,0,0,10" 
+                       IsVisible="{Binding InlineWarningVisibily}"/>
 
                 <Label Text="Tu plata, bajo tu control."
                        Style="{StaticResource Caption}"
