@@ -1,17 +1,18 @@
-﻿using Repositories;
+﻿using DataServices;
 using DomainModel;
-using System.IO;
-using Microsoft.VisualBasic;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using System.Security.Cryptography.X509Certificates;
-using System.Net.WebSockets;
-using DataServices;
-using SQLitePCL;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
-using System.Globalization;
-using System.Security;
-using System.Runtime.CompilerServices;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.VisualBasic;
 using NetworkServices;
+using Repositories;
+using Serilog;
+using SQLitePCL;
+using System.Globalization;
+using System.IO;
+using System.Net.WebSockets;
+using System.Runtime.CompilerServices;
+using System.Security;
+using System.Security.Cryptography.X509Certificates;
 
 namespace ConsoleTest 
 {
@@ -22,7 +23,7 @@ namespace ConsoleTest
             Batteries_V2.Init();
 
             EF_SQLite_StateStorageRepo<CurrencyDto> repo = new("Test.db");
-            CurrencyPersistenceService cps = new(repo);
+            CurrenciesRatesService crs = new("pene");
         }
     }
 }
