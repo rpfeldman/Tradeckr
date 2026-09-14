@@ -9,6 +9,7 @@ using DomainModel;
 using SQLitePCL;
 using NetworkServices;
 using CommunityToolkit.Maui;
+using Serilog;
 
 namespace GENAP_MAUI
 {
@@ -31,6 +32,13 @@ namespace GENAP_MAUI
                     fonts.AddFont("Symbols.ttf", "Symbols");
                 });
 
+            // Paths
+            var dbPath = Path.Combine(FileSystem.AppDataDirectory, "Tradeckr_Storage.db");
+            var logPath = Path.Combine(FileSystem.AppDataDirectory, "Tradeckr_Log.txt");
+
+            // Logging system
+            Log.Logger = new LoggerConfiguration().WriteTo.File(logPath).CreateLogger();
+
             // ViewModels
             builder.Services.AddTransient<MainDashboardPageViewModel>();
             builder.Services.AddTransient<RegistTransactionPageViewModel>();
@@ -42,9 +50,7 @@ namespace GENAP_MAUI
             builder.Services.AddTransient<ClearStorageConfirmationPageViewModel>();
             builder.Services.AddTransient<OnboardingpageViewModel>();
 
-            // Data services & the repository
-            var dbPath = Path.Combine(FileSystem.AppDataDirectory, "Tradeckr_Storage.db");
-
+            // Data services & the repository 
             builder.Services.AddSingleton<IStateStorage<TransactionDto>, EF_SQLite_StateStorageRepo<TransactionDto>>(sp => { return new EF_SQLite_StateStorageRepo<TransactionDto>(dbPath); });
 
             builder.Services.AddSingleton<DataRegistrationService>();
