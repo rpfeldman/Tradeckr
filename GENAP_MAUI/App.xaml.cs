@@ -2,6 +2,8 @@
 using NetworkServices;
 using Microsoft.Extensions.DependencyInjection;
 using DomainModel;
+using Serilog;
+using GENAP_MAUI.InnerComponents;
 
 namespace GENAP_MAUI
 {
@@ -10,6 +12,8 @@ namespace GENAP_MAUI
         public App()
         {
             InitializeComponent();
+
+            Log.Debug("App initialized");
         }
 
         protected override Window CreateWindow(IActivationState? activationState)
@@ -29,9 +33,12 @@ namespace GENAP_MAUI
 
                 if (GlobalResources.IsNewUser)
                 {
+                     Log.Debug("Advacing as new user");
+
                     CategoryPersistenceService categoryPersistenService = IPlatformApplication.Current!.Services.GetRequiredService<CategoryPersistenceService>();
 
                     var checkCategoriesOperation = await categoryPersistenService.HasCategories();
+                        checkCategoriesOperation.WriteLog("Check if there are alredy categories in the storage");
 
                     if (!checkCategoriesOperation.Success)
                     {
@@ -42,6 +49,7 @@ namespace GENAP_MAUI
                     if (!checkCategoriesOperation.Result)
                     {
                         var setDefaultCategoriesOperation = await categoryPersistenService.AddCategoriesAsync(DefaultCategories.DefaultCategoriesList);
+                            setDefaultCategoriesOperation.WriteLog("Set and save the default categories in the storage");
 
                         if (!setDefaultCategoriesOperation.Success)
                         {
@@ -50,6 +58,7 @@ namespace GENAP_MAUI
                         }
                     }
                     var checkCurrenciesOperation = await currencyPersistenceService.HasCurrencies();
+                        checkCategoriesOperation.WriteLog("Check if there are alredy currencies in the storage");
 
                     if (!checkCurrenciesOperation.Success)
                     {
@@ -59,6 +68,7 @@ namespace GENAP_MAUI
                     if (!checkCurrenciesOperation.Result)
                     {
                         var setCurrenciesOperation = await currencyPersistenceService.AddRangeAsync(GlobalResources.Currencies);
+                            setCurrenciesOperation.WriteLog("Set and save the default currencies in the storage");
 
                         if (!setCurrenciesOperation.Success)
                         {
@@ -68,17 +78,21 @@ namespace GENAP_MAUI
                     }
 
                     GlobalResources.AppLoadingResetEvent.Set();
+                    Log.Debug("AppLoadingResetEvent setted");
 
                     return;
                 }
 
                 Application.Current?.UserAppTheme = Preferences.Get(PreferenceKeys.UserThemeKey, true) ? AppTheme.Dark : AppTheme.Light;
+                 Log.Debug("UserAppTheme setted");
 
                 if (!NetworkMethods.CheckInternetConnection()) 
                 { 
                     System.Diagnostics.Debug.WriteLine("User does not have internet connection. Advacing without updating the currencies rates");
+                    Log.Warning("Advacing without connection");
 
                     var getCurrenciesOperation = await currencyPersistenceService.GetAllAsync();
+                        getCurrenciesOperation.WriteLog("Bring to memory the currencies in the storage");
 
                     if (!getCurrenciesOperation.Success)
                     {
@@ -88,7 +102,9 @@ namespace GENAP_MAUI
 
                     GlobalResources.Currencies = [.. getCurrenciesOperation.Result!];
 
+                    
                     GlobalResources.AppLoadingResetEvent.Set();
+                    Log.Debug("AppLoadingResetEvent setted");
 
                     return; 
                 }
@@ -97,9 +113,12 @@ namespace GENAP_MAUI
 
                 if(lastDayEntered != DateTime.Today)
                 {
+                    Log.Debug("NEW DAY: Updating currencies");
+
                     CurrenciesRatesService currenciesRatesService = new(GlobalResources.DefaultTradingCurrency.IsoCode);
 
                     var getCurrenciesOperation = await currencyPersistenceService.GetAllAsync();
+                        getCurrenciesOperation.WriteLog("Bring to memory the currencies in the storage");
 
                     if (!getCurrenciesOperation.Success)
                     {
@@ -110,6 +129,7 @@ namespace GENAP_MAUI
                     var currencies = getCurrenciesOperation.Result!.ToArray();
 
                     var updateRatesOperation = await currenciesRatesService.UpdateCurrenciesRatesAsync(currencies, DateOnly.FromDateTime(DateTime.Today));
+                        updateRatesOperation.WriteLog($"Update the currencies rates");
                     
                     if(!updateRatesOperation.Success)
                     {
@@ -120,6 +140,8 @@ namespace GENAP_MAUI
                     GlobalResources.Currencies = currencies;
 
                     var updateCurrenciesOperation = await currencyPersistenceService.UpdateRangeAsync(currencies);
+                        updateCurrenciesOperation.WriteLog("Update the currencies rates in the storage");
+
                     if (!updateRatesOperation.Success)
                     {
                         System.Diagnostics.Debug.WriteLine(updateCurrenciesOperation.InnerError!.ErrorMessage);
@@ -129,10 +151,12 @@ namespace GENAP_MAUI
                     Preferences.Set(PreferenceKeys.LastRateUpdateKey, DateTime.Today);
 
                     GlobalResources.AppLoadingResetEvent.Set();
+                    Log.Debug("AppLoadingResetEvent setted");
                 }
                 else
                 {
                     var getCurrenciesOperation = await currencyPersistenceService.GetAllAsync();
+                        getCurrenciesOperation.WriteLog("Bring the currencies to memory");
 
                     if (!getCurrenciesOperation.Success)
                     {
@@ -143,6 +167,7 @@ namespace GENAP_MAUI
                     GlobalResources.Currencies = [.. getCurrenciesOperation.Result!];
 
                     GlobalResources.AppLoadingResetEvent.Set();
+                    Log.Debug("AppLoadingResetEvent setted");
                 }
 
                 Preferences.Set(PreferenceKeys.LastDayEnteredKey, DateTime.Today);

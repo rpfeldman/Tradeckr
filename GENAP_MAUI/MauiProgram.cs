@@ -37,7 +37,7 @@ namespace GENAP_MAUI
             var logPath = Path.Combine(FileSystem.AppDataDirectory, "Tradeckr_Log.txt");
 
             // Logging system
-            Log.Logger = new LoggerConfiguration().WriteTo.File(logPath).CreateLogger();
+            Log.Logger = new LoggerConfiguration().WriteTo.File(logPath).MinimumLevel.Debug().CreateLogger();
 
             // ViewModels
             builder.Services.AddTransient<MainDashboardPageViewModel>();

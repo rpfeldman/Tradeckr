@@ -16,7 +16,7 @@ namespace GENAP_MAUI.InnerComponents
                 return;
             }
 
-            Log.Information($"Succesful operation '{operationDescription}'");
+            Log.Information($"Successful operation '{operationDescription}'");
         }
         public static void WriteLog<T>(this OperationResult<T> operation, string operationDescription)
         {
@@ -26,7 +26,7 @@ namespace GENAP_MAUI.InnerComponents
                 return;
             }
 
-            Log.Information($"Succesful operation '{operationDescription}'");
+            Log.Information($"Successful operation '{operationDescription}'");
         }
     }
 }
