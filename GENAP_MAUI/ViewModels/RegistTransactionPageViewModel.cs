@@ -80,16 +80,21 @@ namespace GENAP_MAUI.ViewModels
 
             if (Depletion)
             {
-                var ExpenseRegistrationTask = IsFixed ? await _RegistrationService.RegistFixedExpenseAsync(Value, DateOnly.FromDateTime(PickedDate), Category.Name, FixedTransactionDuration) : await _RegistrationService.RegistExpenseAsync(Value, DateOnly.FromDateTime(PickedDate), Category.Name);
+                var ExpenseRegistrationOperation = IsFixed ? await _RegistrationService.RegistFixedExpenseAsync(Value, DateOnly.FromDateTime(PickedDate), Category.Name, FixedTransactionDuration) : await _RegistrationService.RegistExpenseAsync(Value, DateOnly.FromDateTime(PickedDate), Category.Name);
 
-                await Shell.Current.DisplayAlertAsync(DisplayAlertTitle, ExpenseRegistrationTask.Success ? "Gasto registrado con exito" : ExpenseRegistrationTask.InnerError?.ErrorMessage, DisplayAlertButton);
+                ExpenseRegistrationOperation.WriteLog($"Save new expense/s with the following attributes: category: '{Category.Name}'. Fixed: '{IsFixed}'. Value: '{Value} {PickedCurrency.IsoCode}$'. Date: '{PickedDate:dd/MM/yyyy}'");
+
+
+                await Shell.Current.DisplayAlertAsync(DisplayAlertTitle, ExpenseRegistrationOperation.Success ? "Gasto registrado con exito" : ExpenseRegistrationOperation.InnerError?.ErrorMessage, DisplayAlertButton);
 
                 return;
             }
 
-            var IncomeRegistrationTask = IsFixed ? await _RegistrationService.RegistFixedIncomeAsync(Value, DateOnly.FromDateTime(PickedDate), Category.Name, FixedTransactionDuration) : await _RegistrationService.RegistIncomeAsync(Value, DateOnly.FromDateTime(PickedDate), Category.Name);
+            var IncomeRegistrationOperation = IsFixed ? await _RegistrationService.RegistFixedIncomeAsync(Value, DateOnly.FromDateTime(PickedDate), Category.Name, FixedTransactionDuration) : await _RegistrationService.RegistIncomeAsync(Value, DateOnly.FromDateTime(PickedDate), Category.Name);
 
-            await Shell.Current.DisplayAlertAsync(DisplayAlertTitle, IncomeRegistrationTask.Success ? "Ingreso registrado con exito" : IncomeRegistrationTask.InnerError?.ErrorMessage, DisplayAlertButton);
+            IncomeRegistrationOperation.WriteLog($"Save new income/s with the following attributes: category: '{Category.Name}'. Fixed: '{IsFixed}'. Value: '{Value} {PickedCurrency.IsoCode}$'. Date: '{PickedDate:dd/MM/yyyy}'");
+
+            await Shell.Current.DisplayAlertAsync(DisplayAlertTitle, IncomeRegistrationOperation.Success ? "Ingreso registrado con exito" : IncomeRegistrationOperation.InnerError?.ErrorMessage, DisplayAlertButton);
 
 			return;
         }

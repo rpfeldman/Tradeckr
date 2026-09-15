@@ -221,7 +221,7 @@ namespace GENAP_MAUI.ViewModels
             TransactionsLog = ExpensesLog.Concat(LossesLog).Concat(IncomeLog);
             TradingLog = LossesLog.Concat(ProfitLog);
 
-            Log.Information($"Charts filled with new data (GraphsPage) using timeperiod '{timePeriod}' and currency '{currency.IsoCode}'");
+            Log.Information($"Charts filled with new data using timeperiod '{timePeriod}' and currency '{currency.IsoCode}' (GraphsPage) ");
 
 			return;
 		}
