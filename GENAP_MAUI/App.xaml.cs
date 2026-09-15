@@ -33,7 +33,7 @@ namespace GENAP_MAUI
 
                 if (GlobalResources.IsNewUser)
                 {
-                     Log.Debug("Advacing as new user");
+                     Log.Debug("Advancing as new user");
 
                     CategoryPersistenceService categoryPersistenService = IPlatformApplication.Current!.Services.GetRequiredService<CategoryPersistenceService>();
 
