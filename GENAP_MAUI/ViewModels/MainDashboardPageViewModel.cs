@@ -55,7 +55,7 @@ namespace GENAP_MAUI.ViewModels
 
             var today = DateOnly.FromDateTime(DateTime.Today);
             var getMonthTransactions = await _dataProjectionService.GetAllByMonthAsync(today.Month, today.Year, order: DataProjectionService.Order.OrderByDateDescending, currency: PickedCurrency);
-                getMonthTransactions.WriteLog("Bring month transactions from storage (Main Dashboard)");
+                getMonthTransactions.WriteLog($"Bring month transactions from storage using currency '{PickedCurrency.IsoCode}' (Main Dashboard)");
 
             if (!getMonthTransactions.Success)
             {
