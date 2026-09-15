@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using DataServices;
+using GENAP_MAUI.InnerComponents;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,6 +19,7 @@ namespace GENAP_MAUI.ViewModels
             if (!alert){ return; }
 
             var clearStorageOperation = await _dataManagementService.RestartDataAsync();
+                clearStorageOperation.WriteLog("Fully clear storage");
 
             if (!clearStorageOperation.Success)
             {
