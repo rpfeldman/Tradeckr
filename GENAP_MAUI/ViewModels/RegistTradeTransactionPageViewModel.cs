@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using DataServices;
 using DomainModel;
+using GENAP_MAUI.InnerComponents;
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -59,16 +60,19 @@ namespace GENAP_MAUI.ViewModels
 
             if (Depletion)
             {
-                var ExpenseRegistrationTask = await _RegistrationService.RegistExpenseAsync(Value, DateOnly.FromDateTime(PickedDate), DefaultCategories.TradingCategoryName);
+                var ExpenseRegistrationOperation = await _RegistrationService.RegistExpenseAsync(Value, DateOnly.FromDateTime(PickedDate), DefaultCategories.TradingCategoryName);
+                    ExpenseRegistrationOperation.WriteLog($"Save new trading loss in the storage. Value: '{Value} {PickedCurrency.IsoCode}$'. Date: '{PickedDate}'");
 
-                await Shell.Current.DisplayAlertAsync(DisplayAlertTitle, ExpenseRegistrationTask.Success ? "Perdida registrada con exito" : ExpenseRegistrationTask.InnerError?.ErrorMessage, DisplayAlertButton);
+
+                await Shell.Current.DisplayAlertAsync(DisplayAlertTitle, ExpenseRegistrationOperation.Success ? "Perdida registrada con exito" : ExpenseRegistrationOperation.InnerError?.ErrorMessage, DisplayAlertButton);
 
                 return;
             }
 
-            var IncomeRegistrationTask = await _RegistrationService.RegistIncomeAsync(Value, DateOnly.FromDateTime(PickedDate), DefaultCategories.TradingCategoryName);
+            var IncomeRegistrationOperation = await _RegistrationService.RegistIncomeAsync(Value, DateOnly.FromDateTime(PickedDate), DefaultCategories.TradingCategoryName);
+                IncomeRegistrationOperation.WriteLog($"Save new trading win in the storage. Value: '{Value} {PickedCurrency.IsoCode}$'. Date: '{PickedDate}'");    
 
-            await Shell.Current.DisplayAlertAsync(DisplayAlertTitle, IncomeRegistrationTask.Success ? "Ganancia registrada con exito" : IncomeRegistrationTask.InnerError?.ErrorMessage, DisplayAlertButton);
+            await Shell.Current.DisplayAlertAsync(DisplayAlertTitle, IncomeRegistrationOperation.Success ? "Ganancia registrada con exito" : IncomeRegistrationOperation.InnerError?.ErrorMessage, DisplayAlertButton);
 
             return;
         }
