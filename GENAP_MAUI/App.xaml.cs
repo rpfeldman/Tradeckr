@@ -88,8 +88,8 @@ namespace GENAP_MAUI
 
                 if (!NetworkMethods.CheckInternetConnection()) 
                 { 
-                    System.Diagnostics.Debug.WriteLine("User does not have internet connection. Advacing without updating the currencies rates");
-                    Log.Warning("Advacing without connection");
+                    System.Diagnostics.Debug.WriteLine("User does not have internet connection. Advancing without updating the currencies rates");
+                    Log.Warning("Advancing without connection");
 
                     var getCurrenciesOperation = await currencyPersistenceService.GetAllAsync();
                         getCurrenciesOperation.WriteLog("Bring to memory the currencies in the storage");

@@ -7,6 +7,7 @@ using System.Text;
 using CommunityToolkit.Mvvm.Input;
 using GENAP_MAUI.InnerComponents;
 using System.Security;
+using Serilog;
 
 namespace GENAP_MAUI.ViewModels
 {
@@ -39,6 +40,7 @@ namespace GENAP_MAUI.ViewModels
             Application.Current?.UserAppTheme = IsDarkTheme ? AppTheme.Light : AppTheme.Dark;
 
             Preferences.Set(PreferenceKeys.UserThemeKey, !IsDarkTheme);
+            Log.Information("UserAppTheme changed");
         }
         
         [RelayCommand]
@@ -53,6 +55,7 @@ namespace GENAP_MAUI.ViewModels
 
             var today = DateOnly.FromDateTime(DateTime.Today);
             var getMonthTransactions = await _dataProjectionService.GetAllByMonthAsync(today.Month, today.Year, order: DataProjectionService.Order.OrderByDateDescending, currency: PickedCurrency);
+                getMonthTransactions.WriteLog("Bring month transactions from storage (Main Dashboard)");
 
             if (!getMonthTransactions.Success)
             {
