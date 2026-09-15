@@ -3,7 +3,9 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DataServices;
 using DomainModel;
+using GENAP_MAUI.InnerComponents;
 using NetworkServices;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Runtime.Intrinsics.X86;
@@ -49,6 +51,7 @@ namespace GENAP_MAUI.ViewModels
             var currenciesRatesService = new CurrenciesRatesService(PickedTradingCurrency.IsoCode);
 
             var updateCurrenciesRatesOperation = await currenciesRatesService.UpdateCurrenciesRatesAsync(GlobalResources.Currencies, DateOnly.FromDateTime(DateTime.Today));
+                updateCurrenciesRatesOperation.WriteLog("Update currencies rates");
 
             if (!updateCurrenciesRatesOperation.Success)
             {
@@ -57,6 +60,7 @@ namespace GENAP_MAUI.ViewModels
             }
 
             var saveCurrenciesOperation = await _CurrencyPersistenceService.UpdateRangeAsync(GlobalResources.Currencies);
+                saveCurrenciesOperation.WriteLog("Save the new currencies rates in the storage");
 
             if (!saveCurrenciesOperation.Success)
             {
@@ -68,6 +72,8 @@ namespace GENAP_MAUI.ViewModels
             Preferences.Set(PreferenceKeys.LastRateUpdateKey, DateTime.Today);
 
             IsPingerActive = false;
+
+            Log.Information($"User advanced OnBoarding page with '{PickedCommonCurrency.IsoCode}' as daily currency and '{PickedTradingCurrency.IsoCode}' as trading currency");
             await DirectNavigate(Routes.Dashboard);
         }
 
@@ -82,6 +88,7 @@ namespace GENAP_MAUI.ViewModels
                 InlineWarningVisibily = !IsConnected;
 
                 System.Diagnostics.Debug.WriteLine("Ping: " + (IsConnected ? "correctly connected" : "the connection could not be established")); 
+                Log.Debug("Ping: " + (IsConnected ? "correctly connected" : "the connection could not be established"));
 
                 await Task.Delay(3500);
             }
