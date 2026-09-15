@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 using DataServices;
 using DomainModel;
 using GENAP_MAUI.InnerComponents;
+using Serilog;
 using SkiaSharp;
 using System;
 using System.Collections.Generic;
@@ -53,6 +54,8 @@ namespace GENAP_MAUI.ViewModels
                 DeletedCategories.Add(Category);
             }
             else { AddedCategories.Remove(Category); }
+
+            Log.Information($"Removed category {Category.Name}");
             
             SaveCommand.NotifyCanExecuteChanged();
         }
@@ -67,6 +70,8 @@ namespace GENAP_MAUI.ViewModels
 
 			SaveCommand.NotifyCanExecuteChanged();
             NewCategory = string.Empty;
+
+            Log.Information($"Added category {NewCategory}");
         }
 
         [RelayCommand(CanExecute = nameof(SaveCanExecute))]
@@ -106,6 +111,7 @@ namespace GENAP_MAUI.ViewModels
                 updatedCategories.Add(category.A);
 
                 var renameCategoryOperation = await _dataManagementService.RenameCategoryAsync(category.B.Name, category.A.Name);
+                    renameCategoryOperation.WriteLog($"Rename movements with the category '{category.B.Name}' to '{category.A.Name}' (Categories page)");
 
                 if (!renameCategoryOperation.Success)
                 {
@@ -132,6 +138,8 @@ namespace GENAP_MAUI.ViewModels
             }
 
             await Shell.Current.DisplayAlertAsync("Categorias", "Se guardaron las categorias correctamente", "Aceptar");
+                Log.Information("Categories updated and saved in the storage (Categories page)");
+
             await ReLoad();
         }
 
@@ -144,6 +152,8 @@ namespace GENAP_MAUI.ViewModels
             AddedCategories.Clear();
 
             var getCategoryOperation = await _categoryPersistenceService.GetCategoriesAsync();
+                getCategoryOperation.WriteLog("Bring categories from the storage (Categories page)");
+
             if (getCategoryOperation.Success)
             {
                 Categories = new(getCategoryOperation.Result!.Select(c => new CategoryDto() { Name = c.Name, HexColor = c.HexColor, Id = c.Id }));
