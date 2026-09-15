@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using DomainModel;
 using Serilog;
 using GENAP_MAUI.InnerComponents;
+using Serilog.Events;
 
 namespace GENAP_MAUI
 {
