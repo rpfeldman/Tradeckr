@@ -13,7 +13,7 @@ namespace GENAP_MAUI.ContentViews.Graphs
             {
                 >= 1_000_000 => $"{value / 1_000_000:0.#}M$",
                 >= 10_000 => $"{value / 1_000:0.#}K$",
-                _ => $"{value:N0}$"
+                _ => $"{value:N2}$"   
             };
         }
     }

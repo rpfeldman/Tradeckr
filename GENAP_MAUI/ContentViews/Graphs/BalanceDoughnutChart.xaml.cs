@@ -203,7 +203,7 @@ public partial class BalanceDoughnutChart : ContentView
         }
 
         var balance = income - expenses;
-        BalanceLabel.Text = $"Balance:\n{balance:N0}$";
+        BalanceLabel.Text = $"Balance:\n{balance:N2}$"; 
 
         SetIncomeSlice(income);
         SetExpenseSlice(expenses);
