@@ -7,6 +7,7 @@ using LiveChartsCore;
 using LiveChartsCore.Defaults;
 using LiveChartsCore.SkiaSharpView;
 using Microsoft.Maui.Platform;
+using Serilog;
 using SkiaSharp;
 using System;
 using System.Collections.Generic;
@@ -220,6 +221,8 @@ namespace GENAP_MAUI.ViewModels
             TransactionsLog = ExpensesLog.Concat(LossesLog).Concat(IncomeLog);
             TradingLog = LossesLog.Concat(ProfitLog);
 
+            Log.Information($"Charts filled with new data (GraphsPage) using timeperiod '{timePeriod}' and currency '{currency.IsoCode}'");
+
 			return;
 		}
 
@@ -229,6 +232,7 @@ namespace GENAP_MAUI.ViewModels
             _IsAlredyFillingGraphs = true;
 
             var getCategoriesOperation = await _categoryPersistenceService.GetCategoriesAsync();
+                getCategoriesOperation.WriteLog("Bring categories from storage (GraphsPage)");
 
             if (getCategoriesOperation.Success)
             {
