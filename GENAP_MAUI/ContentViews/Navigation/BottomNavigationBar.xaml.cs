@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using Serilog;
 
 namespace GENAP_MAUI.ContentViews.Navigation;
 
@@ -33,6 +34,8 @@ public partial class BottomNavigationBar : ContentView
 
     private static async Task Go(string route)
     {
+        Log.Information($"Moving to {route}");
+
         var current = Shell.Current?.CurrentState?.Location?.OriginalString ?? string.Empty;
         if (current.Contains(route)) return;
         await Shell.Current!.GoToAsync($"//{route}");
