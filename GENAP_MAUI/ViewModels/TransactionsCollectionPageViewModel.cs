@@ -3,6 +3,8 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DataServices;
 using DomainModel;
+using GENAP_MAUI.InnerComponents;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -49,6 +51,7 @@ namespace GENAP_MAUI.ViewModels
                 { "TransactionProperty", TransactionId }
             };
 
+            Log.Information($"Moving to {Routes.TransactionMenu} with the ID: '{TransactionId}'");
             await Shell.Current.GoToAsync(Routes.TransactionMenu, parameters: NavProperty);
         }
         public async Task ReloadTransactions(GlobalResources.TimePeriodsEnum timePeriod, CurrencyDto currency)
@@ -103,6 +106,7 @@ namespace GENAP_MAUI.ViewModels
             }
 
             var GetTransactionsOperation = await getTransactionsTask;
+                GetTransactionsOperation.WriteLog($"Bring Transactions from storage using timeperiod '{PickedTimePeriod.Key}' and currency '{PickedCurrency.IsoCode}' (TransactionsCollectionPage)");
 
             if (GetTransactionsOperation.Success)
             {
