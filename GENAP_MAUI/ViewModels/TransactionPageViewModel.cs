@@ -157,7 +157,7 @@ namespace GENAP_MAUI.ViewModels
         {
             var updateTransactionOperation = await _dataManagementService.UpdateTransactionAsync(TransactionId, CurrencyConverterService.CurrencyToTfu(_Value, PickedCurrency), DateOnly.FromDateTime(PickedDate), PickedCategory.Name, Transaction.Depletion);
 
-                updateTransactionOperation.WriteLog($"Update Transaction with ID '{TransactionId}' with the new attributes: Value: '{_Value:N2} TFU$'. Date: '{PickedDate}', Category: '{PickedCategory.Name}'");
+                updateTransactionOperation.WriteLog($"Update Transaction with ID '{TransactionId}' with the new attributes: Value: '{_Value:N2} TFU$'. Date: '{PickedDate:dd/MM/yyyy}', Category: '{PickedCategory.Name}'");
 
             await Shell.Current.DisplayAlertAsync("Editar", updateTransactionOperation.Success ? "Se ha guardado el movimiento correctamente" : updateTransactionOperation.InnerError?.ErrorMessage, "Aceptar");
         }
