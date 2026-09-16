@@ -27,7 +27,7 @@ public partial class LoadingPage : ContentPage
                 GlobalResources.AppLoadingResetEvent.Dispose();
                     Log.Debug("AppLoadingResetEvent disposed");
 
-                    Log.Debug("Moving to OnBoarding page");
+                    Log.Debug("Moving to OnBoardingPage");
                 await Shell.Current.GoToAsync($"//{Routes.Onboarding}");
                 return;
             }
@@ -35,7 +35,7 @@ public partial class LoadingPage : ContentPage
             GlobalResources.AppLoadingResetEvent.Dispose();
                 Log.Debug("AppLoadingResetEvent disposed");
 
-                Log.Debug("Moving to MainDashboard page");
+                Log.Debug("Moving to MainDashboardPage");
             await Shell.Current.GoToAsync($"//{Routes.Dashboard}");
         });
     }
