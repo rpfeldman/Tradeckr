@@ -68,10 +68,10 @@ namespace GENAP_MAUI.ViewModels
             Categories.Add(newCategory);
             AddedCategories.Add(newCategory);
 
-			SaveCommand.NotifyCanExecuteChanged();
-            NewCategory = string.Empty;
+             Log.Information($"Added category '{NewCategory}' '{PickedColor.DisplayName}' (Categories page)");
 
-            Log.Information($"Added category {NewCategory}");
+			SaveCommand.NotifyCanExecuteChanged();
+            NewCategory = string.Empty;   
         }
 
         [RelayCommand(CanExecute = nameof(SaveCanExecute))]
