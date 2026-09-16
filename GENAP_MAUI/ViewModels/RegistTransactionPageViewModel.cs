@@ -82,7 +82,15 @@ namespace GENAP_MAUI.ViewModels
             {
                 var ExpenseRegistrationOperation = IsFixed ? await _RegistrationService.RegistFixedExpenseAsync(Value, DateOnly.FromDateTime(PickedDate), Category.Name, FixedTransactionDuration) : await _RegistrationService.RegistExpenseAsync(Value, DateOnly.FromDateTime(PickedDate), Category.Name);
 
-                ExpenseRegistrationOperation.WriteLog($"Save new expense/s with the following attributes: category: '{Category.Name}'. Fixed: '{IsFixed}'. Value: '{Value:N2} {PickedCurrency.IsoCode}$'. Date: '{PickedDate:dd/MM/yyyy}'");
+                ExpenseRegistrationOperation.WriteLog
+                    (
+                        IsFixed ? 
+
+                            $"Save new series of expenses with the following attributes: category: '{Category.Name}'. Value: '{Value:N2} {PickedCurrency.IsoCode}$'. Date: '{PickedDate:dd/MM/yyyy}'. Duration: '{FixedTransactionDuration}'" :
+                             
+                            $"Save new expense with the following attributes: category: '{Category.Name}'. Value: '{Value:N2} {PickedCurrency.IsoCode}$'. Date: '{PickedDate:dd/MM/yyyy}'"
+                    
+                    );
 
 
                 await Shell.Current.DisplayAlertAsync(DisplayAlertTitle, ExpenseRegistrationOperation.Success ? "Gasto registrado con exito" : ExpenseRegistrationOperation.InnerError?.ErrorMessage, DisplayAlertButton);
@@ -92,7 +100,14 @@ namespace GENAP_MAUI.ViewModels
 
             var IncomeRegistrationOperation = IsFixed ? await _RegistrationService.RegistFixedIncomeAsync(Value, DateOnly.FromDateTime(PickedDate), Category.Name, FixedTransactionDuration) : await _RegistrationService.RegistIncomeAsync(Value, DateOnly.FromDateTime(PickedDate), Category.Name);
 
-            IncomeRegistrationOperation.WriteLog($"Save new income/s with the following attributes: category: '{Category.Name}'. Fixed: '{IsFixed}'. Value: '{Value:N2} {PickedCurrency.IsoCode}$'. Date: '{PickedDate:dd/MM/yyyy}'");
+            IncomeRegistrationOperation.WriteLog
+                (
+                    IsFixed ? 
+
+                    $"Save new series of income with the following attributes: category: '{Category.Name}'. Value: '{Value:N2} {PickedCurrency.IsoCode}$'. Date: '{PickedDate:dd/MM/yyyy}'. Duration: '{FixedTransactionDuration}'" :
+                             
+                    $"Save new income with the following attributes: category: '{Category.Name}'. Value: '{Value:N2} {PickedCurrency.IsoCode}$'. Date: '{PickedDate:dd/MM/yyyy}'"
+                );
 
             await Shell.Current.DisplayAlertAsync(DisplayAlertTitle, IncomeRegistrationOperation.Success ? "Ingreso registrado con exito" : IncomeRegistrationOperation.InnerError?.ErrorMessage, DisplayAlertButton);
 
