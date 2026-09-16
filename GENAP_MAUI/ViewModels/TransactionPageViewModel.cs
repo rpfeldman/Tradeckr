@@ -4,6 +4,7 @@ using DataServices;
 using DomainModel;
 using GENAP_MAUI.InnerComponents;
 using Microsoft.EntityFrameworkCore.Update.Internal;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -66,6 +67,7 @@ namespace GENAP_MAUI.ViewModels
             );
 
             var getCategoriesOperation = await _categoryPersistenceService.GetCategoriesAsync();
+                getCategoriesOperation.WriteLog("Bring categories from storage (Transaction Page)");
 
             if (!getCategoriesOperation.Success)
             {
@@ -114,6 +116,8 @@ namespace GENAP_MAUI.ViewModels
             var oldTfuValue = CurrencyConverterService.CurrencyToTfu(_Value, oldValue);
 
             PickedValue = CurrencyConverterService.TfuToCurrency(oldTfuValue, newValue).ToString();
+
+            Log.Information($"Currency switched from '{oldValue.IsoCode}' to '{newValue.IsoCode}' (Transaction Page)");
         }
 
         partial void OnPickedValueChanged(string value)
@@ -128,6 +132,7 @@ namespace GENAP_MAUI.ViewModels
         public async Task DeleteTransaction()
         {
             var deleteTransactionOperation = await _dataManagementService.RemoveTransactionAsync(TransactionId);
+                deleteTransactionOperation.WriteLog($"Delete transaction. ID: '{TransactionId}'");
 
             await Shell.Current.DisplayAlertAsync("Eliminar", deleteTransactionOperation.Success ? "Movimiento eliminado correctamente" : deleteTransactionOperation.InnerError?.ErrorMessage, "Aceptar");
 
@@ -140,6 +145,8 @@ namespace GENAP_MAUI.ViewModels
             var transaction = Transaction as FixedTransactionDto;
             var deleteCollectionOperation = FromToday ? await _dataManagementService.RemoveFixedTransactionAsync(transaction!.FixedTransactionId, transaction.Duration) : await _dataManagementService.RemoveFixedTransactionAsync(transaction!.FixedTransactionId);
 
+                deleteCollectionOperation.WriteLog($"Delete a collection of fixed transactions. FromToday: '{FromToday}'");
+
             await Shell.Current.DisplayAlertAsync("Eliminar", deleteCollectionOperation.Success ? "Movimientos eliminado correctamente" : deleteCollectionOperation.InnerError?.ErrorMessage, "Aceptar");
 
             await DirectNavigate(Routes.TransactionsList);
@@ -149,6 +156,8 @@ namespace GENAP_MAUI.ViewModels
         public async Task UpdateTransaction()
         {
             var updateTransactionOperation = await _dataManagementService.UpdateTransactionAsync(TransactionId, CurrencyConverterService.CurrencyToTfu(_Value, PickedCurrency), DateOnly.FromDateTime(PickedDate), PickedCategory.Name, Transaction.Depletion);
+
+                updateTransactionOperation.WriteLog($"Update Transaction with ID '{TransactionId}' with the new attributes: Value: '{_Value:N2} TFU$'. Date: '{PickedDate}', Category: '{PickedCategory.Name}'");
 
             await Shell.Current.DisplayAlertAsync("Editar", updateTransactionOperation.Success ? "Se ha guardado el movimiento correctamente" : updateTransactionOperation.InnerError?.ErrorMessage, "Aceptar");
         }
