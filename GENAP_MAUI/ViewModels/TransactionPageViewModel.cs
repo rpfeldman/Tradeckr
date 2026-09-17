@@ -155,9 +155,18 @@ namespace GENAP_MAUI.ViewModels
         [RelayCommand(CanExecute = nameof(UpdateTransactionCanExecute))]
         public async Task UpdateTransaction()
         {
-            var updateTransactionOperation = await _dataManagementService.UpdateTransactionAsync(TransactionId, CurrencyConverterService.CurrencyToTfu(_Value, PickedCurrency), DateOnly.FromDateTime(PickedDate), PickedCategory.Name, Transaction.Depletion);
+            _Value = CurrencyConverterService.CurrencyToTfu(_Value, PickedCurrency);
 
-                updateTransactionOperation.WriteLog($"Update Transaction with ID '{TransactionId}' with the new attributes: Value: '{_Value:N2} TFU$'. Date: '{PickedDate:dd/MM/yyyy}', Category: '{PickedCategory.Name}'");
+            var updateTransactionOperation = await _dataManagementService.UpdateTransactionAsync(TransactionId, _Value, DateOnly.FromDateTime(PickedDate), PickedCategory.Name, Transaction.Depletion);
+
+                updateTransactionOperation.WriteLog
+                    (
+                        $"Update Transaction with ID '{TransactionId}' with the following attributes:\n" +
+                        $" -Intended value: '{(CurrencyConverterService.TfuToCurrency(_Value, PickedCurrency)):N2} {PickedCurrency.IsoCode}$'\n" +
+                        $" -Real value: '{_Value:N4} {GlobalResources.DefaultTradingCurrency.IsoCode}$'\n" +
+                        $" -Date: '{PickedDate:dd/MM/yyyy}'\n" +
+                        $" -Category: '{PickedCategory.Name}'"
+                    );
 
             await Shell.Current.DisplayAlertAsync("Editar", updateTransactionOperation.Success ? "Se ha guardado el movimiento correctamente" : updateTransactionOperation.InnerError?.ErrorMessage, "Aceptar");
         }

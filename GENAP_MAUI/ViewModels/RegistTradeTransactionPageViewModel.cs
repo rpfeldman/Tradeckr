@@ -64,8 +64,8 @@ namespace GENAP_MAUI.ViewModels
                     ExpenseRegistrationOperation.WriteLog
                         (
                             $"Save new trading loss in the storage\n" +
-                            $" -Intended Value: '{(CurrencyConverterService.TfuToCurrency(Value, PickedCurrency)):N2} {PickedCurrency.IsoCode}$'\n" +
-                            $" -Real Value: '{Value:N4} {GlobalResources.DefaultTradingCurrency.IsoCode}$'\n" +
+                            $" -Intended value: '{(CurrencyConverterService.TfuToCurrency(Value, PickedCurrency)):N2} {PickedCurrency.IsoCode}$'\n" +
+                            $" -Real value: '{Value:N4} {GlobalResources.DefaultTradingCurrency.IsoCode}$'\n" +
                             $" -Date: '{PickedDate:dd/MM/yyyy}'"
                         );
 
@@ -79,8 +79,8 @@ namespace GENAP_MAUI.ViewModels
                 IncomeRegistrationOperation.WriteLog
                     (
                         $"Save new trading win in the storage\n" +
-                        $" -Intended Value: '{(CurrencyConverterService.TfuToCurrency(Value, PickedCurrency)):N2} {PickedCurrency.IsoCode}$'\n" +
-                        $" -Real Value: '{Value:N4} {GlobalResources.DefaultTradingCurrency.IsoCode}$'\n" +
+                        $" -Intended value: '{(CurrencyConverterService.TfuToCurrency(Value, PickedCurrency)):N2} {PickedCurrency.IsoCode}$'\n" +
+                        $" -Real value: '{Value:N4} {GlobalResources.DefaultTradingCurrency.IsoCode}$'\n" +
                         $" -Date: '{PickedDate:dd/MM/yyyy}'"
                     );    
 

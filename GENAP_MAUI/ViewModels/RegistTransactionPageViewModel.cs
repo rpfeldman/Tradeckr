@@ -97,7 +97,7 @@ namespace GENAP_MAUI.ViewModels
                             $" -Category: '{Category.Name}'\n" +
                             $" -Intended value: '{(CurrencyConverterService.TfuToCurrency(Value, PickedCurrency)):N2} {PickedCurrency.IsoCode}$'\n" +
                             $" -Real value: '{Value:N4} {GlobalResources.DefaultTradingCurrency.IsoCode}$'\n" +
-                            $" -Date: '{PickedDate:dd/MM/yyyy}'\n"
+                            $" -Date: '{PickedDate:dd/MM/yyyy}'"
                     );
 
 
@@ -123,7 +123,7 @@ namespace GENAP_MAUI.ViewModels
                        $" -Category: '{Category.Name}'\n" +
                        $" -Intended value: '{(CurrencyConverterService.TfuToCurrency(Value, PickedCurrency)):N2} {PickedCurrency.IsoCode}$'\n" +
                        $" -Real value: '{Value:N4} {GlobalResources.DefaultTradingCurrency.IsoCode}$'\n" +
-                       $" -Date: '{PickedDate:dd/MM/yyyy}'\n"
+                       $" -Date: '{PickedDate:dd/MM/yyyy}'"
                 );
 
             await Shell.Current.DisplayAlertAsync(DisplayAlertTitle, IncomeRegistrationOperation.Success ? "Ingreso registrado con exito" : IncomeRegistrationOperation.InnerError?.ErrorMessage, DisplayAlertButton);
