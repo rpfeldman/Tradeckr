@@ -85,7 +85,7 @@ namespace GENAP_MAUI
                 }
 
                 Application.Current?.UserAppTheme = Preferences.Get(PreferenceKeys.UserThemeKey, true) ? AppTheme.Dark : AppTheme.Light;
-                 Log.Debug("UserAppTheme setted");
+                 Log.Debug("UserAppTheme set");
 
                 if (!NetworkMethods.CheckInternetConnection()) 
                 { 
