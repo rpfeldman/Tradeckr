@@ -22,7 +22,7 @@ namespace GENAP_MAUI.ViewModels
 	{
 		private DataProjectionService _dataProjectionService;
 		private CategoryPersistenceService _categoryPersistenceService;
-        private bool _IsAlredyFillingGraphs;
+        private bool _IsAlreadyFillingGraphs;
 		public GraphsPageViewModel(DataProjectionService dataProjectionService, CategoryPersistenceService categoryPersistenceService)
 		{
 			_dataProjectionService = dataProjectionService;
@@ -58,13 +58,13 @@ namespace GENAP_MAUI.ViewModels
 
         async partial void OnPickedTimePeriodChanged(KeyValuePair<GlobalResources.TimePeriodsEnum, string> value)
         {
-            if (_IsAlredyFillingGraphs) { return; }
+            if (_IsAlreadyFillingGraphs) { return; }
             await ReFillGraphs(value.Key, PickedCurrency);
         }
 
         async partial void OnPickedCurrencyChanged(CurrencyDto value)
         { 
-            if (_IsAlredyFillingGraphs) { return; }
+            if (_IsAlreadyFillingGraphs) { return; }
             await ReFillGraphs(PickedTimePeriod.Key, value);
         }
 
@@ -229,7 +229,7 @@ namespace GENAP_MAUI.ViewModels
 		[RelayCommand]
 		public async Task ReLoad()
 		{
-            _IsAlredyFillingGraphs = true;
+            _IsAlreadyFillingGraphs = true;
 
             var getCategoriesOperation = await _categoryPersistenceService.GetCategoriesAsync();
                 getCategoriesOperation.WriteLog("Bring categories from storage (GraphsPage)");
@@ -245,7 +245,7 @@ namespace GENAP_MAUI.ViewModels
 
             await ReFillGraphs(PickedTimePeriod.Key, PickedCurrency);
             
-            _IsAlredyFillingGraphs = false;
+            _IsAlreadyFillingGraphs = false;
         }
     }
 }
