@@ -86,10 +86,18 @@ namespace GENAP_MAUI.ViewModels
                     (
                         IsFixed ? 
 
-                            $"Save new series of expenses with the following attributes: category: '{Category.Name}'. Value: '{Value:N2} {PickedCurrency.IsoCode}$'. Date: '{PickedDate:dd/MM/yyyy}'. Duration: '{FixedTransactionDuration}'" :
+                            $"Save new series of expenses with the following attributes:\n" +
+                            $" -Category: '{Category.Name}'\n" +
+                            $" -Intended value: '{(CurrencyConverterService.TfuToCurrency(Value, PickedCurrency)):N2} {PickedCurrency.IsoCode}$'\n" +
+                            $" -Real value: '{Value:N4} {GlobalResources.DefaultTradingCurrency.IsoCode}$'\n" +
+                            $" -Date: '{PickedDate:dd/MM/yyyy}'\n" +
+                            $" -Duration: '{FixedTransactionDuration}'" :
                              
-                            $"Save new expense with the following attributes: category: '{Category.Name}'. Value: '{Value:N2} {PickedCurrency.IsoCode}$'. Date: '{PickedDate:dd/MM/yyyy}'"
-                    
+                            $"Save new expense with the following attributes:\n" +
+                            $" -Category: '{Category.Name}'\n" +
+                            $" -Intended value: '{(CurrencyConverterService.TfuToCurrency(Value, PickedCurrency)):N2} {PickedCurrency.IsoCode}$'\n" +
+                            $" -Real value: '{Value:N4} {GlobalResources.DefaultTradingCurrency.IsoCode}$'\n" +
+                            $" -Date: '{PickedDate:dd/MM/yyyy}'\n"
                     );
 
 
@@ -104,9 +112,18 @@ namespace GENAP_MAUI.ViewModels
                 (
                     IsFixed ? 
 
-                    $"Save new series of income with the following attributes: category: '{Category.Name}'. Value: '{Value:N2} {PickedCurrency.IsoCode}$'. Date: '{PickedDate:dd/MM/yyyy}'. Duration: '{FixedTransactionDuration}'" :
+                       $"Save new series of income with the following attributes:\n" +
+                       $" -Category: '{Category.Name}'\n" +
+                       $" -Intended value: '{(CurrencyConverterService.TfuToCurrency(Value, PickedCurrency)):N2} {PickedCurrency.IsoCode}$'\n" +
+                       $" -Real value: '{Value:N4} {GlobalResources.DefaultTradingCurrency.IsoCode}$'\n" +
+                       $" -Date: '{PickedDate:dd/MM/yyyy}'\n" +
+                       $" -Duration: '{FixedTransactionDuration}'" :
                              
-                    $"Save new income with the following attributes: category: '{Category.Name}'. Value: '{Value:N2} {PickedCurrency.IsoCode}$'. Date: '{PickedDate:dd/MM/yyyy}'"
+                       $"Save new income with the following attributes:\n" +
+                       $" -Category: '{Category.Name}'\n" +
+                       $" -Intended value: '{(CurrencyConverterService.TfuToCurrency(Value, PickedCurrency)):N2} {PickedCurrency.IsoCode}$'\n" +
+                       $" -Real value: '{Value:N4} {GlobalResources.DefaultTradingCurrency.IsoCode}$'\n" +
+                       $" -Date: '{PickedDate:dd/MM/yyyy}'\n"
                 );
 
             await Shell.Current.DisplayAlertAsync(DisplayAlertTitle, IncomeRegistrationOperation.Success ? "Ingreso registrado con exito" : IncomeRegistrationOperation.InnerError?.ErrorMessage, DisplayAlertButton);

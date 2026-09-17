@@ -61,7 +61,13 @@ namespace GENAP_MAUI.ViewModels
             if (Depletion)
             {
                 var ExpenseRegistrationOperation = await _RegistrationService.RegistExpenseAsync(Value, DateOnly.FromDateTime(PickedDate), DefaultCategories.TradingCategoryName);
-                    ExpenseRegistrationOperation.WriteLog($"Save new trading loss in the storage. Value: '{Value:N2} {PickedCurrency.IsoCode}$'. Date: '{PickedDate:dd/MM/yyyy}'");
+                    ExpenseRegistrationOperation.WriteLog
+                        (
+                            $"Save new trading loss in the storage\n" +
+                            $" -Intended Value: '{(CurrencyConverterService.TfuToCurrency(Value, PickedCurrency)):N2} {PickedCurrency.IsoCode}$'\n" +
+                            $" -Real Value: '{Value:N4} {GlobalResources.DefaultTradingCurrency.IsoCode}$'\n" +
+                            $" -Date: '{PickedDate:dd/MM/yyyy}'"
+                        );
 
 
                 await Shell.Current.DisplayAlertAsync(DisplayAlertTitle, ExpenseRegistrationOperation.Success ? "Perdida registrada con exito" : ExpenseRegistrationOperation.InnerError?.ErrorMessage, DisplayAlertButton);
@@ -70,7 +76,13 @@ namespace GENAP_MAUI.ViewModels
             }
 
             var IncomeRegistrationOperation = await _RegistrationService.RegistIncomeAsync(Value, DateOnly.FromDateTime(PickedDate), DefaultCategories.TradingCategoryName);
-                IncomeRegistrationOperation.WriteLog($"Save new trading win in the storage. Value: '{Value:N2} {PickedCurrency.IsoCode}$'. Date: '{PickedDate:dd/MM/yyyy}'");    
+                IncomeRegistrationOperation.WriteLog
+                    (
+                        $"Save new trading win in the storage\n" +
+                        $" -Intended Value: '{(CurrencyConverterService.TfuToCurrency(Value, PickedCurrency)):N2} {PickedCurrency.IsoCode}$'\n" +
+                        $" -Real Value: '{Value:N4} {GlobalResources.DefaultTradingCurrency.IsoCode}$'\n" +
+                        $" -Date: '{PickedDate:dd/MM/yyyy}'"
+                    );    
 
             await Shell.Current.DisplayAlertAsync(DisplayAlertTitle, IncomeRegistrationOperation.Success ? "Ganancia registrada con exito" : IncomeRegistrationOperation.InnerError?.ErrorMessage, DisplayAlertButton);
 
