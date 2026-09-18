@@ -50,7 +50,7 @@ namespace DataServices
             }
             if (!anyTransactionOperation.Result)
             {
-                return OperationResult.FaultedOperation(ServiceErrors.NotFoundCategoryNameError(OldName));
+                return OperationResult.SuccessfulOperation(); // Not an error: no transactions had that name, so there was nothing to rename
             }
 
             var getOldTransactionsOperation = await _StateStorage.GetEntitiesAsync(t => t.Category == OldName);

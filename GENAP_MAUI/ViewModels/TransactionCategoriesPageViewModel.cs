@@ -115,11 +115,8 @@ namespace GENAP_MAUI.ViewModels
 
                 if (!renameCategoryOperation.Success)
                 {
-                    if(renameCategoryOperation.InnerError?.ErrorCode != 9) 
-                    {
-                        await Shell.Current.DisplayAlertAsync("Error", renameCategoryOperation.InnerError?.ErrorMessage, "Aceptar");
-                        return;
-                    }
+                   await Shell.Current.DisplayAlertAsync("Error", renameCategoryOperation.InnerError?.ErrorMessage, "Aceptar");
+                   return;
                 }
             }
 
