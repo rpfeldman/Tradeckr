@@ -32,8 +32,9 @@
 
                     <Button Grid.Column="1"
                             Style="{StaticResource IconButton}"
-                            Text="{x:Static local:Symbols.SwapAppThemeIcon}"
-                            Command="{Binding ChangeThemeCommand}"
+                            Text="{x:Static local:Symbols.SettingsIcon}"
+                            Command="{Binding PushNavigateCommand}"
+                            CommandParameter="{x:Static local:Routes.Settings}"
                             VerticalOptions="Start" />
                 </Grid>
 

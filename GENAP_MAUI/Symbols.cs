@@ -15,5 +15,6 @@ namespace GENAP_MAUI
         public const string DeleteIcon = "\ue872";
         public const string AddIcon = "\ue147";
         public const string WarningIcon = "\ue002";
+        public const string SettingsIcon = "\ue8b8";
     }
 }
