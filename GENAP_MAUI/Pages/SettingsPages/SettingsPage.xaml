@@ -5,6 +5,69 @@
              x:Class="GENAP_MAUI.Pages.SettingsPages.SettingsPage"
              x:DataType="vm:SettingsPageViewModel">
 
-    <VerticalStackLayout>
-    </VerticalStackLayout>
+    <ScrollView>
+        <VerticalStackLayout>
+
+            <VerticalStackLayout>
+                <Label Text="Apariencia y lenguaje" FontSize="18"></Label>
+
+                <HorizontalStackLayout>
+                    <Label Text="Tu nombre: "></Label>
+                    <Entry Text="{Binding PickedUserName}"></Entry>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout>
+                    <Label Text="Tema: "></Label>
+                    <Picker></Picker>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout>
+                    <Label Text="Lenguaje: "></Label>
+                    <Picker></Picker>
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout>
+                <Label Text="Sistema multi-moneda" FontSize="18"></Label>
+
+                <HorizontalStackLayout>
+                    <Label Text="Moneda de uso diario: "></Label>
+                    <Picker></Picker>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout>
+                    <Label Text="Moneda operativa: "></Label>
+                    <Picker></Picker>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout>
+                    <Label Text="Actualizacion diaria: "></Label>
+                    <Picker></Picker>
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout>
+                <Label Text="Reportar error" FontSize="18"></Label>
+
+                <HorizontalStackLayout>
+                    <Label Text="Titulo: "></Label>
+                    <Entry></Entry>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout>
+                    <Label Text="Descripcion: "></Label>
+                    <Entry></Entry>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout>
+                    <Button Text="Enviar!: "></Button>
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+
+
+
+            <VerticalStackLayout>
+                <Label Text="Almacenamiento y datos" FontSize="18"></Label>
+                <Button Text="Reiniciar almacenamiento"></Button>
+            </VerticalStackLayout>
+
+
+            <Button Text="Guardar cambios" Command="{Binding SaveCommand}"></Button>
+            
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

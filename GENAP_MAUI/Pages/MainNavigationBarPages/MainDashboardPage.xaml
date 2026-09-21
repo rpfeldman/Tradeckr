@@ -21,7 +21,7 @@
                             <Label.FormattedText>
                                 <FormattedString>
                                     <Span Text="Bienvenido, " />
-                                    <Span Text="{x:Static local:GlobalResources.UserName}"
+                                    <Span Text="{Binding UserName}"
                                           TextColor="{AppThemeBinding Light={StaticResource AccentLight}, Dark={StaticResource AccentDark}}" />
                                 </FormattedString>
                             </Label.FormattedText>

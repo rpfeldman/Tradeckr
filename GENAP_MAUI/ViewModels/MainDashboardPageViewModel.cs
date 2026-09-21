@@ -23,6 +23,9 @@ namespace GENAP_MAUI.ViewModels
         }
 
         [ObservableProperty]
+        public partial string UserName { get; set;}
+
+        [ObservableProperty]
         public partial TransactionDto[] MonthTransactions { get; set; }
 
         [ObservableProperty]
@@ -52,6 +55,8 @@ namespace GENAP_MAUI.ViewModels
             {
                 PickedCurrency = GlobalResources.DefaultCommonCurrency;
             }
+
+            UserName = GlobalResources.UserName;
 
             var today = DateOnly.FromDateTime(DateTime.Today);
             var getMonthTransactions = await _dataProjectionService.GetAllByMonthAsync(today.Month, today.Year, order: DataProjectionService.Order.OrderByDateDescending, currency: PickedCurrency);

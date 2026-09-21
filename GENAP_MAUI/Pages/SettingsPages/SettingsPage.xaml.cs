@@ -10,4 +10,14 @@ public partial class SettingsPage : ContentPage
 
 		BindingContext = vm;
 	}
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+
+		if(BindingContext is SettingsPageViewModel vm)
+		{
+			vm.LoadCommand.Execute(false);
+		}
+    }
 }
