@@ -9,8 +9,8 @@ namespace GENAP_MAUI.ViewModels
     public sealed partial class SettingsPageViewModel : BaseViewModel
     {
         private bool _IsLoading;
-        private bool AppearanceSettings_HasChanged;
-        private bool CurrencySettings_HasChanged;
+        private bool[] AppearanceSettings = new bool[4];
+        private bool[] CurrencySettings = new bool[4];
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
@@ -23,15 +23,23 @@ namespace GENAP_MAUI.ViewModels
         [RelayCommand(CanExecute = nameof(SaveCanExecute))]
         public async Task Save()
         {
-            if (AppearanceSettings_HasChanged)
+            if (AppearanceSettings[0])
             {
-                Preferences.Set(PreferenceKeys.UserNameKey, PickedUserName);
+                if(AppearanceSettings[1])
+                {
+                    Preferences.Set(PreferenceKeys.UserNameKey, PickedUserName);
+                }
+                
             }
 
-            if (CurrencySettings_HasChanged)
+            if (CurrencySettings[0])
             {
 
             }
+
+            for (int i = 0; i < AppearanceSettings.Length; i++) AppearanceSettings[i] = false;
+            for (int i = 0; i < CurrencySettings.Length; i++)  CurrencySettings[i] = false;
+            Settings_HasChanged = false;
 
             await Shell.Current.DisplayAlertAsync("Configuracion", "Cambios guardados con exito", "Aceptar");
         }
@@ -43,8 +51,8 @@ namespace GENAP_MAUI.ViewModels
 
             PickedUserName = GlobalResources.UserName;
 
-            AppearanceSettings_HasChanged = false;
-            CurrencySettings_HasChanged = false;
+            for (int i = 0; i < AppearanceSettings.Length; i++) AppearanceSettings[i] = false;
+            for (int i = 0; i < CurrencySettings.Length; i++)  CurrencySettings[i] = false;
             Settings_HasChanged = false;
 
             _IsLoading = false;
@@ -53,8 +61,10 @@ namespace GENAP_MAUI.ViewModels
         partial void OnPickedUserNameChanged(string value)
         {
            if(_IsLoading) { return; }
-           
-           AppearanceSettings_HasChanged = true;
+
+           AppearanceSettings[0] = true;
+           AppearanceSettings[1] = true;
+
            Settings_HasChanged = true;
         }
 

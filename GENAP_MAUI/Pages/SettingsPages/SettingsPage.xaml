@@ -6,6 +6,7 @@
              x:DataType="vm:SettingsPageViewModel">
 
     <ScrollView>
+        <!-- this is a temporary prototype -->
         <VerticalStackLayout>
 
             <VerticalStackLayout>
