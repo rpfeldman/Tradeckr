@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Maui.ApplicationModel.Communication;
+using Serilog;
 
 namespace GENAP_MAUI.ViewModels
 {
@@ -109,6 +110,14 @@ namespace GENAP_MAUI.ViewModels
                 return;
             }
 
+            if (!Email.Default.IsComposeSupported)
+            {
+                Log.Warning("Email is not supported. Advacing with file sharig (bug report)");
+                // TO - DO 
+
+                return;
+            }
+
             string emailBody = 
                 $@"
                     Date: {DateOnly.FromDateTime(DateTime.Today)}
@@ -125,7 +134,10 @@ namespace GENAP_MAUI.ViewModels
                 " + Environment.NewLine + BugDescription;
 
             EmailMessage emailMessage = new(BugTitle, emailBody, ["ramirofeldman0@gmail.com"]); // TEMPORARY MAIL
-                emailMessage.Attachments?.Add(new EmailAttachment(logPath));
+            var attachment = new EmailAttachment(logPath);
+
+           emailMessage.Attachments ??= [];
+           emailMessage.Attachments.Add(attachment);
 
             await Email.Default.ComposeAsync(emailMessage);
         }

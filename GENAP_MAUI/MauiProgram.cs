@@ -37,7 +37,7 @@ namespace GENAP_MAUI
             var logPath = Path.Combine(FileSystem.AppDataDirectory, FilePaths.LogFileName);
 
             // Logging system
-            Log.Logger = new LoggerConfiguration().WriteTo.File(logPath).MinimumLevel.Debug().CreateLogger();
+            Log.Logger = new LoggerConfiguration().WriteTo.File(logPath, shared: true).MinimumLevel.Debug().CreateLogger();
 
             // ViewModels
             builder.Services.AddTransient<MainDashboardPageViewModel>();
