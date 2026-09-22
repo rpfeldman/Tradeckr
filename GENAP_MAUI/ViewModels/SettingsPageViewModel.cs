@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using DomainModel;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -23,6 +24,9 @@ namespace GENAP_MAUI.ViewModels
         [ObservableProperty]
         public partial KeyValuePair<AppTheme, string> PickedTheme { get; set; }
 
+        [ObservableProperty]
+        public partial CurrencyDto PickedCommonCurrency { get; set;}
+
         [RelayCommand(CanExecute = nameof(SaveCanExecute))]
         public async Task Save()
         {
@@ -43,7 +47,15 @@ namespace GENAP_MAUI.ViewModels
 
             if (CurrencySettings[0])
             {
+                if (CurrencySettings[1])
+                {
 
+                }
+
+                if (CurrencySettings[2])
+                {
+                    Preferences.Set(PreferenceKeys.CommonCurrencyKey, GlobalResources.Currencies.IndexOf(PickedCommonCurrency));
+                }
             }
 
             for (int i = 0; i < AppearanceSettings.Length; i++) AppearanceSettings[i] = false;
@@ -60,6 +72,8 @@ namespace GENAP_MAUI.ViewModels
 
             PickedUserName = GlobalResources.UserName;
             PickedTheme = Preferences.Get(PreferenceKeys.UserThemeKey, true) ? GlobalResources.AppThemesList[0] : GlobalResources.AppThemesList[1];
+
+            PickedCommonCurrency = GlobalResources.DefaultCommonCurrency;
 
             for (int i = 0; i < AppearanceSettings.Length; i++) AppearanceSettings[i] = false;
             for (int i = 0; i < CurrencySettings.Length; i++)  CurrencySettings[i] = false;
@@ -84,6 +98,16 @@ namespace GENAP_MAUI.ViewModels
 
            AppearanceSettings[0] = true;
            AppearanceSettings[2] = true;
+
+           Settings_HasChanged = true;
+        }
+
+        partial void OnPickedCommonCurrencyChanged(CurrencyDto value)
+        {
+           if(_IsLoading) { return; }
+
+           CurrencySettings[0] = true;
+           CurrencySettings[2] = true;
 
            Settings_HasChanged = true;
         }

@@ -28,7 +28,7 @@
                 </HorizontalStackLayout>
                 <HorizontalStackLayout>
                     <Label Text="Lenguaje: "></Label>
-                    <Picker></Picker>
+                    <Picker IsEnabled="False"></Picker>
                 </HorizontalStackLayout>
             </VerticalStackLayout>
 
@@ -37,11 +37,16 @@
 
                 <HorizontalStackLayout>
                     <Label Text="Moneda de uso diario: "></Label>
-                    <Picker></Picker>
+                    <Picker
+                        Title="Elegí tu moneda cotidiana"
+                        ItemsSource="{x:Static local:GlobalResources.Currencies}"
+                        ItemDisplayBinding="{Binding CurrencyDisplayName}"
+                        SelectedItem="{Binding PickedCommonCurrency}"
+                        />
                 </HorizontalStackLayout>
                 <HorizontalStackLayout>
                     <Label Text="Moneda operativa: "></Label>
-                    <Picker></Picker>
+                    <Picker IsEnabled="False"></Picker>
                 </HorizontalStackLayout>
                 <HorizontalStackLayout>
                     <Label Text="Actualizacion diaria: "></Label>
