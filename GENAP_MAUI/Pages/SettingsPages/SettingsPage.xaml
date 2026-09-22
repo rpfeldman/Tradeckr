@@ -63,14 +63,14 @@
 
                 <HorizontalStackLayout>
                     <Label Text="Titulo: "></Label>
-                    <Entry></Entry>
+                    <Entry Text="{Binding BugTitle}"></Entry>
                 </HorizontalStackLayout>
                 <HorizontalStackLayout>
                     <Label Text="Descripcion: "></Label>
-                    <Entry></Entry>
+                    <Entry Text="{Binding BugDescription}"></Entry>
                 </HorizontalStackLayout>
                 <HorizontalStackLayout>
-                    <Button Text="Enviar!: "></Button>
+                    <Button Text="Reportar" Command="{Binding ReportCommand}"></Button>
                 </HorizontalStackLayout>
             </VerticalStackLayout>
 

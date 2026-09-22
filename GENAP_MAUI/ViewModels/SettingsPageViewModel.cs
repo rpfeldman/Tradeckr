@@ -4,6 +4,7 @@ using DomainModel;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Maui.ApplicationModel.Communication;
 
 namespace GENAP_MAUI.ViewModels
 {
@@ -47,10 +48,11 @@ namespace GENAP_MAUI.ViewModels
         // Bug report properties
 
         [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(ReportCommand))]
         public partial string BugTitle { get; set; }
 
         [ObservableProperty]
-        public partial string? BugDescription { get; set;}
+        public partial string BugDescription { get; set;}
 
 
         [RelayCommand(CanExecute = nameof(SaveCanExecute))]
@@ -96,10 +98,36 @@ namespace GENAP_MAUI.ViewModels
             await Shell.Current.DisplayAlertAsync("Configuracion", "Cambios guardados con exito", "Aceptar");
         }
 
-        [RelayCommand]
+        [RelayCommand(CanExecute = nameof(ReportCanExecute))]
         public async Task Report()
         {
+            var logPath = Path.Combine(FileSystem.AppDataDirectory, FilePaths.LogFileName);
 
+            if (!File.Exists(logPath))
+            {
+                await Shell.Current.DisplayAlertAsync("Error", "No es posible reportar bugs en tu dispositivo. Por favor, contacte con soporte tecnico", "Aceptar");
+                return;
+            }
+
+            string emailBody = 
+                $@"
+                    Date: {DateOnly.FromDateTime(DateTime.Today)}
+
+                    A continuacion se adjuntara la informacion del dispositivo. Estos datos son claves para poder identificar el error.
+                    Eres completamente libre de eliminar los datos que no quieras enviar.
+
+                    Platform: {DeviceInfo.Platform} 
+                    Manufacter: {DeviceInfo.Manufacturer}
+                    Model: {DeviceInfo.Model}
+                    OS Version: {DeviceInfo.VersionString}
+                    Device idiom: {DeviceInfo.Idiom}
+                    Device type: {DeviceInfo.DeviceType}
+                " + Environment.NewLine + BugDescription;
+
+            EmailMessage emailMessage = new(BugTitle, emailBody, ["ramirofeldman0@gmail.com"]); // TEMPORARY MAIL
+                emailMessage.Attachments?.Add(new EmailAttachment(logPath));
+
+            await Email.Default.ComposeAsync(emailMessage);
         }
 
         [RelayCommand]
@@ -162,5 +190,6 @@ namespace GENAP_MAUI.ViewModels
         }
 
         private bool SaveCanExecute() => Settings_HasChanged && !string.IsNullOrWhiteSpace(PickedUserName) && PickedUserName.Length < 20;
+        private bool ReportCanExecute() => !string.IsNullOrWhiteSpace(BugTitle);
     }
 }
