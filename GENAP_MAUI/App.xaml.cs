@@ -28,8 +28,6 @@ namespace GENAP_MAUI
 
             try
             {
-                // TO - DO: Apply a log system
-
                 CurrencyPersistenceService currencyPersistenceService = IPlatformApplication.Current!.Services.GetRequiredService<CurrencyPersistenceService>();
 
                 if (GlobalResources.IsNewUser)
@@ -87,11 +85,15 @@ namespace GENAP_MAUI
                 Application.Current?.UserAppTheme = Preferences.Get(PreferenceKeys.UserThemeKey, true) ? AppTheme.Dark : AppTheme.Light;
                  Log.Debug("UserAppTheme set");
 
-                if (!NetworkMethods.CheckInternetConnection()) 
-                { 
-                    System.Diagnostics.Debug.WriteLine("User does not have internet connection. Advancing without updating the currencies rates");
-                    Log.Warning("Advancing without connection");
-
+                var checkInternet = NetworkMethods.CheckInternetConnection();
+                if (!checkInternet || !Preferences.Get(PreferenceKeys.UpdateRatesKey, true)) 
+                {
+                    if (!checkInternet)
+                    {
+                        System.Diagnostics.Debug.WriteLine("User does not have internet connection. Advancing without updating the currencies rates");
+                        Log.Warning("Advancing without connection");
+                    }
+                   
                     var getCurrenciesOperation = await currencyPersistenceService.GetAllAsync();
                         getCurrenciesOperation.WriteLog("Bring to memory the currencies in the storage");
 

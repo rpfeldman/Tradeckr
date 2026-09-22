@@ -50,7 +50,11 @@
                 </HorizontalStackLayout>
                 <HorizontalStackLayout>
                     <Label Text="Actualizacion diaria: "></Label>
-                    <Picker></Picker>
+                    <Picker
+                        ItemsSource="{Binding UpdateRatesOptionsList}"
+                        ItemDisplayBinding="{Binding Value}"
+                        SelectedItem="{Binding PickedUpdateRateOption}"
+                        />
                 </HorizontalStackLayout>
             </VerticalStackLayout>
 

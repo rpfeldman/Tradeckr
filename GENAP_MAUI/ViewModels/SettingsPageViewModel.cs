@@ -12,7 +12,14 @@ namespace GENAP_MAUI.ViewModels
         private bool _IsLoading;
         private bool[] AppearanceSettings = new bool[4];
         private bool[] CurrencySettings = new bool[4];
+        private Dictionary<bool, string> UpdateRatesOptions = new(2)
+        {
+            { true, "Habilitado" },
+            { false, "Deshabilitado" }
+        };
 
+        public List<KeyValuePair<bool, string>> UpdateRatesOptionsList { get => [.. UpdateRatesOptions];  }
+       
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
         private partial bool Settings_HasChanged { get; set; }
@@ -26,6 +33,9 @@ namespace GENAP_MAUI.ViewModels
 
         [ObservableProperty]
         public partial CurrencyDto PickedCommonCurrency { get; set;}
+
+        [ObservableProperty]
+        public partial KeyValuePair<bool, string> PickedUpdateRateOption { get; set; }
 
         [RelayCommand(CanExecute = nameof(SaveCanExecute))]
         public async Task Save()
@@ -49,12 +59,17 @@ namespace GENAP_MAUI.ViewModels
             {
                 if (CurrencySettings[1])
                 {
-
+                    Preferences.Set(PreferenceKeys.CommonCurrencyKey, GlobalResources.Currencies.IndexOf(PickedCommonCurrency));
                 }
 
                 if (CurrencySettings[2])
                 {
-                    Preferences.Set(PreferenceKeys.CommonCurrencyKey, GlobalResources.Currencies.IndexOf(PickedCommonCurrency));
+                    
+                }
+
+                if (CurrencySettings[3])
+                {
+                    Preferences.Set(PreferenceKeys.UpdateRatesKey, PickedUpdateRateOption.Key);
                 }
             }
 
@@ -74,6 +89,8 @@ namespace GENAP_MAUI.ViewModels
             PickedTheme = Preferences.Get(PreferenceKeys.UserThemeKey, true) ? GlobalResources.AppThemesList[0] : GlobalResources.AppThemesList[1];
 
             PickedCommonCurrency = GlobalResources.DefaultCommonCurrency;
+            PickedUpdateRateOption = Preferences.Get(PreferenceKeys.UpdateRatesKey, true) ? UpdateRatesOptionsList[0] : UpdateRatesOptionsList[1];
+            
 
             for (int i = 0; i < AppearanceSettings.Length; i++) AppearanceSettings[i] = false;
             for (int i = 0; i < CurrencySettings.Length; i++)  CurrencySettings[i] = false;
@@ -107,7 +124,17 @@ namespace GENAP_MAUI.ViewModels
            if(_IsLoading) { return; }
 
            CurrencySettings[0] = true;
-           CurrencySettings[2] = true;
+           CurrencySettings[1] = true;
+
+           Settings_HasChanged = true;
+        }
+
+        partial void OnPickedUpdateRateOptionChanged(KeyValuePair<bool, string> value)
+        {
+           if(_IsLoading) { return; }
+
+           CurrencySettings[0] = true;
+           CurrencySettings[3] = true;
 
            Settings_HasChanged = true;
         }

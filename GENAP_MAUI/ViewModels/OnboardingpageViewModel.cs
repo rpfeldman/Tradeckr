@@ -45,6 +45,7 @@ namespace GENAP_MAUI.ViewModels
             Preferences.Set(PreferenceKeys.CommonCurrencyKey, GlobalResources.Currencies.IndexOf(PickedCommonCurrency));
             Preferences.Set(PreferenceKeys.TradingCurrencyKey, GlobalResources.Currencies.IndexOf(PickedTradingCurrency));
             Preferences.Set(PreferenceKeys.LastDayEnteredKey, DateTime.Today);
+            Preferences.Set(PreferenceKeys.UpdateRatesKey, true);
 
             Preferences.Set(PreferenceKeys.UserThemeKey, Application.Current?.RequestedTheme == AppTheme.Dark); 
 
