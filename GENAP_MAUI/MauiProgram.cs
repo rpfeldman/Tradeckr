@@ -33,8 +33,8 @@ namespace GENAP_MAUI
                 });
 
             // Paths
-            var dbPath = Path.Combine(FileSystem.AppDataDirectory, "Tradeckr_Storage.db");
-            var logPath = Path.Combine(FileSystem.AppDataDirectory, "Tradeckr_Log.txt");
+            var dbPath = Path.Combine(FileSystem.AppDataDirectory, FilePaths.StorageFileName);
+            var logPath = Path.Combine(FileSystem.AppDataDirectory, FilePaths.LogFileName);
 
             // Logging system
             Log.Logger = new LoggerConfiguration().WriteTo.File(logPath).MinimumLevel.Debug().CreateLogger();

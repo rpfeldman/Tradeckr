@@ -24,6 +24,9 @@ namespace GENAP_MAUI.ViewModels
         [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
         private partial bool Settings_HasChanged { get; set; }
 
+
+        // Appearance settings properties
+
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
         public partial string PickedUserName { get; set; }
@@ -31,11 +34,24 @@ namespace GENAP_MAUI.ViewModels
         [ObservableProperty]
         public partial KeyValuePair<AppTheme, string> PickedTheme { get; set; }
 
+
+        // Currency settings properties
+        
         [ObservableProperty]
         public partial CurrencyDto PickedCommonCurrency { get; set;}
 
         [ObservableProperty]
         public partial KeyValuePair<bool, string> PickedUpdateRateOption { get; set; }
+
+
+        // Bug report properties
+
+        [ObservableProperty]
+        public partial string BugTitle { get; set; }
+
+        [ObservableProperty]
+        public partial string? BugDescription { get; set;}
+
 
         [RelayCommand(CanExecute = nameof(SaveCanExecute))]
         public async Task Save()
@@ -78,6 +94,12 @@ namespace GENAP_MAUI.ViewModels
             Settings_HasChanged = false;
 
             await Shell.Current.DisplayAlertAsync("Configuracion", "Cambios guardados con exito", "Aceptar");
+        }
+
+        [RelayCommand]
+        public async Task Report()
+        {
+
         }
 
         [RelayCommand]
