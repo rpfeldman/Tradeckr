@@ -20,6 +20,9 @@ namespace GENAP_MAUI.ViewModels
         [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
         public partial string PickedUserName { get; set; }
 
+        [ObservableProperty]
+        public partial KeyValuePair<AppTheme, string> PickedTheme { get; set; }
+
         [RelayCommand(CanExecute = nameof(SaveCanExecute))]
         public async Task Save()
         {
@@ -29,7 +32,13 @@ namespace GENAP_MAUI.ViewModels
                 {
                     Preferences.Set(PreferenceKeys.UserNameKey, PickedUserName);
                 }
-                
+
+                if (AppearanceSettings[2])
+                {
+                    Application.Current?.UserAppTheme = PickedTheme.Key;
+
+                    Preferences.Set(PreferenceKeys.UserThemeKey, PickedTheme.Key == AppTheme.Dark);
+                }
             }
 
             if (CurrencySettings[0])
@@ -50,6 +59,7 @@ namespace GENAP_MAUI.ViewModels
             _IsLoading = true;
 
             PickedUserName = GlobalResources.UserName;
+            PickedTheme = Preferences.Get(PreferenceKeys.UserThemeKey, true) ? GlobalResources.AppThemesList[0] : GlobalResources.AppThemesList[1];
 
             for (int i = 0; i < AppearanceSettings.Length; i++) AppearanceSettings[i] = false;
             for (int i = 0; i < CurrencySettings.Length; i++)  CurrencySettings[i] = false;
@@ -64,6 +74,16 @@ namespace GENAP_MAUI.ViewModels
 
            AppearanceSettings[0] = true;
            AppearanceSettings[1] = true;
+
+           Settings_HasChanged = true;
+        }
+
+        partial void OnPickedThemeChanged(KeyValuePair<AppTheme, string> value)
+        {
+           if(_IsLoading) { return; }
+
+           AppearanceSettings[0] = true;
+           AppearanceSettings[2] = true;
 
            Settings_HasChanged = true;
         }

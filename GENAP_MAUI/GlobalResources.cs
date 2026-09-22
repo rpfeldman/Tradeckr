@@ -58,6 +58,18 @@ namespace GENAP_MAUI
        
         public static List<ColorDto> ColorList { get => [.. Colors.Values]; }
 
+        // Same, UserAppTheme - a display name
+
+        public readonly static Dictionary<AppTheme, string> AppThemes = new(2)
+        {
+            { AppTheme.Dark, "Oscuro" },
+            { AppTheme.Light, "Claro" }
+        }; 
+
+        public static List<KeyValuePair<AppTheme, string>> AppThemesList { get => [.. AppThemes]; } 
+
+        // In-memory currencies
+
         public static CurrencyDto[] Currencies { get; set; } =
             [
                 new CurrencyDto() { CurrencyDisplayName = "Dólar Estadounidense", IsoCode = "USD", ConversionRate = 1, Id = 1 },

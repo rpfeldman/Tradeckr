@@ -35,16 +35,6 @@ namespace GENAP_MAUI.ViewModels
         public partial CurrencyDto PickedCurrency { get; set; }
 
         public string Month { get { return GlobalResources.Months[DateTime.Today.Month]; } }
-
-        [RelayCommand]
-        public void ChangeTheme()
-        {
-            bool IsDarkTheme = Application.Current?.UserAppTheme == AppTheme.Dark;
-            Application.Current?.UserAppTheme = IsDarkTheme ? AppTheme.Light : AppTheme.Dark;
-
-            Preferences.Set(PreferenceKeys.UserThemeKey, !IsDarkTheme);
-            Log.Information("UserAppTheme changed");
-        }
         
         [RelayCommand]
         public async Task Load(bool reload = false)
