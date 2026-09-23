@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Maui.ApplicationModel.Communication;
 using Serilog;
+using System.Globalization;
 
 namespace GENAP_MAUI.ViewModels
 {
@@ -106,35 +107,47 @@ namespace GENAP_MAUI.ViewModels
 
             if (!File.Exists(logPath))
             {
-                await Shell.Current.DisplayAlertAsync("Error", "No es posible reportar bugs en tu dispositivo. Por favor, contacte con soporte tecnico", "Aceptar");
+                await Shell.Current.DisplayAlertAsync("Error", "No es posible reportar bugs en tu dispositivo.\nPor favor, contacte con soporte tecnico", "Aceptar");
                 return;
             }
+
+            string bugAndDeviceInfo = 
+                $"Bug title: {BugTitle}\n"+
+                $"Bug description: {BugDescription}\n\n"+
+                $"Date: {DateOnly.FromDateTime(DateTime.Today)}\n\n" +
+                $"A continuación se adjuntará la información del dispositivo. "+
+                $"Estos datos son claves para poder identificar el error. " +
+                $"Eres completamente libre de eliminar los datos que no quieras enviar."+
+                $"\n -Platform: {DeviceInfo.Platform} Manufacturer: {DeviceInfo.Manufacturer}" +
+                $"\n -Model: {DeviceInfo.Model}" +
+                $"\n -OS Version: {DeviceInfo.VersionString}" +
+                $"\n -Device idiom: {DeviceInfo.Idiom}" +
+                $"\n -Device type: {DeviceInfo.DeviceType}" +
+                $"\n -Culture: {CultureInfo.CurrentCulture}\n\n"; 
+                                
+                                
+            string applicationLog = await File.ReadAllTextAsync(logPath);
+
+            var bugReportPath = Path.Combine(FileSystem.AppDataDirectory, "BugReport.txt");
+
+            await File.WriteAllTextAsync(bugReportPath, bugAndDeviceInfo + applicationLog);
 
             if (!Email.Default.IsComposeSupported)
             {
-                Log.Warning("Email is not supported. Advacing with file sharig (bug report)");
-                // TO - DO 
+                Log.Warning("Email is not supported. Advancing with file sharing (bug report)");
+                
+                await Shell.Current.DisplayAlertAsync("Reporte", "Aparentemente no tienes una aplicacion predeterminada de correo electronico en tu dispositivo.\n\nPor favor, intente compartir este archivo de texto a 'ramirofeldman0@gmail.com'","Aceptar");
+
+
+                ShareFile file = new(bugReportPath);
+                ShareFileRequest request = new("Bug", file);
+                await Share.Default.RequestAsync(request);
 
                 return;
             }
 
-            string emailBody = 
-                $@"
-                    Date: {DateOnly.FromDateTime(DateTime.Today)}
-
-                    A continuacion se adjuntara la informacion del dispositivo. Estos datos son claves para poder identificar el error.
-                    Eres completamente libre de eliminar los datos que no quieras enviar.
-
-                    Platform: {DeviceInfo.Platform} 
-                    Manufacter: {DeviceInfo.Manufacturer}
-                    Model: {DeviceInfo.Model}
-                    OS Version: {DeviceInfo.VersionString}
-                    Device idiom: {DeviceInfo.Idiom}
-                    Device type: {DeviceInfo.DeviceType}
-                " + Environment.NewLine + BugDescription;
-
-            EmailMessage emailMessage = new(BugTitle, emailBody, ["ramirofeldman0@gmail.com"]); // TEMPORARY MAIL
-            var attachment = new EmailAttachment(logPath);
+            EmailMessage emailMessage = new(BugTitle, BugDescription, ["ramirofeldman0@gmail.com"]); // TEMPORARY MAIL
+            var attachment = new EmailAttachment(bugReportPath);
 
            emailMessage.Attachments ??= [];
            emailMessage.Attachments.Add(attachment);
