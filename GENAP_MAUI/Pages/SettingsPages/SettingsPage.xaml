@@ -78,7 +78,9 @@
 
             <VerticalStackLayout>
                 <Label Text="Almacenamiento y datos" FontSize="18"></Label>
-                <Button Text="Reiniciar almacenamiento"></Button>
+                <Button Text="Reiniciar almacenamiento"       
+                        Command="{Binding PushNavigateCommand}"
+                        CommandParameter="{x:Static local:Routes.ClearStorageConfirmation}"/>
             </VerticalStackLayout>
 
 

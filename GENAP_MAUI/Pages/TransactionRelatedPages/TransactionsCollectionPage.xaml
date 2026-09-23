@@ -147,13 +147,6 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <Button Grid.Row="3"
-                Text="Reiniciar datos"
-                Style="{StaticResource ButtonDestructiveGhost}"
-                Command="{Binding PushNavigateCommand}"
-                CommandParameter="{x:Static local:Routes.ClearStorageConfirmation}"
-                Margin="20,8,20,100" />
-
         <nav:BottomNavigationBar Grid.Row="0" Grid.RowSpan="4" />
     </Grid>
 </ContentPage>
