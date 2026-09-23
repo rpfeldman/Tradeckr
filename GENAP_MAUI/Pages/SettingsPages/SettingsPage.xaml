@@ -6,86 +6,161 @@
              x:Class="GENAP_MAUI.Pages.SettingsPages.SettingsPage"
              x:DataType="vm:SettingsPageViewModel">
 
-    <ScrollView>
-        <!-- this is a temporary prototype -->
-        <VerticalStackLayout>
+    <Grid>
+        <ScrollView>
+            <VerticalStackLayout Style="{StaticResource FormContainer}"
+                                 Spacing="26"
+                                 Padding="20,22,20,108">
 
-            <VerticalStackLayout>
-                <Label Text="Apariencia y lenguaje" FontSize="18"></Label>
+                <VerticalStackLayout Spacing="16" Padding="0">
 
-                <HorizontalStackLayout>
-                    <Label Text="Tu nombre: "></Label>
-                    <Entry Text="{Binding PickedUserName}"></Entry>
-                </HorizontalStackLayout>
-                <HorizontalStackLayout>
-                    <Label Text="Tema: "></Label>
-                    <Picker
-                        Title="Seleccionar tema"
-                        ItemsSource="{x:Static local:GlobalResources.AppThemesList}"
-                        ItemDisplayBinding="{Binding Value}"
-                        SelectedItem="{Binding PickedTheme}"
-                        />
-                </HorizontalStackLayout>
-                <HorizontalStackLayout>
-                    <Label Text="Lenguaje: "></Label>
-                    <Picker IsEnabled="False"></Picker>
-                </HorizontalStackLayout>
+                    <VerticalStackLayout Spacing="4" Padding="0">
+                        <Label Text="Apariencia y lenguaje" Style="{StaticResource SettingsSectionTitle}" />
+                        <BoxView Style="{StaticResource SettingsDivider}" />
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="6" Padding="0">
+                        <Label Text="Tu nombre" Style="{StaticResource FieldLabel}" />
+                        <Border Style="{StaticResource InputField}">
+                            <Entry Text="{Binding PickedUserName}"
+                                   Style="{StaticResource BaseEntry}"
+                                   Placeholder="Tu nombre..." />
+                        </Border>
+                        <Label Style="{StaticResource SettingsHint}"
+                               Text="El nombre con el que la app te saluda cada vez que entrás." />
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="6" Padding="0">
+                        <Label Text="Tema" Style="{StaticResource FieldLabel}" />
+                        <Border Style="{StaticResource InputField}">
+                            <Picker Title="Seleccionar tema"
+                                    ItemsSource="{x:Static local:GlobalResources.AppThemesList}"
+                                    ItemDisplayBinding="{Binding Value}"
+                                    SelectedItem="{Binding PickedTheme}" />
+                        </Border>
+                        <Label Style="{StaticResource SettingsHint}"
+                               Text="Elegí entre modo claro y oscuro, o seguí el tema del sistema." />
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="6" Padding="0">
+                        <Label Text="Lenguaje" Style="{StaticResource FieldLabel}" />
+                        <Border Style="{StaticResource InputField}">
+                            <Picker IsEnabled="False" Title="Próximamente" />
+                        </Border>
+                        <Label Style="{StaticResource SettingsHint}"
+                               Text="Pronto vas a poder cambiar el idioma de la aplicación." />
+                    </VerticalStackLayout>
+
+                </VerticalStackLayout>
+                
+                <VerticalStackLayout Spacing="16" Padding="0">
+
+                    <VerticalStackLayout Spacing="4" Padding="0">
+                        <Label Text="Sistema multi-moneda" Style="{StaticResource SettingsSectionTitle}" />
+                        <BoxView Style="{StaticResource SettingsDivider}" />
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="6" Padding="0">
+                        <Label Text="Moneda de uso diario" Style="{StaticResource FieldLabel}" />
+                        <Border Style="{StaticResource InputField}">
+                            <Picker Title="Elegí tu moneda cotidiana"
+                                    ItemsSource="{x:Static local:GlobalResources.Currencies}"
+                                    ItemDisplayBinding="{Binding CurrencyDisplayName}"
+                                    SelectedItem="{Binding PickedCommonCurrency}" />
+                        </Border>
+                        <Label Style="{StaticResource SettingsHint}"
+                               Text="La moneda en la que ves y registrás tus movimientos del día a día." />
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="6" Padding="0">
+                        <Label Text="Moneda raíz (operativa)" Style="{StaticResource FieldLabel}" />
+                        <Border Style="{StaticResource InputField}">
+                            <Picker IsEnabled="False" Title="Próximamente" />
+                        </Border>
+                        <Label Style="{StaticResource SettingsHint}"
+                               Text="Es la base sobre la que se ajustan todas las demás monedas. Pronto vas a poder cambiarla desde acá." />
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="6" Padding="0">
+                        <Label Text="Actualización de cotizaciones" Style="{StaticResource FieldLabel}" />
+                        <Border Style="{StaticResource InputField}">
+                            <Picker ItemsSource="{Binding UpdateRatesOptionsList}"
+                                    ItemDisplayBinding="{Binding Value}"
+                                    SelectedItem="{Binding PickedUpdateRateOption}" />
+                        </Border>
+                        <Label Style="{StaticResource SettingsHint}"
+                               Text="Definí si las cotizaciones se actualizan automáticamente cada día al abrir la app." />
+                    </VerticalStackLayout>
+
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="16" Padding="0">
+
+                    <VerticalStackLayout Spacing="4" Padding="0">
+                        <Label Text="Reportar un error" Style="{StaticResource SettingsSectionTitle}" />
+                        <BoxView Style="{StaticResource SettingsDivider}" />
+                    </VerticalStackLayout>
+
+                    <Label Style="{StaticResource SettingsHint}"
+                           Text="Si algo falló, contanos. Se adjunta información técnica de tu dispositivo y un registro de actividad reciente para ayudarnos a encontrar el problema. Sos libre de revisar y eliminar lo que no quieras enviar." />
+
+                    <VerticalStackLayout Spacing="6" Padding="0">
+                        <Label Text="Título" Style="{StaticResource FieldLabel}" />
+                        <Border Style="{StaticResource InputField}">
+                            <Entry Text="{Binding BugTitle}"
+                                   Style="{StaticResource BaseEntry}"
+                                   Placeholder="Resumí el problema en pocas palabras" />
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="6" Padding="0">
+                        <Label Text="Descripción" Style="{StaticResource FieldLabel}" />
+                        <Border Style="{StaticResource InputField}">
+                            <Entry Text="{Binding BugDescription}"
+                                   Style="{StaticResource BaseEntry}"
+                                   Placeholder="Contá qué estabas haciendo (opcional)" />
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <Button Text="Reportar"
+                            Style="{StaticResource ButtonSecondary}"
+                            Command="{Binding ReportCommand}"
+                            Margin="0,4,0,0" />
+
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="16" Padding="0">
+
+                    <VerticalStackLayout Spacing="4" Padding="0">
+                        <Label Text="Almacenamiento y datos" Style="{StaticResource SettingsSectionTitle}" />
+                        <BoxView Style="{StaticResource SettingsDivider}" />
+                    </VerticalStackLayout>
+
+                    <Label Style="{StaticResource SettingsHint}"
+                           Text="Reiniciar borra todos tus datos —movimientos, categorías y preferencias— y devuelve la app a su estado inicial. Esta acción no se puede deshacer." />
+
+                    <Button Text="Reiniciar almacenamiento"
+                            Style="{StaticResource ButtonDangerOutline}"
+                            Command="{Binding PushNavigateCommand}"
+                            CommandParameter="{x:Static local:Routes.ClearStorageConfirmation}" />
+
+                </VerticalStackLayout>
+
             </VerticalStackLayout>
+        </ScrollView>
 
-            <VerticalStackLayout>
-                <Label Text="Sistema multi-moneda" FontSize="18"></Label>
-
-                <HorizontalStackLayout>
-                    <Label Text="Moneda de uso diario: "></Label>
-                    <Picker
-                        Title="Elegí tu moneda cotidiana"
-                        ItemsSource="{x:Static local:GlobalResources.Currencies}"
-                        ItemDisplayBinding="{Binding CurrencyDisplayName}"
-                        SelectedItem="{Binding PickedCommonCurrency}"
-                        />
-                </HorizontalStackLayout>
-                <HorizontalStackLayout>
-                    <Label Text="Moneda operativa: "></Label>
-                    <Picker IsEnabled="False"></Picker>
-                </HorizontalStackLayout>
-                <HorizontalStackLayout>
-                    <Label Text="Actualizacion diaria: "></Label>
-                    <Picker
-                        ItemsSource="{Binding UpdateRatesOptionsList}"
-                        ItemDisplayBinding="{Binding Value}"
-                        SelectedItem="{Binding PickedUpdateRateOption}"
-                        />
-                </HorizontalStackLayout>
-            </VerticalStackLayout>
-
-            <VerticalStackLayout>
-                <Label Text="Reportar error" FontSize="18"></Label>
-
-                <HorizontalStackLayout>
-                    <Label Text="Titulo: "></Label>
-                    <Entry Text="{Binding BugTitle}"></Entry>
-                </HorizontalStackLayout>
-                <HorizontalStackLayout>
-                    <Label Text="Descripcion: "></Label>
-                    <Entry Text="{Binding BugDescription}"></Entry>
-                </HorizontalStackLayout>
-                <HorizontalStackLayout>
-                    <Button Text="Reportar" Command="{Binding ReportCommand}"></Button>
-                </HorizontalStackLayout>
-            </VerticalStackLayout>
-
-
-
-            <VerticalStackLayout>
-                <Label Text="Almacenamiento y datos" FontSize="18"></Label>
-                <Button Text="Reiniciar almacenamiento"       
-                        Command="{Binding PushNavigateCommand}"
-                        CommandParameter="{x:Static local:Routes.ClearStorageConfirmation}"/>
-            </VerticalStackLayout>
-
-
-            <Button Text="Guardar cambios" Command="{Binding SaveCommand}"></Button>
-            
+        <VerticalStackLayout VerticalOptions="End"
+                             Spacing="0"
+                             Padding="0"
+                             BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}">
+            <BoxView Style="{StaticResource SettingsDivider}" />
+            <Grid Padding="20,12,20,18">
+                <Button Text="Guardar cambios"
+                        Style="{StaticResource ButtonPrimary}"
+                        Command="{Binding SaveCommand}" />
+            </Grid>
         </VerticalStackLayout>
-    </ScrollView>
+
+    </Grid>
+
 </ContentPage>

@@ -73,6 +73,11 @@ namespace GENAP_MAUI.ViewModels
 
                     Preferences.Set(PreferenceKeys.UserThemeKey, PickedTheme.Key == AppTheme.Dark);
                 }
+
+                if (AppearanceSettings[3])
+                {
+                    // TO - DO
+                }
             }
 
             if (CurrencySettings[0])
@@ -84,7 +89,7 @@ namespace GENAP_MAUI.ViewModels
 
                 if (CurrencySettings[2])
                 {
-                    
+                    // TO DO
                 }
 
                 if (CurrencySettings[3])
