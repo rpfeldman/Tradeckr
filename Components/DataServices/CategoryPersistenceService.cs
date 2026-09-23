@@ -91,5 +91,10 @@ namespace DataServices
         {
             return await _StateStorage.AnyAsync();
         }
+
+        public async Task<OperationResult> RestartDataAsync()
+        {
+            return await _StateStorage.ClearStorageAsync();
+        }
     }
 }
