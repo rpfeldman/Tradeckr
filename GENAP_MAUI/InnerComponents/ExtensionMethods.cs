@@ -12,7 +12,11 @@ namespace GENAP_MAUI.InnerComponents
         {
             if (!operation.Success)
             {
-               Log.Error($"Error trying to '{operationDescription}'\n {operation.InnerError!.ErrorMessage}\n Code: {operation.InnerError!.ErrorCode}");
+               Log.Error($"Error trying to '{operationDescription}'\n" +
+                   $" Message:{operation.InnerError!.ErrorMessage}\n" 
+                   + operation.InnerError!.ErrorDescription is not null ? $" Description: {operation.InnerError!.ErrorDescription}" : string.Empty +
+                   $" Code: {operation.InnerError!.ErrorCode}");
+
                 return;
             }
 
@@ -20,9 +24,13 @@ namespace GENAP_MAUI.InnerComponents
         }
         public static void WriteLog<T>(this OperationResult<T> operation, string operationDescription)
         {
-             if (!operation.Success)
+            if (!operation.Success)
             {
-               Log.Error($"Error trying to '{operationDescription}'\n {operation.InnerError!.ErrorMessage}\n Code: {operation.InnerError!.ErrorCode}");
+                Log.Error($"Error trying to '{operationDescription}'\n" +
+                   $" Message:{operation.InnerError!.ErrorMessage}\n" 
+                   + operation.InnerError!.ErrorDescription is not null ? $" Description: {operation.InnerError!.ErrorDescription}" : string.Empty +
+                   $" Code: {operation.InnerError!.ErrorCode}");
+
                 return;
             }
 
