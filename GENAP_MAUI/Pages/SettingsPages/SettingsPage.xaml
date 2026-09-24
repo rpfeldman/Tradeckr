@@ -39,7 +39,7 @@
                                     SelectedItem="{Binding PickedTheme}" />
                         </Border>
                         <Label Style="{StaticResource SettingsHint}"
-                               Text="Elegí entre modo claro y oscuro, o seguí el tema del sistema." />
+                               Text="Elegí entre modo claro u oscuro." />
                     </VerticalStackLayout>
 
                     <VerticalStackLayout Spacing="6" Padding="0">
@@ -89,7 +89,7 @@
                                     SelectedItem="{Binding PickedUpdateRateOption}" />
                         </Border>
                         <Label Style="{StaticResource SettingsHint}"
-                               Text="Definí si las cotizaciones se actualizan automáticamente cada día al abrir la app." />
+                               Text="Decidí si querés que las cotizaciones se actualicen automáticamente cada día al abrir la app." />
                     </VerticalStackLayout>
 
                 </VerticalStackLayout>
@@ -105,7 +105,7 @@
                            Text="Si algo falló, contanos. Se adjunta información técnica de tu dispositivo y un registro de actividad reciente para ayudarnos a encontrar el problema. Sos libre de revisar y eliminar lo que no quieras enviar." />
 
                     <VerticalStackLayout Spacing="6" Padding="0">
-                        <Label Text="Título" Style="{StaticResource FieldLabel}" />
+                        <Label Text="Título (obligatorio)" Style="{StaticResource FieldLabel}" />
                         <Border Style="{StaticResource InputField}">
                             <Entry Text="{Binding BugTitle}"
                                    Style="{StaticResource BaseEntry}"
@@ -114,11 +114,11 @@
                     </VerticalStackLayout>
 
                     <VerticalStackLayout Spacing="6" Padding="0">
-                        <Label Text="Descripción" Style="{StaticResource FieldLabel}" />
+                        <Label Text="Descripción (opcional)" Style="{StaticResource FieldLabel}" />
                         <Border Style="{StaticResource InputField}">
                             <Entry Text="{Binding BugDescription}"
                                    Style="{StaticResource BaseEntry}"
-                                   Placeholder="Contá qué estabas haciendo (opcional)" />
+                                   Placeholder="Contá qué estabas haciendo. Cuanto mas detalle, mejor." />
                         </Border>
                     </VerticalStackLayout>
 

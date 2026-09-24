@@ -108,6 +108,12 @@ namespace GENAP_MAUI.ViewModels
         [RelayCommand(CanExecute = nameof(ReportCanExecute))]
         public async Task Report()
         {
+            if(DeviceInfo.Idiom == DeviceIdiom.Desktop)
+            {
+                await Shell.Current.DisplayAlertAsync("Error", "El reporte de errores desde la app es exclusivo de dispositivos móviles.\n\nPuedes hacer tu reporte enviando el mismo a 'ramirofeldman0@gmail.com'", "Aceptar");
+                return;
+            }
+
             var logPath = Path.Combine(FileSystem.AppDataDirectory, FilePaths.LogFileName);
 
             if (!File.Exists(logPath))
@@ -123,7 +129,8 @@ namespace GENAP_MAUI.ViewModels
                 $"A continuación se adjuntará la información del dispositivo. "+
                 $"Estos datos son claves para poder identificar el error. " +
                 $"Eres completamente libre de eliminar los datos que no quieras enviar."+
-                $"\n -Platform: {DeviceInfo.Platform} Manufacturer: {DeviceInfo.Manufacturer}" +
+                $"\n -Platform: {DeviceInfo.Platform}" +
+                $"\n -Manufacturer: {DeviceInfo.Manufacturer}" +
                 $"\n -Model: {DeviceInfo.Model}" +
                 $"\n -OS Version: {DeviceInfo.VersionString}" +
                 $"\n -Device idiom: {DeviceInfo.Idiom}" +
@@ -141,12 +148,14 @@ namespace GENAP_MAUI.ViewModels
             {
                 Log.Warning("Email is not supported. Advancing with file sharing (bug report)");
                 
-                await Shell.Current.DisplayAlertAsync("Reporte", "Aparentemente no tienes una aplicacion predeterminada de correo electronico en tu dispositivo.\n\nPor favor, intente compartir este archivo de texto a 'ramirofeldman0@gmail.com'","Aceptar");
+                await Shell.Current.DisplayAlertAsync("Reporte", "Aparentemente no tienes una aplicacion predeterminada de correo electronico en tu dispositivo.\n\nPor favor, intente compartir el siguiente archivo de texto a 'ramirofeldman0@gmail.com'","Aceptar");
 
 
                 ShareFile file = new(bugReportPath);
                 ShareFileRequest request = new("Bug", file);
                 await Share.Default.RequestAsync(request);
+
+               await Shell.Current.DisplayAlertAsync($"Gracias, {GlobalResources.UserName}", "El equipo de Tradeckr agradece infinitamente que te hayas tomado el tiempo de realizar tu reporte\n\n¡Tu colaboración nos ayuda a ser mejores cada día!","Aceptar");
 
                 return;
             }
@@ -158,6 +167,8 @@ namespace GENAP_MAUI.ViewModels
            emailMessage.Attachments.Add(attachment);
 
             await Email.Default.ComposeAsync(emailMessage);
+
+            await Shell.Current.DisplayAlertAsync($"Gracias, {GlobalResources.UserName}", "El equipo de Tradeckr agradece infinitamente que te hayas tomado el tiempo de realizar tu reporte\n\n¡Tu colaboración nos ayuda a ser mejores cada día!", "Aceptar");
         }
 
         [RelayCommand]
