@@ -35,17 +35,17 @@ namespace Repositories
 
                 return OperationResult.SuccessfulOperation();
             }
-            catch (SqliteException)
+            catch (SqliteException ex)
             {
-                return OperationResult.FaultedOperation(RepositorieErrors.DBProviderError);
+                return OperationResult.FaultedOperation(RepositorieErrors.DBProviderError(ex));
             }
-            catch (DbUpdateException)
+            catch (DbUpdateException ex)
             {
-                return OperationResult.FaultedOperation(RepositorieErrors.DBUpdateError);
+                return OperationResult.FaultedOperation(RepositorieErrors.DBUpdateError(ex));
             }
-            catch (TimeoutException)
+            catch (TimeoutException ex)
             {
-                return OperationResult.FaultedOperation(RepositorieErrors.TimeoutError);
+                return OperationResult.FaultedOperation(RepositorieErrors.TimeoutError(ex));
             }
         }
 
@@ -67,17 +67,17 @@ namespace Repositories
 
                 return OperationResult.SuccessfulOperation();
             }
-            catch (SqliteException)
+            catch (SqliteException ex)
             {
-                return OperationResult.FaultedOperation(RepositorieErrors.DBProviderError);
+                return OperationResult.FaultedOperation(RepositorieErrors.DBProviderError(ex));
             }
-            catch (DbUpdateException)
+            catch (DbUpdateException ex)
             {
-                return OperationResult.FaultedOperation(RepositorieErrors.DBUpdateError);
+                return OperationResult.FaultedOperation(RepositorieErrors.DBUpdateError(ex));
             }
-            catch (TimeoutException)
+            catch (TimeoutException ex)
             {
-                return OperationResult.FaultedOperation(RepositorieErrors.TimeoutError);
+                return OperationResult.FaultedOperation(RepositorieErrors.TimeoutError(ex));
             }
         }
 
@@ -92,17 +92,17 @@ namespace Repositories
 
                 return OperationResult<int>.SuccessfulOperation(affectedRows);
             }
-            catch (SqliteException)
+            catch (SqliteException ex)
             {
-                return OperationResult<int>.FaultedOperation(RepositorieErrors.DBProviderError);
+                return OperationResult<int>.FaultedOperation(RepositorieErrors.DBProviderError(ex));
             }
-            catch (DbUpdateException)
+            catch (DbUpdateException ex)
             {
-                return OperationResult<int>.FaultedOperation(RepositorieErrors.DBUpdateError);
+                return OperationResult<int>.FaultedOperation(RepositorieErrors.DBUpdateError(ex));
             }
-            catch (TimeoutException)
+            catch (TimeoutException ex)
             {
-                return OperationResult<int>.FaultedOperation(RepositorieErrors.TimeoutError);
+                return OperationResult<int>.FaultedOperation(RepositorieErrors.TimeoutError(ex));
             }
         }
 
@@ -123,17 +123,17 @@ namespace Repositories
 
                 return OperationResult.SuccessfulOperation();
             }
-            catch (SqliteException)
+            catch (SqliteException ex)
             {
-                return OperationResult.FaultedOperation(RepositorieErrors.DBProviderError);
+                return OperationResult.FaultedOperation(RepositorieErrors.DBProviderError(ex));
             }
-            catch (DbUpdateException)
+            catch (DbUpdateException ex)
             {
-                return OperationResult.FaultedOperation(RepositorieErrors.DBUpdateError);
+                return OperationResult.FaultedOperation(RepositorieErrors.DBUpdateError(ex));
             }
-            catch (TimeoutException)
+            catch (TimeoutException ex)
             {
-                return OperationResult.FaultedOperation(RepositorieErrors.TimeoutError);
+                return OperationResult.FaultedOperation(RepositorieErrors.TimeoutError(ex));
             }
         }
 
@@ -146,17 +146,17 @@ namespace Repositories
                 var result = await context.Set<T>().AsNoTracking().ToListAsync(); // I wanted to use 'IAsyncEnumerable' to create a 1-to-1 data stream. But since we're using SQLite with a small amount of data, I felt it was a bit over-engineering.
                 return OperationResult<IEnumerable<T>>.SuccessfulOperation(result);
             }
-            catch (SqliteException)
+            catch (SqliteException ex)
             {
-                return OperationResult<IEnumerable<T>>.FaultedOperation(RepositorieErrors.DBProviderError);
+                return OperationResult<IEnumerable<T>>.FaultedOperation(RepositorieErrors.DBProviderError(ex));
             }
-            catch (DbUpdateException)
+            catch (DbUpdateException ex)
             {
-                return OperationResult<IEnumerable<T>>.FaultedOperation(RepositorieErrors.DBUpdateError);
+                return OperationResult<IEnumerable<T>>.FaultedOperation(RepositorieErrors.DBUpdateError(ex));
             }
-            catch (TimeoutException)
+            catch (TimeoutException ex)
             {
-                return OperationResult<IEnumerable<T>>.FaultedOperation(RepositorieErrors.TimeoutError);
+                return OperationResult<IEnumerable<T>>.FaultedOperation(RepositorieErrors.TimeoutError(ex));
             }
         }
 
@@ -169,17 +169,17 @@ namespace Repositories
                 var result = await context.Set<T>().AsNoTracking().Select(Selector).ToListAsync();
                 return OperationResult<IEnumerable<TResult>>.SuccessfulOperation(result);
             }
-            catch (SqliteException)
+            catch (SqliteException ex)
             {
-                return OperationResult<IEnumerable<TResult>>.FaultedOperation(RepositorieErrors.DBProviderError);
+                return OperationResult<IEnumerable<TResult>>.FaultedOperation(RepositorieErrors.DBProviderError(ex));
             }
-            catch (DbUpdateException)
+            catch (DbUpdateException ex)
             {
-                return OperationResult<IEnumerable<TResult>>.FaultedOperation(RepositorieErrors.DBUpdateError);
+                return OperationResult<IEnumerable<TResult>>.FaultedOperation(RepositorieErrors.DBUpdateError(ex));
             }
-            catch (TimeoutException)
+            catch (TimeoutException ex)
             {
-                return OperationResult<IEnumerable<TResult>>.FaultedOperation(RepositorieErrors.TimeoutError);
+                return OperationResult<IEnumerable<TResult>>.FaultedOperation(RepositorieErrors.TimeoutError(ex));
             }
         }
         public async Task<OperationResult<IEnumerable<TResult>>> ProjectByPredicateAsync<TResult>(Expression<Func<T, TResult>> Selector, Expression<Func<T, bool>> Predicate)
@@ -191,17 +191,17 @@ namespace Repositories
                 var result = await context.Set<T>().AsNoTracking().Where(Predicate).Select(Selector).ToListAsync();
                 return OperationResult<IEnumerable<TResult>>.SuccessfulOperation(result);
             }
-            catch (SqliteException)
+            catch (SqliteException ex)
             {
-                return OperationResult<IEnumerable<TResult>>.FaultedOperation(RepositorieErrors.DBProviderError);
+                return OperationResult<IEnumerable<TResult>>.FaultedOperation(RepositorieErrors.DBProviderError(ex));
             }
-            catch (DbUpdateException)
+            catch (DbUpdateException ex)
             {
-                return OperationResult<IEnumerable<TResult>>.FaultedOperation(RepositorieErrors.DBUpdateError);
+                return OperationResult<IEnumerable<TResult>>.FaultedOperation(RepositorieErrors.DBUpdateError(ex));
             }
-            catch (TimeoutException)
+            catch (TimeoutException ex)
             {
-                return OperationResult<IEnumerable<TResult>>.FaultedOperation(RepositorieErrors.TimeoutError);
+                return OperationResult<IEnumerable<TResult>>.FaultedOperation(RepositorieErrors.TimeoutError(ex));
             }
         }
 
@@ -215,17 +215,17 @@ namespace Repositories
 
                 return OperationResult<IEnumerable<T>>.SuccessfulOperation(result);
             }
-            catch (SqliteException)
+             catch (SqliteException ex)
             {
-                return OperationResult<IEnumerable<T>>.FaultedOperation(RepositorieErrors.DBProviderError);
+                return OperationResult<IEnumerable<T>>.FaultedOperation(RepositorieErrors.DBProviderError(ex));
             }
-            catch (DbUpdateException)
+            catch (DbUpdateException ex)
             {
-                return OperationResult<IEnumerable<T>>.FaultedOperation(RepositorieErrors.DBUpdateError);
+                return OperationResult<IEnumerable<T>>.FaultedOperation(RepositorieErrors.DBUpdateError(ex));
             }
-            catch (TimeoutException)
+            catch (TimeoutException ex)
             {
-                return OperationResult<IEnumerable<T>>.FaultedOperation(RepositorieErrors.TimeoutError);
+                return OperationResult<IEnumerable<T>>.FaultedOperation(RepositorieErrors.TimeoutError(ex));
             }
         }
 
@@ -264,17 +264,17 @@ namespace Repositories
 
                 return OperationResult.SuccessfulOperation();
             }
-            catch (SqliteException)
+            catch (SqliteException ex)
             {
-                return OperationResult.FaultedOperation(RepositorieErrors.DBProviderError);
+                return OperationResult.FaultedOperation(RepositorieErrors.DBProviderError(ex));
             }
-            catch (DbUpdateException)
+            catch (DbUpdateException ex)
             {
-                return OperationResult.FaultedOperation(RepositorieErrors.DBUpdateError);
+                return OperationResult.FaultedOperation(RepositorieErrors.DBUpdateError(ex));
             }
-            catch (TimeoutException)
+            catch (TimeoutException ex)
             {
-                return OperationResult.FaultedOperation(RepositorieErrors.TimeoutError);
+                return OperationResult.FaultedOperation(RepositorieErrors.TimeoutError(ex));
             }
         }
 
@@ -303,17 +303,17 @@ namespace Repositories
 
                 return OperationResult<int>.SuccessfulOperation(affectedRows);
             }
-            catch (SqliteException)
+            catch (SqliteException ex)
             {
-                return OperationResult<int>.FaultedOperation(RepositorieErrors.DBProviderError);
+                return OperationResult<int>.FaultedOperation(RepositorieErrors.DBProviderError(ex));
             }
-            catch (DbUpdateException)
+            catch (DbUpdateException ex)
             {
-                return OperationResult<int>.FaultedOperation(RepositorieErrors.DBUpdateError);
+                return OperationResult<int>.FaultedOperation(RepositorieErrors.DBUpdateError(ex));
             }
-            catch (TimeoutException)
+            catch (TimeoutException ex)
             {
-                return OperationResult<int>.FaultedOperation(RepositorieErrors.TimeoutError);
+                return OperationResult<int>.FaultedOperation(RepositorieErrors.TimeoutError(ex));
             }
         }
 
@@ -333,17 +333,17 @@ namespace Repositories
 
                 return OperationResult.FaultedOperation(new InnerErrorDto() { ErrorMessage = $"No records were updated. Please verify that the entity with ID {NewEntity.Id} exists" });
             }
-            catch (SqliteException)
+            catch (SqliteException ex)
             {
-                return OperationResult.FaultedOperation(RepositorieErrors.DBProviderError);
+                return OperationResult.FaultedOperation(RepositorieErrors.DBProviderError(ex));
             }
-            catch (DbUpdateException)
+            catch (DbUpdateException ex)
             {
-                return OperationResult.FaultedOperation(RepositorieErrors.DBUpdateError);
+                return OperationResult.FaultedOperation(RepositorieErrors.DBUpdateError(ex));
             }
-            catch (TimeoutException)
+            catch (TimeoutException ex)
             {
-                return OperationResult.FaultedOperation(RepositorieErrors.TimeoutError);
+                return OperationResult.FaultedOperation(RepositorieErrors.TimeoutError(ex));
             }
         }
 
@@ -358,17 +358,17 @@ namespace Repositories
 
                 return OperationResult<int>.SuccessfulOperation(affectedRows);
             }
-            catch (SqliteException)
+            catch (SqliteException ex)
             {
-                return OperationResult<int>.FaultedOperation(RepositorieErrors.DBProviderError);
+                return OperationResult<int>.FaultedOperation(RepositorieErrors.DBProviderError(ex));
             }
-            catch (DbUpdateException)
+            catch (DbUpdateException ex)
             {
-                return OperationResult<int>.FaultedOperation(RepositorieErrors.DBUpdateError);
+                return OperationResult<int>.FaultedOperation(RepositorieErrors.DBUpdateError(ex));
             }
-            catch (TimeoutException)
+            catch (TimeoutException ex)
             {
-                return OperationResult<int>.FaultedOperation(RepositorieErrors.TimeoutError);
+                return OperationResult<int>.FaultedOperation(RepositorieErrors.TimeoutError(ex));
             }
         }
 
@@ -382,17 +382,17 @@ namespace Repositories
 
                 return OperationResult<bool>.SuccessfulOperation(anyOperation);
             }
-            catch (SqliteException)
+            catch (SqliteException ex)
             {
-                return OperationResult<bool>.FaultedOperation(RepositorieErrors.DBProviderError);
+                return OperationResult<bool>.FaultedOperation(RepositorieErrors.DBProviderError(ex));
             }
-            catch (DbUpdateException)
+            catch (DbUpdateException ex)
             {
-                return OperationResult<bool>.FaultedOperation(RepositorieErrors.DBUpdateError);
+                return OperationResult<bool>.FaultedOperation(RepositorieErrors.DBUpdateError(ex));
             }
-            catch (TimeoutException)
+            catch (TimeoutException ex)
             {
-                return OperationResult<bool>.FaultedOperation(RepositorieErrors.TimeoutError);
+                return OperationResult<bool>.FaultedOperation(RepositorieErrors.TimeoutError(ex));
             }
         }
         public async Task<OperationResult<bool>> AnyAsync(Expression<Func<T, bool>> Predicate)
@@ -405,17 +405,17 @@ namespace Repositories
 
                 return OperationResult<bool>.SuccessfulOperation(anyOperation);
             }
-            catch (SqliteException)
+            catch (SqliteException ex)
             {
-                return OperationResult<bool>.FaultedOperation(RepositorieErrors.DBProviderError);
+                return OperationResult<bool>.FaultedOperation(RepositorieErrors.DBProviderError(ex));
             }
-            catch (DbUpdateException)
+            catch (DbUpdateException ex)
             {
-                return OperationResult<bool>.FaultedOperation(RepositorieErrors.DBUpdateError);
+                return OperationResult<bool>.FaultedOperation(RepositorieErrors.DBUpdateError(ex));
             }
-            catch (TimeoutException)
+            catch (TimeoutException ex)
             {
-                return OperationResult<bool>.FaultedOperation(RepositorieErrors.TimeoutError);
+                return OperationResult<bool>.FaultedOperation(RepositorieErrors.TimeoutError(ex));
             }
         }
     }
