@@ -23,7 +23,7 @@ namespace ConsoleTest
             Batteries_V2.Init();
 
             EF_SQLite_StateStorageRepo<CurrencyDto> repo = new("Test.db");
-            CurrenciesRatesService crs = new("pene");
+            CurrenciesRatesService crs = new("");
         }
     }
 }

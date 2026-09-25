@@ -23,6 +23,7 @@ namespace GENAP_MAUI
             builder
                 .UseSkiaSharp()
                 .UseLiveCharts()
+                .UseMauiCommunityToolkit()
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkitMediaElement(false)
                 .ConfigureFonts(fonts =>

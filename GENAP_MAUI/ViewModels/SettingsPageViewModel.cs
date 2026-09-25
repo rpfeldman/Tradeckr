@@ -1,12 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DomainModel;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.Maui.ApplicationModel.Communication;
 using Serilog;
+using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Text;
 
 namespace GENAP_MAUI.ViewModels
 {
@@ -60,10 +60,14 @@ namespace GENAP_MAUI.ViewModels
         [RelayCommand(CanExecute = nameof(SaveCanExecute))]
         public async Task Save()
         {
+            Log.Information("Settings saved (Settings Page)");
+
             if (AppearanceSettings[0])
             {
                 if(AppearanceSettings[1])
                 {
+                    Log.Information($"Tried to change Username from '{GlobalResources.UserName}' to '{PickedUserName}' (Settings page)");
+
                     Preferences.Set(PreferenceKeys.UserNameKey, PickedUserName);
                 }
 
