@@ -10,6 +10,7 @@ using SQLitePCL;
 using NetworkServices;
 using CommunityToolkit.Maui;
 using Serilog;
+using GENAP_MAUI.CustomViews.AlertDialogPopup;
 
 namespace GENAP_MAUI
 {
@@ -24,6 +25,7 @@ namespace GENAP_MAUI
                 .UseSkiaSharp()
                 .UseLiveCharts()
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .UseMauiCommunityToolkitMediaElement(false)
                 .ConfigureFonts(fonts =>
                 {
@@ -38,6 +40,9 @@ namespace GENAP_MAUI
 
             // Logging system
             Log.Logger = new LoggerConfiguration().WriteTo.File(logPath, shared: true).MinimumLevel.Debug().CreateLogger();
+
+            // CommunityToolkit views
+            builder.Services.AddTransientPopup<AlertDialogPopup, AlertDialogPopupViewModel>();
 
             // ViewModels
             builder.Services.AddTransient<MainDashboardPageViewModel>();
