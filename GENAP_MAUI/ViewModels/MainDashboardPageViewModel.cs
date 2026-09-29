@@ -17,7 +17,7 @@ namespace GENAP_MAUI.ViewModels
     public sealed partial class MainDashboardPageViewModel : BaseViewModel
     {
         private DataProjectionService _dataProjectionService;
-        private CustomDialogsService _customDialogsService;
+        private readonly CustomDialogsService _customDialogsService;
         private bool _IsLoading;
         public MainDashboardPageViewModel(DataProjectionService dataProjectionService, CustomDialogsService customDialogsService)
         {

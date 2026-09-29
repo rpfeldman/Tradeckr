@@ -118,7 +118,7 @@
                         <Border Style="{StaticResource InputField}">
                             <Entry Text="{Binding BugDescription}"
                                    Style="{StaticResource BaseEntry}"
-                                   Placeholder="Contá qué estabas haciendo. Cuanto mas detalle, mejor." />
+                                   Placeholder="Contá en detalle qué estabas haciendo." />
                         </Border>
                     </VerticalStackLayout>
 

@@ -76,7 +76,7 @@ namespace GENAP_MAUI.ViewModels
         [RelayCommand(CanExecute = nameof(RegistTransactionCanExecute))]
         public async Task RegistTransaction()
         {
-            var DisplayAlertTitle = "Transaccion";
+            var DisplayAlertTitle = "Movimiento";
             var DisplayAlertButton = "Aceptar";
 
             Value = CurrencyConverterService.CurrencyToTfu(Value, PickedCurrency); 

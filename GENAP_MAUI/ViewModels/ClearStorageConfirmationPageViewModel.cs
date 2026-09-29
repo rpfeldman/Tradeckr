@@ -49,7 +49,7 @@ namespace GENAP_MAUI.ViewModels
                 return;
              }
 
-            await _customDialogsService.ShowAlertDialogAsync("Aplicacion formateada", "Se han reiniciado los datos correctamente", "Aceptar");
+            await _customDialogsService.ShowAlertDialogAsync("Datos eliminados", "Se han reiniciado los datos correctamente", "Aceptar");
             await DirectNavigate(Routes.Dashboard);
         }
     }
