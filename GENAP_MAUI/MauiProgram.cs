@@ -12,6 +12,7 @@ using CommunityToolkit.Maui;
 using Serilog;
 using GENAP_MAUI.CustomViews.AlertDialogPopup;
 using GENAP_MAUI.CustomViews;
+using GENAP_MAUI.CustomViews.DoubleActionDialogPopup;
 
 namespace GENAP_MAUI
 {
@@ -45,6 +46,7 @@ namespace GENAP_MAUI
             // CommunityToolkit views and related
             builder.Services.AddSingleton<CustomDialogsService>();
             builder.Services.AddTransientPopup<AlertDialogPopup, AlertDialogPopupViewModel>();
+            builder.Services.AddTransientPopup<DoubleActionDialogPopup,  DoubleActionDialogPopupViewModel>();
 
             // ViewModels
             builder.Services.AddTransient<MainDashboardPageViewModel>();

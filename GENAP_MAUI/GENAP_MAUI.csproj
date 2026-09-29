@@ -118,6 +118,9 @@
 	  <MauiXaml Update="CustomViews\AlertDialogPopup\AlertDialogPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="CustomViews\DoubleActionDialogPopup\DoubleActionDialogPopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\ConfirmationPages\ClearStorageConfirmationPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
