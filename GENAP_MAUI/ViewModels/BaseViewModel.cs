@@ -1,4 +1,5 @@
 ﻿
+using CommunityToolkit.Maui;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using GENAP_MAUI.Pages.MainNavigationBarPages;
@@ -11,7 +12,6 @@ namespace GENAP_MAUI.ViewModels
 {
     public abstract partial class BaseViewModel : ObservableObject
     {
-
         [RelayCommand]
         public async Task GoBack()
         {

@@ -8,22 +8,27 @@ using CommunityToolkit.Mvvm.Input;
 using GENAP_MAUI.InnerComponents;
 using System.Security;
 using Serilog;
+using CommunityToolkit.Maui;
+using GENAP_MAUI.CustomViews.AlertDialogPopup;
+using GENAP_MAUI.CustomViews;
 
 namespace GENAP_MAUI.ViewModels
 {
     public sealed partial class MainDashboardPageViewModel : BaseViewModel
     {
         private DataProjectionService _dataProjectionService;
+        private CustomDialogsService _customDialogsService;
         private bool _IsLoading;
-
-        public MainDashboardPageViewModel(DataProjectionService dataProjectionService)
+        public MainDashboardPageViewModel(DataProjectionService dataProjectionService, CustomDialogsService customDialogsService)
         {
             _dataProjectionService = dataProjectionService;
+            _customDialogsService = customDialogsService;
+
             MonthTransactions = [];
         }
 
         [ObservableProperty]
-        public partial string UserName { get; set;}
+        public partial string UserName { get; set; } = string.Empty; 
 
         [ObservableProperty]
         public partial TransactionDto[] MonthTransactions { get; set; }

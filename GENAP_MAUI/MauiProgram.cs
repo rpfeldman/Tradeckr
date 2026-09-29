@@ -11,6 +11,7 @@ using NetworkServices;
 using CommunityToolkit.Maui;
 using Serilog;
 using GENAP_MAUI.CustomViews.AlertDialogPopup;
+using GENAP_MAUI.CustomViews;
 
 namespace GENAP_MAUI
 {
@@ -41,7 +42,8 @@ namespace GENAP_MAUI
             // Logging system
             Log.Logger = new LoggerConfiguration().WriteTo.File(logPath, shared: true).MinimumLevel.Debug().CreateLogger();
 
-            // CommunityToolkit views
+            // CommunityToolkit views and related
+            builder.Services.AddSingleton<CustomDialogsService>();
             builder.Services.AddTransientPopup<AlertDialogPopup, AlertDialogPopupViewModel>();
 
             // ViewModels
