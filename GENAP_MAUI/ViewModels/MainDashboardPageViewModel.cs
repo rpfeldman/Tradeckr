@@ -73,10 +73,6 @@ namespace GENAP_MAUI.ViewModels
         {
             if (_IsLoading) { return; }
 
-               var a = await _customDialogsService.ShowDoubleActionDialogAsync("Test", "Esto es un test", "Opcion1", "Opcion2");
-                await _customDialogsService.ShowAlertDialogAsync("resultado", $"{a}","aceptar");
-
-
             await Load(true);
         }
     }
