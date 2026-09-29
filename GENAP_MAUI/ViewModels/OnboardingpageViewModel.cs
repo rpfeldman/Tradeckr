@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DataServices;
 using DomainModel;
+using GENAP_MAUI.CustomViews;
 using GENAP_MAUI.InnerComponents;
 using NetworkServices;
 using Serilog;
@@ -15,9 +16,10 @@ using static GENAP_MAUI.GlobalResources;
 
 namespace GENAP_MAUI.ViewModels
 {
-    public sealed partial class OnboardingpageViewModel(CurrencyPersistenceService currencyPersistenceService) : BaseViewModel
+    public sealed partial class OnboardingpageViewModel(CurrencyPersistenceService currencyPersistenceService, CustomDialogsService customDialogsService) : BaseViewModel
     {
         private CurrencyPersistenceService _CurrencyPersistenceService = currencyPersistenceService;
+        private CustomDialogsService _customDialogsService = customDialogsService;
 
         private bool IsPingerActive { get; set; }
 
@@ -56,7 +58,7 @@ namespace GENAP_MAUI.ViewModels
 
             if (!updateCurrenciesRatesOperation.Success)
             {
-                await Shell.Current.DisplayAlertAsync("Error", updateCurrenciesRatesOperation.InnerError!.ErrorMessage, "Aceptar");
+                await _customDialogsService.ShowAlertDialogAsync("Error", updateCurrenciesRatesOperation.InnerError!.ErrorMessage, "Aceptar");
                 return;
             }
 
@@ -65,7 +67,7 @@ namespace GENAP_MAUI.ViewModels
 
             if (!saveCurrenciesOperation.Success)
             {
-                await Shell.Current.DisplayAlertAsync("Error", saveCurrenciesOperation.InnerError!.ErrorMessage, "Aceptar");
+                await _customDialogsService.ShowAlertDialogAsync("Error", saveCurrenciesOperation.InnerError!.ErrorMessage, "Aceptar");
                 return;
             }
 

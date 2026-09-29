@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using DataServices;
 using DomainModel;
+using GENAP_MAUI.CustomViews;
 using GENAP_MAUI.InnerComponents;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,10 @@ using System.Text;
 
 namespace GENAP_MAUI.ViewModels
 {
-    public sealed partial class RegistTradeTransactionPageViewModel(DataRegistrationService dataRegistrationService) : BaseViewModel
+    public sealed partial class RegistTradeTransactionPageViewModel(DataRegistrationService dataRegistrationService, CustomDialogsService customDialogsService) : BaseViewModel
     {
         private DataRegistrationService _RegistrationService = dataRegistrationService;
+        private CustomDialogsService _customDialogsService = customDialogsService;
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(RegistTransactionCommand))]

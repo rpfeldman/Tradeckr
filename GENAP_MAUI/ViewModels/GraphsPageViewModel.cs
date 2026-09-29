@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using DataServices;
 using DomainModel;
+using GENAP_MAUI.CustomViews;
 using GENAP_MAUI.InnerComponents;
 using LiveChartsCore;
 using LiveChartsCore.Defaults;
@@ -22,11 +23,14 @@ namespace GENAP_MAUI.ViewModels
 	{
 		private DataProjectionService _dataProjectionService;
 		private CategoryPersistenceService _categoryPersistenceService;
+
+        private CustomDialogsService _customDialogsService;
         private bool _IsAlreadyFillingGraphs;
-		public GraphsPageViewModel(DataProjectionService dataProjectionService, CategoryPersistenceService categoryPersistenceService)
+		public GraphsPageViewModel(DataProjectionService dataProjectionService, CategoryPersistenceService categoryPersistenceService, CustomDialogsService customDialogsService)
 		{
 			_dataProjectionService = dataProjectionService;
 			_categoryPersistenceService = categoryPersistenceService;
+            _customDialogsService = customDialogsService;
         }
 
 		[ObservableProperty]
@@ -238,7 +242,7 @@ namespace GENAP_MAUI.ViewModels
             {
                 Categories = new(getCategoriesOperation.Result!);
             }
-            else { await Shell.Current.DisplayAlertAsync("Error", getCategoriesOperation.InnerError?.ErrorMessage, "Aceptar"); }
+            else { await _customDialogsService.ShowAlertDialogAsync("Error", getCategoriesOperation.InnerError?.ErrorMessage!, "Aceptar"); }
 
             PickedCurrency = GlobalResources.DefaultCommonCurrency;
             PickedTimePeriod = GlobalResources.TimePeriods.Where(d => d.Key == GlobalResources.TimePeriodsEnum.Month).First();
