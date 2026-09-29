@@ -59,7 +59,7 @@ namespace GENAP_MAUI.ViewModels
 
             if (!getMonthTransactions.Success)
             {
-                await Shell.Current.DisplayAlertAsync("Error", getMonthTransactions.InnerError?.ErrorMessage, "Aceptar");
+                await _customDialogsService.ShowAlertDialogAsync("Error", getMonthTransactions.InnerError?.ErrorMessage!, "Aceptar");
                 return;
             }
 

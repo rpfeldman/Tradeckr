@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using DataServices;
+using GENAP_MAUI.CustomViews;
 using GENAP_MAUI.InnerComponents;
 using System;
 using System.Collections.Generic;
@@ -7,10 +8,12 @@ using System.Text;
 
 namespace GENAP_MAUI.ViewModels
 {
-    public sealed partial class ClearStorageConfirmationPageViewModel(DataManagementService dataManagementService, CategoryPersistenceService categoryPersistenceService) : BaseViewModel
+    public sealed partial class ClearStorageConfirmationPageViewModel(DataManagementService dataManagementService, CategoryPersistenceService categoryPersistenceService, CustomDialogsService customDialogsService) : BaseViewModel
     {
         private DataManagementService _dataManagementService = dataManagementService;
         private CategoryPersistenceService _categoryPersistenceService = categoryPersistenceService;
+
+        private CustomDialogsService _customDialogsService = customDialogsService;
 
         [RelayCommand]
         public async Task ClearStorage()
@@ -24,7 +27,7 @@ namespace GENAP_MAUI.ViewModels
 
             if (!clearStorageOperation.Success)
             {
-                await Shell.Current.DisplayAlertAsync("Error", clearStorageOperation.InnerError?.ErrorMessage, "Aceptar");
+                await _customDialogsService.ShowAlertDialogAsync("Error", clearStorageOperation.InnerError?.ErrorMessage!, "Aceptar");
                 return;
             }
 
@@ -33,7 +36,7 @@ namespace GENAP_MAUI.ViewModels
 
              if (!clearCategoriesOperation.Success)
              {
-                await Shell.Current.DisplayAlertAsync("Error", clearCategoriesOperation.InnerError?.ErrorMessage, "Aceptar");
+                await _customDialogsService.ShowAlertDialogAsync("Error", clearCategoriesOperation.InnerError?.ErrorMessage!, "Aceptar");
                 return;
              }
 
@@ -42,11 +45,11 @@ namespace GENAP_MAUI.ViewModels
 
              if (!addDefaultCategoriesOperation.Success)
              {
-                await Shell.Current.DisplayAlertAsync("Error", addDefaultCategoriesOperation.InnerError?.ErrorMessage, "Aceptar");
+                await  _customDialogsService.ShowAlertDialogAsync("Error", addDefaultCategoriesOperation.InnerError?.ErrorMessage!, "Aceptar");
                 return;
              }
 
-            await Shell.Current.DisplayAlertAsync("Exito", "Se han reiniciado los datos correctamente\n\nVolviendo al menu...", "aceptar");
+            await  _customDialogsService.ShowAlertDialogAsync("Aplicacion formateada", "Se han reiniciado los datos correctamente", "Aceptar");
             await DirectNavigate(Routes.Dashboard);
         }
     }
