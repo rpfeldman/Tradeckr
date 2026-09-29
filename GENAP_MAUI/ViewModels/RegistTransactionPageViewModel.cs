@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel.__Internals;
 using CommunityToolkit.Mvvm.Input;
 using DataServices;
 using DomainModel;
+using GENAP_MAUI.CustomViews;
 using GENAP_MAUI.InnerComponents;
 using Microsoft.Extensions.DependencyModel;
 using System;
@@ -14,10 +15,12 @@ using System.Text;
 
 namespace GENAP_MAUI.ViewModels
 {
-    public sealed partial class RegistTransactionPageViewModel(DataRegistrationService dataRegistrationService, CategoryPersistenceService categoryPersistenceService) : BaseViewModel
+    public sealed partial class RegistTransactionPageViewModel(DataRegistrationService dataRegistrationService, CategoryPersistenceService categoryPersistenceService, CustomDialogsService customDialogsService) : BaseViewModel
     {
-        private DataRegistrationService _RegistrationService = dataRegistrationService;
-        private CategoryPersistenceService _CategoryPersistenceService = categoryPersistenceService;
+        private readonly DataRegistrationService _RegistrationService = dataRegistrationService;
+        private readonly CategoryPersistenceService _CategoryPersistenceService = categoryPersistenceService;
+
+        private readonly CustomDialogsService _customDialogsService = customDialogsService;
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(RegistTransactionCommand))]
@@ -101,7 +104,7 @@ namespace GENAP_MAUI.ViewModels
                     );
 
 
-                await Shell.Current.DisplayAlertAsync(DisplayAlertTitle, ExpenseRegistrationOperation.Success ? "Gasto registrado con exito" : ExpenseRegistrationOperation.InnerError?.ErrorMessage, DisplayAlertButton);
+                await _customDialogsService.ShowAlertDialogAsync(DisplayAlertTitle, ExpenseRegistrationOperation.Success ? "Gasto registrado con exito" : ExpenseRegistrationOperation.InnerError?.ErrorMessage!, DisplayAlertButton);
 
                 return;
             }
@@ -126,7 +129,7 @@ namespace GENAP_MAUI.ViewModels
                        $" -Date: '{PickedDate:dd/MM/yyyy}'"
                 );
 
-            await Shell.Current.DisplayAlertAsync(DisplayAlertTitle, IncomeRegistrationOperation.Success ? "Ingreso registrado con exito" : IncomeRegistrationOperation.InnerError?.ErrorMessage, DisplayAlertButton);
+            await _customDialogsService.ShowAlertDialogAsync(DisplayAlertTitle, IncomeRegistrationOperation.Success ? "Ingreso registrado con exito" : IncomeRegistrationOperation.InnerError?.ErrorMessage!, DisplayAlertButton);
 
 			return;
         }
@@ -146,7 +149,7 @@ namespace GENAP_MAUI.ViewModels
                 Categories = new(getCategoriesOperation.Result!);
                 Category = getCategoriesOperation.Result!.First();
             }
-            else { await Shell.Current.DisplayAlertAsync("Error", getCategoriesOperation.InnerError?.ErrorMessage, "Aceptar"); }
+            else { await _customDialogsService.ShowAlertDialogAsync("Error", getCategoriesOperation.InnerError?.ErrorMessage!, "Aceptar"); }
         }
 
         [RelayCommand] void SetIncome() => Depletion = false;

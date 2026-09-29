@@ -13,8 +13,8 @@ namespace GENAP_MAUI.ViewModels
 {
     public sealed partial class RegistTradeTransactionPageViewModel(DataRegistrationService dataRegistrationService, CustomDialogsService customDialogsService) : BaseViewModel
     {
-        private DataRegistrationService _RegistrationService = dataRegistrationService;
-        private CustomDialogsService _customDialogsService = customDialogsService;
+        private readonly DataRegistrationService _RegistrationService = dataRegistrationService;
+        private readonly CustomDialogsService _customDialogsService = customDialogsService;
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(RegistTransactionCommand))]
@@ -72,7 +72,7 @@ namespace GENAP_MAUI.ViewModels
                         );
 
 
-                await Shell.Current.DisplayAlertAsync(DisplayAlertTitle, ExpenseRegistrationOperation.Success ? "Perdida registrada con exito" : ExpenseRegistrationOperation.InnerError?.ErrorMessage, DisplayAlertButton);
+                await _customDialogsService.ShowAlertDialogAsync(DisplayAlertTitle, ExpenseRegistrationOperation.Success ? "Perdida registrada con exito" : ExpenseRegistrationOperation.InnerError?.ErrorMessage!, DisplayAlertButton);
 
                 return;
             }
@@ -86,7 +86,7 @@ namespace GENAP_MAUI.ViewModels
                         $" -Date: '{PickedDate:dd/MM/yyyy}'"
                     );    
 
-            await Shell.Current.DisplayAlertAsync(DisplayAlertTitle, IncomeRegistrationOperation.Success ? "Ganancia registrada con exito" : IncomeRegistrationOperation.InnerError?.ErrorMessage, DisplayAlertButton);
+            await _customDialogsService.ShowAlertDialogAsync(DisplayAlertTitle, IncomeRegistrationOperation.Success ? "Ganancia registrada con exito" : IncomeRegistrationOperation.InnerError?.ErrorMessage!, DisplayAlertButton);
 
             return;
         }
