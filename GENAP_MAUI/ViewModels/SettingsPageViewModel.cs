@@ -7,11 +7,14 @@ using System.Text;
 using Microsoft.Maui.ApplicationModel.Communication;
 using Serilog;
 using System.Globalization;
+using GENAP_MAUI.CustomViews;
 
 namespace GENAP_MAUI.ViewModels
 {
-    public sealed partial class SettingsPageViewModel : BaseViewModel
+    public sealed partial class SettingsPageViewModel(CustomDialogsService customDialogsService) : BaseViewModel
     {
+        private readonly CustomDialogsService _customDialogsService = customDialogsService;
+
         private bool _IsLoading;
         private bool[] AppearanceSettings = new bool[4];
         private bool[] CurrencySettings = new bool[4];
@@ -102,7 +105,7 @@ namespace GENAP_MAUI.ViewModels
             for (int i = 0; i < CurrencySettings.Length; i++)  CurrencySettings[i] = false;
             Settings_HasChanged = false;
 
-            await Shell.Current.DisplayAlertAsync("Configuracion", "Cambios guardados con exito", "Aceptar");
+            await _customDialogsService.ShowAlertDialogAsync("Configuracion", "Cambios guardados con exito", "Aceptar");
         }
 
         [RelayCommand(CanExecute = nameof(ReportCanExecute))]
@@ -110,7 +113,7 @@ namespace GENAP_MAUI.ViewModels
         {
             if(DeviceInfo.Idiom == DeviceIdiom.Desktop)
             {
-                await Shell.Current.DisplayAlertAsync("Error", "El reporte de errores desde la app es exclusivo de dispositivos móviles.\n\nPuedes hacer tu reporte enviando el mismo a 'ramirofeldman0@gmail.com'", "Aceptar");
+                await _customDialogsService.ShowAlertDialogAsync("Error", "El reporte de errores desde la app es exclusivo de dispositivos móviles.\n\nPuedes hacer tu reporte enviando el mismo a 'ramirofeldman0@gmail.com'", "Aceptar");
                 return;
             }
 
@@ -118,7 +121,7 @@ namespace GENAP_MAUI.ViewModels
 
             if (!File.Exists(logPath))
             {
-                await Shell.Current.DisplayAlertAsync("Error", "No es posible reportar bugs en tu dispositivo.\nPor favor, contacte con soporte tecnico", "Aceptar");
+                await _customDialogsService.ShowAlertDialogAsync("Error", "No es posible reportar bugs en tu dispositivo.\nPor favor, contacte con soporte tecnico", "Aceptar");
                 return;
             }
 
@@ -148,14 +151,14 @@ namespace GENAP_MAUI.ViewModels
             {
                 Log.Warning("Email is not supported. Advancing with file sharing (bug report)");
                 
-                await Shell.Current.DisplayAlertAsync("Reporte", "Aparentemente no tienes una aplicacion predeterminada de correo electronico en tu dispositivo.\n\nPor favor, intente compartir el siguiente archivo de texto a 'ramirofeldman0@gmail.com'","Aceptar");
+                await _customDialogsService.ShowAlertDialogAsync("Reporte", "Aparentemente no tienes una aplicacion predeterminada de correo electronico en tu dispositivo.\n\nPor favor, intente compartir el siguiente archivo de texto a 'ramirofeldman0@gmail.com'","Aceptar");
 
 
                 ShareFile file = new(bugReportPath);
                 ShareFileRequest request = new("Bug", file);
                 await Share.Default.RequestAsync(request);
 
-               await Shell.Current.DisplayAlertAsync($"Gracias, {GlobalResources.UserName}", "El equipo de Tradeckr agradece infinitamente que te hayas tomado el tiempo de realizar tu reporte\n\n¡Tu colaboración nos ayuda a ser mejores cada día!","Aceptar");
+               await _customDialogsService.ShowAlertDialogAsync($"Gracias, {GlobalResources.UserName}", "El equipo de Tradeckr agradece infinitamente que te hayas tomado el tiempo de realizar tu reporte\n\n¡Tu colaboración nos ayuda a ser mejores cada día!","Aceptar");
 
                 return;
             }
@@ -168,7 +171,7 @@ namespace GENAP_MAUI.ViewModels
 
             await Email.Default.ComposeAsync(emailMessage);
 
-            await Shell.Current.DisplayAlertAsync($"Gracias, {GlobalResources.UserName}", "El equipo de Tradeckr agradece infinitamente que te hayas tomado el tiempo de realizar tu reporte\n\n¡Tu colaboración nos ayuda a ser mejores cada día!", "Aceptar");
+            await _customDialogsService.ShowAlertDialogAsync($"Gracias, {GlobalResources.UserName}", "El equipo de Tradeckr agradece infinitamente que te hayas tomado el tiempo de realizar tu reporte\n\n¡Tu colaboración nos ayuda a ser mejores cada día!", "Aceptar");
         }
 
         [RelayCommand]

@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DataServices;
 using DomainModel;
+using GENAP_MAUI.CustomViews;
 using GENAP_MAUI.InnerComponents;
 using Serilog;
 using SkiaSharp;
@@ -19,10 +20,13 @@ namespace GENAP_MAUI.ViewModels
     {
         private DataManagementService _dataManagementService;
         private CategoryPersistenceService _categoryPersistenceService;
-        public TransactionCategoriesPageViewModel(CategoryPersistenceService categoryPersistenceService, DataManagementService dataManagementService)
+
+        private CustomDialogsService _customDialogsService;
+        public TransactionCategoriesPageViewModel(CategoryPersistenceService categoryPersistenceService, DataManagementService dataManagementService, CustomDialogsService customDialogsService)
         {
             _dataManagementService = dataManagementService;
             _categoryPersistenceService = categoryPersistenceService;
+            _customDialogsService = customDialogsService;
 
             PickedColor = GlobalResources.Colors[ColorsEnum.SteelBlue];
         }
@@ -99,7 +103,7 @@ namespace GENAP_MAUI.ViewModels
 
             if (Categories.DistinctBy(c => c.Name).Count() != Categories.Count)
             {
-                await Shell.Current.DisplayAlertAsync("Error", "No puede haber 2 categorias con el mismo nombre\n\nNo se guardaron las categorias", "Aceptar");
+                await _customDialogsService.ShowAlertDialogAsync("Error", "No puede haber 2 categorias con el mismo nombre\n\nNo se guardaron las categorias", "Aceptar");
                 return;
             }
 
@@ -115,7 +119,7 @@ namespace GENAP_MAUI.ViewModels
 
                 if (!renameCategoryOperation.Success)
                 {
-                   await Shell.Current.DisplayAlertAsync("Error", renameCategoryOperation.InnerError?.ErrorMessage, "Aceptar");
+                   await _customDialogsService.ShowAlertDialogAsync("Error", renameCategoryOperation.InnerError?.ErrorMessage!, "Aceptar");
                    return;
                 }
             }
@@ -129,12 +133,12 @@ namespace GENAP_MAUI.ViewModels
 
             if (Operations.Any(o => !o.Success))
             {
-                await Shell.Current.DisplayAlertAsync("Error", Operations.Where(o => !o.Success).First().InnerError?.ErrorMessage, "Aceptar");
+                await _customDialogsService.ShowAlertDialogAsync("Error", Operations.Where(o => !o.Success).First().InnerError?.ErrorMessage!, "Aceptar");
                 await ReLoad();
                 return;
             }
 
-            await Shell.Current.DisplayAlertAsync("Categorias", "Se guardaron las categorias correctamente", "Aceptar");
+            await _customDialogsService.ShowAlertDialogAsync("Categorias guardadas", "Se guardaron las categorias correctamente", "Aceptar");
                 Log.Information("Categories updated and saved in the storage (Categories page)");
 
             await ReLoad();
@@ -156,7 +160,7 @@ namespace GENAP_MAUI.ViewModels
                 Categories = new(getCategoryOperation.Result!.Select(c => new CategoryDto() { Name = c.Name, HexColor = c.HexColor, Id = c.Id }));
                 OldCategories = [.. getCategoryOperation.Result!];
             }
-            else { await Shell.Current.DisplayAlertAsync("Error", getCategoryOperation.InnerError?.ErrorMessage, "Aceptar"); }
+            else { await _customDialogsService.ShowAlertDialogAsync("Error", getCategoryOperation.InnerError?.ErrorMessage!, "Aceptar"); }
         }
         private bool AddCategoryCanExecute() => !string.IsNullOrWhiteSpace(NewCategory) && !Categories.Any(c => c.Name == NewCategory) && PickedColor is not null && NewCategory.Length <= 20;
         private bool SaveCanExecute() => Categories.Count > 0 && !Categories.Any(c => string.IsNullOrWhiteSpace(c.Name));

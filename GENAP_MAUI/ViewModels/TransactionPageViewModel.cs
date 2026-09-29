@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using DataServices;
 using DomainModel;
+using GENAP_MAUI.CustomViews;
 using GENAP_MAUI.InnerComponents;
 using Microsoft.EntityFrameworkCore.Update.Internal;
 using Serilog;
@@ -17,14 +18,17 @@ namespace GENAP_MAUI.ViewModels
     public sealed partial class TransactionPageViewModel : BaseViewModel
     {
         private bool _IsLoading;
-        private DataProjectionService _dataProjectionService;
-        private DataManagementService _dataManagementService;
-        private CategoryPersistenceService _categoryPersistenceService;
-        public TransactionPageViewModel(DataProjectionService dataProjectionService, DataManagementService dataManagementService, CategoryPersistenceService categoryPersistenceService)
+        private readonly DataProjectionService _dataProjectionService;
+        private readonly DataManagementService _dataManagementService;
+        private readonly CategoryPersistenceService _categoryPersistenceService;
+
+        private readonly CustomDialogsService _customDialogsService;
+        public TransactionPageViewModel(DataProjectionService dataProjectionService, DataManagementService dataManagementService, CategoryPersistenceService categoryPersistenceService, CustomDialogsService customDialogsService)
         {
             _dataProjectionService = dataProjectionService;
             _dataManagementService = dataManagementService;
             _categoryPersistenceService = categoryPersistenceService;
+            _customDialogsService = customDialogsService;
         }
 
         [ObservableProperty]
@@ -63,7 +67,7 @@ namespace GENAP_MAUI.ViewModels
             getTransactionOperation.Match
             (
                 some: (t) => Transaction = t,
-                none: async () => { await Shell.Current.DisplayAlertAsync("Error", "Transaccion inexistente", "Aceptar"); await DirectNavigate(Routes.TransactionsList); }
+                none: async () => { await _customDialogsService.ShowAlertDialogAsync("Error", "Transaccion inexistente", "Aceptar"); await DirectNavigate(Routes.TransactionsList); }
             );
 
             var getCategoriesOperation = await _categoryPersistenceService.GetCategoriesAsync();
@@ -71,7 +75,7 @@ namespace GENAP_MAUI.ViewModels
 
             if (!getCategoriesOperation.Success)
             {
-                await Shell.Current.DisplayAlertAsync("Error", getCategoriesOperation.InnerError?.ErrorMessage, "Aceptar");
+                await _customDialogsService.ShowAlertDialogAsync("Error", getCategoriesOperation.InnerError?.ErrorMessage!, "Aceptar");
                 return;
             }
 
@@ -134,7 +138,7 @@ namespace GENAP_MAUI.ViewModels
             var deleteTransactionOperation = await _dataManagementService.RemoveTransactionAsync(TransactionId);
                 deleteTransactionOperation.WriteLog($"Delete transaction. ID: '{TransactionId}'");
 
-            await Shell.Current.DisplayAlertAsync("Eliminar", deleteTransactionOperation.Success ? "Movimiento eliminado correctamente" : deleteTransactionOperation.InnerError?.ErrorMessage, "Aceptar");
+            await _customDialogsService.ShowAlertDialogAsync("Eliminar", deleteTransactionOperation.Success ? "Movimiento eliminado correctamente" : deleteTransactionOperation.InnerError?.ErrorMessage!, "Aceptar");
 
             await DirectNavigate(Routes.TransactionsList);
         }
@@ -147,7 +151,7 @@ namespace GENAP_MAUI.ViewModels
 
                 deleteCollectionOperation.WriteLog($"Delete a collection of fixed transactions. FromToday: '{FromToday}'");
 
-            await Shell.Current.DisplayAlertAsync("Eliminar", deleteCollectionOperation.Success ? "Movimientos eliminado correctamente" : deleteCollectionOperation.InnerError?.ErrorMessage, "Aceptar");
+            await _customDialogsService.ShowAlertDialogAsync("Eliminar", deleteCollectionOperation.Success ? "Movimientos eliminado correctamente" : deleteCollectionOperation.InnerError?.ErrorMessage!, "Aceptar");
 
             await DirectNavigate(Routes.TransactionsList);
         }
@@ -168,7 +172,7 @@ namespace GENAP_MAUI.ViewModels
                         $" -Category: '{PickedCategory.Name}'"
                     );
 
-            await Shell.Current.DisplayAlertAsync("Editar", updateTransactionOperation.Success ? "Se ha guardado el movimiento correctamente" : updateTransactionOperation.InnerError?.ErrorMessage, "Aceptar");
+            await _customDialogsService.ShowAlertDialogAsync("Edicion", updateTransactionOperation.Success ? "Se ha guardado el movimiento correctamente" : updateTransactionOperation.InnerError?.ErrorMessage!, "Aceptar");
         }
 
         private bool DeleteFixedTransactionCanExecute => Transaction is FixedTransactionDto;

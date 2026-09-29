@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DataServices;
 using DomainModel;
+using GENAP_MAUI.CustomViews;
 using GENAP_MAUI.InnerComponents;
 using Serilog;
 using System;
@@ -15,11 +16,13 @@ namespace GENAP_MAUI.ViewModels
     public sealed partial class TransactionsCollectionPageViewModel : BaseViewModel
     {
         private DataProjectionService _dataProjectionService;
+        private CustomDialogsService _customDialogsService;
 
         private bool _IsReloading; 
-        public TransactionsCollectionPageViewModel(DataProjectionService dataProjectionService)
+        public TransactionsCollectionPageViewModel(DataProjectionService dataProjectionService, CustomDialogsService customDialogsService)
         {
             _dataProjectionService = dataProjectionService;
+            _customDialogsService = customDialogsService;
         }
 
         [ObservableProperty]
@@ -111,7 +114,7 @@ namespace GENAP_MAUI.ViewModels
             if (GetTransactionsOperation.Success)
             {
                 Transactions = new(GetTransactionsOperation.Result!);
-            }else  { await Shell.Current.DisplayAlertAsync("Error", GetTransactionsOperation.InnerError?.ErrorMessage, "Aceptar"); }
+            }else  { await _customDialogsService.ShowAlertDialogAsync("Error", GetTransactionsOperation.InnerError?.ErrorMessage!, "Aceptar"); }
         }
 
         [RelayCommand]
