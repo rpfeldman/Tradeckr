@@ -18,9 +18,9 @@ namespace GENAP_MAUI.ViewModels
         [RelayCommand]
         public async Task ClearStorage()
         {
-            var alert = await Shell.Current.DisplayAlertAsync("Confirmar", "¿desea confirmar el reinicio de los datos?", "Si, reinciar", "No cancelar");
+            var alert = await _customDialogsService.ShowDoubleActionDialogAsync("Confirmar", "¿desea confirmar el reinicio de los datos?", "Si, reinciar", "No cancelar");
 
-            if (!alert){ return; }
+            if (alert == 2 || alert == 0){ return; }
 
             var clearStorageOperation = await _dataManagementService.RestartDataAsync();
                 clearStorageOperation.WriteLog("Remove all transactions in the storage (Clear Storage)");

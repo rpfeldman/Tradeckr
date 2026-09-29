@@ -83,21 +83,21 @@ namespace GENAP_MAUI.ViewModels
         {
             // I definitely have to review this....
 
-            const string ActionTitle = "Se ha detectado que has borrado una o mas categorias\n¿que desea hacer con los movimiento asociados a las mismas?";
-            const string ActionCancelBtn = "Cancelar";
+            const string ActionTitle = "Se ha detectado que has borrado una o mas categorias";
+            const string ActionContent = "¿que desea hacer con los movimiento asociados a las mismas?";
             const string ActionDeleteAllBtn = "Eliminar todos los movimientos asociados";
             const string ActionPreserveBtn = "Mantener los movimientos sin categoria";
 
             Task<OperationResult> ActionMethod = Task.FromResult(OperationResult.SuccessfulOperation());
             if (DeletedCategories.Count != 0)
             {
-                var action = await Shell.Current.DisplayActionSheetAsync(ActionTitle, ActionCancelBtn, ActionDeleteAllBtn, buttons: [ActionPreserveBtn]);
+                var action = await _customDialogsService.ShowDoubleActionDialogAsync(ActionTitle, ActionContent, ActionDeleteAllBtn, ActionPreserveBtn);
 
                 switch (action)
                 {
-                    case ActionCancelBtn: await ReLoad(); return;
-                    case ActionDeleteAllBtn: ActionMethod = _dataManagementService.RemoveFromCategories([.. DeletedCategories.Select(c => c.Name)]); break;
-                    case ActionPreserveBtn: break;
+                    case 0: await ReLoad(); return;
+                    case 1: ActionMethod = _dataManagementService.RemoveFromCategories([.. DeletedCategories.Select(c => c.Name)]); break;
+                    case 2: break;
                 }   
             }
 
