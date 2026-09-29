@@ -2,6 +2,7 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:GENAP_MAUI.CustomViews.DoubleActionDialogPopup"
+<<<<<<< HEAD
              xmlns:local="clr-namespace:GENAP_MAUI"
              x:Class="GENAP_MAUI.CustomViews.DoubleActionDialogPopup.DoubleActionDialogPopup"
              x:DataType="vm:DoubleActionDialogPopupViewModel"
@@ -48,5 +49,11 @@
 
             </VerticalStackLayout>
         </Grid>
+=======
+             x:Class="GENAP_MAUI.CustomViews.DoubleActionDialogPopup.DoubleActionDialogPopup"
+             x:DataType="vm:DoubleActionDialogPopupViewModel">
+
+    <Border>
+>>>>>>> a39a50c8291a2f57763f3c02720502a8c4fc39e8
     </Border>
 </ContentView>
