@@ -5,6 +5,19 @@
              x:Class="GENAP_MAUI.CustomViews.DoubleActionDialogPopup.DoubleActionDialogPopup"
              x:DataType="vm:DoubleActionDialogPopupViewModel">
 
-    <Border>
+    <Border WidthRequest="320"
+            BackgroundColor="{AppThemeBinding Light={StaticResource CardLight}, Dark={StaticResource CardDark}}"
+            Padding="20"
+            StrokeShape="RoundRectangle 16">
+        
+        <VerticalStackLayout Spacing="16">
+            <Label Text="{Binding Title}" />
+            <Label Text="{Binding Content}"/>
+
+            <Button Text="{Binding FirstOptionText}" Command="{Binding FirstOptionCommand}"></Button>
+            <Button Text="{Binding SecondOptionText}" Command="{Binding SecondOptionCommand}"></Button>
+            <Button Text="Cancel" Command="{Binding CancelCommand}"></Button>
+        </VerticalStackLayout>
+        
     </Border>
 </ContentView>
