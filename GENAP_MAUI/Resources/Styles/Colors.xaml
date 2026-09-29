@@ -8,7 +8,8 @@
 
     <Color x:Key="BrandViolet">#8C52FF</Color>
     <Color x:Key="ButtonViolet">#B48FFF</Color>
-
+    <Color x:Key="BrandVioletDeep">#6A2CFF</Color>
+    
     <Color x:Key="AccentLight">#5C0AFF</Color>
     <Color x:Key="AccentDark">#AA80FF</Color>
 
@@ -17,6 +18,9 @@
 
     <Color x:Key="CardLight">#FFFFFF</Color>
     <Color x:Key="CardDark">#1E1E1E</Color>
+
+    <Color x:Key="CardDarkTint">#1F1A2B</Color>
+    <Color x:Key="CardLightTint">#F6F1FF</Color>
 
     <Color x:Key="BorderLight">#E2E5EC</Color>
     <Color x:Key="BorderDark">#2C2C2C</Color>

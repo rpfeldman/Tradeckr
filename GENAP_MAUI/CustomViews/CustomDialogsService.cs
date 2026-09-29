@@ -25,9 +25,16 @@ namespace GENAP_MAUI.CustomViews
                  [nameof(AlertDialogPopupViewModel.ButtonText)] = ButtonText,
             };
 
+            var popupOptions = new PopupOptions
+            {
+                PageOverlayColor = Color.FromArgb("#D90B0716"), 
+                Shape = null,                                    
+                Shadow = null                                    
+            };
+
             await _popupService.ShowPopupAsync<AlertDialogPopupViewModel>(
                 Shell.Current, 
-                options: PopupOptions.Empty,
+                options: popupOptions,
                 shellParameters: queryAttributes
                 );
         }

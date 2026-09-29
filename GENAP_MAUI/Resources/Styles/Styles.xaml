@@ -17,6 +17,29 @@
         <Setter Property="StrokeShape" Value="Rectangle"/>
         <Setter Property="StrokeThickness" Value="1"/>
     </Style>
+    
+    <Style x:Key="DialogCard" TargetType="Border">
+        <Setter Property="WidthRequest" Value="320" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 20" />
+        <Setter Property="StrokeThickness" Value="1.2" />
+        <Setter Property="Background">
+            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Offset="0" Color="{AppThemeBinding Light={StaticResource CardLight}, Dark={StaticResource CardDark}}" />
+                <GradientStop Offset="1" Color="{AppThemeBinding Light={StaticResource CardLightTint}, Dark={StaticResource CardDarkTint}}" />
+            </LinearGradientBrush>
+        </Setter>
+        <Setter Property="Stroke">
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Offset="0" Color="{StaticResource BrandViolet}" />
+                <GradientStop Offset="0.55" Color="#408C52FF" />
+                <GradientStop Offset="1" Color="#148C52FF" />
+            </LinearGradientBrush>
+        </Setter>
+        <Setter Property="Shadow">
+            <Shadow Brush="{StaticResource BrandVioletBrush}" Opacity="0.35" Radius="32" Offset="0,6" />
+        </Setter>
+    </Style>
 
     <Style x:Key="InputField" TargetType="Border">
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource CardLight}, Dark={StaticResource CardDark}}" />
@@ -122,6 +145,23 @@
 
     <Style TargetType="BoxView">
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}" />
+    </Style>
+
+    <Style x:Key="DialogDivider" TargetType="BoxView">
+        <Setter Property="HeightRequest" Value="1" />
+        <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource BorderLight}, Dark={StaticResource BorderDark}}" />
+    </Style>
+
+    <Style x:Key="DialogAccentBar" TargetType="BoxView">
+        <Setter Property="HeightRequest" Value="3" />
+        <Setter Property="Background">
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                <GradientStop Offset="0" Color="Transparent" />
+                <GradientStop Offset="0.35" Color="{StaticResource BrandViolet}" />
+                <GradientStop Offset="0.65" Color="{StaticResource AccentDark}" />
+                <GradientStop Offset="1" Color="Transparent" />
+            </LinearGradientBrush>
+        </Setter>
     </Style>
 
     <Style x:Key="SettingsDivider" TargetType="BoxView">
@@ -289,6 +329,17 @@
         </Setter>
     </Style>
 
+    <Style x:Key="DialogButtonBrand" TargetType="Button" BasedOn="{StaticResource ButtonPrimary}">
+        <Setter Property="TextColor" Value="{StaticResource White}" />
+        <Setter Property="HeightRequest" Value="48" />
+        <Setter Property="Background">
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                <GradientStop Offset="0" Color="{StaticResource BrandViolet}" />
+                <GradientStop Offset="1" Color="{StaticResource BrandVioletDeep}" />
+            </LinearGradientBrush>
+        </Setter>
+    </Style>
+
     <Style TargetType="CheckBox">
         <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource AccentLight}, Dark={StaticResource White}}" />
         <Setter Property="MinimumHeightRequest" Value="44"/>
@@ -444,6 +495,32 @@
         <Setter Property="FontSize" Value="21" />
         <Setter Property="FontAttributes" Value="Bold" />
     </Style>
+
+    <Style x:Key="DialogEyebrow" TargetType="Label">
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource AccentLight}, Dark={StaticResource AccentDark}}" />
+        <Setter Property="FontFamily" Value="OpenSansRegular" />
+        <Setter Property="FontSize" Value="11" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="CharacterSpacing" Value="3" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+
+    <Style x:Key="DialogTitle" TargetType="Label">
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+        <Setter Property="FontFamily" Value="OpenSansRegular" />
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="FontAttributes" Value="Bold" />
+    </Style>
+
+
+    <Style x:Key="DialogContent" TargetType="Label">
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+        <Setter Property="FontFamily" Value="OpenSansRegular" />
+        <Setter Property="FontSize" Value="14.5" />
+        <Setter Property="LineHeight" Value="1.35" />
+    </Style>
+
 
     <Style x:Key="NoticeText" TargetType="Label">
         <Setter Property="TextColor"
@@ -781,6 +858,17 @@
             </VisualStateGroupList>
         </Setter>
     </Style>
+
+    <Style x:Key="DialogStatusDot" TargetType="Ellipse">
+        <Setter Property="WidthRequest" Value="8" />
+        <Setter Property="HeightRequest" Value="8" />
+        <Setter Property="Fill" Value="{StaticResource BrandVioletBrush}" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="Shadow">
+            <Shadow Brush="{StaticResource BrandVioletBrush}" Opacity="0.9" Radius="8" Offset="0,0" />
+        </Setter>
+    </Style>
+
 
     <Style TargetType="SwipeItem">
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" />
