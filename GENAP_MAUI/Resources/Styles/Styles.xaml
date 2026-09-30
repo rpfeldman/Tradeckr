@@ -19,7 +19,8 @@
     </Style>
     
     <Style x:Key="DialogCard" TargetType="Border">
-        <Setter Property="WidthRequest" Value="320" />
+        <Setter Property="MinimumWidthRequest" Value="320" />
+        <Setter Property="MaximumWidthRequest" Value="400" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="StrokeShape" Value="RoundRectangle 20" />
         <Setter Property="StrokeThickness" Value="1.2" />
@@ -226,7 +227,10 @@
         <Setter Property="BackgroundColor" Value="#148C52FF" />
         <Setter Property="BorderColor" Value="{StaticResource BrandViolet}" />
         <Setter Property="BorderWidth" Value="1.2" />
-        <Setter Property="HeightRequest" Value="48" />
+        <Setter Property="HeightRequest" Value="-1" />
+        <Setter Property="MinimumHeightRequest" Value="48" />
+        <Setter Property="LineBreakMode" Value="WordWrap" />
+        <Setter Property="Padding" Value="16,12" />
     </Style>
 
     <Style x:Key="ButtonDestructiveOutline" TargetType="Button">
@@ -365,7 +369,10 @@
 
     <Style x:Key="DialogButtonBrand" TargetType="Button" BasedOn="{StaticResource ButtonPrimary}">
         <Setter Property="TextColor" Value="{StaticResource White}" />
-        <Setter Property="HeightRequest" Value="48" />
+        <Setter Property="HeightRequest" Value="-1" />
+        <Setter Property="MinimumHeightRequest" Value="48" />
+        <Setter Property="LineBreakMode" Value="WordWrap" />
+        <Setter Property="Padding" Value="16,12" />
         <Setter Property="Background">
             <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                 <GradientStop Offset="0" Color="{StaticResource BrandViolet}" />
