@@ -12,10 +12,17 @@ namespace GENAP_MAUI.CustomViews
     public sealed class CustomDialogsService
     {
         private readonly IPopupService _popupService;
-
+        private readonly PopupOptions popupOptions;
         public CustomDialogsService(IPopupService popupService)
         {
             _popupService = popupService;
+
+            popupOptions = new PopupOptions
+            {
+                PageOverlayColor = Color.FromArgb("#D90B0716"), 
+                Shape = null,                                    
+                Shadow = null                                    
+            };
         }
 
         public async Task ShowAlertDialogAsync(string Title, string Content, string ButtonText)
@@ -25,13 +32,6 @@ namespace GENAP_MAUI.CustomViews
                  [nameof(AlertDialogPopupViewModel.Title)] = Title,
                  [nameof(AlertDialogPopupViewModel.Content)] = Content,
                  [nameof(AlertDialogPopupViewModel.ButtonText)] = ButtonText,
-            };
-
-            var popupOptions = new PopupOptions
-            {
-                PageOverlayColor = Color.FromArgb("#D90B0716"), 
-                Shape = null,                                    
-                Shadow = null                                    
             };
 
             await _popupService.ShowPopupAsync<AlertDialogPopupViewModel>(
@@ -49,13 +49,6 @@ namespace GENAP_MAUI.CustomViews
                  [nameof(DoubleActionDialogPopupViewModel.Content)] = Content,
                  [nameof(DoubleActionDialogPopupViewModel.FirstOptionText)] = FirstOption,
                  [nameof(DoubleActionDialogPopupViewModel.SecondOptionText)] = SecondOption,
-            };
-
-            var popupOptions = new PopupOptions
-            {
-                PageOverlayColor = Color.FromArgb("#D90B0716"), 
-                Shape = null,                                    
-                Shadow = null                                    
             };
 
             var result = await _popupService.ShowPopupAsync<DoubleActionDialogPopupViewModel>(
