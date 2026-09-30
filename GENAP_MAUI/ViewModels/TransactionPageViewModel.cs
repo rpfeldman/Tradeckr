@@ -135,6 +135,10 @@ namespace GENAP_MAUI.ViewModels
         [RelayCommand]
         public async Task DeleteTransaction()
         {
+            var action = await _customDialogsService.ShowDoubleActionDialogAsync("Eliminar movimiento", "¿Estas seguro de querer eliminar este movimiento?", "Si, eliminar", "No, cancelar");
+
+            if(action == 0 || action == 2) { return; }
+
             var deleteTransactionOperation = await _dataManagementService.RemoveTransactionAsync(TransactionId);
                 deleteTransactionOperation.WriteLog($"Delete transaction. ID: '{TransactionId}'");
 
