@@ -16,6 +16,8 @@ namespace GENAP_MAUI.ViewModels
         private readonly DataRegistrationService _RegistrationService = dataRegistrationService;
         private readonly CustomDialogsService _customDialogsService = customDialogsService;
 
+        private bool IsAnAlert = false;
+
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(RegistTransactionCommand))]
         public partial decimal Value { get; set; }
@@ -72,7 +74,9 @@ namespace GENAP_MAUI.ViewModels
                         );
 
 
+                    IsAnAlert = true;
                 await _customDialogsService.ShowAlertDialogAsync(DisplayAlertTitle, ExpenseRegistrationOperation.Success ? "Perdida registrada con exito" : ExpenseRegistrationOperation.InnerError?.ErrorMessage!, DisplayAlertButton);
+                    IsAnAlert = false;
 
                 return;
             }
@@ -86,7 +90,9 @@ namespace GENAP_MAUI.ViewModels
                         $" -Date: '{PickedDate:dd/MM/yyyy}'"
                     );    
 
+                IsAnAlert = true;
             await _customDialogsService.ShowAlertDialogAsync(DisplayAlertTitle, IncomeRegistrationOperation.Success ? "Ganancia registrada con exito" : IncomeRegistrationOperation.InnerError?.ErrorMessage!, DisplayAlertButton);
+                IsAnAlert = false;
 
             return;
         }
@@ -94,6 +100,8 @@ namespace GENAP_MAUI.ViewModels
         [RelayCommand]
         public void ReLoad()
         {
+            if(IsAnAlert) return;
+
             Value = 0m;
             PickedValue = string.Empty;
             PickedDate = DateTime.Today;

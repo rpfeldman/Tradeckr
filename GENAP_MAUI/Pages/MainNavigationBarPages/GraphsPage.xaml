@@ -11,20 +11,62 @@
 
     <Grid RowDefinitions="Auto,*">
 
-        <VerticalStackLayout Grid.Row="0" Spacing="6" Margin="20,16,20,8">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="OrientationStates">
 
-            <Border Style="{StaticResource InputField}">
-                <Picker Title="Seleccionar período de tiempo"
+                <VisualState x:Name="Portrait">
+                    <VisualState.StateTriggers>
+                        <OrientationStateTrigger Orientation="Portrait" />
+                    </VisualState.StateTriggers>
+                </VisualState>
+
+                <VisualState x:Name="Landscape">
+                    <VisualState.StateTriggers>
+                        <OrientationStateTrigger Orientation="Landscape" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter TargetName="FiltersGrid" Property="Margin" Value="20,8,20,4" />
+                        <Setter TargetName="PeriodFilter" Property="Grid.ColumnSpan" Value="1" />
+                        <Setter TargetName="CurrencyFilter" Property="Grid.Row" Value="0" />
+                        <Setter TargetName="CurrencyFilter" Property="Grid.Column" Value="1" />
+                        <Setter TargetName="CurrencyFilter" Property="Grid.ColumnSpan" Value="1" />
+                        <Setter TargetName="LandscapeHint" Property="IsVisible" Value="False" />
+
+                        <Setter TargetName="PeriodFilter" Property="Padding" Value="14,4" />
+                        <Setter TargetName="CurrencyFilter" Property="Padding" Value="14,4" />
+                    </VisualState.Setters>
+                </VisualState>
+
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <Grid x:Name="FiltersGrid"
+              Grid.Row="0"
+              ColumnDefinitions="*,*"
+              RowDefinitions="Auto,Auto"
+              ColumnSpacing="10"
+              RowSpacing="6"
+              Margin="20,16,20,8">
+
+            <Border x:Name="PeriodFilter"
+                    Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                    Style="{StaticResource InputField}">
+                <Picker x:Name="PeriodPicker"
+                        Title="Seleccionar período de tiempo"
                         ItemsSource="{x:Static local:GlobalResources.TimePeriodsList}"
                         ItemDisplayBinding="{Binding Value}"
                         SelectedItem="{Binding PickedTimePeriod}" />
             </Border>
 
-            <Border Style="{StaticResource CurrencyPickerField}">
+            <Border x:Name="CurrencyFilter"
+                    Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                    Style="{StaticResource CurrencyPickerField}">
                 <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
-                    <Label Grid.Column="0" Text="Ver en"
+                    <Label x:Name="CurrencyHint"
+                           Grid.Column="0" Text="Ver en"
                            Style="{StaticResource CurrencyPickerHint}" />
-                    <Picker Grid.Column="1"
+                    <Picker x:Name="CurrencyPicker"
+                            Grid.Column="1"
                             Style="{StaticResource CurrencyPickerControl}"
                             ItemsSource="{x:Static local:GlobalResources.Currencies}"
                             ItemDisplayBinding="{Binding CurrencyDisplayName}"
@@ -32,16 +74,17 @@
                 </Grid>
             </Border>
 
-        </VerticalStackLayout>
+        </Grid>
 
-        <ScrollView Grid.Row="1" Padding="20,8,20,20">
+        <ScrollView x:Name="ChartsScroll" Grid.Row="1" Padding="20,8,20,120">
             <VerticalStackLayout Spacing="0">
 
                 <VerticalStackLayout Spacing="4">
                     <Label Text="Apartado de graficos" Style="{StaticResource SubHeadline}" />
-                    <Label Style="{StaticResource Caption}"
-                          HorizontalTextAlignment="Center"
-                          Text="Para una mejor visualizacion se recomienda usar el celular en horizontal." />
+                    <Label x:Name="LandscapeHint"
+                           Style="{StaticResource Caption}"
+                           HorizontalTextAlignment="Center"
+                           Text="Para una mejor visualizacion se recomienda usar el celular en horizontal." />
                 </VerticalStackLayout>
 
                 <Label Text="Balance general" Style="{StaticResource SectionHeader}" />
@@ -105,9 +148,6 @@
                         <charts:BasicLineChart Transactions="{Binding IncomeLog}" LineColor="{StaticResource IncomeGreen}" Title="Evolucion del ingreso neto"/>
                     </VerticalStackLayout>
                 </Border>
-
-                <Label Text="Comparativas" Style="{StaticResource SectionHeader}" />
-
             </VerticalStackLayout>
         </ScrollView>
 

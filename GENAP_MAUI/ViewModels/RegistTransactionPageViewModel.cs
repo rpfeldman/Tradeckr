@@ -20,6 +20,7 @@ namespace GENAP_MAUI.ViewModels
         private readonly DataRegistrationService _RegistrationService = dataRegistrationService;
         private readonly CategoryPersistenceService _CategoryPersistenceService = categoryPersistenceService;
 
+        private bool IsAnAlert = false;
         private readonly CustomDialogsService _customDialogsService = customDialogsService;
 
         [ObservableProperty]
@@ -103,8 +104,9 @@ namespace GENAP_MAUI.ViewModels
                             $" -Date: '{PickedDate:dd/MM/yyyy}'"
                     );
 
-
+                    IsAnAlert = true;
                 await _customDialogsService.ShowAlertDialogAsync(DisplayAlertTitle, ExpenseRegistrationOperation.Success ? "Gasto registrado con exito" : ExpenseRegistrationOperation.InnerError?.ErrorMessage!, DisplayAlertButton);
+                    IsAnAlert = false;
 
                 return;
             }
@@ -129,7 +131,9 @@ namespace GENAP_MAUI.ViewModels
                        $" -Date: '{PickedDate:dd/MM/yyyy}'"
                 );
 
+                IsAnAlert = true;
             await _customDialogsService.ShowAlertDialogAsync(DisplayAlertTitle, IncomeRegistrationOperation.Success ? "Ingreso registrado con exito" : IncomeRegistrationOperation.InnerError?.ErrorMessage!, DisplayAlertButton);
+                IsAnAlert = false;
 
 			return;
         }
@@ -137,6 +141,8 @@ namespace GENAP_MAUI.ViewModels
         [RelayCommand]
         public async Task ReLoad() 
         {
+            if(IsAnAlert) { return; }
+
             FixedTransactionDuration = 1;
             Value = 0m;
             PickedValue = string.Empty;
