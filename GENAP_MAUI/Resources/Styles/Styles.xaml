@@ -19,6 +19,7 @@
     </Style>
     
     <Style x:Key="DialogCard" TargetType="Border">
+        <Setter Property="Margin" Value="36" />
         <Setter Property="MinimumWidthRequest" Value="320" />
         <Setter Property="MaximumWidthRequest" Value="400" />
         <Setter Property="Padding" Value="0" />
