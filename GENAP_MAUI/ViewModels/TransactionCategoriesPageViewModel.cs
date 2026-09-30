@@ -18,10 +18,9 @@ namespace GENAP_MAUI.ViewModels
 {
     public sealed partial class TransactionCategoriesPageViewModel : BaseViewModel
     {
-        private DataManagementService _dataManagementService;
-        private CategoryPersistenceService _categoryPersistenceService;
-
-        private CustomDialogsService _customDialogsService;
+        private readonly DataManagementService _dataManagementService;
+        private readonly CategoryPersistenceService _categoryPersistenceService;
+        private readonly CustomDialogsService _customDialogsService;
         public TransactionCategoriesPageViewModel(CategoryPersistenceService categoryPersistenceService, DataManagementService dataManagementService, CustomDialogsService customDialogsService)
         {
             _dataManagementService = dataManagementService;
@@ -31,15 +30,17 @@ namespace GENAP_MAUI.ViewModels
             PickedColor = GlobalResources.Colors[ColorsEnum.SteelBlue];
         }
 
-        [ObservableProperty]
-        [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
-        public partial ObservableCollection<CategoryDto> Categories { get; set; } = new();
+        private bool _IsDeciding = false;
 
         private List<CategoryDto> DeletedCategories { get; set; } = [];
 
         private List<CategoryDto> AddedCategories { get; set; } = [];
 
         private CategoryDto[] OldCategories { get; set; } = [];
+
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
+        public partial ObservableCollection<CategoryDto> Categories { get; set; } = new();
 
         [ObservableProperty]
         public partial ColorDto PickedColor { get; set; } 
@@ -91,7 +92,9 @@ namespace GENAP_MAUI.ViewModels
             Task<OperationResult> ActionMethod = Task.FromResult(OperationResult.SuccessfulOperation());
             if (DeletedCategories.Count != 0)
             {
-                var action = await _customDialogsService.ShowDoubleActionDialogAsync(ActionTitle, ActionContent, ActionDeleteAllBtn, ActionPreserveBtn);
+                _IsDeciding = true;
+                    var action = await _customDialogsService.ShowDoubleActionDialogAsync(ActionTitle, ActionContent, ActionDeleteAllBtn, ActionPreserveBtn); // this is reinstancing the ViewModel. to-fix. 
+                _IsDeciding = false;
 
                 switch (action)
                 {
@@ -147,6 +150,8 @@ namespace GENAP_MAUI.ViewModels
         [RelayCommand]
         public async Task ReLoad()
         {
+            if (_IsDeciding) { return; }
+
             PickedColor = GlobalResources.Colors[ColorsEnum.SteelBlue];
             NewCategory = string.Empty;
             DeletedCategories.Clear();
