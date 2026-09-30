@@ -20,8 +20,7 @@
     
     <Style x:Key="DialogCard" TargetType="Border">
         <Setter Property="Margin" Value="36" />
-        <Setter Property="MinimumWidthRequest" Value="320" />
-        <Setter Property="MaximumWidthRequest" Value="400" />
+        <Setter Property="WidthRequest" Value="330" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="StrokeShape" Value="RoundRectangle 20" />
         <Setter Property="StrokeThickness" Value="1.2" />
@@ -558,6 +557,7 @@
 
     <Style x:Key="DialogContent" TargetType="Label">
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+        <Setter Property="LineHeight" Value="{OnPlatform Android=1.1, Default=1.35}" />
         <Setter Property="FontFamily" Value="OpenSansRegular" />
         <Setter Property="FontSize" Value="14.5" />
         <Setter Property="LineHeight" Value="1.35" />
