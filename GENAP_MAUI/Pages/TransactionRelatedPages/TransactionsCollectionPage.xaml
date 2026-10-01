@@ -9,25 +9,64 @@
              x:DataType="vm:TransactionsCollectionPageViewModel"
              BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}">
 
-    <Grid RowDefinitions="Auto,Auto,*,Auto">
+    <Grid RowDefinitions="Auto,Auto,*">
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="OrientationStates">
+
+                <VisualState x:Name="Portrait">
+                    <VisualState.StateTriggers>
+                        <OrientationStateTrigger Orientation="Portrait" />
+                    </VisualState.StateTriggers>
+                </VisualState>
+
+                <VisualState x:Name="Landscape">
+                    <VisualState.StateTriggers>
+                        <OrientationStateTrigger Orientation="Landscape" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter TargetName="HeaderHint" Property="IsVisible" Value="False" />
+                        <Setter TargetName="FiltersGrid" Property="Margin" Value="20,8,20,4" />
+                        <Setter TargetName="PeriodFilter" Property="Grid.ColumnSpan" Value="1" />
+                        <Setter TargetName="CurrencyFilter" Property="Grid.Row" Value="0" />
+                        <Setter TargetName="CurrencyFilter" Property="Grid.Column" Value="1" />
+                        <Setter TargetName="CurrencyFilter" Property="Grid.ColumnSpan" Value="1" />
+                        <Setter TargetName="PeriodFilter" Property="Padding" Value="14,4" />
+                        <Setter TargetName="CurrencyFilter" Property="Padding" Value="14,4" />
+                    </VisualState.Setters>
+                </VisualState>
+
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
 
         <VerticalStackLayout Grid.Row="0" Spacing="4" Padding="20,20,20,0">
             <Label Text="Movimientos" Style="{StaticResource SubHeadline}" />
-            <Label Style="{StaticResource Caption}"
+            <Label x:Name="HeaderHint"
+                   Style="{StaticResource Caption}"
                    HorizontalTextAlignment="Center"
                    Text="Tocá un movimiento para ver el detalle o editarlo." />
         </VerticalStackLayout>
 
-        <VerticalStackLayout Grid.Row="1" Spacing="6" Margin="20,16,20,8">
+        <Grid x:Name="FiltersGrid"
+              Grid.Row="1"
+              ColumnDefinitions="*,*"
+              RowDefinitions="Auto,Auto"
+              ColumnSpacing="10"
+              RowSpacing="6"
+              Margin="20,16,20,8">
 
-            <Border Style="{StaticResource InputField}">
+            <Border x:Name="PeriodFilter"
+                    Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                    Style="{StaticResource InputField}">
                 <Picker Title="Seleccionar período de tiempo"
                         ItemsSource="{x:Static local:GlobalResources.TimePeriodsList}"
                         ItemDisplayBinding="{Binding Value}"
                         SelectedItem="{Binding PickedTimePeriod}" />
             </Border>
 
-            <Border Style="{StaticResource CurrencyPickerField}">
+            <Border x:Name="CurrencyFilter"
+                    Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                    Style="{StaticResource CurrencyPickerField}">
                 <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
                     <Label Grid.Column="0" Text="Ver en"
                            Style="{StaticResource CurrencyPickerHint}" />
@@ -39,7 +78,7 @@
                 </Grid>
             </Border>
 
-        </VerticalStackLayout>
+        </Grid>
 
         <CollectionView Grid.Row="2"
                         ItemsSource="{Binding Transactions}"
@@ -145,8 +184,12 @@
                     </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
+
+            <CollectionView.Footer>
+                <ContentView HeightRequest="110" />
+            </CollectionView.Footer>
         </CollectionView>
 
-        <nav:BottomNavigationBar Grid.Row="0" Grid.RowSpan="4" />
+        <nav:BottomNavigationBar Grid.Row="0" Grid.RowSpan="3" />
     </Grid>
 </ContentPage>
