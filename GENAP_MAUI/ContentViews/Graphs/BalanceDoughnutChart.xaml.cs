@@ -6,6 +6,7 @@ using LiveChartsCore.Defaults;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using SkiaSharp;
+using System.Globalization;
 
 namespace GENAP_MAUI.ContentViews.Graphs;
 
@@ -177,7 +178,7 @@ public partial class BalanceDoughnutChart : ContentView
 
         if (empty)
         {
-            BalanceLabel.Text = "Balance:\n0$";
+            SetBalanceText(0m);
             SetIncomeSlice(0m);
             SetExpenseSlice(0m);
             return;
@@ -203,10 +204,28 @@ public partial class BalanceDoughnutChart : ContentView
         }
 
         var balance = income - expenses;
-        BalanceLabel.Text = $"Balance:\n{balance:N2}$"; 
+        SetBalanceText(balance);
 
         SetIncomeSlice(income);
         SetExpenseSlice(expenses);
+    }
+
+    private void SetBalanceText(decimal balance)
+    {
+        var culture = CultureInfo.CurrentCulture;
+
+        if (balance % 1 == 0)
+        {
+            BalanceIntegerSpan.Text = balance.ToString("N0", culture);
+            BalanceDecimalSpan.Text = "$";
+            return;
+        }
+
+        var formatted = balance.ToString("N2", culture);
+        var separatorIndex = formatted.LastIndexOf(culture.NumberFormat.NumberDecimalSeparator, StringComparison.Ordinal);
+
+        BalanceIntegerSpan.Text = formatted[..separatorIndex];
+        BalanceDecimalSpan.Text = formatted[separatorIndex..] + "$";
     }
 
     private void SetIncomeSlice(decimal income)

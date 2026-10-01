@@ -12,16 +12,22 @@
 
             <Label x:Name="BalanceLabel"
                    IsVisible="{Binding HasData, Source={x:Reference Root}}"
-                   Text="Balance:&#10;0$"
                    HorizontalOptions="Center"
                    VerticalOptions="Center"
                    HorizontalTextAlignment="Center"
                    FontSize="16"
-                   FontAttributes="Bold"
                    Margin="0,0,0,30"
                    TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
                    TranslationY="-1"
-                   InputTransparent="True" />
+                   InputTransparent="True">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Balance:&#10;" FontAttributes="Bold" />
+                        <Span x:Name="BalanceIntegerSpan" Text="0" FontAttributes="Bold" />
+                        <Span x:Name="BalanceDecimalSpan" Text="$" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
 
             <lvc:PieChart
                 IsVisible="{Binding HasData, Source={x:Reference Root}}"
