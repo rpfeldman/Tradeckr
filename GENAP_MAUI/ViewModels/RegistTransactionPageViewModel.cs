@@ -161,6 +161,6 @@ namespace GENAP_MAUI.ViewModels
         [RelayCommand] void SetIncome() => Depletion = false;
         [RelayCommand] void SetExpense() => Depletion = true;
 
-        private bool RegistTransactionCanExecute() => Value > 0m && Value <= 1000000000m && FixedTransactionDuration >= 1;
+        private bool RegistTransactionCanExecute() => Value > 0m && Value <= 1000000000m && FixedTransactionDuration >= 1 && FixedTransactionDuration <= 120 && PickedDate <= DateTime.Today.AddYears(10) && PickedDate.Year >= DateTime.Today.Year-10;
     }
 }
