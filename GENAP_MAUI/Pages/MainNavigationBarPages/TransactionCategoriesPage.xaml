@@ -10,7 +10,32 @@
 
     <Grid RowDefinitions="Auto,*,Auto" RowSpacing="16">
 
-        <VerticalStackLayout Grid.Row="0" Spacing="4" Padding="20,20,20,0">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="OrientationStates">
+
+                <VisualState x:Name="Portrait">
+                    <VisualState.StateTriggers>
+                        <OrientationStateTrigger Orientation="Portrait" />
+                    </VisualState.StateTriggers>
+                </VisualState>
+
+                <VisualState x:Name="Landscape">
+                    <VisualState.StateTriggers>
+                        <OrientationStateTrigger Orientation="Landscape" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter TargetName="Header" Property="IsVisible" Value="False" />
+                        <Setter TargetName="NewCategoryCard" Property="Grid.ColumnSpan" Value="1" />
+                        <Setter TargetName="SaveButton" Property="Grid.Row" Value="0" />
+                        <Setter TargetName="SaveButton" Property="Grid.Column" Value="1" />
+                        <Setter TargetName="SaveButton" Property="Grid.ColumnSpan" Value="1" />
+                    </VisualState.Setters>
+                </VisualState>
+
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <VerticalStackLayout x:Name="Header" Grid.Row="0" Spacing="4" Padding="20,20,20,0">
             <Label Text="Categorías" Style="{StaticResource SubHeadline}" />
             <Label Style="{StaticResource Caption}"
                    HorizontalTextAlignment="Center"
@@ -48,9 +73,17 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <VerticalStackLayout Grid.Row="2" Spacing="12" Padding="20,0,20,0" Margin="0,0,0,100">
+        <Grid Grid.Row="2"
+              ColumnDefinitions="2*,*"
+              RowDefinitions="Auto,Auto"
+              ColumnSpacing="12"
+              RowSpacing="12"
+              Padding="20,0,20,0"
+              Margin="0,0,0,100">
 
-            <Border Style="{StaticResource CategoryCard}">
+            <Border x:Name="NewCategoryCard"
+                    Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                    Style="{StaticResource CategoryCard}">
                 <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
                     <Entry Grid.Column="0"
                            Style="{StaticResource InlineEntry}"
@@ -75,10 +108,12 @@
                 </Grid>
             </Border>
 
-            <Button Text="Guardar cambios"
+            <Button x:Name="SaveButton"
+                    Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                    Text="Guardar cambios"
                     Command="{Binding SaveCommand}"
                     Style="{StaticResource ButtonPrimary}" />
-        </VerticalStackLayout>
+        </Grid>
 
         <nav:BottomNavigationBar Grid.Row="0" Grid.RowSpan="3" />
     </Grid>
