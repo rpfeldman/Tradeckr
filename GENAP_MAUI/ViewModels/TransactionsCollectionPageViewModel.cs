@@ -65,23 +65,23 @@ namespace GENAP_MAUI.ViewModels
             switch (timePeriod)
             {
                 case GlobalResources.TimePeriodsEnum.Historical:
-                    getTransactionsTask = _dataProjectionService.GetAllAsync(order: DataProjectionService.Order.OrderByDate, currency: currency);
+                    getTransactionsTask = _dataProjectionService.GetAllAsync(order: DataProjectionService.Order.OrderByDateDescending, currency: currency);
                     break;
 
                 case GlobalResources.TimePeriodsEnum.HistoricalToday:
-                    getTransactionsTask = _dataProjectionService.GetAllByPredicateAsync(t => t.Date <= today, order: DataProjectionService.Order.OrderByDate, currency: currency);
+                    getTransactionsTask = _dataProjectionService.GetAllByPredicateAsync(t => t.Date <= today, order: DataProjectionService.Order.OrderByDateDescending, currency: currency);
                     break;
 
                 case GlobalResources.TimePeriodsEnum.Month:
-                    getTransactionsTask = _dataProjectionService.GetAllByMonthAsync(today.Month, today.Year, order:DataProjectionService.Order.OrderByDate, currency: currency);
+                    getTransactionsTask = _dataProjectionService.GetAllByMonthAsync(today.Month, today.Year, order:DataProjectionService.Order.OrderByDateDescending, currency: currency);
                     break;
 
                 case GlobalResources.TimePeriodsEnum.ThirtyDays:
-                    getTransactionsTask = _dataProjectionService.GetAllByPredicateAsync(t => t.Date.DayOfYear >= (today.DayOfYear - 30) && t.Date <= today && t.Date.Year == today.Year, order: DataProjectionService.Order.OrderByDate, currency: currency);
+                    getTransactionsTask = _dataProjectionService.GetAllByPredicateAsync(t => t.Date.DayOfYear >= (today.DayOfYear - 30) && t.Date <= today && t.Date.Year == today.Year, order: DataProjectionService.Order.OrderByDateDescending, currency: currency);
                     break;
 
                 case GlobalResources.TimePeriodsEnum.ThreeMonths:
-                    getTransactionsTask = _dataProjectionService.GetAllByPredicateAsync(t => t.Date.Month >= (today.Month - 3) && t.Date.Month <= today.Month && t.Date.Year == today.Year, order: DataProjectionService.Order.OrderByDate, currency: currency);
+                    getTransactionsTask = _dataProjectionService.GetAllByPredicateAsync(t => t.Date.Month >= (today.Month - 3) && t.Date.Month <= today.Month && t.Date.Year == today.Year, order: DataProjectionService.Order.OrderByDateDescending, currency: currency);
                     break;
 
                 case GlobalResources.TimePeriodsEnum.Semester:
@@ -92,19 +92,19 @@ namespace GENAP_MAUI.ViewModels
                     { MinBound = 7; MaxBound = 12; }
                     else { MinBound = 1; MaxBound = 6; }
 
-                    getTransactionsTask = _dataProjectionService.GetAllByPredicateAsync(t => t.Date.Month >= MinBound && t.Date.Month <= MaxBound && t.Date.Year == today.Year, order: DataProjectionService.Order.OrderByDate, currency: currency);
+                    getTransactionsTask = _dataProjectionService.GetAllByPredicateAsync(t => t.Date.Month >= MinBound && t.Date.Month <= MaxBound && t.Date.Year == today.Year, order: DataProjectionService.Order.OrderByDateDescending, currency: currency);
                     break;
 
                 case GlobalResources.TimePeriodsEnum.Year:
-                    getTransactionsTask = _dataProjectionService.GetAllByYearAsync(today.Year, order: DataProjectionService.Order.OrderByDate, currency: currency);
+                    getTransactionsTask = _dataProjectionService.GetAllByYearAsync(today.Year, order: DataProjectionService.Order.OrderByDateDescending, currency: currency);
                     break;
 
                 case GlobalResources.TimePeriodsEnum.Today:
-                    getTransactionsTask = _dataProjectionService.GetAllByDateAsync(today, order: DataProjectionService.Order.OrderByDate, currency: currency);
+                    getTransactionsTask = _dataProjectionService.GetAllByDateAsync(today, order: DataProjectionService.Order.OrderByDateDescending, currency: currency);
                     break;
 
                 default:
-                    getTransactionsTask = _dataProjectionService.GetAllAsync(order: DataProjectionService.Order.OrderByDate, currency: currency);
+                    getTransactionsTask = _dataProjectionService.GetAllAsync(order: DataProjectionService.Order.OrderByDateDescending, currency: currency);
                     break;
             }
 
