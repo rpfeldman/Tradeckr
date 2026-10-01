@@ -97,7 +97,6 @@ namespace GENAP_MAUI.ViewModels
                 case GlobalResources.TimePeriodsEnum.Historical:
                     Predicates =
                     [
-
                         _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Category != DefaultCategories.TradingCategoryName),
                         _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Category == DefaultCategories.TradingCategoryName),
                         _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false),
@@ -245,9 +244,9 @@ namespace GENAP_MAUI.ViewModels
             else { await _customDialogsService.ShowAlertDialogAsync("Error", getCategoriesOperation.InnerError?.ErrorMessage!, "Aceptar"); }
 
             PickedCurrency = GlobalResources.DefaultCommonCurrency;
-            PickedTimePeriod = GlobalResources.TimePeriods.Where(d => d.Key == GlobalResources.TimePeriodsEnum.Month).First();
+            PickedTimePeriod = GlobalResources.TimePeriodsList[1];
 
-            await ReFillGraphs(PickedTimePeriod.Key, PickedCurrency);
+            await ReFillGraphs(TimePeriodsEnum.ThirtyDays, PickedCurrency);
             
             _IsAlreadyFillingGraphs = false;
         }
