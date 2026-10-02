@@ -23,7 +23,22 @@ namespace ConsoleTest
             Batteries_V2.Init();
 
             EF_SQLite_StateStorageRepo<CurrencyDto> repo = new("Test.db");
-            CurrenciesRatesService crs = new("pene");
+            CurrenciesRatesService crs = new("usd");
+
+            var getRatesOperation = await crs.GetRatesAsync(DateOnly.FromDateTime(new DateTime(2026, 11, 10)));
+
+            
+            if(!getRatesOperation.Success)
+            {
+                Console.WriteLine($"Ha ocurrido un error: {getRatesOperation.InnerError!.ErrorMessage} - {getRatesOperation.InnerError.ErrorDescription}");
+                return;
+            }
+
+            foreach (var item in getRatesOperation.Result!)
+            {
+                Console.WriteLine($"1,00$ 'usd' equivale a {item.Value:N2}$ '{item.Key}'");
+            }
+
         }
     }
 }

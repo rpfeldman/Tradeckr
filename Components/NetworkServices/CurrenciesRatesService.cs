@@ -44,6 +44,10 @@ namespace NetworkServices
 
                 var request = await _httpClient.GetAsync($"https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@{formattedDate}/v1/currencies/{_RootCurrencyIsoCode}.json");
 
+                if(request.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
+                    request = await _httpClient.GetAsync($"https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/{_RootCurrencyIsoCode}.json");
+                }
                 if (!request.IsSuccessStatusCode)
                 {
                     return OperationResult<Dictionary<string, decimal>>.FaultedOperation(NetworkErrors.HttpStatusCodeError(request.StatusCode)); 
