@@ -167,7 +167,7 @@ namespace GENAP_MAUI.ViewModels
             }
             else { await _customDialogsService.ShowAlertDialogAsync("Error", getCategoryOperation.InnerError?.ErrorMessage!, "Aceptar"); }
         }
-        private bool AddCategoryCanExecute() => !string.IsNullOrWhiteSpace(NewCategory) && !Categories.Any(c => c.Name == NewCategory) && PickedColor is not null && NewCategory.Length <= 20;
+        private bool AddCategoryCanExecute() => !string.IsNullOrWhiteSpace(NewCategory) && !Categories.Any(c => c.Name == NewCategory) && PickedColor is not null && NewCategory.Length <= 40;
         private bool SaveCanExecute() => Categories.Count > 0 && !Categories.Any(c => string.IsNullOrWhiteSpace(c.Name));
     }
 }
