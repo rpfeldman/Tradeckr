@@ -8,7 +8,7 @@ namespace GENAP_MAUI.ControlBehaviours
 {
     public sealed class MoneyEntryBehaviour : Behavior<Entry>
     {
-        private bool _IsFormatting = false;
+        private bool IsFormatting = false;
 
         protected override void OnAttachedTo(Entry bindable)
         {
@@ -31,7 +31,7 @@ namespace GENAP_MAUI.ControlBehaviours
 
         private void Entry_TextChanged(object? sender, TextChangedEventArgs e)
         { 
-            if (_IsFormatting) { return; }
+            if (IsFormatting) { return; }
 
             var entry = (Entry)sender!;
             var culture = CultureInfo.CurrentCulture;
@@ -39,12 +39,12 @@ namespace GENAP_MAUI.ControlBehaviours
             
             if (string.IsNullOrWhiteSpace(e.NewTextValue) || e.NewTextValue.Length <= 3 || e.NewTextValue[^1] == decimalSeparator) { return; } // cases in which formatting is not necessary
 
-            _IsFormatting = true;
+            IsFormatting = true;
 
             if (!decimal.TryParse(entry.Text, out decimal value))
             {
                 entry.Text = string.Empty;
-                _IsFormatting = false;
+                IsFormatting = false;
 
                 return;
             }
@@ -52,7 +52,7 @@ namespace GENAP_MAUI.ControlBehaviours
             entry.Dispatcher.Dispatch(() =>
             {
                 entry.Text = value % 1 != 0 ? value.ToString("N2", culture) : value.ToString("N0", culture);
-                _IsFormatting = false;
+                IsFormatting = false;
             });
         }
     }

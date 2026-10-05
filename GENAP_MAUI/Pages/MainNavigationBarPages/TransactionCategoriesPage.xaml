@@ -5,6 +5,7 @@
              xmlns:model="clr-namespace:DomainModel;assembly=DomainModel"
              xmlns:nav="clr-namespace:GENAP_MAUI.ContentViews.Navigation"
              xmlns:local="clr-namespace:GENAP_MAUI"
+             xmlns:behaviours="clr-namespace:GENAP_MAUI.ControlBehaviours"
              x:Class="GENAP_MAUI.Pages.MainNavigationBarPages.TransactionCategoriesPage"
              x:DataType="vm:TransactionCategoriesPageViewModel">
 
@@ -59,7 +60,12 @@
                             <Entry Grid.Column="1"
                                    Style="{StaticResource InlineEntry}"
                                    Text="{Binding Name}"
-                                   VerticalOptions="Center" />
+                                   VerticalOptions="Center">
+
+                                <Entry.Behaviors>
+                                     <behaviours:CategoryEntryBehaviour/>
+                                </Entry.Behaviors>
+                            </Entry>
 
                             <Button Grid.Column="2"
                                     Style="{StaticResource IconButton}"
@@ -89,9 +95,14 @@
                            Style="{StaticResource InlineEntry}"
                            Placeholder="Nueva categoría"
                            Text="{Binding NewCategory}"
-                           VerticalOptions="Center" />
+                           VerticalOptions="Center">
+                        
+                        <Entry.Behaviors>
+                            <behaviours:CategoryEntryBehaviour/>
+                        </Entry.Behaviors>
+                    </Entry>
 
-                    <Picker Grid.Column="1"
+                        <Picker Grid.Column="1"
                             Title="Color"
                             WidthRequest="80"
                             ItemsSource="{x:Static local:GlobalResources.ColorList}"
