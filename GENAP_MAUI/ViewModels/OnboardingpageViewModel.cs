@@ -97,6 +97,6 @@ namespace GENAP_MAUI.ViewModels
             }
         }
 
-        private bool ContinueCanExecute() => !string.IsNullOrWhiteSpace(UserName) && UserName.Length < 20 && IsConnected;
+        private bool ContinueCanExecute() => !string.IsNullOrWhiteSpace(UserName) && UserName.Length < BoundsConst.UserNameLimit && IsConnected;
     }
 }
