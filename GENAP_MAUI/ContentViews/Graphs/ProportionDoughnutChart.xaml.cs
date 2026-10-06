@@ -85,6 +85,9 @@ public partial class ProportionDoughnutChart : ContentView
     {
         DoughnutSeries = [];
         InitializeComponent();
+
+        Loaded += OnChartLoaded;
+        Unloaded += OnChartUnloaded;
     }
 
     private static void OnDataChanged(BindableObject bindable, object oldValue, object newValue)
@@ -131,12 +134,13 @@ public partial class ProportionDoughnutChart : ContentView
 
         var totalSum = grouped.Sum(g => g.Total);
         var colorMap = BuildColorMap(Categories);
+        var labelColor = ResolveLabelColor(IsDarkTheme());
 
         var series = new List<ISeries>();
         foreach (var group in grouped)
         {
             var color = ResolveColor(group.Name, colorMap);
-            series.Add(CreatePieSlice(group.Name, group.Total, totalSum, color));
+            series.Add(CreatePieSlice(group.Name, group.Total, totalSum, color, labelColor));
         }
 
         DoughnutSeries = series.ToArray();
@@ -213,7 +217,8 @@ public partial class ProportionDoughnutChart : ContentView
         string name,
         decimal value,
         decimal totalSum,
-        SKColor color)
+        SKColor color,
+        SKColor labelColor)
     {
         var percentage = totalSum > 0 ? (double)(value / totalSum) * 100 : 0;
         var showLabel = percentage >= MinLabelPercentage;
@@ -228,12 +233,71 @@ public partial class ProportionDoughnutChart : ContentView
             Values = [new((double)value)],
             InnerRadius = 80,
             Fill = new SolidColorPaint(color),
-            DataLabelsPaint = showLabel ? new SolidColorPaint(SKColors.White) : null,
+            DataLabelsPaint = showLabel ? CreateLabelPaint(labelColor) : null,
             DataLabelsPosition = LiveChartsCore.Measure.PolarLabelsPosition.Middle,
             DataLabelsFormatter = point =>
                 $"{percentage.ToString("N1", CultureInfo.InvariantCulture)}%",
             ToolTipLabelFormatter = point =>
                 $"{tooltipName}\n{point.Coordinate.PrimaryValue.ToString("N2", CultureInfo.InvariantCulture)}$ ({percentage.ToString("N1", CultureInfo.InvariantCulture)}%)"
         };
+    }
+
+    private static bool IsDarkTheme() => Preferences.Get(PreferenceKeys.UserThemeKey, true);
+
+    private static SKColor ResolveLabelColor(bool isDark)
+    {
+        var key = isDark ? "TextPrimaryDark" : "TextPrimaryLight";
+
+        if (Application.Current?.Resources.TryGetValue(key, out var value) == true && value is Color color)
+        {
+            return new SKColor(
+                (byte)(color.Red * 255),
+                (byte)(color.Green * 255),
+                (byte)(color.Blue * 255),
+                (byte)(color.Alpha * 255));
+        }
+
+        return isDark ? SKColors.White : SKColor.Parse("#1F2937");
+    }
+    private static readonly SKTypeface LabelTypeface = SKTypeface.FromFamilyName(
+        null,
+        SKFontStyleWeight.SemiBold,
+        SKFontStyleWidth.Normal,
+        SKFontStyleSlant.Upright);
+
+    private static SolidColorPaint CreateLabelPaint(SKColor color) =>
+        new(color) { SKTypeface = LabelTypeface };
+
+    private void OnChartLoaded(object? sender, EventArgs e)
+    {
+        if (Application.Current is not null)
+        {
+            Application.Current.RequestedThemeChanged -= OnAppThemeChanged;
+            Application.Current.RequestedThemeChanged += OnAppThemeChanged;
+        }
+
+        ApplyLabelColor(ResolveLabelColor(IsDarkTheme()));
+    }
+
+    private void OnChartUnloaded(object? sender, EventArgs e)
+    {
+        if (Application.Current is not null)
+            Application.Current.RequestedThemeChanged -= OnAppThemeChanged;
+    }
+
+    private void OnAppThemeChanged(object? sender, AppThemeChangedEventArgs e)
+    {
+        ApplyLabelColor(ResolveLabelColor(e.RequestedTheme == AppTheme.Dark));
+    }
+
+    private void ApplyLabelColor(SKColor color)
+    {
+        foreach (var series in DoughnutSeries.OfType<PieSeries<ObservableValue>>())
+        {
+            if (series.DataLabelsPaint is not null)
+                series.DataLabelsPaint = CreateLabelPaint(color);
+        }
+
+        OnPropertyChanged(nameof(DoughnutSeries));
     }
 }

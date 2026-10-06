@@ -108,6 +108,8 @@ public partial class BalanceDoughnutChart : ContentView
 
     public BalanceDoughnutChart()
     {
+        var labelColor = ResolveLabelColor(IsDarkTheme());
+
         DoughnutChart = [
             new PieSeries<ObservableValue>
             {
@@ -115,7 +117,7 @@ public partial class BalanceDoughnutChart : ContentView
                 Values = [new(0)],
                 InnerRadius = 80,
                 Fill = new SolidColorPaint(IncomeColor),
-                DataLabelsPaint = new SolidColorPaint(SKColors.White),
+                DataLabelsPaint = CreateLabelPaint(labelColor),
                 DataLabelsPosition = LiveChartsCore.Measure.PolarLabelsPosition.Middle,
                 DataLabelsFormatter = point => ChartFormat.CompactCurrency(point.Coordinate.PrimaryValue),
                 ToolTipLabelFormatter = point => $"{point.Coordinate.PrimaryValue:N2}$"
@@ -126,7 +128,7 @@ public partial class BalanceDoughnutChart : ContentView
                 Values = [new(0)],
                 InnerRadius = 80,
                 Fill = new SolidColorPaint(ExpenseColor),
-                DataLabelsPaint = new SolidColorPaint(SKColors.White),
+                DataLabelsPaint = CreateLabelPaint(labelColor),
                 DataLabelsPosition = LiveChartsCore.Measure.PolarLabelsPosition.Middle,
                 DataLabelsFormatter = point => ChartFormat.CompactCurrency(point.Coordinate.PrimaryValue),
                 ToolTipLabelFormatter = point => $"{point.Coordinate.PrimaryValue:N2}$"
@@ -134,6 +136,9 @@ public partial class BalanceDoughnutChart : ContentView
         ];
 
         InitializeComponent();
+
+        Loaded += OnChartLoaded;
+        Unloaded += OnChartUnloaded;
     }
 
     private static void OnDataChanged(BindableObject bindable, object oldValue, object newValue)
@@ -252,5 +257,61 @@ public partial class BalanceDoughnutChart : ContentView
     {
         var slice = (PieSeries<ObservableValue>)DoughnutChart[1];
         slice.Values = [new((double)expenses)];
+    }
+
+    private static bool IsDarkTheme() => Preferences.Get(PreferenceKeys.UserThemeKey, true);
+
+    private static SKColor ResolveLabelColor(bool isDark)
+    {
+        var key = isDark ? "TextPrimaryDark" : "TextPrimaryLight";
+
+        if (Application.Current?.Resources.TryGetValue(key, out var value) == true && value is Color color)
+        {
+            return new SKColor(
+                (byte)(color.Red * 255),
+                (byte)(color.Green * 255),
+                (byte)(color.Blue * 255),
+                (byte)(color.Alpha * 255));
+        }
+
+        return isDark ? SKColors.White : SKColor.Parse("#1F2937");
+    }
+    private static readonly SKTypeface LabelTypeface = SKTypeface.FromFamilyName(
+        null,
+        SKFontStyleWeight.SemiBold,
+        SKFontStyleWidth.Normal,
+        SKFontStyleSlant.Upright);
+
+    private static SolidColorPaint CreateLabelPaint(SKColor color) =>
+        new(color) { SKTypeface = LabelTypeface };
+
+    private void OnChartLoaded(object? sender, EventArgs e)
+    {
+        if (Application.Current is not null)
+        {
+            Application.Current.RequestedThemeChanged -= OnAppThemeChanged;
+            Application.Current.RequestedThemeChanged += OnAppThemeChanged;
+        }
+
+        ApplyLabelColor(ResolveLabelColor(IsDarkTheme()));
+    }
+
+    private void OnChartUnloaded(object? sender, EventArgs e)
+    {
+        if (Application.Current is not null)
+            Application.Current.RequestedThemeChanged -= OnAppThemeChanged;
+    }
+
+    private void OnAppThemeChanged(object? sender, AppThemeChangedEventArgs e)
+    {
+        ApplyLabelColor(ResolveLabelColor(e.RequestedTheme == AppTheme.Dark));
+    }
+
+    private void ApplyLabelColor(SKColor color)
+    {
+        foreach (var series in DoughnutChart.OfType<PieSeries<ObservableValue>>())
+            series.DataLabelsPaint = CreateLabelPaint(color);
+
+        OnPropertyChanged(nameof(DoughnutChart));
     }
 }
