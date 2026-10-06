@@ -105,6 +105,8 @@ namespace GENAP_MAUI.ViewModels
             for (int i = 0; i < CurrencySettings.Length; i++)  CurrencySettings[i] = false;
             Settings_HasChanged = false;
 
+            Log.Information($"Changes have been saved (Settings page)");
+
             await _customDialogsService.ShowAlertDialogAsync("Configuracion", "Cambios guardados con exito", "Aceptar");
         }
 
@@ -201,6 +203,8 @@ namespace GENAP_MAUI.ViewModels
            AppearanceSettings[1] = true;
 
            Settings_HasChanged = true;
+
+            Log.Information($"Possible setting: Username changed to '{value}' (Settings page)");
         }
 
         partial void OnPickedThemeChanged(KeyValuePair<AppTheme, string> value)
@@ -211,6 +215,8 @@ namespace GENAP_MAUI.ViewModels
            AppearanceSettings[2] = true;
 
            Settings_HasChanged = true;
+
+            Log.Information($"Possible setting: App theme changed to '{value.Key}' (Settings page)");
         }
 
         partial void OnPickedCommonCurrencyChanged(CurrencyDto value)
@@ -221,6 +227,8 @@ namespace GENAP_MAUI.ViewModels
            CurrencySettings[1] = true;
 
            Settings_HasChanged = true;
+
+            Log.Information($"Possible setting: Common currency changed to '{value.IsoCode}' (Settings page)");
         }
 
         partial void OnPickedUpdateRateOptionChanged(KeyValuePair<bool, string> value)
@@ -231,6 +239,8 @@ namespace GENAP_MAUI.ViewModels
            CurrencySettings[3] = true;
 
            Settings_HasChanged = true;
+
+            Log.Information($"Possible setting: Daily update rate changed to '{value.Key}' (Settings page)");
         }
 
         private bool SaveCanExecute() => Settings_HasChanged && !string.IsNullOrWhiteSpace(PickedUserName) && PickedUserName.Length < 20;
