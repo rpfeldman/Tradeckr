@@ -34,7 +34,7 @@ namespace GENAP_MAUI.ViewModels
         [ObservableProperty]
         public partial int TransactionId { get; set; }
 
-        private decimal _Value = 0m;
+        private decimal Value = 0m;
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(DeleteFixedTransactionCommand))]
@@ -85,6 +85,7 @@ namespace GENAP_MAUI.ViewModels
 
             decimal mvalue = CurrencyConverterService.TfuToCurrency(Transaction.Value, PickedCurrency);
             PickedValue = mvalue % 1 == 0 ? mvalue.ToString("N0") : mvalue.ToString("N2");
+            Value = mvalue;
 
             if (Transaction.Category == DefaultCategories.TradingCategoryName) 
             {
@@ -117,19 +118,13 @@ namespace GENAP_MAUI.ViewModels
         {
             if (_IsLoading) { return; }
 
-            var oldTfuValue = CurrencyConverterService.CurrencyToTfu(_Value, oldValue);
+            var TfuValue = CurrencyConverterService.CurrencyToTfu(Value, oldValue);
+            var ConvertedValue = CurrencyConverterService.TfuToCurrency(TfuValue, newValue);
 
-            PickedValue = CurrencyConverterService.TfuToCurrency(oldTfuValue, newValue).ToString();
+            PickedValue = ConvertedValue.ToString();
+            Value = ConvertedValue;
 
             Log.Information($"Currency switched from '{oldValue.IsoCode}' to '{newValue.IsoCode}' (Transaction Page)");
-        }
-
-        partial void OnPickedValueChanged(string value)
-        {
-            if (decimal.TryParse(value, out decimal mvalue))
-            {
-                _Value = mvalue;
-            }
         }
 
         [RelayCommand]
@@ -163,15 +158,16 @@ namespace GENAP_MAUI.ViewModels
         [RelayCommand(CanExecute = nameof(UpdateTransactionCanExecute))]
         public async Task UpdateTransaction()
         {
-            _Value = CurrencyConverterService.CurrencyToTfu(_Value, PickedCurrency);
+            Value = decimal.Parse(PickedValue);
+            Value = CurrencyConverterService.CurrencyToTfu(Value, PickedCurrency);
 
-            var updateTransactionOperation = await _dataManagementService.UpdateTransactionAsync(TransactionId, _Value, DateOnly.FromDateTime(PickedDate), PickedCategory.Name, Transaction.Depletion);
+            var updateTransactionOperation = await _dataManagementService.UpdateTransactionAsync(TransactionId, Value, DateOnly.FromDateTime(PickedDate), PickedCategory.Name, Transaction.Depletion);
 
                 updateTransactionOperation.WriteLog
                     (
                         $"Update Transaction with ID '{TransactionId}' with the following attributes:\n" +
-                        $" -Intended value: '{(CurrencyConverterService.TfuToCurrency(_Value, PickedCurrency)):N2} {PickedCurrency.IsoCode}$'\n" +
-                        $" -Real value: '{_Value:N4} {GlobalResources.DefaultTradingCurrency.IsoCode}$'\n" +
+                        $" -Intended value: '{(CurrencyConverterService.TfuToCurrency(Value, PickedCurrency)):N2} {PickedCurrency.IsoCode}$'\n" +
+                        $" -Real value: '{Value:N4} {GlobalResources.DefaultTradingCurrency.IsoCode}$'\n" +
                         $" -Date: '{PickedDate:dd/MM/yyyy}'\n" +
                         $" -Category: '{PickedCategory.Name}'"
                     );
@@ -181,6 +177,6 @@ namespace GENAP_MAUI.ViewModels
 
         private bool DeleteFixedTransactionCanExecute => Transaction is FixedTransactionDto;
 
-        private bool UpdateTransactionCanExecute => _Value > 0; 
+        private bool UpdateTransactionCanExecute => (int)Value > 0 && decimal.TryParse(PickedValue, out _); 
     }
 }
