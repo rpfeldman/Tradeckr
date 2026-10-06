@@ -30,6 +30,8 @@
 		<!-- Display name -->
 		<ApplicationTitle>Tradeckr</ApplicationTitle>
 
+		<NeutralLanguage>en</NeutralLanguage>
+
 		<!-- App Identifier -->
 		<ApplicationId>com.feldman.tradeckr</ApplicationId>
 
@@ -158,6 +160,21 @@
 
 	<ItemGroup>
 	  <Folder Include="Resources\Images\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Resources\AppResources\AppResource.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>AppResource.resx</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Update="Resources\AppResources\AppResource.resx">
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	    <LastGenOutput>AppResource.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
 	</ItemGroup>
 
 	<ItemGroup>
