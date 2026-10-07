@@ -147,4 +147,10 @@
   <data name="Colors" xml:space="preserve">
     <value>Azul plateado_Amarillo_Verde_Morado_Aguamarina_Naranja_Rojo_Verde esmeralda_Celeste_Lavanda_Magenta</value>
   </data>
+  <data name="DarkTheme" xml:space="preserve">
+    <value>Oscuro</value>
+  </data>
+  <data name="LightTheme" xml:space="preserve">
+    <value>Claro</value>
+  </data>
 </root>

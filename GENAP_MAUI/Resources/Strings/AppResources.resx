@@ -127,4 +127,10 @@
   <data name="Colors" xml:space="preserve">
     <value>Steel blue_Yellow_Green_Purple_Aqua_Orange_Red_Emerald_Cyan_Indigo_Magenta</value>
   </data>
+  <data name="DarkTheme" xml:space="preserve">
+    <value>Dark</value>
+  </data>
+  <data name="LightTheme" xml:space="preserve">
+    <value>Light</value>
+  </data>
 </root>

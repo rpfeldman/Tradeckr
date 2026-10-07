@@ -82,8 +82,8 @@ namespace GENAP_MAUI
 
         public readonly static Dictionary<AppTheme, string> AppThemes = new(2)
         {
-            { AppTheme.Dark, "Oscuro" },
-            { AppTheme.Light, "Claro" }
+            { AppTheme.Dark, AppResources.DarkTheme },
+            { AppTheme.Light, AppResources.LightTheme }
         }; 
 
         public static List<KeyValuePair<AppTheme, string>> AppThemesList { get => [.. AppThemes]; } 

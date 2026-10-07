@@ -79,6 +79,15 @@ namespace GENAP_MAUI.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Dark.
+        /// </summary>
+        public static string DarkTheme {
+            get {
+                return ResourceManager.GetString("DarkTheme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a View charts ›.
         /// </summary>
         public static string GoToGraphs_caption {
@@ -93,6 +102,15 @@ namespace GENAP_MAUI.Resources.Strings {
         public static string GoToTransactions_caption {
             get {
                 return ResourceManager.GetString("GoToTransactions_caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Light.
+        /// </summary>
+        public static string LightTheme {
+            get {
+                return ResourceManager.GetString("LightTheme", resourceCulture);
             }
         }
         
