@@ -22,17 +22,26 @@ namespace GENAP_MAUI
 
         // TimePeriod is split in 3: the enum (type-safe id), the display name (what the user sees), and the logic (per consumption point)
         // To add one: extend the enum, map its display name, handle its logic where consumed.
-        public enum TimePeriodsEnum { Historical, HistoricalToday, Month, ThirtyDays, ThreeMonths, Semester, Year, Today }; 
+        public enum TimePeriodsEnum { Historical, HistoricalToday, Month, ThirtyDays, ThreeMonths, Semester, Year, Today };
+
+        public static string[] TimePeriodsStrings { get => AppResources.TimePeriods.Split('_'); }
         public readonly static Dictionary<TimePeriodsEnum, string> TimePeriods = new(8)
          {
-                {TimePeriodsEnum.Today, "Hoy"},
-                {TimePeriodsEnum.ThirtyDays, "Ultimos 30 dias"},
-                {TimePeriodsEnum.Month, "Este mes"},
-                {TimePeriodsEnum.ThreeMonths, "Ultimos 3 meses"},
-                {TimePeriodsEnum.Semester, "Ultimo semestre"},
-                {TimePeriodsEnum.Year, "Ultimo año"},
-                {TimePeriodsEnum.HistoricalToday, "Historico hasta hoy"},
-                {TimePeriodsEnum.Historical, "Proyeccion"},
+                {TimePeriodsEnum.Today, TimePeriodsStrings[0]},
+
+                {TimePeriodsEnum.ThirtyDays, TimePeriodsStrings[1]},
+
+                {TimePeriodsEnum.Month, TimePeriodsStrings[2]},
+
+                {TimePeriodsEnum.ThreeMonths, TimePeriodsStrings[3]},
+
+                {TimePeriodsEnum.Semester, TimePeriodsStrings[4]},
+
+                {TimePeriodsEnum.Year, TimePeriodsStrings[5]},
+
+                {TimePeriodsEnum.HistoricalToday, TimePeriodsStrings[6]},
+
+                {TimePeriodsEnum.Historical, TimePeriodsStrings[7]},
          };
         
         public static List<KeyValuePair<TimePeriodsEnum, string>> TimePeriodsList { get => [.. TimePeriods]; }

@@ -124,6 +124,15 @@ namespace GENAP_MAUI.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Today_Last 30 days_This month_Last 3 months_Last 6 months_Last year_All time_Projection.
+        /// </summary>
+        public static string TimePeriods {
+            get {
+                return ResourceManager.GetString("TimePeriods", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Welcome,.
         /// </summary>
         public static string Welcome_title {

@@ -141,4 +141,7 @@
   <data name="GoToTransactions_caption" xml:space="preserve">
     <value>Ver todos ›</value>
   </data>
+  <data name="TimePeriods" xml:space="preserve">
+    <value>Hoy_Últimos 30 días_Este mes_Últimos 3 meses_Este semestre_Este año_Histórico_Proyección</value>
+  </data>
 </root>
