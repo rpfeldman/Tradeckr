@@ -79,6 +79,15 @@ namespace GENAP_MAUI.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a United States Dollar_Argentine Peso_Uruguayan Peso_Mexican Peso_Chilean Peso_Euro_British Pound_Japanese Yen_Swiss Franc_Brazilian Real.
+        /// </summary>
+        public static string Currencies {
+            get {
+                return ResourceManager.GetString("Currencies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Dark.
         /// </summary>
         public static string DarkTheme {

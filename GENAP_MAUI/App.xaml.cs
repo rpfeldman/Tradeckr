@@ -26,9 +26,7 @@ namespace GENAP_MAUI
         protected override async void OnStart()
         {
             base.OnStart();
-            var cultura = new CultureInfo("en");
-            CultureInfo.CurrentUICulture = cultura;
-            CultureInfo.DefaultThreadCurrentUICulture = cultura;
+            
             try
             {
                 CurrencyPersistenceService currencyPersistenceService = IPlatformApplication.Current!.Services.GetRequiredService<CurrencyPersistenceService>();

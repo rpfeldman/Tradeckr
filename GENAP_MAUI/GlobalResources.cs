@@ -89,28 +89,29 @@ namespace GENAP_MAUI
         public static List<KeyValuePair<AppTheme, string>> AppThemesList { get => [.. AppThemes]; } 
 
         // In-memory currencies
-
+        
+        public static string[] CurrenciesStrings { get => AppResources.Currencies.Split('_'); }
         public static CurrencyDto[] Currencies { get; set; } =
             [
-                new CurrencyDto() { CurrencyDisplayName = "Dólar Estadounidense", IsoCode = "USD", ConversionRate = 1, Id = 1 },
+                new CurrencyDto() { CurrencyDisplayName = CurrenciesStrings[0], IsoCode = "USD", ConversionRate = 1, Id = 1 },
 
-                new CurrencyDto() { CurrencyDisplayName = "Peso Argentino", IsoCode = "ARS", ConversionRate = 1, Id = 2 },
+                new CurrencyDto() { CurrencyDisplayName = CurrenciesStrings[1], IsoCode = "ARS", ConversionRate = 1, Id = 2 },
 
-                new CurrencyDto() { CurrencyDisplayName = "Peso uruguayo", IsoCode = "UYU", ConversionRate = 1, Id = 3 },
+                new CurrencyDto() { CurrencyDisplayName = CurrenciesStrings[2], IsoCode = "UYU", ConversionRate = 1, Id = 3 },
 
-                new CurrencyDto() { CurrencyDisplayName = "Peso mexicano", IsoCode = "MXN", ConversionRate = 1, Id = 4 },
+                new CurrencyDto() { CurrencyDisplayName = CurrenciesStrings[3], IsoCode = "MXN", ConversionRate = 1, Id = 4 },
 
-                new CurrencyDto() { CurrencyDisplayName = "Peso chileno", IsoCode = "CLP", ConversionRate = 1, Id = 5 },
+                new CurrencyDto() { CurrencyDisplayName = CurrenciesStrings[4], IsoCode = "CLP", ConversionRate = 1, Id = 5 },
 
-                new CurrencyDto() { CurrencyDisplayName = "Euro", IsoCode = "EUR", ConversionRate = 1, Id = 6 },
+                new CurrencyDto() { CurrencyDisplayName = CurrenciesStrings[5], IsoCode = "EUR", ConversionRate = 1, Id = 6 },
 
-                new CurrencyDto() { CurrencyDisplayName = "Libra esterlina", IsoCode = "GBP", ConversionRate = 1, Id = 7 },
+                new CurrencyDto() { CurrencyDisplayName = CurrenciesStrings[6], IsoCode = "GBP", ConversionRate = 1, Id = 7 },
 
-                new CurrencyDto() { CurrencyDisplayName = "Yen japonés", IsoCode = "JPY", ConversionRate = 1, Id = 8 },
+                new CurrencyDto() { CurrencyDisplayName = CurrenciesStrings[7], IsoCode = "JPY", ConversionRate = 1, Id = 8 },
 
-                new CurrencyDto() { CurrencyDisplayName = "Franco suizo", IsoCode = "CHF", ConversionRate = 1, Id = 9 },
+                new CurrencyDto() { CurrencyDisplayName = CurrenciesStrings[8], IsoCode = "CHF", ConversionRate = 1, Id = 9 },
 
-                new CurrencyDto() { CurrencyDisplayName = "Real brasileño", IsoCode = "BRL", ConversionRate = 1, Id = 10 }
+                new CurrencyDto() { CurrencyDisplayName = CurrenciesStrings[9], IsoCode = "BRL", ConversionRate = 1, Id = 10 }
             ];
     }
 }

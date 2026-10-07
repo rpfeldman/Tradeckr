@@ -133,4 +133,7 @@
   <data name="LightTheme" xml:space="preserve">
     <value>Light</value>
   </data>
+  <data name="Currencies" xml:space="preserve">
+    <value>United States Dollar_Argentine Peso_Uruguayan Peso_Mexican Peso_Chilean Peso_Euro_British Pound_Japanese Yen_Swiss Franc_Brazilian Real</value>
+  </data>
 </root>

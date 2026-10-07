@@ -153,4 +153,7 @@
   <data name="LightTheme" xml:space="preserve">
     <value>Claro</value>
   </data>
+  <data name="Currencies" xml:space="preserve">
+    <value>Dólar Estadounidense_Peso Argentino_Peso Uruguayo_Peso Mexicano_Peso Chileno_Euro_Libra Esterlina_Yen Japonés_Franco Suizo_Real Brasileño</value>
+  </data>
 </root>
