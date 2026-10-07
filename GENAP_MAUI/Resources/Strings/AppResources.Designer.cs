@@ -70,6 +70,15 @@ namespace GENAP_MAUI.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Steel blue_Yellow_Green_Purple_Aqua_Orange_Red_Emerald_Cyan_Indigo_Magenta.
+        /// </summary>
+        public static string Colors {
+            get {
+                return ResourceManager.GetString("Colors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a View charts ›.
         /// </summary>
         public static string GoToGraphs_caption {

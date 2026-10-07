@@ -144,4 +144,7 @@
   <data name="TimePeriods" xml:space="preserve">
     <value>Hoy_Últimos 30 días_Este mes_Últimos 3 meses_Este semestre_Este año_Histórico_Proyección</value>
   </data>
+  <data name="Colors" xml:space="preserve">
+    <value>Azul plateado_Amarillo_Verde_Violeta_Verde agua_Naranja_Rojo_Verde esmeralda_Celeste_Lila_Fucsia</value>
+  </data>
 </root>

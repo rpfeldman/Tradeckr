@@ -50,19 +50,30 @@ namespace GENAP_MAUI
 
         public enum ColorsEnum { SteelBlue, Yellow, Green, Purple, Aqua, Coral, Red, Emerald, Cyan, Indigo, Magenta } 
 
+        public static string[] ColorsStrings { get => AppResources.Colors.Split('_'); }
         public readonly static Dictionary<ColorsEnum, ColorDto> Colors = new(16)
         {
-            { ColorsEnum.SteelBlue, new ColorDto("#466C87", "Azul plateado") },
-            { ColorsEnum.Yellow, new ColorDto("#F1C40F", "Amarillo") },
-            { ColorsEnum.Green, new ColorDto("#2ECC71", "Verde") },
-            { ColorsEnum.Purple, new ColorDto("#9B59B6", "Morado") },
-            { ColorsEnum.Aqua, new ColorDto("#1ABC9C", "Verde agua") },
-            { ColorsEnum.Coral, new ColorDto("#E67E22", "Naranja") },
-            { ColorsEnum.Red, new ColorDto("#E74C3C", "Rojo") },
-            { ColorsEnum.Emerald, new ColorDto("#16A085", "Verde esmeralda") },
-            { ColorsEnum.Cyan, new ColorDto("#00BCD4", "Celeste") },
-            { ColorsEnum.Indigo, new ColorDto("#5C6BC0", "Lavanda") },
-            { ColorsEnum.Magenta, new ColorDto("#E84393", "Magenta") },
+            { ColorsEnum.SteelBlue, new ColorDto("#466C87", ColorsStrings[0]) },
+
+            { ColorsEnum.Yellow, new ColorDto("#F1C40F", ColorsStrings[1]) },
+
+            { ColorsEnum.Green, new ColorDto("#2ECC71", ColorsStrings[2]) },
+
+            { ColorsEnum.Purple, new ColorDto("#9B59B6", ColorsStrings[3]) },
+
+            { ColorsEnum.Aqua, new ColorDto("#1ABC9C", ColorsStrings[4]) },
+
+            { ColorsEnum.Coral, new ColorDto("#E67E22", ColorsStrings[5]) },
+
+            { ColorsEnum.Red, new ColorDto("#E74C3C", ColorsStrings[6]) },
+
+            { ColorsEnum.Emerald, new ColorDto("#16A085", ColorsStrings[7]) },
+
+            { ColorsEnum.Cyan, new ColorDto("#00BCD4", ColorsStrings[8]) },
+
+            { ColorsEnum.Indigo, new ColorDto("#5C6BC0", ColorsStrings[9]) },
+
+            { ColorsEnum.Magenta, new ColorDto("#E84393", ColorsStrings[10]) },
         }; 
        
         public static List<ColorDto> ColorList { get => [.. Colors.Values]; }
