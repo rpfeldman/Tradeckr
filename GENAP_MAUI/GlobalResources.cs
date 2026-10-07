@@ -1,6 +1,7 @@
 ﻿
 using DomainModel;
 using GENAP_MAUI.InnerComponents;
+using GENAP_MAUI.Resources.Strings;
 using Microsoft.Maui.Storage;
 
 namespace GENAP_MAUI
@@ -17,8 +18,7 @@ namespace GENAP_MAUI
         public static CurrencyDto DefaultCommonCurrency { get => Currencies[Preferences.Get(PreferenceKeys.CommonCurrencyKey, 0)]; }
         public static CurrencyDto DefaultTradingCurrency { get => Currencies[Preferences.Get(PreferenceKeys.TradingCurrencyKey, 0)]; }
 
-        // Months name are hardcoded, in the future they will be fetched by a CSV file with the translations
-        public static string[] Months { get => ["Desconocido", "enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]; }
+        public static string[] Months { get => AppResources.Months.Split('_'); }
 
         // TimePeriod is split in 3: the enum (type-safe id), the display name (what the user sees), and the logic (per consumption point)
         // To add one: extend the enum, map its display name, handle its logic where consumed.

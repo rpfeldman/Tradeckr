@@ -61,11 +61,74 @@ namespace GENAP_MAUI.Resources.Strings {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a This is a test.
+        ///   Busca una cadena traducida similar a Balance of.
         /// </summary>
-        public static string Test {
+        public static string Balance_label {
             get {
-                return ResourceManager.GetString("Test", resourceCulture);
+                return ResourceManager.GetString("Balance_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a View charts ›.
+        /// </summary>
+        public static string GoToGraphs_caption {
+            get {
+                return ResourceManager.GetString("GoToGraphs_caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a See all ›.
+        /// </summary>
+        public static string GoToTransactions_caption {
+            get {
+                return ResourceManager.GetString("GoToTransactions_caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Monthly activity.
+        /// </summary>
+        public static string Month_summary_label {
+            get {
+                return ResourceManager.GetString("Month_summary_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Unknown_January_February_March_Aril_My_June_July_August_September_October_November_December.
+        /// </summary>
+        public static string Months {
+            get {
+                return ResourceManager.GetString("Months", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Display in.
+        /// </summary>
+        public static string PickerDisplay_caption {
+            get {
+                return ResourceManager.GetString("PickerDisplay_caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Your money, your control..
+        /// </summary>
+        public static string Tagline_caption {
+            get {
+                return ResourceManager.GetString("Tagline_caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Welcome,.
+        /// </summary>
+        public static string Welcome_title {
+            get {
+                return ResourceManager.GetString("Welcome_title", resourceCulture);
             }
         }
     }

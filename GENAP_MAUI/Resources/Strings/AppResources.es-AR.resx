@@ -117,7 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Test" xml:space="preserve">
-    <value>Esto es un test PIBE</value>
+  <data name="Welcome_title" xml:space="preserve">
+    <value>Bienvenido,</value>
+  </data>
+  <data name="Tagline_caption" xml:space="preserve">
+    <value>Tu dinero, bajo tu control.</value>
+  </data>
+  <data name="Month_summary_label" xml:space="preserve">
+    <value>Movimientos del mes</value>
+  </data>
+  <data name="Months" xml:space="preserve">
+    <value>desconocido_enero_febrero_marzo_abril_mayo_junio_julio_agosto_septiembre_octubre_noviembre</value>
+  </data>
+  <data name="PickerDisplay_caption" xml:space="preserve">
+    <value>Ver en</value>
+  </data>
+  <data name="Balance_label" xml:space="preserve">
+    <value>Balance de</value>
+  </data>
+  <data name="GoToGraphs_caption" xml:space="preserve">
+    <value>Ver gráficos ›</value>
+  </data>
+  <data name="GoToTransactions_caption" xml:space="preserve">
+    <value>Ver todos ›</value>
   </data>
 </root>

@@ -6,6 +6,7 @@
              xmlns:chart="clr-namespace:GENAP_MAUI.ContentViews.Graphs"
              xmlns:model="clr-namespace:DomainModel;assembly=DomainModel"
              xmlns:nav="clr-namespace:GENAP_MAUI.ContentViews.Navigation"
+             xmlns:strings="clr-namespace:GENAP_MAUI.Resources.Strings"
              x:Class="GENAP_MAUI.Pages.MainNavigationBarPages.MainDashboardPage"
              x:DataType="vm:MainDashboardPageViewModel"
              BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}">
@@ -20,13 +21,14 @@
                                TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}">
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span Text="Bienvenido, " />
+                                    <Span Text="{x:Static strings:AppResources.Welcome_title}" />
+                                    <Span Text=" " />
                                     <Span Text="{Binding UserName}"
                                           TextColor="{AppThemeBinding Light={StaticResource AccentLight}, Dark={StaticResource AccentDark}}" />
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
-                        <Label Text="Tu plata, bajo tu control."
+                        <Label Text="{x:Static strings:AppResources.Tagline_caption}"
                                Style="{StaticResource Caption}" />
                     </VerticalStackLayout>
 
@@ -40,7 +42,7 @@
 
                 <Border Style="{StaticResource CurrencyPickerField}" Margin="0,12,0,4">
                     <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
-                        <Label Grid.Column="0" Text="Ver en"
+                        <Label Grid.Column="0" Text="{x:Static strings:AppResources.PickerDisplay_caption}"
                                Style="{StaticResource CurrencyPickerHint}" />
                         <Picker Grid.Column="1"
                                 Style="{StaticResource CurrencyPickerControl}"
@@ -60,14 +62,15 @@
                         <Label Style="{StaticResource ChartTitle}">
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span Text="Balance de " />
+                                    <Span Text="{x:Static strings:AppResources.Balance_label}" />
+                                    <Span Text=" " />
                                     <Span Text="{Binding Month}"
                                           TextColor="{AppThemeBinding Light={StaticResource AccentLight}, Dark={StaticResource AccentDark}}" />
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
                         <chart:BalanceDoughnutChart Transactions="{Binding GraphableTransactions}" DownTitle="Gastos" UpTitle="Ingresos" SubtractTradingLossFromIncome="True"/>
-                        <Label Text="Ver gráficos ›"
+                        <Label Text="{x:Static strings:AppResources.GoToGraphs_caption}"
                                Style="{StaticResource Caption}"
                                HorizontalOptions="End" />
                     </VerticalStackLayout>
@@ -80,7 +83,7 @@
                     </Border.GestureRecognizers>
 
                     <VerticalStackLayout Spacing="8" Padding="0">
-                        <Label Text="Movimientos del mes" Style="{StaticResource ChartTitle}" />
+                        <Label Text="{x:Static strings:AppResources.Month_summary_label}" Style="{StaticResource ChartTitle}" />
 
                         <VerticalStackLayout BindableLayout.ItemsSource="{Binding MonthTransactions}"
                                              Spacing="0" Padding="0">
@@ -138,7 +141,7 @@
                             </BindableLayout.ItemTemplate>
                         </VerticalStackLayout>
 
-                        <Label Text="Ver todos ›"
+                        <Label Text="{x:Static strings:AppResources.GoToTransactions_caption}"
                                Style="{StaticResource Caption}"
                                HorizontalOptions="End" />
                     </VerticalStackLayout>

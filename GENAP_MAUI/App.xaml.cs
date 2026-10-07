@@ -5,6 +5,7 @@ using DomainModel;
 using Serilog;
 using GENAP_MAUI.InnerComponents;
 using Serilog.Events;
+using System.Globalization;
 
 namespace GENAP_MAUI
 {
@@ -25,7 +26,9 @@ namespace GENAP_MAUI
         protected override async void OnStart()
         {
             base.OnStart();
-
+            var cultura = new CultureInfo("en");
+            CultureInfo.CurrentUICulture = cultura;
+            CultureInfo.DefaultThreadCurrentUICulture = cultura;
             try
             {
                 CurrencyPersistenceService currencyPersistenceService = IPlatformApplication.Current!.Services.GetRequiredService<CurrencyPersistenceService>();
