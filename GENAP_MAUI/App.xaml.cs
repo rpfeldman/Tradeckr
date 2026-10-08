@@ -1,11 +1,7 @@
 ﻿using DataServices;
-using NetworkServices;
-using Microsoft.Extensions.DependencyInjection;
-using DomainModel;
-using Serilog;
 using GENAP_MAUI.InnerComponents;
-using Serilog.Events;
-using System.Globalization;
+using NetworkServices;
+using Serilog;
 
 namespace GENAP_MAUI
 {
@@ -31,6 +27,8 @@ namespace GENAP_MAUI
             {
                 CurrencyPersistenceService currencyPersistenceService = IPlatformApplication.Current!.Services.GetRequiredService<CurrencyPersistenceService>();
 
+                # region new user path
+                // occurs when it is the first time the application is opened or when the user has not yet passed the onboarding page.
                 if (GlobalResources.IsNewUser)
                 {
                      Log.Debug("Advancing as new user");
@@ -82,23 +80,26 @@ namespace GENAP_MAUI
 
                     return;
                 }
+                #endregion
 
                 Application.Current?.UserAppTheme = Preferences.Get(PreferenceKeys.UserThemeKey, true) ? AppTheme.Dark : AppTheme.Light;
                  Log.Debug("UserAppTheme set");
 
                 var lastDayEntered = Preferences.Get(PreferenceKeys.LastDayEnteredKey, DateTime.Today);
 
-                if(lastDayEntered == DateTime.Today)
+                 var getCurrenciesOperation = await currencyPersistenceService.GetAllAsync();
+                     getCurrenciesOperation.WriteLog("Bring the currencies to memory");
+                
+                if (!getCurrenciesOperation.Success)
                 {
-                    var getCurrenciesOperation = await currencyPersistenceService.GetAllAsync();
-                        getCurrenciesOperation.WriteLog("Bring the currencies to memory");
+                    System.Diagnostics.Debug.WriteLine(getCurrenciesOperation.InnerError!.ErrorMessage);
+                    return;
+                }
 
-                    if (!getCurrenciesOperation.Success)
-                    {
-                        System.Diagnostics.Debug.WriteLine(getCurrenciesOperation.InnerError!.ErrorMessage);
-                        return;
-                    }
-
+                #region application opened x+1 times path (long name lol) { x >= 1 }
+                // occurs when it is not the first time the user opens the application on the same day or when the user has disabled the daily rate update
+                if (lastDayEntered == DateTime.Today || !Preferences.Get(PreferenceKeys.UpdateRatesKey, true))
+                {
                     GlobalResources.Currencies = [.. getCurrenciesOperation.Result!];
 
                     GlobalResources.AppLoadingResetEvent.Set();
@@ -106,48 +107,18 @@ namespace GENAP_MAUI
 
                     return;
                 }
+                #endregion
 
                 var checkInternet = NetworkMethods.CheckInternetConnection();
-                if (!checkInternet || !Preferences.Get(PreferenceKeys.UpdateRatesKey, true)) 
+
+                # region rates need to be updated path
+                // occurs when the application is opened for the first time in the day,
+                // the user has an internet connection and has enabled the feature to update rates daily
+                if (checkInternet) 
                 {
-                    if (!checkInternet)
-                    {
-                        System.Diagnostics.Debug.WriteLine("User does not have internet connection. Advancing without updating the currencies rates");
-                        Log.Warning("Advancing without connection");
-                    }
-                   
-                    var getCurrenciesOperation = await currencyPersistenceService.GetAllAsync();
-                        getCurrenciesOperation.WriteLog("Bring to memory the currencies in the storage");
-
-                    if (!getCurrenciesOperation.Success)
-                    {
-                        System.Diagnostics.Debug.WriteLine(getCurrenciesOperation.InnerError!.ErrorMessage);
-                        return;
-                    }
-
-                    GlobalResources.Currencies = [.. getCurrenciesOperation.Result!];
-
-                    
-                    GlobalResources.AppLoadingResetEvent.Set();
-                    Log.Debug("AppLoadingResetEvent set");
-
-                    return; 
-                }
-
-               
-
-                Log.Debug("NEW DAY: Updating currencies");
+                    Log.Debug("NEW DAY: Updating currencies");
 
                     CurrenciesRatesService currenciesRatesService = new(GlobalResources.DefaultTradingCurrency.IsoCode);
-
-                    var getCurrenciesOperation = await currencyPersistenceService.GetAllAsync();
-                        getCurrenciesOperation.WriteLog("Bring to memory the currencies in the storage");
-
-                    if (!getCurrenciesOperation.Success)
-                    {
-                        System.Diagnostics.Debug.WriteLine(getCurrenciesOperation.InnerError!.ErrorMessage);
-                        return;
-                    }
 
                     var currencies = getCurrenciesOperation.Result!.ToArray();
 
@@ -172,9 +143,29 @@ namespace GENAP_MAUI
                     }
 
                     Preferences.Set(PreferenceKeys.LastRateUpdateKey, DateTime.Today);
+                    Preferences.Set(PreferenceKeys.LastDayEnteredKey, DateTime.Today);
 
                     GlobalResources.AppLoadingResetEvent.Set();
                     Log.Debug("AppLoadingResetEvent set");
+
+                    return; 
+                }
+                #endregion
+
+                #region No internet path
+                // occurs when it is necessary to update the rates but the user does not have an internet connection
+                System.Diagnostics.Debug.WriteLine("User does not have internet connection. Advancing without updating the currencies rates");
+                    Log.Warning("Advancing without connection");
+                
+
+                GlobalResources.Currencies = [.. getCurrenciesOperation.Result!];
+
+                    
+                 GlobalResources.AppLoadingResetEvent.Set();
+                    Log.Debug("AppLoadingResetEvent set");   
+                
+                return;
+                #endregion
             }
             catch (Exception x)
             {
