@@ -6,7 +6,7 @@
     <Grid>
         <toolkit:MediaElement 
             x:Name="SplashAnimation"
-            Source="embed://SplashAnimation.mp4"
+            Source="{AppThemeBinding Light='embed://SplashAnimation_LightTheme.mp4', Dark='embed://SplashAnimation_DarkTheme.mp4'}"
             ShouldShowPlaybackControls="False"
             Aspect="AspectFill"
             ShouldAutoPlay="False"
