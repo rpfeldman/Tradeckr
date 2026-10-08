@@ -50,3 +50,4 @@ appsettings.*.local.json
 secrets.json
 .env
 .DS_Store	
+/GENAP_MAUI/ResXManager.config.xml
