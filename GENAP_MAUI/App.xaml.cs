@@ -1,4 +1,5 @@
 ﻿using DataServices;
+using DomainModel;
 using GENAP_MAUI.InnerComponents;
 using NetworkServices;
 using Serilog;
@@ -89,6 +90,8 @@ namespace GENAP_MAUI
 
                  var getCurrenciesOperation = await currencyPersistenceService.GetAllAsync();
                      getCurrenciesOperation.WriteLog("Bring the currencies to memory");
+
+                CurrencyDto[] Currencies = [.. getCurrenciesOperation.Result!.Select(c => new CurrencyDto() { Id = c.Id, ConversionRate = c.ConversionRate, CurrencyDisplayName = GlobalResources.CurrenciesStringsDictionary[c.IsoCode], IsoCode = c.IsoCode })];
                 
                 if (!getCurrenciesOperation.Success)
                 {
@@ -100,7 +103,7 @@ namespace GENAP_MAUI
                 // occurs when it is not the first time the user opens the application on the same day or when the user has disabled the daily rate update
                 if (lastDayEntered == DateTime.Today || !Preferences.Get(PreferenceKeys.UpdateRatesKey, true))
                 {
-                    GlobalResources.Currencies = [.. getCurrenciesOperation.Result!];
+                    GlobalResources.Currencies = Currencies;
 
                     GlobalResources.AppLoadingResetEvent.Set();
                     Log.Debug("AppLoadingResetEvent set");
@@ -120,9 +123,7 @@ namespace GENAP_MAUI
 
                     CurrenciesRatesService currenciesRatesService = new(GlobalResources.DefaultTradingCurrency.IsoCode);
 
-                    var currencies = getCurrenciesOperation.Result!.ToArray();
-
-                    var updateRatesOperation = await currenciesRatesService.UpdateCurrenciesRatesAsync(currencies, DateOnly.FromDateTime(DateTime.Today));
+                    var updateRatesOperation = await currenciesRatesService.UpdateCurrenciesRatesAsync(Currencies, DateOnly.FromDateTime(DateTime.Today));
                         updateRatesOperation.WriteLog($"Update the currencies rates");
                     
                     if(!updateRatesOperation.Success)
@@ -131,9 +132,9 @@ namespace GENAP_MAUI
                         return;
                     }
 
-                    GlobalResources.Currencies = currencies;
+                    GlobalResources.Currencies = Currencies;
 
-                    var updateCurrenciesOperation = await currencyPersistenceService.UpdateRangeAsync(currencies);
+                    var updateCurrenciesOperation = await currencyPersistenceService.UpdateRangeAsync(Currencies);
                         updateCurrenciesOperation.WriteLog("Update the currencies rates in the storage");
 
                     if (!updateRatesOperation.Success)
@@ -158,7 +159,7 @@ namespace GENAP_MAUI
                     Log.Warning("Advancing without connection");
                 
 
-                GlobalResources.Currencies = [.. getCurrenciesOperation.Result!];
+                GlobalResources.Currencies = Currencies;
 
                     
                  GlobalResources.AppLoadingResetEvent.Set();

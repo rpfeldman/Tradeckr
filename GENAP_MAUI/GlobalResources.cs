@@ -3,6 +3,7 @@ using DomainModel;
 using GENAP_MAUI.InnerComponents;
 using GENAP_MAUI.Resources.Strings;
 using Microsoft.Maui.Storage;
+using System.Runtime.CompilerServices;
 
 namespace GENAP_MAUI
 {
@@ -88,30 +89,45 @@ namespace GENAP_MAUI
 
         public static List<KeyValuePair<AppTheme, string>> AppThemesList { get => [.. AppThemes]; } 
 
-        // In-memory currencies
-        
+        // To add a new currency, you must first add it to AppResources along with its translations, then to the dictionary following the correct order,
+        // and finally to the currency array. For it to be updated daily, the IsoCode must be a valid, real currency.
         public static string[] CurrenciesStrings { get => AppResources.Currencies.Split('_'); }
+    
+        public readonly static Dictionary<string, string> CurrenciesStringsDictionary = new(10)
+        {
+            { "USD",  CurrenciesStrings[0] },
+            { "ARS",  CurrenciesStrings[1] },
+            { "UYU",  CurrenciesStrings[2] },
+            { "MXN",  CurrenciesStrings[3] },
+            { "CLP",  CurrenciesStrings[4] },
+            { "EUR",  CurrenciesStrings[5] },
+            { "GBP",  CurrenciesStrings[6] },
+            { "JPY",  CurrenciesStrings[7] },
+            { "CHF",  CurrenciesStrings[8] },
+            { "BRL",  CurrenciesStrings[9] },
+        };
+
         public static CurrencyDto[] Currencies { get; set; } =
             [
-                new CurrencyDto() { CurrencyDisplayName = CurrenciesStrings[0], IsoCode = "USD", ConversionRate = 1, Id = 1 },
+                new CurrencyDto() { CurrencyDisplayName = CurrenciesStringsDictionary["USD"], IsoCode = "USD", ConversionRate = 1, Id = 1 },
 
-                new CurrencyDto() { CurrencyDisplayName = CurrenciesStrings[1], IsoCode = "ARS", ConversionRate = 1, Id = 2 },
+                new CurrencyDto() { CurrencyDisplayName = CurrenciesStringsDictionary["ARS"], IsoCode = "ARS", ConversionRate = 1, Id = 2 },
 
-                new CurrencyDto() { CurrencyDisplayName = CurrenciesStrings[2], IsoCode = "UYU", ConversionRate = 1, Id = 3 },
+                new CurrencyDto() { CurrencyDisplayName = CurrenciesStringsDictionary["UYU"], IsoCode = "UYU", ConversionRate = 1, Id = 3 },
 
-                new CurrencyDto() { CurrencyDisplayName = CurrenciesStrings[3], IsoCode = "MXN", ConversionRate = 1, Id = 4 },
+                new CurrencyDto() { CurrencyDisplayName = CurrenciesStringsDictionary["MXN"], IsoCode = "MXN", ConversionRate = 1, Id = 4 },
 
-                new CurrencyDto() { CurrencyDisplayName = CurrenciesStrings[4], IsoCode = "CLP", ConversionRate = 1, Id = 5 },
+                new CurrencyDto() { CurrencyDisplayName = CurrenciesStringsDictionary["CLP"], IsoCode = "CLP", ConversionRate = 1, Id = 5 },
 
-                new CurrencyDto() { CurrencyDisplayName = CurrenciesStrings[5], IsoCode = "EUR", ConversionRate = 1, Id = 6 },
+                new CurrencyDto() { CurrencyDisplayName = CurrenciesStringsDictionary["EUR"], IsoCode = "EUR", ConversionRate = 1, Id = 6 },
 
-                new CurrencyDto() { CurrencyDisplayName = CurrenciesStrings[6], IsoCode = "GBP", ConversionRate = 1, Id = 7 },
+                new CurrencyDto() { CurrencyDisplayName = CurrenciesStringsDictionary["GBP"], IsoCode = "GBP", ConversionRate = 1, Id = 7 },
 
-                new CurrencyDto() { CurrencyDisplayName = CurrenciesStrings[7], IsoCode = "JPY", ConversionRate = 1, Id = 8 },
+                new CurrencyDto() { CurrencyDisplayName = CurrenciesStringsDictionary["JPY"], IsoCode = "JPY", ConversionRate = 1, Id = 8 },
 
-                new CurrencyDto() { CurrencyDisplayName = CurrenciesStrings[8], IsoCode = "CHF", ConversionRate = 1, Id = 9 },
+                new CurrencyDto() { CurrencyDisplayName = CurrenciesStringsDictionary["CHF"], IsoCode = "CHF", ConversionRate = 1, Id = 9 },
 
-                new CurrencyDto() { CurrencyDisplayName = CurrenciesStrings[9], IsoCode = "BRL", ConversionRate = 1, Id = 10 }
+                new CurrencyDto() { CurrencyDisplayName = CurrenciesStringsDictionary["BRL"], IsoCode = "BRL", ConversionRate = 1, Id = 10 }
             ];
     }
 }
