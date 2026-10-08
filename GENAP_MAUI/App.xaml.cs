@@ -86,6 +86,27 @@ namespace GENAP_MAUI
                 Application.Current?.UserAppTheme = Preferences.Get(PreferenceKeys.UserThemeKey, true) ? AppTheme.Dark : AppTheme.Light;
                  Log.Debug("UserAppTheme set");
 
+                var lastDayEntered = Preferences.Get(PreferenceKeys.LastDayEnteredKey, DateTime.Today);
+
+                if(lastDayEntered == DateTime.Today)
+                {
+                    var getCurrenciesOperation = await currencyPersistenceService.GetAllAsync();
+                        getCurrenciesOperation.WriteLog("Bring the currencies to memory");
+
+                    if (!getCurrenciesOperation.Success)
+                    {
+                        System.Diagnostics.Debug.WriteLine(getCurrenciesOperation.InnerError!.ErrorMessage);
+                        return;
+                    }
+
+                    GlobalResources.Currencies = [.. getCurrenciesOperation.Result!];
+
+                    GlobalResources.AppLoadingResetEvent.Set();
+                    Log.Debug("AppLoadingResetEvent set");
+
+                    return;
+                }
+
                 var checkInternet = NetworkMethods.CheckInternetConnection();
                 if (!checkInternet || !Preferences.Get(PreferenceKeys.UpdateRatesKey, true)) 
                 {
@@ -113,11 +134,9 @@ namespace GENAP_MAUI
                     return; 
                 }
 
-                var lastDayEntered = Preferences.Get(PreferenceKeys.LastDayEnteredKey, DateTime.Today);
+               
 
-                if(lastDayEntered != DateTime.Today)
-                {
-                    Log.Debug("NEW DAY: Updating currencies");
+                Log.Debug("NEW DAY: Updating currencies");
 
                     CurrenciesRatesService currenciesRatesService = new(GlobalResources.DefaultTradingCurrency.IsoCode);
 
@@ -156,29 +175,11 @@ namespace GENAP_MAUI
 
                     GlobalResources.AppLoadingResetEvent.Set();
                     Log.Debug("AppLoadingResetEvent set");
-                }
-                else
-                {
-                    var getCurrenciesOperation = await currencyPersistenceService.GetAllAsync();
-                        getCurrenciesOperation.WriteLog("Bring the currencies to memory");
-
-                    if (!getCurrenciesOperation.Success)
-                    {
-                        System.Diagnostics.Debug.WriteLine(getCurrenciesOperation.InnerError!.ErrorMessage);
-                        return;
-                    }
-
-                    GlobalResources.Currencies = [.. getCurrenciesOperation.Result!];
-
-                    GlobalResources.AppLoadingResetEvent.Set();
-                    Log.Debug("AppLoadingResetEvent set");
-                }
-
-                Preferences.Set(PreferenceKeys.LastDayEnteredKey, DateTime.Today);
             }
             catch (Exception x)
             {
                 System.Diagnostics.Debug.WriteLine($"Seed failed: {x.Message}");
+                    Log.Error($"Seed failed: {x.Message}");
             }
         }
     }
