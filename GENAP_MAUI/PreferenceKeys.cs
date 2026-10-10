@@ -15,5 +15,7 @@ namespace GENAP_MAUI
         public const string LastDayEnteredKey = "LastDayEntered";
         public const string LastRateUpdateKey = "LastRateUpdate";
         public const string UpdateRatesKey = "UpdateRatesKey";
+
+        public const string LanguageKey = "LanguageKey";
     }
 }

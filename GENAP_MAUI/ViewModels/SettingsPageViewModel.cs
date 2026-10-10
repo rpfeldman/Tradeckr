@@ -1,13 +1,14 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DomainModel;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using GENAP_MAUI.CustomViews;
 using Microsoft.Maui.ApplicationModel.Communication;
 using Serilog;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
-using GENAP_MAUI.CustomViews;
+using System.Text;
 
 namespace GENAP_MAUI.ViewModels
 {
@@ -18,13 +19,22 @@ namespace GENAP_MAUI.ViewModels
         private bool _IsLoading;
         private bool[] AppearanceSettings = new bool[4];
         private bool[] CurrencySettings = new bool[4];
-        private Dictionary<bool, string> UpdateRatesOptions = new(2)
+        private readonly Dictionary<bool, string> UpdateRatesOptions = new(2)
         {
             { true, "Habilitado" },
             { false, "Deshabilitado" }
         };
 
         public List<KeyValuePair<bool, string>> UpdateRatesOptionsList { get => [.. UpdateRatesOptions];  }
+
+        private readonly Dictionary<string, string> Languages = new(3) 
+        {
+            { "en", "English (United States)" },
+            { "es", "Español (neutro)" },
+            { "es-AR", "Español (Argentina)" }
+        };
+
+        public List<KeyValuePair<string, string>> LanguagesList { get => [.. Languages]; }
        
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
@@ -40,6 +50,8 @@ namespace GENAP_MAUI.ViewModels
         [ObservableProperty]
         public partial KeyValuePair<AppTheme, string> PickedTheme { get; set; }
 
+        [ObservableProperty]
+        public partial KeyValuePair<string, string> PickedLanguage { get; set; }
 
         // Currency settings properties
         
@@ -79,7 +91,14 @@ namespace GENAP_MAUI.ViewModels
 
                 if (AppearanceSettings[3])
                 {
-                    // TO - DO
+                    Preferences.Set(PreferenceKeys.LanguageKey, PickedLanguage.Key);
+
+                    var culture = new CultureInfo(PickedLanguage.Key);
+
+                    CultureInfo.CurrentUICulture = culture;
+                    CultureInfo.DefaultThreadCurrentUICulture = culture;
+
+                    await _customDialogsService.ShowAlertDialogAsync("Idioma", "El idioma se ha actualizado correctamente\nPara ver los cambios reinicia la app", "Aceptar");
                 }
             }
 
@@ -183,6 +202,7 @@ namespace GENAP_MAUI.ViewModels
 
             PickedUserName = GlobalResources.UserName;
             PickedTheme = Preferences.Get(PreferenceKeys.UserThemeKey, true) ? GlobalResources.AppThemesList[0] : GlobalResources.AppThemesList[1];
+            //PickedLanguage = LanguagesList.Where(k => k.Key == Preferences.Get(PreferenceKeys.LanguageKey, CultureInfo.CurrentCulture.Name)).First();
 
             PickedCommonCurrency = GlobalResources.DefaultCommonCurrency;
             PickedUpdateRateOption = Preferences.Get(PreferenceKeys.UpdateRatesKey, true) ? UpdateRatesOptionsList[0] : UpdateRatesOptionsList[1];
@@ -217,6 +237,18 @@ namespace GENAP_MAUI.ViewModels
            Settings_HasChanged = true;
 
             Log.Information($"Possible setting: App theme changed to '{value.Key}' (Settings page)");
+        }
+
+        partial void OnPickedLanguageChanged(KeyValuePair<string, string> value)
+        {
+            if(_IsLoading) { return; }
+
+           AppearanceSettings[0] = true;
+           AppearanceSettings[3] = true;
+
+           Settings_HasChanged = true;
+
+            Log.Information($"Possible setting: Language changed to '{value.Key}' (Settings page)");
         }
 
         partial void OnPickedCommonCurrencyChanged(CurrencyDto value)

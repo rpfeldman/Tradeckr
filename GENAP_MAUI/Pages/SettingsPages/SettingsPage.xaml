@@ -45,10 +45,14 @@
                     <VerticalStackLayout Spacing="6" Padding="0">
                         <Label Text="Lenguaje" Style="{StaticResource FieldLabel}" />
                         <Border Style="{StaticResource InputField}">
-                            <Picker IsEnabled="False" Title="Próximamente" />
+                            <Picker Title="Elegir idioma" 
+                                    ItemsSource="{Binding LanguagesList}"
+                                    ItemDisplayBinding="{Binding Value}"
+                                    SelectedItem="{Binding PickedLanguage}"/>
+                            
                         </Border>
                         <Label Style="{StaticResource SettingsHint}"
-                               Text="Pronto vas a poder cambiar el idioma de la aplicación." />
+                               Text="Cambiar el idioma de la aplicación." />
                     </VerticalStackLayout>
 
                 </VerticalStackLayout>
