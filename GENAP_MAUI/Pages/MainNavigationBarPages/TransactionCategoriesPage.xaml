@@ -6,6 +6,7 @@
              xmlns:nav="clr-namespace:GENAP_MAUI.ContentViews.Navigation"
              xmlns:local="clr-namespace:GENAP_MAUI"
              xmlns:behaviours="clr-namespace:GENAP_MAUI.ControlBehaviours"
+             xmlns:strings="clr-namespace:GENAP_MAUI.Resources.Strings"
              x:Class="GENAP_MAUI.Pages.MainNavigationBarPages.TransactionCategoriesPage"
              x:DataType="vm:TransactionCategoriesPageViewModel">
 
@@ -37,10 +38,10 @@
         </VisualStateManager.VisualStateGroups>
 
         <VerticalStackLayout x:Name="Header" Grid.Row="0" Spacing="4" Padding="20,20,20,0">
-            <Label Text="Categorías" Style="{StaticResource SubHeadline}" />
+            <Label Text="{x:Static strings:AppResources.Categories_Title}" Style="{StaticResource SubHeadline}" />
             <Label Style="{StaticResource Caption}"
                    HorizontalTextAlignment="Center"
-                   Text="Organizá tus movimientos. Tocá un nombre para editarlo." />
+                   Text="{x:Static strings:AppResources.CategoriesHeader_Caption}"/>
         </VerticalStackLayout>
 
         <CollectionView Grid.Row="1"
@@ -93,7 +94,7 @@
                 <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
                     <Entry Grid.Column="0"
                            Style="{StaticResource InlineEntry}"
-                           Placeholder="Nueva categoría"
+                           Placeholder="{x:Static strings:AppResources.NewCategoryEntry_PlaceHolder}"
                            Text="{Binding NewCategory}"
                            VerticalOptions="Center">
                         
@@ -103,7 +104,7 @@
                     </Entry>
 
                         <Picker Grid.Column="1"
-                            Title="Color"
+                            Title="{x:Static strings:AppResources.NewCategoryColor_Caption}"
                             WidthRequest="80"
                             ItemsSource="{x:Static local:GlobalResources.ColorList}"
                             ItemDisplayBinding="{Binding DisplayName}"
@@ -121,7 +122,7 @@
 
             <Button x:Name="SaveButton"
                     Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
-                    Text="Guardar cambios"
+                    Text="{x:Static strings:AppResources.SaveChanges_Button}"
                     Command="{Binding SaveCommand}"
                     Style="{StaticResource ButtonPrimary}" />
         </Grid>

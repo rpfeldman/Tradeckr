@@ -136,4 +136,43 @@
   <data name="Currencies" xml:space="preserve">
     <value>United States Dollar_Argentine Peso_Uruguayan Peso_Mexican Peso_Chilean Peso_Euro_British Pound_Japanese Yen_Swiss Franc_Brazilian Real</value>
   </data>
+  <data name="Categories_Title" xml:space="preserve">
+    <value>Categories</value>
+  </data>
+  <data name="CategoriesHeader_Caption" xml:space="preserve">
+    <value>Organize your transactions by category. Tap a name to edit it.</value>
+  </data>
+  <data name="NewCategoryEntry_PlaceHolder" xml:space="preserve">
+    <value>New category</value>
+  </data>
+  <data name="NewCategoryColor_Caption" xml:space="preserve">
+    <value>Color</value>
+  </data>
+  <data name="SaveChanges_Button" xml:space="preserve">
+    <value>Save changes</value>
+  </data>
+  <data name="DeletedCategories_ActionTitle" xml:space="preserve">
+    <value>You deleted some categories</value>
+  </data>
+  <data name="DeletedCategories_ActionContent" xml:space="preserve">
+    <value>What do you want to do with the associated transactions?</value>
+  </data>
+  <data name="DeletedCategories_ActionRemoveTransactionsOption" xml:space="preserve">
+    <value>Delete associated transactions</value>
+  </data>
+  <data name="DeletedCategories_ActionPreserveTransactions" xml:space="preserve">
+    <value>Keep associated transactions</value>
+  </data>
+  <data name="Error_AlertTitle" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="Accept_AlertButton" xml:space="preserve">
+    <value>Got it</value>
+  </data>
+  <data name="CategoriesSaved_AlertTitle" xml:space="preserve">
+    <value>Categories saved</value>
+  </data>
+  <data name="CategoriesSaved_AlertContent" xml:space="preserve">
+    <value>Categories saved successfully.</value>
+  </data>
 </root>

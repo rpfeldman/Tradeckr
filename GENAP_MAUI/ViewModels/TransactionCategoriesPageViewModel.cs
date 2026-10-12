@@ -5,6 +5,7 @@ using DataServices;
 using DomainModel;
 using GENAP_MAUI.CustomViews;
 using GENAP_MAUI.InnerComponents;
+using GENAP_MAUI.Resources.Strings;
 using Serilog;
 using SkiaSharp;
 using System;
@@ -84,16 +85,19 @@ namespace GENAP_MAUI.ViewModels
         {
             // I definitely have to review this....
 
-            const string ActionTitle = "Se ha detectado que has borrado una o mas categorias";
-            const string ActionContent = "¿que desea hacer con los movimiento asociados a las mismas?";
-            const string ActionDeleteAllBtn = "Eliminar todos los movimientos asociados";
-            const string ActionPreserveBtn = "Mantener los movimientos sin categoria";
-
             Task<OperationResult> ActionMethod = Task.FromResult(OperationResult.SuccessfulOperation());
             if (DeletedCategories.Count != 0)
             {
                 _IsDeciding = true;
-                    var action = await _customDialogsService.ShowDoubleActionDialogAsync(ActionTitle, ActionContent, ActionDeleteAllBtn, ActionPreserveBtn); // this is reinstancing the ViewModel. to-fix. 
+
+                    var action = await _customDialogsService.ShowDoubleActionDialogAsync
+                        (
+                            AppResources.DeletedCategories_ActionTitle, 
+                            AppResources.DeletedCategories_ActionContent, 
+                            AppResources.DeletedCategories_ActionRemoveTransactionsOption, 
+                            AppResources.DeletedCategories_ActionPreserveTransactions
+                        );         
+
                 _IsDeciding = false;
 
                 switch (action)
@@ -102,12 +106,6 @@ namespace GENAP_MAUI.ViewModels
                     case 1: ActionMethod = _dataManagementService.RemoveFromCategories([.. DeletedCategories.Select(c => c.Name)]); break;
                     case 2: break;
                 }   
-            }
-
-            if (Categories.DistinctBy(c => c.Name).Count() != Categories.Count)
-            {
-                await _customDialogsService.ShowAlertDialogAsync("Error", "No puede haber 2 categorias con el mismo nombre\n\nNo se guardaron las categorias", "Aceptar");
-                return;
             }
 
             List<CategoryDto> updatedCategories = [];
@@ -122,7 +120,7 @@ namespace GENAP_MAUI.ViewModels
 
                 if (!renameCategoryOperation.Success)
                 {
-                   await _customDialogsService.ShowAlertDialogAsync("Error", renameCategoryOperation.InnerError?.ErrorMessage!, "Aceptar");
+                   await _customDialogsService.ShowAlertDialogAsync(AppResources.Error_AlertTitle, renameCategoryOperation.InnerError?.ErrorMessage!, AppResources.Accept_AlertButton);
                    return;
                 }
             }
@@ -136,12 +134,12 @@ namespace GENAP_MAUI.ViewModels
 
             if (Operations.Any(o => !o.Success))
             {
-                await _customDialogsService.ShowAlertDialogAsync("Error", Operations.Where(o => !o.Success).First().InnerError?.ErrorMessage!, "Aceptar");
+                await _customDialogsService.ShowAlertDialogAsync(AppResources.Error_AlertTitle, Operations.Where(o => !o.Success).First().InnerError?.ErrorMessage!, AppResources.Accept_AlertButton);
                 await ReLoad();
                 return;
             }
 
-            await _customDialogsService.ShowAlertDialogAsync("Categorias guardadas", "Se guardaron las categorias correctamente", "Aceptar");
+            await _customDialogsService.ShowAlertDialogAsync(AppResources.CategoriesSaved_AlertTitle, AppResources.CategoriesSaved_AlertContent, AppResources.Accept_AlertButton);
                 Log.Information("Categories updated and saved in the storage (Categories page)");
 
             await ReLoad();
@@ -165,7 +163,7 @@ namespace GENAP_MAUI.ViewModels
                 Categories = new(getCategoryOperation.Result!.Select(c => new CategoryDto() { Name = c.Name, HexColor = c.HexColor, Id = c.Id }));
                 OldCategories = [.. getCategoryOperation.Result!];
             }
-            else { await _customDialogsService.ShowAlertDialogAsync("Error", getCategoryOperation.InnerError?.ErrorMessage!, "Aceptar"); }
+            else { await _customDialogsService.ShowAlertDialogAsync(AppResources.Error_AlertTitle, getCategoryOperation.InnerError?.ErrorMessage!, AppResources.Accept_AlertButton); }
         }
         private bool AddCategoryCanExecute() => !string.IsNullOrWhiteSpace(NewCategory) && !Categories.Any(c => c.Name == NewCategory) && PickedColor is not null && NewCategory.Length <= BoundsConst.CategoryNameLimit;
         private bool SaveCanExecute() => Categories.Count > 0 && !Categories.Any(c => string.IsNullOrWhiteSpace(c.Name));

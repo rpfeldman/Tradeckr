@@ -61,11 +61,56 @@ namespace GENAP_MAUI.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Got it.
+        /// </summary>
+        public static string Accept_AlertButton {
+            get {
+                return ResourceManager.GetString("Accept_AlertButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Balance of.
         /// </summary>
         public static string Balance_label {
             get {
                 return ResourceManager.GetString("Balance_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Categories.
+        /// </summary>
+        public static string Categories_Title {
+            get {
+                return ResourceManager.GetString("Categories_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Organize your transactions by category. Tap a name to edit it..
+        /// </summary>
+        public static string CategoriesHeader_Caption {
+            get {
+                return ResourceManager.GetString("CategoriesHeader_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Categories saved successfully..
+        /// </summary>
+        public static string CategoriesSaved_AlertContent {
+            get {
+                return ResourceManager.GetString("CategoriesSaved_AlertContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Categories saved.
+        /// </summary>
+        public static string CategoriesSaved_AlertTitle {
+            get {
+                return ResourceManager.GetString("CategoriesSaved_AlertTitle", resourceCulture);
             }
         }
         
@@ -93,6 +138,51 @@ namespace GENAP_MAUI.Resources.Strings {
         public static string DarkTheme {
             get {
                 return ResourceManager.GetString("DarkTheme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a What do you want to do with the associated transactions?.
+        /// </summary>
+        public static string DeletedCategories_ActionContent {
+            get {
+                return ResourceManager.GetString("DeletedCategories_ActionContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Keep associated transactions.
+        /// </summary>
+        public static string DeletedCategories_ActionPreserveTransactions {
+            get {
+                return ResourceManager.GetString("DeletedCategories_ActionPreserveTransactions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Delete associated transactions.
+        /// </summary>
+        public static string DeletedCategories_ActionRemoveTransactionsOption {
+            get {
+                return ResourceManager.GetString("DeletedCategories_ActionRemoveTransactionsOption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a You deleted some categories.
+        /// </summary>
+        public static string DeletedCategories_ActionTitle {
+            get {
+                return ResourceManager.GetString("DeletedCategories_ActionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Error.
+        /// </summary>
+        public static string Error_AlertTitle {
+            get {
+                return ResourceManager.GetString("Error_AlertTitle", resourceCulture);
             }
         }
         
@@ -142,11 +232,38 @@ namespace GENAP_MAUI.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Color.
+        /// </summary>
+        public static string NewCategoryColor_Caption {
+            get {
+                return ResourceManager.GetString("NewCategoryColor_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a New category.
+        /// </summary>
+        public static string NewCategoryEntry_PlaceHolder {
+            get {
+                return ResourceManager.GetString("NewCategoryEntry_PlaceHolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Display in.
         /// </summary>
         public static string PickerDisplay_caption {
             get {
                 return ResourceManager.GetString("PickerDisplay_caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Save changes.
+        /// </summary>
+        public static string SaveChanges_Button {
+            get {
+                return ResourceManager.GetString("SaveChanges_Button", resourceCulture);
             }
         }
         
