@@ -175,4 +175,16 @@
   <data name="CategoriesSaved_AlertContent" xml:space="preserve">
     <value>Categories saved successfully.</value>
   </data>
+  <data name="Categories_NavBarTitle" xml:space="preserve">
+    <value>Categories</value>
+  </data>
+  <data name="Transaction_NavBarTitle" xml:space="preserve">
+    <value>Transactions</value>
+  </data>
+  <data name="Trade_NavBarTitle" xml:space="preserve">
+    <value>Trade</value>
+  </data>
+  <data name="Charts_NavBarTitle" xml:space="preserve">
+    <value>Charts</value>
+  </data>
 </root>

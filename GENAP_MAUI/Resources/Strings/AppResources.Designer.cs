@@ -81,6 +81,15 @@ namespace GENAP_MAUI.Resources.Strings {
         /// <summary>
         ///   Busca una cadena traducida similar a Categories.
         /// </summary>
+        public static string Categories_NavBarTitle {
+            get {
+                return ResourceManager.GetString("Categories_NavBarTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Categories.
+        /// </summary>
         public static string Categories_Title {
             get {
                 return ResourceManager.GetString("Categories_Title", resourceCulture);
@@ -111,6 +120,15 @@ namespace GENAP_MAUI.Resources.Strings {
         public static string CategoriesSaved_AlertTitle {
             get {
                 return ResourceManager.GetString("CategoriesSaved_AlertTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Charts.
+        /// </summary>
+        public static string Charts_NavBarTitle {
+            get {
+                return ResourceManager.GetString("Charts_NavBarTitle", resourceCulture);
             }
         }
         
@@ -282,6 +300,24 @@ namespace GENAP_MAUI.Resources.Strings {
         public static string TimePeriods {
             get {
                 return ResourceManager.GetString("TimePeriods", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Trade.
+        /// </summary>
+        public static string Trade_NavBarTitle {
+            get {
+                return ResourceManager.GetString("Trade_NavBarTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Transactions.
+        /// </summary>
+        public static string Transaction_NavBarTitle {
+            get {
+                return ResourceManager.GetString("Transaction_NavBarTitle", resourceCulture);
             }
         }
         

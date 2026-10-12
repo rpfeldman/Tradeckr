@@ -2,6 +2,7 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:GENAP_MAUI"
+             xmlns:strings="clr-namespace:GENAP_MAUI.Resources.Strings"
              x:Class="GENAP_MAUI.ContentViews.Navigation.BottomNavigationBar"
              x:Name="Root">
 
@@ -25,7 +26,7 @@
                         <TapGestureRecognizer Tapped="OnCategoriesTapped" />
                     </VerticalStackLayout.GestureRecognizers>
                     <Label Style="{StaticResource SymbolLabel}" x:Name="IconCategories" Text="{x:Static local:Symbols.CategoriesIcon}" HorizontalOptions="Center" FontFamily="Symbols"/>
-                    <Label x:Name="TextCategories" Text="Categorías" FontSize="10" HorizontalOptions="Center" />
+                    <Label x:Name="TextCategories" Text="{x:Static strings:AppResources.Categories_NavBarTitle}" FontSize="10" HorizontalOptions="Center" />
                 </VerticalStackLayout>
 
                 <VerticalStackLayout Grid.Column="1" Spacing="2" Padding="0"
@@ -34,7 +35,7 @@
                         <TapGestureRecognizer Tapped="OnDefaultTapped" />
                     </VerticalStackLayout.GestureRecognizers>
                     <Label Style="{StaticResource SymbolLabel}" x:Name="IconDefault" Text="{x:Static local:Symbols.RegistTransactionIcon}" HorizontalOptions="Center" FontFamily="Symbols" />
-                    <Label x:Name="TextDefault" Text="Movimiento" FontSize="10" HorizontalOptions="Center" />
+                    <Label x:Name="TextDefault" Text="{x:Static strings:AppResources.Transaction_NavBarTitle}" FontSize="10" HorizontalOptions="Center" />
                 </VerticalStackLayout>
 
 
@@ -44,7 +45,7 @@
                         <TapGestureRecognizer Tapped="OnTradeTapped" />
                     </VerticalStackLayout.GestureRecognizers>
                     <Label Style="{StaticResource SymbolLabel}" x:Name="IconTrade" Text="{x:Static local:Symbols.RegistTradeIcon}" HorizontalOptions="Center" FontFamily="Symbols" />
-                    <Label x:Name="TextTrade" Text="Trade" FontSize="10" HorizontalOptions="Center" />
+                    <Label x:Name="TextTrade" Text="{x:Static strings:AppResources.Trade_NavBarTitle}" FontSize="10" HorizontalOptions="Center" />
                 </VerticalStackLayout>
 
                 <VerticalStackLayout Grid.Column="4" Spacing="2" Padding="0"
@@ -53,7 +54,7 @@
                         <TapGestureRecognizer Tapped="OnGraphsTapped" />
                     </VerticalStackLayout.GestureRecognizers>
                     <Label Style="{StaticResource SymbolLabel}" x:Name="IconGraphs" Text="{x:Static local:Symbols.GraphsIcon}" HorizontalOptions="Center" FontFamily="Symbols" />
-                    <Label x:Name="TextGraphs" Text="Gráficos" FontSize="10" HorizontalOptions="Center" />
+                    <Label x:Name="TextGraphs" Text="{x:Static strings:AppResources.Charts_NavBarTitle}" FontSize="10" HorizontalOptions="Center" />
                 </VerticalStackLayout>
             </Grid>
         </Border>
