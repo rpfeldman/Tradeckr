@@ -107,7 +107,7 @@
     <value>Monthly activity</value>
   </data>
   <data name="Months" xml:space="preserve">
-    <value>Unknown_January_February_March_Aril_My_June_July_August_September_October_November_December</value>
+    <value>Unknown_January_February_March_April_May_June_July_August_September_October_November_December</value>
   </data>
   <data name="PickerDisplay_caption" xml:space="preserve">
     <value>Display in</value>

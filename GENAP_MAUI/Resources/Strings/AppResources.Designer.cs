@@ -241,7 +241,7 @@ namespace GENAP_MAUI.Resources.Strings {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Unknown_January_February_March_Aril_My_June_July_August_September_October_November_December.
+        ///   Busca una cadena traducida similar a Unknown_January_February_March_April_May_June_July_August_September_October_November_December.
         /// </summary>
         public static string Months {
             get {
