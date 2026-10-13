@@ -5,6 +5,7 @@ using DataServices;
 using DomainModel;
 using GENAP_MAUI.CustomViews;
 using GENAP_MAUI.InnerComponents;
+using GENAP_MAUI.Resources.Strings;
 using Microsoft.Extensions.DependencyModel;
 using System;
 using System.Collections.Generic;
@@ -77,10 +78,9 @@ namespace GENAP_MAUI.ViewModels
         [RelayCommand(CanExecute = nameof(RegistTransactionCanExecute))]
         public async Task RegistTransaction()
         {
-            var DisplayAlertTitle = "Movimiento";
-            var DisplayAlertButton = "Aceptar";
-
             Value = CurrencyConverterService.CurrencyToTfu(Value, PickedCurrency); 
+            
+            var alertContents = AppResources.TransactionRegistered_AlertContent.Split('_');
 
             if (Depletion)
             {
@@ -105,7 +105,14 @@ namespace GENAP_MAUI.ViewModels
                     );
 
                     IsAnAlert = true;
-                await _customDialogsService.ShowAlertDialogAsync(DisplayAlertTitle, ExpenseRegistrationOperation.Success ? "Gasto registrado con exito" : ExpenseRegistrationOperation.InnerError?.ErrorMessage!, DisplayAlertButton);
+
+                await _customDialogsService.ShowAlertDialogAsync
+                    (
+                        AppResources.TransactionRegistered_AlertTitle, 
+                        ExpenseRegistrationOperation.Success ? alertContents[0] : ExpenseRegistrationOperation.InnerError?.ErrorMessage!,
+                        AppResources.Accept_AlertButton
+                    );
+
                     IsAnAlert = false;
 
                 return;
@@ -132,7 +139,14 @@ namespace GENAP_MAUI.ViewModels
                 );
 
                 IsAnAlert = true;
-            await _customDialogsService.ShowAlertDialogAsync(DisplayAlertTitle, IncomeRegistrationOperation.Success ? "Ingreso registrado con exito" : IncomeRegistrationOperation.InnerError?.ErrorMessage!, DisplayAlertButton);
+
+            await _customDialogsService.ShowAlertDialogAsync
+                (
+                    AppResources.TransactionRegistered_AlertTitle, 
+                    IncomeRegistrationOperation.Success ? alertContents[1] : IncomeRegistrationOperation.InnerError?.ErrorMessage!,
+                    AppResources.Accept_AlertButton
+                );
+
                 IsAnAlert = false;
 
 			return;
@@ -155,7 +169,7 @@ namespace GENAP_MAUI.ViewModels
                 Categories = new(getCategoriesOperation.Result!);
                 Category = getCategoriesOperation.Result!.First();
             }
-            else { await _customDialogsService.ShowAlertDialogAsync("Error", getCategoriesOperation.InnerError?.ErrorMessage!, "Aceptar"); }
+            else { await _customDialogsService.ShowAlertDialogAsync(AppResources.Error_AlertTitle, getCategoriesOperation.InnerError?.ErrorMessage!, AppResources.Accept_AlertButton); }
         }
 
         [RelayCommand] void SetIncome() => Depletion = false;

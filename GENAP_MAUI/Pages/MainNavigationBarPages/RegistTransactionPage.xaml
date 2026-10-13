@@ -6,6 +6,7 @@
              xmlns:nav="clr-namespace:GENAP_MAUI.ContentViews.Navigation"
              xmlns:behaviours="clr-namespace:GENAP_MAUI.ControlBehaviours"
              xmlns:local="clr-namespace:GENAP_MAUI"
+             xmlns:strings="clr-namespace:GENAP_MAUI.Resources.Strings"
              x:Class="GENAP_MAUI.Pages.MainNavigationBarPages.RegistTransactionPage"
              x:DataType="vm:RegistTransactionPageViewModel"
              BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}">
@@ -15,14 +16,14 @@
             <VerticalStackLayout Style="{StaticResource FormContainer}" Padding="20,20,20,110">
 
                 <VerticalStackLayout Spacing="4">
-                    <Label Text="Nuevo movimiento" Style="{StaticResource SubHeadline}" />
+                    <Label Text="{x:Static strings:AppResources.NewTransaction_Title}" Style="{StaticResource SubHeadline}" />
                     <Label Style="{StaticResource Caption}"
                            HorizontalTextAlignment="Center"
-                           Text="Registrá un gasto o ingreso de tu día a día. Los movimientos de trading van en su propia sección." />
+                           Text="{x:Static strings:AppResources.NewTransaction_SubTitle}" />
                 </VerticalStackLayout>
 
                 <VerticalStackLayout>
-                    <Label Text="Valor del movimiento" Style="{StaticResource FieldLabel}" />
+                    <Label Text="{x:Static strings:AppResources.TransactionValue_Label}" Style="{StaticResource FieldLabel}" />
                     <Border Style="{StaticResource InputField}">
                         <Grid ColumnDefinitions="Auto,*" ColumnSpacing="6">
                             <Label Grid.Column="0" Text="$"
@@ -42,7 +43,7 @@
 
                     <Border Style="{StaticResource CurrencyPickerAttached}">
                         <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
-                            <Label Grid.Column="0" Text="Moneda"
+                            <Label Grid.Column="0" Text="{x:Static strings:AppResources.Currency_PickerLabel}"
                                    Style="{StaticResource CurrencyPickerHint}" />
                             <Picker Grid.Column="1"
                                     Style="{StaticResource CurrencyPickerControl}"
@@ -56,7 +57,7 @@
                         <Label Style="{StaticResource NoticeText}">
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span Text="Monedas actualizadas al " />
+                                    <Span Text="{x:Static strings:AppResources.RateUpdate_Label}" />
                                     <Span Text="{x:Static local:GlobalResources.LastRateUpdateFormatted}"
                                           FontAttributes="Bold" />
                                 </FormattedString>
@@ -66,9 +67,9 @@
                 </VerticalStackLayout>
 
                 <VerticalStackLayout>
-                    <Label Text="Categoría" Style="{StaticResource FieldLabel}" />
+                    <Label Text="{x:Static strings:AppResources.Category_Label}" Style="{StaticResource FieldLabel}" />
                     <Border Style="{StaticResource InputField}">
-                        <Picker Title="Seleccionar categoría"
+                        <Picker Title="{x:Static strings:AppResources.PickCategory_PickerTitle}"
                                 ItemsSource="{Binding Categories}"
                                 ItemDisplayBinding="{Binding Name, x:DataType=model:CategoryDto}"
                                 SelectedItem="{Binding Category}" />
@@ -76,7 +77,7 @@
                 </VerticalStackLayout>
 
                 <VerticalStackLayout>
-                    <Label Text="Fecha" Style="{StaticResource FieldLabel}" />
+                    <Label Text="{x:Static strings:AppResources.Date_Label}" Style="{StaticResource FieldLabel}" />
                     <Border Style="{StaticResource InputField}">
                         <DatePicker Date="{Binding PickedDate}" />
                     </Border>
@@ -84,13 +85,13 @@
 
                 <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
                     <Button Grid.Column="0"
-                    Text="Ingreso"
+                    Text="{x:Static strings:AppResources.Income_ButtonText}"
                     Style="{StaticResource IncomeChoice}"
                     Command="{Binding SetIncomeCommand}"
                     IsEnabled="{Binding IsExpenseSelected}" />
 
                     <Button Grid.Column="1"
-                    Text="Gasto"
+                    Text="{x:Static strings:AppResources.Expense_ButtonText}"
                     Style="{StaticResource ExpenseChoice}"
                     Command="{Binding SetExpenseCommand}"
                     IsEnabled="{Binding IsIncomeSelected}" />
@@ -98,7 +99,7 @@
 
                 <Border Style="{StaticResource InputField}">
                     <Grid ColumnDefinitions="*,Auto">
-                        <Label Grid.Column="0" Text="¿Es un movimiento fijo?"
+                        <Label Grid.Column="0" Text="{x:Static strings:AppResources.FixedTransaction_Label}"
                                Style="{StaticResource FieldLabel}"
                                VerticalOptions="Center" />
                         <Switch Grid.Column="1"
@@ -108,20 +109,20 @@
                 </Border>
 
                 <VerticalStackLayout IsVisible="{Binding IsFixed}">
-                    <Label Text="Duración" Style="{StaticResource FieldLabel}" />
+                    <Label Text="{x:Static strings:AppResources.Duration_Label}" Style="{StaticResource FieldLabel}" />
                     <Border Style="{StaticResource InputField}">
                         <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6">
                             <Entry Grid.Column="0" Placeholder="Ej. 12"
                                    Keyboard="Numeric"
                                    Text="{Binding FixedTransactionDuration}" />
-                            <Label Grid.Column="1" Text="meses"
+                            <Label Grid.Column="1" Text="{x:Static strings:AppResources.Months_Caption}"
                                    Style="{StaticResource Caption}"
                                    VerticalOptions="Center" />
                         </Grid>
                     </Border>
                 </VerticalStackLayout>
 
-                <Button Text="Registrar movimiento"
+                <Button Text="{x:Static strings:AppResources.RegistTransacion_Button}"
                         Command="{Binding RegistTransactionCommand}"
                         Style="{StaticResource ButtonPrimary}" />
             </VerticalStackLayout>

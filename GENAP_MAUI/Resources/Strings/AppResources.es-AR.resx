@@ -207,4 +207,52 @@
   <data name="Charts_NavBarTitle" xml:space="preserve">
     <value>Gráficos</value>
   </data>
+  <data name="NewTransaction_Title" xml:space="preserve">
+    <value>Nuevo movimiento</value>
+  </data>
+  <data name="NewTransaction_SubTitle" xml:space="preserve">
+    <value>Registrá un gasto o ingreso de tu día a día. Los movimientos de trading van en su propia sección.</value>
+  </data>
+  <data name="TransactionValue_Label" xml:space="preserve">
+    <value>Monto</value>
+  </data>
+  <data name="Currency_PickerLabel" xml:space="preserve">
+    <value>Moneda</value>
+  </data>
+  <data name="RateUpdate_Label" xml:space="preserve">
+    <value>Cotizaciones de divisas actualizadas al </value>
+  </data>
+  <data name="Category_Label" xml:space="preserve">
+    <value>Categoría</value>
+  </data>
+  <data name="PickCategory_PickerTitle" xml:space="preserve">
+    <value>Elegir categoría</value>
+  </data>
+  <data name="Date_Label" xml:space="preserve">
+    <value>Fecha</value>
+  </data>
+  <data name="Income_ButtonText" xml:space="preserve">
+    <value>Ingreso</value>
+  </data>
+  <data name="Expense_ButtonText" xml:space="preserve">
+    <value>Gasto</value>
+  </data>
+  <data name="FixedTransaction_Label" xml:space="preserve">
+    <value>Movimiento fijo</value>
+  </data>
+  <data name="Duration_Label" xml:space="preserve">
+    <value>Duración</value>
+  </data>
+  <data name="Months_Caption" xml:space="preserve">
+    <value>Meses</value>
+  </data>
+  <data name="RegistTransacion_Button" xml:space="preserve">
+    <value>Registrar movimiento</value>
+  </data>
+  <data name="TransactionRegistered_AlertTitle" xml:space="preserve">
+    <value>Movimiento registrado</value>
+  </data>
+  <data name="TransactionRegistered_AlertContent" xml:space="preserve">
+    <value>El gasto se registró correctamente._El ingreso se registró correctamente.</value>
+  </data>
 </root>

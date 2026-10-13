@@ -124,6 +124,15 @@ namespace GENAP_MAUI.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Category.
+        /// </summary>
+        public static string Category_Label {
+            get {
+                return ResourceManager.GetString("Category_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Charts.
         /// </summary>
         public static string Charts_NavBarTitle {
@@ -151,11 +160,29 @@ namespace GENAP_MAUI.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Currency.
+        /// </summary>
+        public static string Currency_PickerLabel {
+            get {
+                return ResourceManager.GetString("Currency_PickerLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Dark.
         /// </summary>
         public static string DarkTheme {
             get {
                 return ResourceManager.GetString("DarkTheme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Date.
+        /// </summary>
+        public static string Date_Label {
+            get {
+                return ResourceManager.GetString("Date_Label", resourceCulture);
             }
         }
         
@@ -196,11 +223,38 @@ namespace GENAP_MAUI.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Duration.
+        /// </summary>
+        public static string Duration_Label {
+            get {
+                return ResourceManager.GetString("Duration_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Error.
         /// </summary>
         public static string Error_AlertTitle {
             get {
                 return ResourceManager.GetString("Error_AlertTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Expense.
+        /// </summary>
+        public static string Expense_ButtonText {
+            get {
+                return ResourceManager.GetString("Expense_ButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Recurring transaction.
+        /// </summary>
+        public static string FixedTransaction_Label {
+            get {
+                return ResourceManager.GetString("FixedTransaction_Label", resourceCulture);
             }
         }
         
@@ -219,6 +273,15 @@ namespace GENAP_MAUI.Resources.Strings {
         public static string GoToTransactions_caption {
             get {
                 return ResourceManager.GetString("GoToTransactions_caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Income.
+        /// </summary>
+        public static string Income_ButtonText {
+            get {
+                return ResourceManager.GetString("Income_ButtonText", resourceCulture);
             }
         }
         
@@ -250,6 +313,15 @@ namespace GENAP_MAUI.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Months.
+        /// </summary>
+        public static string Months_Caption {
+            get {
+                return ResourceManager.GetString("Months_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Color.
         /// </summary>
         public static string NewCategoryColor_Caption {
@@ -268,11 +340,56 @@ namespace GENAP_MAUI.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Log a daily expense or income. Trading transactions go in their own section..
+        /// </summary>
+        public static string NewTransaction_SubTitle {
+            get {
+                return ResourceManager.GetString("NewTransaction_SubTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a New transaction.
+        /// </summary>
+        public static string NewTransaction_Title {
+            get {
+                return ResourceManager.GetString("NewTransaction_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Choose category.
+        /// </summary>
+        public static string PickCategory_PickerTitle {
+            get {
+                return ResourceManager.GetString("PickCategory_PickerTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Display in.
         /// </summary>
         public static string PickerDisplay_caption {
             get {
                 return ResourceManager.GetString("PickerDisplay_caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Exchange rates updated as of .
+        /// </summary>
+        public static string RateUpdate_Label {
+            get {
+                return ResourceManager.GetString("RateUpdate_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Save transaction.
+        /// </summary>
+        public static string RegistTransacion_Button {
+            get {
+                return ResourceManager.GetString("RegistTransacion_Button", resourceCulture);
             }
         }
         
@@ -318,6 +435,33 @@ namespace GENAP_MAUI.Resources.Strings {
         public static string Transaction_NavBarTitle {
             get {
                 return ResourceManager.GetString("Transaction_NavBarTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Expense saved successfully._Income saved successfully..
+        /// </summary>
+        public static string TransactionRegistered_AlertContent {
+            get {
+                return ResourceManager.GetString("TransactionRegistered_AlertContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Transaction saved.
+        /// </summary>
+        public static string TransactionRegistered_AlertTitle {
+            get {
+                return ResourceManager.GetString("TransactionRegistered_AlertTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Amount.
+        /// </summary>
+        public static string TransactionValue_Label {
+            get {
+                return ResourceManager.GetString("TransactionValue_Label", resourceCulture);
             }
         }
         
