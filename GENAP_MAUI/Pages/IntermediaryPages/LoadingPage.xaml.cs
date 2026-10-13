@@ -12,6 +12,12 @@ public partial class LoadingPage : ContentPage
         Log.Debug("Loading page initialized");
 	}
 
+    protected override void OnNavigatedFrom(NavigatedFromEventArgs args)
+    {
+        base.OnNavigatedFrom(args);
+        SplashAnimation.Handler?.DisconnectHandler();
+    }
+
     private async void MediaElement_MediaEnded(object sender, EventArgs e)
     {
             Log.Debug("Media ended");
