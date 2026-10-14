@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using DomainModel;
 using GENAP_MAUI.CustomViews;
+using GENAP_MAUI.Resources.Strings;
 using Microsoft.Maui.ApplicationModel.Communication;
 using Serilog;
 using System;
@@ -202,7 +203,7 @@ namespace GENAP_MAUI.ViewModels
 
             PickedUserName = GlobalResources.UserName;
             PickedTheme = Preferences.Get(PreferenceKeys.UserThemeKey, true) ? GlobalResources.AppThemesList[0] : GlobalResources.AppThemesList[1];
-            //PickedLanguage = LanguagesList.Where(k => k.Key == Preferences.Get(PreferenceKeys.LanguageKey, CultureInfo.CurrentCulture.Name)).First();
+            PickedLanguage = LanguagesList.Where(c => c.Value == AppResources.CurrentLanguageName).FirstOrDefault();
 
             PickedCommonCurrency = GlobalResources.DefaultCommonCurrency;
             PickedUpdateRateOption = Preferences.Get(PreferenceKeys.UpdateRatesKey, true) ? UpdateRatesOptionsList[0] : UpdateRatesOptionsList[1];
