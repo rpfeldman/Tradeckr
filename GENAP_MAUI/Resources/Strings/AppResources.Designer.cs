@@ -79,6 +79,24 @@ namespace GENAP_MAUI.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Balance.
+        /// </summary>
+        public static string BalanceDoughnutChart_ChartTitle {
+            get {
+                return ResourceManager.GetString("BalanceDoughnutChart_ChartTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Balance trend.
+        /// </summary>
+        public static string BalanceLineChart_ChartTitle {
+            get {
+                return ResourceManager.GetString("BalanceLineChart_ChartTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Categories.
         /// </summary>
         public static string Categories_NavBarTitle {
@@ -259,11 +277,65 @@ namespace GENAP_MAUI.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Expense overview.
+        /// </summary>
+        public static string Expenses_ChartSection {
+            get {
+                return ResourceManager.GetString("Expenses_ChartSection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Expenses.
+        /// </summary>
+        public static string Expenses_ChartVariable {
+            get {
+                return ResourceManager.GetString("Expenses_ChartVariable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Expense breakdown.
+        /// </summary>
+        public static string ExpensesDoughnutChart_ChartTitle {
+            get {
+                return ResourceManager.GetString("ExpensesDoughnutChart_ChartTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Expense trend.
+        /// </summary>
+        public static string ExpensesLineChart_ChartTitle {
+            get {
+                return ResourceManager.GetString("ExpensesLineChart_ChartTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Recurring transaction.
         /// </summary>
         public static string FixedTransaction_Label {
             get {
                 return ResourceManager.GetString("FixedTransaction_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Gains.
+        /// </summary>
+        public static string Gains_ChartVariable {
+            get {
+                return ResourceManager.GetString("Gains_ChartVariable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Overview.
+        /// </summary>
+        public static string GeneralCharts_ChartSection {
+            get {
+                return ResourceManager.GetString("GeneralCharts_ChartSection", resourceCulture);
             }
         }
         
@@ -286,6 +358,24 @@ namespace GENAP_MAUI.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Rotate your phone for a better view..
+        /// </summary>
+        public static string GraphsPage_SubTitle {
+            get {
+                return ResourceManager.GetString("GraphsPage_SubTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Charts.
+        /// </summary>
+        public static string GraphsPage_Title {
+            get {
+                return ResourceManager.GetString("GraphsPage_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Income.
         /// </summary>
         public static string Income_ButtonText {
@@ -295,11 +385,56 @@ namespace GENAP_MAUI.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Income overview.
+        /// </summary>
+        public static string Income_ChartSection {
+            get {
+                return ResourceManager.GetString("Income_ChartSection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Income.
+        /// </summary>
+        public static string Income_ChartVariable {
+            get {
+                return ResourceManager.GetString("Income_ChartVariable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Income breakdown.
+        /// </summary>
+        public static string IncomeDoughnutChart_ChartTitle {
+            get {
+                return ResourceManager.GetString("IncomeDoughnutChart_ChartTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Income trend.
+        /// </summary>
+        public static string IncomeLineChart_ChartTitle {
+            get {
+                return ResourceManager.GetString("IncomeLineChart_ChartTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Light.
         /// </summary>
         public static string LightTheme {
             get {
                 return ResourceManager.GetString("LightTheme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Losses.
+        /// </summary>
+        public static string Losses_ChartVariable {
+            get {
+                return ResourceManager.GetString("Losses_ChartVariable", resourceCulture);
             }
         }
         
@@ -403,6 +538,42 @@ namespace GENAP_MAUI.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Choose period.
+        /// </summary>
+        public static string PickTimePeriod_PickerTitle {
+            get {
+                return ResourceManager.GetString("PickTimePeriod_PickerTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Daily PnL.
+        /// </summary>
+        public static string PnlColumnChart_ChartTitle {
+            get {
+                return ResourceManager.GetString("PnlColumnChart_ChartTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Gains vs. losses.
+        /// </summary>
+        public static string PnlDoughnutChart_ChartTitle {
+            get {
+                return ResourceManager.GetString("PnlDoughnutChart_ChartTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a PnL trend.
+        /// </summary>
+        public static string PnlLineChart_ChartTitle {
+            get {
+                return ResourceManager.GetString("PnlLineChart_ChartTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Exchange rates updated as of .
         /// </summary>
         public static string RateUpdate_Label {
@@ -489,6 +660,15 @@ namespace GENAP_MAUI.Resources.Strings {
         public static string TradeWin_ButtonText {
             get {
                 return ResourceManager.GetString("TradeWin_ButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Trading overview.
+        /// </summary>
+        public static string TradingCharts_ChartSection {
+            get {
+                return ResourceManager.GetString("TradingCharts_ChartSection", resourceCulture);
             }
         }
         

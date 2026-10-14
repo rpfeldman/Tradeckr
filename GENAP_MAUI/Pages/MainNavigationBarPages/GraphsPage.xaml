@@ -5,10 +5,11 @@
              xmlns:charts="clr-namespace:GENAP_MAUI.ContentViews.Graphs"
              xmlns:nav="clr-namespace:GENAP_MAUI.ContentViews.Navigation"
              xmlns:local="clr-namespace:GENAP_MAUI"
+             xmlns:strings="clr-namespace:GENAP_MAUI.Resources.Strings"
              x:Class="GENAP_MAUI.Pages.MainNavigationBarPages.GraphsPage"
              x:DataType="vm:GraphsPageViewModel"
              BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}">
-
+    
     <Grid RowDefinitions="Auto,*">
 
         <VisualStateManager.VisualStateGroups>
@@ -52,7 +53,7 @@
                     Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
                     Style="{StaticResource InputField}">
                 <Picker x:Name="PeriodPicker"
-                        Title="Seleccionar período de tiempo"
+                        Title="{x:Static strings:AppResources.PickTimePeriod_PickerTitle}"
                         ItemsSource="{x:Static local:GlobalResources.TimePeriodsList}"
                         ItemDisplayBinding="{Binding Value}"
                         SelectedItem="{Binding PickedTimePeriod}" />
@@ -63,7 +64,7 @@
                     Style="{StaticResource CurrencyPickerField}">
                 <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
                     <Label x:Name="CurrencyHint"
-                           Grid.Column="0" Text="Ver en"
+                           Grid.Column="0" Text="{x:Static strings:AppResources.PickerDisplay_caption}"
                            Style="{StaticResource CurrencyPickerHint}" />
                     <Picker x:Name="CurrencyPicker"
                             Grid.Column="1"
@@ -80,72 +81,72 @@
             <VerticalStackLayout Spacing="0">
 
                 <VerticalStackLayout Spacing="4">
-                    <Label Text="Apartado de graficos" Style="{StaticResource SubHeadline}" />
+                    <Label Text="{x:Static strings:AppResources.GraphsPage_Title}" Style="{StaticResource SubHeadline}" />
                     <Label x:Name="LandscapeHint"
                            Style="{StaticResource Caption}"
                            HorizontalTextAlignment="Center"
-                           Text="Para una mejor visualizacion se recomienda usar el celular en horizontal." />
+                           Text="{x:Static strings:AppResources.GraphsPage_SubTitle}" />
                 </VerticalStackLayout>
 
-                <Label Text="Balance general" Style="{StaticResource SectionHeader}" />
+                <Label Text="{x:Static strings:AppResources.GeneralCharts_ChartSection}" Style="{StaticResource SectionHeader}" />
 
                 <Border Style="{StaticResource ChartCard}">
                     <VerticalStackLayout>
-                        <charts:BalanceDoughnutChart Transactions="{Binding TransactionsLog}" UpTitle="Ingresos" DownTitle="Gastos" Title="Dona de balance" SubtractTradingLossFromIncome="True"/>
+                        <charts:BalanceDoughnutChart Transactions="{Binding TransactionsLog}" UpTitle="{x:Static strings:AppResources.Income_ChartVariable}" DownTitle="{x:Static strings:AppResources.Expenses_ChartVariable}" Title="{x:Static strings:AppResources.BalanceDoughnutChart_ChartTitle}" SubtractTradingLossFromIncome="True"/>
                     </VerticalStackLayout>
                 </Border>
 
                 <Border Style="{StaticResource ChartCard}">
                     <VerticalStackLayout>
-                        <charts:BalanceLineChart Transactions="{Binding TransactionsLog}" Title="Evolucion del balance"/>
+                        <charts:BalanceLineChart Transactions="{Binding TransactionsLog}" Title="{x:Static strings:AppResources.BalanceLineChart_ChartTitle}"/>
                     </VerticalStackLayout>
                 </Border>
 
-                <Label Text="Trading" Style="{StaticResource SectionHeader}" />
+                <Label Text="{x:Static strings:AppResources.TradingCharts_ChartSection}" Style="{StaticResource SectionHeader}" />
 
                 <Border Style="{StaticResource ChartCard}">
                     <VerticalStackLayout>
-                        <charts:BalanceDoughnutChart Transactions="{Binding TradingLog}" UpTitle="Ganancias" DownTitle="Perdidas" Title="Proporcion PnL" SubtractTradingLossFromIncome="False"/>
-                    </VerticalStackLayout>
-                </Border>
-
-                <Border Style="{StaticResource ChartCard}">
-                    <VerticalStackLayout>
-                        <charts:BalanceLineChart Transactions="{Binding TradingLog}" Title="Evolucion PnL"></charts:BalanceLineChart>
+                        <charts:BalanceDoughnutChart Transactions="{Binding TradingLog}" UpTitle="{x:Static strings:AppResources.Gains_ChartVariable}" DownTitle="{x:Static strings:AppResources.Losses_ChartVariable}" Title="{x:Static strings:AppResources.PnlDoughnutChart_ChartTitle}" SubtractTradingLossFromIncome="False"/>
                     </VerticalStackLayout>
                 </Border>
 
                 <Border Style="{StaticResource ChartCard}">
                     <VerticalStackLayout>
-                        <charts:DailyColumnChart Transactions="{Binding TradingLog}" Title="PnL por dia"></charts:DailyColumnChart>
-                    </VerticalStackLayout>
-                </Border>
-
-                <Label Text="Análisis de gastos cotidianos" Style="{StaticResource SectionHeader}" />
-
-                <Border Style="{StaticResource ChartCard}">
-                    <VerticalStackLayout>
-                        <charts:ProportionDoughnutChart Categories="{Binding Categories}" Transactions="{Binding ExpensesLog}" Title="Gastos por categoria"/>
+                        <charts:BalanceLineChart Transactions="{Binding TradingLog}" Title="{x:Static strings:AppResources.PnlLineChart_ChartTitle}"></charts:BalanceLineChart>
                     </VerticalStackLayout>
                 </Border>
 
                 <Border Style="{StaticResource ChartCard}">
                     <VerticalStackLayout>
-                        <charts:BasicLineChart Transactions="{Binding ExpensesLog}" LineColor="{StaticResource ExpenseRed}" Title="Evolucion del gasto"/>
+                        <charts:DailyColumnChart Transactions="{Binding TradingLog}" Title="{x:Static strings:AppResources.PnlColumnChart_ChartTitle}"></charts:DailyColumnChart>
                     </VerticalStackLayout>
                 </Border>
 
-                <Label Text="Análisis de ingreso neto" Style="{StaticResource SectionHeader}" />
+                <Label Text="{x:Static strings:AppResources.Expenses_ChartSection}" Style="{StaticResource SectionHeader}" />
 
                 <Border Style="{StaticResource ChartCard}">
                     <VerticalStackLayout>
-                        <charts:ProportionDoughnutChart Categories="{Binding Categories}" Transactions="{Binding IncomeLog}" Title="Ingreso neto por categoria" />
+                        <charts:ProportionDoughnutChart Categories="{Binding Categories}" Transactions="{Binding ExpensesLog}" Title="{x:Static strings:AppResources.ExpensesDoughnutChart_ChartTitle}"/>
                     </VerticalStackLayout>
                 </Border>
 
                 <Border Style="{StaticResource ChartCard}">
                     <VerticalStackLayout>
-                        <charts:BasicLineChart Transactions="{Binding IncomeLog}" LineColor="{StaticResource IncomeGreen}" Title="Evolucion del ingreso neto"/>
+                        <charts:BasicLineChart Transactions="{Binding ExpensesLog}" LineColor="{StaticResource ExpenseRed}" Title="{x:Static strings:AppResources.ExpensesLineChart_ChartTitle}"/>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Label Text="{x:Static strings:AppResources.Income_ChartSection}" Style="{StaticResource SectionHeader}" />
+
+                <Border Style="{StaticResource ChartCard}">
+                    <VerticalStackLayout>
+                        <charts:ProportionDoughnutChart Categories="{Binding Categories}" Transactions="{Binding IncomeLog}" Title="{x:Static strings:AppResources.IncomeDoughnutChart_ChartTitle}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Style="{StaticResource ChartCard}">
+                    <VerticalStackLayout>
+                        <charts:BasicLineChart Transactions="{Binding IncomeLog}" LineColor="{StaticResource IncomeGreen}" Title="{x:Static strings:AppResources.IncomeLineChart_ChartTitle}"/>
                     </VerticalStackLayout>
                 </Border>
             </VerticalStackLayout>

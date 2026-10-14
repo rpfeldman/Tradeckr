@@ -276,4 +276,64 @@
   <data name="CurrentLanguageName" xml:space="preserve">
     <value>Español (neutro)</value>
   </data>
+  <data name="PickTimePeriod_PickerTitle" xml:space="preserve">
+    <value>Seleccionar período</value>
+  </data>
+  <data name="GraphsPage_Title" xml:space="preserve">
+    <value>Gráficos</value>
+  </data>
+  <data name="GraphsPage_SubTitle" xml:space="preserve">
+    <value>Gira el dispositivo para una mejor vista.</value>
+  </data>
+  <data name="GeneralCharts_ChartSection" xml:space="preserve">
+    <value>Resumen general</value>
+  </data>
+  <data name="BalanceDoughnutChart_ChartTitle" xml:space="preserve">
+    <value>Balance general</value>
+  </data>
+  <data name="Income_ChartVariable" xml:space="preserve">
+    <value>Ingresos</value>
+  </data>
+  <data name="Expenses_ChartVariable" xml:space="preserve">
+    <value>Gastos</value>
+  </data>
+  <data name="Losses_ChartVariable" xml:space="preserve">
+    <value>Pérdidas</value>
+  </data>
+  <data name="Gains_ChartVariable" xml:space="preserve">
+    <value>Ganancias</value>
+  </data>
+  <data name="BalanceLineChart_ChartTitle" xml:space="preserve">
+    <value>Evolución del balance</value>
+  </data>
+  <data name="TradingCharts_ChartSection" xml:space="preserve">
+    <value>Resumen de trading</value>
+  </data>
+  <data name="PnlDoughnutChart_ChartTitle" xml:space="preserve">
+    <value>Ganancias vs. pérdidas</value>
+  </data>
+  <data name="PnlLineChart_ChartTitle" xml:space="preserve">
+    <value>Evolución del PnL</value>
+  </data>
+  <data name="PnlColumnChart_ChartTitle" xml:space="preserve">
+    <value>PnL diario</value>
+  </data>
+  <data name="Expenses_ChartSection" xml:space="preserve">
+    <value>Resumen de gastos</value>
+  </data>
+  <data name="ExpensesDoughnutChart_ChartTitle" xml:space="preserve">
+    <value>Gastos por categoría</value>
+  </data>
+  <data name="ExpensesLineChart_ChartTitle" xml:space="preserve">
+    <value>Evolución de gastos</value>
+  </data>
+  <data name="Income_ChartSection" xml:space="preserve">
+    <value>Resumen de ingresos</value>
+  </data>
+  <data name="IncomeDoughnutChart_ChartTitle" xml:space="preserve">
+    <value>Ingresos por categoría</value>
+  </data>
+  <data name="IncomeLineChart_ChartTitle" xml:space="preserve">
+    <value>Evolución de ingresos</value>
+  </data>
 </root>

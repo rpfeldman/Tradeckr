@@ -4,6 +4,7 @@ using DataServices;
 using DomainModel;
 using GENAP_MAUI.CustomViews;
 using GENAP_MAUI.InnerComponents;
+using GENAP_MAUI.Resources.Strings;
 using LiveChartsCore;
 using LiveChartsCore.Defaults;
 using LiveChartsCore.SkiaSharpView;
@@ -241,7 +242,7 @@ namespace GENAP_MAUI.ViewModels
             {
                 Categories = new(getCategoriesOperation.Result!);
             }
-            else { await _customDialogsService.ShowAlertDialogAsync("Error", getCategoriesOperation.InnerError?.ErrorMessage!, "Aceptar"); }
+            else { await _customDialogsService.ShowAlertDialogAsync(AppResources.Error_AlertTitle, getCategoriesOperation.InnerError?.ErrorMessage!, AppResources.Accept_AlertButton); }
 
             PickedCurrency = GlobalResources.DefaultCommonCurrency;
             PickedTimePeriod = GlobalResources.TimePeriodsList[1];
