@@ -169,6 +169,15 @@ namespace GENAP_MAUI.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a English (United States).
+        /// </summary>
+        public static string CurrentLanguageName {
+            get {
+                return ResourceManager.GetString("CurrentLanguageName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Dark.
         /// </summary>
         public static string DarkTheme {
@@ -340,6 +349,24 @@ namespace GENAP_MAUI.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Every trade is a building block. Build discipline, not luck..
+        /// </summary>
+        public static string NewTrade_SubTitle {
+            get {
+                return ResourceManager.GetString("NewTrade_SubTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a New trade.
+        /// </summary>
+        public static string NewTrade_Title {
+            get {
+                return ResourceManager.GetString("NewTrade_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Log a daily expense or income. Trading transactions go in their own section..
         /// </summary>
         public static string NewTransaction_SubTitle {
@@ -381,6 +408,15 @@ namespace GENAP_MAUI.Resources.Strings {
         public static string RateUpdate_Label {
             get {
                 return ResourceManager.GetString("RateUpdate_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Save trade.
+        /// </summary>
+        public static string RegistTrade_Button {
+            get {
+                return ResourceManager.GetString("RegistTrade_Button", resourceCulture);
             }
         }
         
@@ -430,6 +466,33 @@ namespace GENAP_MAUI.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Loss.
+        /// </summary>
+        public static string TradeLoss_ButtonText {
+            get {
+                return ResourceManager.GetString("TradeLoss_ButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Trade result.
+        /// </summary>
+        public static string TradeResult_Label {
+            get {
+                return ResourceManager.GetString("TradeResult_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Gain.
+        /// </summary>
+        public static string TradeWin_ButtonText {
+            get {
+                return ResourceManager.GetString("TradeWin_ButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Transactions.
         /// </summary>
         public static string Transaction_NavBarTitle {
@@ -439,7 +502,7 @@ namespace GENAP_MAUI.Resources.Strings {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Expense saved successfully._Income saved successfully..
+        ///   Busca una cadena traducida similar a Expense saved successfully._Income saved successfully._Loss saved successfully._Gain saved successfully..
         /// </summary>
         public static string TransactionRegistered_AlertContent {
             get {

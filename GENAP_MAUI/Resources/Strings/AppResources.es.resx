@@ -253,6 +253,27 @@
     <value>Movimiento registrado</value>
   </data>
   <data name="TransactionRegistered_AlertContent" xml:space="preserve">
-    <value>El gasto se ha registrado correctamente._El ingreso se ha registrado correctamente.</value>
+    <value>El gasto se ha registrado correctamente._El ingreso se ha registrado correctamente._La pérdida se ha registrado correctamente._La ganancia se ha registrado correctamente.</value>
+  </data>
+  <data name="NewTrade_Title" xml:space="preserve">
+    <value>Nuevo trade</value>
+  </data>
+  <data name="NewTrade_SubTitle" xml:space="preserve">
+    <value>Cada trade es un ladrillo. Construye tu disciplina, no tu suerte.</value>
+  </data>
+  <data name="TradeResult_Label" xml:space="preserve">
+    <value>Resultado</value>
+  </data>
+  <data name="TradeWin_ButtonText" xml:space="preserve">
+    <value>Ganancia</value>
+  </data>
+  <data name="TradeLoss_ButtonText" xml:space="preserve">
+    <value>Pérdida</value>
+  </data>
+  <data name="RegistTrade_Button" xml:space="preserve">
+    <value>Registrar trade</value>
+  </data>
+  <data name="CurrentLanguageName" xml:space="preserve">
+    <value>Español (neutro)</value>
   </data>
 </root>

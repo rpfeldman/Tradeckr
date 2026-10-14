@@ -4,6 +4,7 @@ using DataServices;
 using DomainModel;
 using GENAP_MAUI.CustomViews;
 using GENAP_MAUI.InnerComponents;
+using GENAP_MAUI.Resources.Strings;
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -57,10 +58,9 @@ namespace GENAP_MAUI.ViewModels
         [RelayCommand(CanExecute = nameof(RegistTransactionCanExecute))]
         public async Task RegistTransaction()
         {
-            var DisplayAlertTitle = "Movimiento";
-            var DisplayAlertButton = "Aceptar";
-
             Value = CurrencyConverterService.CurrencyToTfu(Value, PickedCurrency);  
+
+            var alertContents = AppResources.TransactionRegistered_AlertContent.Split('_');
 
             if (Depletion)
             {
@@ -75,7 +75,14 @@ namespace GENAP_MAUI.ViewModels
 
 
                     IsAnAlert = true;
-                await _customDialogsService.ShowAlertDialogAsync(DisplayAlertTitle, ExpenseRegistrationOperation.Success ? "Perdida registrada con exito" : ExpenseRegistrationOperation.InnerError?.ErrorMessage!, DisplayAlertButton);
+
+                await _customDialogsService.ShowAlertDialogAsync
+                    (
+                        AppResources.TransactionRegistered_AlertTitle, 
+                        ExpenseRegistrationOperation.Success ? alertContents[2] : ExpenseRegistrationOperation.InnerError?.ErrorMessage!, 
+                        AppResources.Accept_AlertButton
+                    );
+
                     IsAnAlert = false;
 
                 return;
@@ -91,7 +98,14 @@ namespace GENAP_MAUI.ViewModels
                     );    
 
                 IsAnAlert = true;
-            await _customDialogsService.ShowAlertDialogAsync(DisplayAlertTitle, IncomeRegistrationOperation.Success ? "Ganancia registrada con exito" : IncomeRegistrationOperation.InnerError?.ErrorMessage!, DisplayAlertButton);
+
+            await _customDialogsService.ShowAlertDialogAsync
+                (
+                    AppResources.TransactionRegistered_AlertTitle,
+                    IncomeRegistrationOperation.Success ? alertContents[3] : IncomeRegistrationOperation.InnerError?.ErrorMessage!,
+                    AppResources.Accept_AlertButton
+                );
+
                 IsAnAlert = false;
 
             return;
