@@ -132,7 +132,7 @@
   <data name="PickerDisplay_caption" xml:space="preserve">
     <value>Ver en</value>
   </data>
-  <data name="Balance_label" xml:space="preserve">
+  <data name="Balance_label_Postmodification" xml:space="preserve">
     <value>Balance de</value>
   </data>
   <data name="GoToGraphs_caption" xml:space="preserve">
@@ -335,5 +335,8 @@
   </data>
   <data name="IncomeLineChart_ChartTitle" xml:space="preserve">
     <value>Evolución de ingresos</value>
+  </data>
+  <data name="Balance_label_Premodification" xml:space="preserve">
+    <value>ㅤ</value>
   </data>
 </root>

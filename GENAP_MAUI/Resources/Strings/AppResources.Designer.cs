@@ -70,11 +70,20 @@ namespace GENAP_MAUI.Resources.Strings {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Balance of.
+        ///   Busca una cadena traducida similar a .
         /// </summary>
-        public static string Balance_label {
+        public static string Balance_label_Postmodification {
             get {
-                return ResourceManager.GetString("Balance_label", resourceCulture);
+                return ResourceManager.GetString("Balance_label_Postmodification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a balance.
+        /// </summary>
+        public static string Balance_label_Premodification {
+            get {
+                return ResourceManager.GetString("Balance_label_Premodification", resourceCulture);
             }
         }
         
