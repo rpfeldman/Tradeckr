@@ -24,6 +24,8 @@ namespace GENAP_MAUI
         protected override async void OnStart()
         {
             base.OnStart();
+
+            System.Diagnostics.Debug.WriteLine("test");
             
             var culture = new CultureInfo(Preferences.Get(PreferenceKeys.LanguageKey, CultureInfo.CurrentCulture.Name));
 

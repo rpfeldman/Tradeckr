@@ -5,6 +5,7 @@ using DataServices;
 using DomainModel;
 using GENAP_MAUI.CustomViews;
 using GENAP_MAUI.InnerComponents;
+using GENAP_MAUI.Resources.Strings;
 using NetworkServices;
 using Serilog;
 using System;
@@ -58,7 +59,7 @@ namespace GENAP_MAUI.ViewModels
 
             if (!updateCurrenciesRatesOperation.Success)
             {
-                await _customDialogsService.ShowAlertDialogAsync("Error", updateCurrenciesRatesOperation.InnerError!.ErrorMessage, "Aceptar");
+                await _customDialogsService.ShowAlertDialogAsync(AppResources.Error_AlertTitle, updateCurrenciesRatesOperation.InnerError!.ErrorMessage, AppResources.Accept_AlertButton);
                 return;
             }
 
@@ -67,7 +68,7 @@ namespace GENAP_MAUI.ViewModels
 
             if (!saveCurrenciesOperation.Success)
             {
-                await _customDialogsService.ShowAlertDialogAsync("Error", saveCurrenciesOperation.InnerError!.ErrorMessage, "Aceptar");
+                await _customDialogsService.ShowAlertDialogAsync(AppResources.Error_AlertTitle, saveCurrenciesOperation.InnerError!.ErrorMessage, AppResources.Accept_AlertButton);
                 return;
             }
 

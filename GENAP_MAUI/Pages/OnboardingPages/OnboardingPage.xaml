@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:GENAP_MAUI.ViewModels"
              xmlns:local="clr-namespace:GENAP_MAUI"
+             xmlns:strings="clr-namespace:GENAP_MAUI.Resources.Strings"
              x:Class="GENAP_MAUI.Pages.OnboardingPages.OnboardingPage"
              x:DataType="vm:OnboardingpageViewModel">
 
@@ -28,7 +29,7 @@
                     <Label.FormattedText>
                         <FormattedString>
                             <Span Text="Donde tu gestión financiera deja de ser un " />
-                            <Span Text="caos" />
+                            <Span Text="caos" FontAttributes="Bold"/>
                             <Span Text=" y pasa a ser una " />
                             <Span Text="realidad"
                                   TextColor="{AppThemeBinding Light={StaticResource AccentLight}, Dark={StaticResource AccentDark}}"
@@ -107,7 +108,7 @@
                        Margin="0,0,0,10" 
                        IsVisible="{Binding InlineWarningVisibily}"/>
 
-                <Label Text="Tu plata, bajo tu control."
+                <Label Text="{x:Static strings:AppResources.Tagline_caption}"
                        Style="{StaticResource Caption}"
                        HorizontalTextAlignment="Center"
                        HorizontalOptions="Center" />
