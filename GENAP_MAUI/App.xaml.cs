@@ -24,161 +24,164 @@ namespace GENAP_MAUI
         protected override async void OnStart()
         {
             base.OnStart();
+            
+            var culture = new CultureInfo(Preferences.Get(PreferenceKeys.LanguageKey, CultureInfo.CurrentCulture.Name));
 
-            try
-            {
-                var culture = new CultureInfo(Preferences.Get(PreferenceKeys.LanguageKey, CultureInfo.CurrentCulture.Name));
+            CultureInfo.CurrentUICulture = culture;
+            CultureInfo.DefaultThreadCurrentUICulture = culture;
 
-                CultureInfo.CurrentUICulture = culture;
-                CultureInfo.DefaultThreadCurrentUICulture = culture;
+             Application.Current?.UserAppTheme = Preferences.Get(PreferenceKeys.UserThemeKey, true) ? AppTheme.Dark : AppTheme.Light;
+                         Log.Debug("UserAppTheme set");
 
-                CurrencyPersistenceService currencyPersistenceService = IPlatformApplication.Current!.Services.GetRequiredService<CurrencyPersistenceService>();
-
-                # region new user path
-                // occurs when it is the first time the application is opened or when the user has not yet passed the onboarding page.
-                if (GlobalResources.IsNewUser)
+            _ = Task.Run(async () =>
                 {
-                     Log.Debug("Advancing as new user");
-
-                    CategoryPersistenceService categoryPersistenService = IPlatformApplication.Current!.Services.GetRequiredService<CategoryPersistenceService>();
-
-                    var checkCategoriesOperation = await categoryPersistenService.HasCategories();
-                        checkCategoriesOperation.WriteLog("Check if there are already categories in the storage");
-
-                    if (!checkCategoriesOperation.Success)
+                    try
                     {
-                        System.Diagnostics.Debug.WriteLine(checkCategoriesOperation.InnerError?.ErrorMessage);
-                        return;
-                    }
+                        CurrencyPersistenceService currencyPersistenceService = IPlatformApplication.Current!.Services.GetRequiredService<CurrencyPersistenceService>();
 
-                    if (!checkCategoriesOperation.Result)
-                    {
-                        var setDefaultCategoriesOperation = await categoryPersistenService.AddCategoriesAsync(DefaultCategories.DefaultCategoriesList);
-                            setDefaultCategoriesOperation.WriteLog("Set and save the default categories in the storage");
-
-                        if (!setDefaultCategoriesOperation.Success)
+                        # region new user path
+                        // occurs when it is the first time the application is opened or when the user has not yet passed the onboarding page.
+                        if (GlobalResources.IsNewUser)
                         {
-                            System.Diagnostics.Debug.WriteLine(setDefaultCategoriesOperation.InnerError?.ErrorMessage);
+                             Log.Debug("Advancing as new user");
+
+                            CategoryPersistenceService categoryPersistenService = IPlatformApplication.Current!.Services.GetRequiredService<CategoryPersistenceService>();
+
+                            var checkCategoriesOperation = await categoryPersistenService.HasCategories();
+                                checkCategoriesOperation.WriteLog("Check if there are already categories in the storage");
+
+                            if (!checkCategoriesOperation.Success)
+                            {
+                                System.Diagnostics.Debug.WriteLine(checkCategoriesOperation.InnerError?.ErrorMessage);
+                                return;
+                            }
+
+                            if (!checkCategoriesOperation.Result)
+                            {
+                                var setDefaultCategoriesOperation = await categoryPersistenService.AddCategoriesAsync(DefaultCategories.DefaultCategoriesList);
+                                    setDefaultCategoriesOperation.WriteLog("Set and save the default categories in the storage");
+
+                                if (!setDefaultCategoriesOperation.Success)
+                                {
+                                    System.Diagnostics.Debug.WriteLine(setDefaultCategoriesOperation.InnerError?.ErrorMessage);
+                                    return;
+                                }
+                            }
+                            var checkCurrenciesOperation = await currencyPersistenceService.HasCurrencies();
+                                checkCategoriesOperation.WriteLog("Check if there are Already currencies in the storage");
+
+                            if (!checkCurrenciesOperation.Success)
+                            {
+                                System.Diagnostics.Debug.WriteLine(checkCurrenciesOperation.InnerError?.ErrorMessage);
+                            }
+
+                            if (!checkCurrenciesOperation.Result)
+                            {
+                                var setCurrenciesOperation = await currencyPersistenceService.AddRangeAsync(GlobalResources.Currencies);
+                                    setCurrenciesOperation.WriteLog("Set and save the default currencies in the storage");
+
+                                if (!setCurrenciesOperation.Success)
+                                {
+                                    System.Diagnostics.Debug.WriteLine(setCurrenciesOperation.InnerError?.ErrorMessage);
+                                    return;
+                                }
+                            }
+
+                            GlobalResources.AppLoadingResetEvent.Set();
+                            Log.Debug("AppLoadingResetEvent set");
+
                             return;
                         }
-                    }
-                    var checkCurrenciesOperation = await currencyPersistenceService.HasCurrencies();
-                        checkCategoriesOperation.WriteLog("Check if there are Already currencies in the storage");
+                        #endregion
 
-                    if (!checkCurrenciesOperation.Success)
-                    {
-                        System.Diagnostics.Debug.WriteLine(checkCurrenciesOperation.InnerError?.ErrorMessage);
-                    }
+                        var lastDayEntered = Preferences.Get(PreferenceKeys.LastDayEnteredKey, DateTime.Today);
 
-                    if (!checkCurrenciesOperation.Result)
-                    {
-                        var setCurrenciesOperation = await currencyPersistenceService.AddRangeAsync(GlobalResources.Currencies);
-                            setCurrenciesOperation.WriteLog("Set and save the default currencies in the storage");
+                         var getCurrenciesOperation = await currencyPersistenceService.GetAllAsync();
+                             getCurrenciesOperation.WriteLog("Bring the currencies to memory");
 
-                        if (!setCurrenciesOperation.Success)
+                        CurrencyDto[] Currencies = [.. getCurrenciesOperation.Result!.Select(c => new CurrencyDto() { Id = c.Id, ConversionRate = c.ConversionRate, CurrencyDisplayName = GlobalResources.CurrenciesStringsDictionary[c.IsoCode], IsoCode = c.IsoCode })];
+                
+                        if (!getCurrenciesOperation.Success)
                         {
-                            System.Diagnostics.Debug.WriteLine(setCurrenciesOperation.InnerError?.ErrorMessage);
+                            System.Diagnostics.Debug.WriteLine(getCurrenciesOperation.InnerError!.ErrorMessage);
                             return;
                         }
-                    }
 
-                    GlobalResources.AppLoadingResetEvent.Set();
-                    Log.Debug("AppLoadingResetEvent set");
+                        #region application opened x+1 times path (long name lol) { x >= 1 }
+                        // occurs when it is not the first time the user opens the application on the same day or when the user has disabled the daily rate update
+                        if (lastDayEntered == DateTime.Today || !Preferences.Get(PreferenceKeys.UpdateRatesKey, true))
+                        {
+                            GlobalResources.Currencies = Currencies;
 
-                    return;
-                }
-                #endregion
+                            GlobalResources.AppLoadingResetEvent.Set();
+                            Log.Debug("AppLoadingResetEvent set");
 
-                Application.Current?.UserAppTheme = Preferences.Get(PreferenceKeys.UserThemeKey, true) ? AppTheme.Dark : AppTheme.Light;
-                 Log.Debug("UserAppTheme set");
+                            return;
+                        }
+                        #endregion
 
-                var lastDayEntered = Preferences.Get(PreferenceKeys.LastDayEnteredKey, DateTime.Today);
+                        var checkInternet = NetworkMethods.CheckInternetConnection();
 
-                 var getCurrenciesOperation = await currencyPersistenceService.GetAllAsync();
-                     getCurrenciesOperation.WriteLog("Bring the currencies to memory");
+                        # region rates need to be updated path
+                        // occurs when the application is opened for the first time in the day,
+                        // the user has an internet connection and has enabled the feature to update rates daily
+                        if (checkInternet) 
+                        {
+                            Log.Debug("NEW DAY: Updating currencies");
 
-                CurrencyDto[] Currencies = [.. getCurrenciesOperation.Result!.Select(c => new CurrencyDto() { Id = c.Id, ConversionRate = c.ConversionRate, CurrencyDisplayName = GlobalResources.CurrenciesStringsDictionary[c.IsoCode], IsoCode = c.IsoCode })];
-                
-                if (!getCurrenciesOperation.Success)
-                {
-                    System.Diagnostics.Debug.WriteLine(getCurrenciesOperation.InnerError!.ErrorMessage);
-                    return;
-                }
+                            CurrenciesRatesService currenciesRatesService = new(GlobalResources.DefaultTradingCurrency.IsoCode);
 
-                #region application opened x+1 times path (long name lol) { x >= 1 }
-                // occurs when it is not the first time the user opens the application on the same day or when the user has disabled the daily rate update
-                if (lastDayEntered == DateTime.Today || !Preferences.Get(PreferenceKeys.UpdateRatesKey, true))
-                {
-                    GlobalResources.Currencies = Currencies;
-
-                    GlobalResources.AppLoadingResetEvent.Set();
-                    Log.Debug("AppLoadingResetEvent set");
-
-                    return;
-                }
-                #endregion
-
-                var checkInternet = NetworkMethods.CheckInternetConnection();
-
-                # region rates need to be updated path
-                // occurs when the application is opened for the first time in the day,
-                // the user has an internet connection and has enabled the feature to update rates daily
-                if (checkInternet) 
-                {
-                    Log.Debug("NEW DAY: Updating currencies");
-
-                    CurrenciesRatesService currenciesRatesService = new(GlobalResources.DefaultTradingCurrency.IsoCode);
-
-                    var updateRatesOperation = await currenciesRatesService.UpdateCurrenciesRatesAsync(Currencies, DateOnly.FromDateTime(DateTime.Today));
-                        updateRatesOperation.WriteLog($"Update the currencies rates");
+                            var updateRatesOperation = await currenciesRatesService.UpdateCurrenciesRatesAsync(Currencies, DateOnly.FromDateTime(DateTime.Today));
+                                updateRatesOperation.WriteLog($"Update the currencies rates");
                     
-                    if(!updateRatesOperation.Success)
-                    {
-                        System.Diagnostics.Debug.WriteLine(updateRatesOperation.InnerError!.ErrorMessage);
-                        return;
-                    }
+                            if(!updateRatesOperation.Success)
+                            {
+                                System.Diagnostics.Debug.WriteLine(updateRatesOperation.InnerError!.ErrorMessage);
+                                return;
+                            }
 
-                    GlobalResources.Currencies = Currencies;
+                            GlobalResources.Currencies = Currencies;
 
-                    var updateCurrenciesOperation = await currencyPersistenceService.UpdateRangeAsync(Currencies);
-                        updateCurrenciesOperation.WriteLog("Update the currencies rates in the storage");
+                            var updateCurrenciesOperation = await currencyPersistenceService.UpdateRangeAsync(Currencies);
+                                updateCurrenciesOperation.WriteLog("Update the currencies rates in the storage");
 
-                    if (!updateRatesOperation.Success)
-                    {
-                        System.Diagnostics.Debug.WriteLine(updateCurrenciesOperation.InnerError!.ErrorMessage);
-                        return;
-                    }
+                            if (!updateRatesOperation.Success)
+                            {
+                                System.Diagnostics.Debug.WriteLine(updateCurrenciesOperation.InnerError!.ErrorMessage);
+                                return;
+                            }
 
-                    Preferences.Set(PreferenceKeys.LastRateUpdateKey, DateTime.Today);
-                    Preferences.Set(PreferenceKeys.LastDayEnteredKey, DateTime.Today);
+                            Preferences.Set(PreferenceKeys.LastRateUpdateKey, DateTime.Today);
+                            Preferences.Set(PreferenceKeys.LastDayEnteredKey, DateTime.Today);
 
-                    GlobalResources.AppLoadingResetEvent.Set();
-                    Log.Debug("AppLoadingResetEvent set");
+                            GlobalResources.AppLoadingResetEvent.Set();
+                            Log.Debug("AppLoadingResetEvent set");
 
-                    return; 
-                }
-                #endregion
+                            return; 
+                        }
+                        #endregion
 
-                #region No internet path
-                // occurs when it is necessary to update the rates but the user does not have an internet connection
-                System.Diagnostics.Debug.WriteLine("User does not have internet connection. Advancing without updating the currencies rates");
-                    Log.Warning("Advancing without connection");
+                        #region No internet path
+                        // occurs when it is necessary to update the rates but the user does not have an internet connection
+                        System.Diagnostics.Debug.WriteLine("User does not have internet connection. Advancing without updating the currencies rates");
+                            Log.Warning("Advancing without connection");
                 
 
-                GlobalResources.Currencies = Currencies;
+                        GlobalResources.Currencies = Currencies;
 
                     
-                 GlobalResources.AppLoadingResetEvent.Set();
-                    Log.Debug("AppLoadingResetEvent set");   
+                         GlobalResources.AppLoadingResetEvent.Set();
+                            Log.Debug("AppLoadingResetEvent set");   
                 
-                return;
-                #endregion
-            }
-            catch (Exception x)
-            {
-                System.Diagnostics.Debug.WriteLine($"Seed failed: {x.Message}");
-                    Log.Error($"Seed failed: {x.Message}");
-            }
+                        return;
+                    #endregion
+                    }
+                    catch (Exception x)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"Seed failed: {x.Message} - {x.InnerException}");
+                            Log.Error($"Seed failed: {x.Message} - {x.InnerException}");
+                    }
+            });
         }
     }
 }
