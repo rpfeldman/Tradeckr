@@ -387,4 +387,7 @@
   <data name="Start_ButtonText" xml:space="preserve">
     <value>Comenzar</value>
   </data>
+  <data name="InternetConnection_Warning" xml:space="preserve">
+    <value>Para avanzar necesitas internet. Revisa tu conexión y vuelve a intentarlo.</value>
+  </data>
 </root>

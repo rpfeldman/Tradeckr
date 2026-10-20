@@ -475,6 +475,15 @@ namespace GENAP_MAUI.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a You need an internet connection to continue. Check your connection and try again..
+        /// </summary>
+        public static string InternetConnection_Warning {
+            get {
+                return ResourceManager.GetString("InternetConnection_Warning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Light.
         /// </summary>
         public static string LightTheme {

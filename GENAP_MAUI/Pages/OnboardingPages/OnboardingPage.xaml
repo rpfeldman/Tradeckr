@@ -16,7 +16,7 @@
                                  Spacing="0"
                                  VerticalOptions="Center">
 
-                <Label Text="Bienvenido a"
+                <Label Text="{x:Static strings:AppResources.OnBoardingWelcome_Label}"
                        Style="{StaticResource OnboardingEyebrow}"
                        Margin="0,0,0,4" />
 
@@ -28,18 +28,21 @@
                        Margin="0,0,0,48">
                     <Label.FormattedText>
                         <FormattedString>
-                            <Span Text="Donde tu gestión financiera deja de ser un " />
-                            <Span Text="caos" FontAttributes="Bold"/>
-                            <Span Text=" y pasa a ser una " />
-                            <Span Text="realidad"
+                            <Span Text="{x:Static strings:AppResources.OnBoardingPage_SubTitle_1}"/>
+                            
+                            <Span Text="{x:Static strings:AppResources.OnBoardingPage_SubTitle_2}"
+                                  FontAttributes="Bold"/>
+                            
+                            <Span Text=".&#10;" />
+                            
+                            <Span Text="{x:Static strings:AppResources.OnBoardingPage_SubTitle_3}"
                                   TextColor="{AppThemeBinding Light={StaticResource AccentLight}, Dark={StaticResource AccentDark}}"
                                   FontAttributes="Bold" />
-                            <Span Text="." />
                         </FormattedString>
                     </Label.FormattedText>
                 </Label>
 
-                <Label Text="Para empezar, ¿cómo te llamás?"
+                <Label Text="{x:Static strings:AppResources.PickUsername_Label}"
                        Style="{StaticResource FieldLabel}"
                        HorizontalTextAlignment="Center"
                        HorizontalOptions="Center"
@@ -48,18 +51,18 @@
                 <Border Style="{StaticResource InputFieldBrand}">
                     <Entry Text="{Binding UserName}"
                            Style="{StaticResource BaseEntry}"
-                           Placeholder="Tu nombre..."
+                           Placeholder="{x:Static strings:AppResources.UsernameEntry_PlaceHolder}"
                            HorizontalTextAlignment="Center"
                            ReturnType="Done"
                            ReturnCommand="{Binding ContinueCommand}" />
                 </Border>
 
                 <VerticalStackLayout Spacing="8" Margin="0,28,0,0">
-                    <Label Text="¿Qué moneda usás en tu día a día?"
+                    <Label Text="{x:Static strings:AppResources.PickDailyCurrency_Label}"
                            Style="{StaticResource PreferencePickerLabel}" />
                     <Border Style="{StaticResource PreferencePickerField}">
                         <Picker Style="{StaticResource PreferencePickerControl}"
-                                Title="Elegí tu moneda cotidiana"
+                                Title="{x:Static strings:AppResources.PickDailyCurrency_PickerTitle}"
                                 ItemsSource="{x:Static local:GlobalResources.Currencies}"
                                 ItemDisplayBinding="{Binding CurrencyDisplayName}"
                                 SelectedItem="{Binding PickedCommonCurrency}" />
@@ -67,11 +70,11 @@
                 </VerticalStackLayout>
 
                 <VerticalStackLayout Spacing="8" Margin="0,18,0,0">
-                    <Label Text="¿Y con qué moneda operás?"
+                    <Label Text="{x:Static strings:AppResources.PickTradingCurrency_Label}"
                            Style="{StaticResource PreferencePickerLabel}" />
                     <Border Style="{StaticResource PreferencePickerField}">
                         <Picker Style="{StaticResource PreferencePickerControl}"
-                                Title="Elegí tu moneda de trading"
+                                Title="{x:Static strings:AppResources.PickTradingCurrency_PickerTitle}"
                                 ItemsSource="{x:Static local:GlobalResources.Currencies}"
                                 ItemDisplayBinding="{Binding CurrencyDisplayName}"
                                 SelectedItem="{Binding PickedTradingCurrency}" />
@@ -81,10 +84,20 @@
                         <Label Style="{StaticResource NoticeText}">
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span Text="IMPORTANTE: " FontAttributes="Bold" />
-                                    <Span Text="La moneda que elijas como tu moneda operativa va a convertirse en tu " />
-                                    <Span Text="moneda raíz" FontAttributes="Bold" />
-                                    <Span Text=". Esto significa que el resto de monedas van a adaptar su conversión a esta moneda. Podés cambiar esto en cualquier momento desde los ajustes." />
+                                    <Span Text="{x:Static strings:AppResources.CurrenciesNotice_Label_1}"
+                                          FontAttributes="Bold"/>
+
+                                    <Span Text="{x:Static strings:AppResources.CurrenciesNotice_Label_2}"/>
+
+                                    <Span Text="{x:Static strings:AppResources.CurrenciesNotice_Label_3}"
+                                          FontAttributes="Bold"/>
+                                    
+                                    <Span Text=". "/>
+
+                                    <Span Text="{x:Static strings:AppResources.CurrenciesNotice_Label_4}"
+                                          FontAttributes="Bold"/>
+
+                                    <Span Text="{x:Static strings:AppResources.CurrenciesNotice_Label_5}"/>
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
@@ -98,12 +111,12 @@
                                  Spacing="0"
                                  VerticalOptions="End">
 
-                <Button Text="Comenzar"
+                <Button Text="{x:Static strings:AppResources.Start_ButtonText}"
                         Style="{StaticResource ButtonPrimary}"
                         Command="{Binding ContinueCommand}"
                         Margin="0,0,0,10" />
 
-                <Label Text="Es necesario estar conectado a internet la primera vez que ingresás a la aplicación."
+                <Label Text="{x:Static strings:AppResources.InternetConnection_Warning}"
                        Style="{StaticResource InlineWarning}"
                        Margin="0,0,0,10" 
                        IsVisible="{Binding InlineWarningVisibily}"/>
