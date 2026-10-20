@@ -339,4 +339,55 @@
   <data name="Balance_label_Premodification" xml:space="preserve">
     <value>balance</value>
   </data>
+  <data name="OnBoardingWelcome_Label" xml:space="preserve">
+    <value>Welcome to</value>
+  </data>
+  <data name="OnBoardingPage_SubTitle_1" xml:space="preserve">
+    <value>Where you take control of your </value>
+  </data>
+  <data name="OnBoardingPage_SubTitle_2" xml:space="preserve">
+    <value>finances</value>
+  </data>
+  <data name="OnBoardingPage_SubTitle_3" xml:space="preserve">
+    <value>How far can you go?</value>
+  </data>
+  <data name="PickUsername_Label" xml:space="preserve">
+    <value>What's your name?</value>
+  </data>
+  <data name="UsernameEntry_PlaceHolder" xml:space="preserve">
+    <value>Your name...</value>
+  </data>
+  <data name="PickDailyCurrency_Label" xml:space="preserve">
+    <value>What currency do you use day-to-day?</value>
+  </data>
+  <data name="PickTradingCurrency_Label" xml:space="preserve">
+    <value>What currency do you use for trading?</value>
+  </data>
+  <data name="PickDailyCurrency_PickerTitle" xml:space="preserve">
+    <value>Daily currency</value>
+  </data>
+  <data name="PickTradingCurrency_PickerTitle" xml:space="preserve">
+    <value>Trading currency</value>
+  </data>
+  <data name="CurrenciesNotice_Label_1" xml:space="preserve">
+    <value>Heads up: </value>
+  </data>
+  <data name="CurrenciesNotice_Label_2" xml:space="preserve">
+    <value>your trading currency will be your base currency. Since exchange rates update daily, the value of your transactions in other currencies </value>
+  </data>
+  <data name="CurrenciesNotice_Label_3" xml:space="preserve">
+    <value>may change over time</value>
+  </data>
+  <data name="CurrenciesNotice_Label_4" xml:space="preserve">
+    <value>You can turn off daily updates </value>
+  </data>
+  <data name="CurrenciesNotice_Label_5" xml:space="preserve">
+    <value>or change your base currency in Settings.</value>
+  </data>
+  <data name="Start_ButtonText" xml:space="preserve">
+    <value>Get started</value>
+  </data>
+  <data name="InternetConnection_Warning" xml:space="preserve">
+    <value>You need an internet connection to continue. Check your connection and try again.</value>
+  </data>
 </root>

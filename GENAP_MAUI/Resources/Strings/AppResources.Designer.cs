@@ -187,6 +187,51 @@ namespace GENAP_MAUI.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Heads up: .
+        /// </summary>
+        public static string CurrenciesNotice_Label_1 {
+            get {
+                return ResourceManager.GetString("CurrenciesNotice_Label_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a your trading currency will be your base currency. Since exchange rates update daily, the value of your transactions in other currencies .
+        /// </summary>
+        public static string CurrenciesNotice_Label_2 {
+            get {
+                return ResourceManager.GetString("CurrenciesNotice_Label_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a may change over time.
+        /// </summary>
+        public static string CurrenciesNotice_Label_3 {
+            get {
+                return ResourceManager.GetString("CurrenciesNotice_Label_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a You can turn off daily updates .
+        /// </summary>
+        public static string CurrenciesNotice_Label_4 {
+            get {
+                return ResourceManager.GetString("CurrenciesNotice_Label_4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a or change your base currency in Settings..
+        /// </summary>
+        public static string CurrenciesNotice_Label_5 {
+            get {
+                return ResourceManager.GetString("CurrenciesNotice_Label_5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Currency.
         /// </summary>
         public static string Currency_PickerLabel {
@@ -430,6 +475,15 @@ namespace GENAP_MAUI.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a You need an internet connection to continue. Check your connection and try again..
+        /// </summary>
+        public static string InternetConnection_Warning {
+            get {
+                return ResourceManager.GetString("InternetConnection_Warning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Light.
         /// </summary>
         public static string LightTheme {
@@ -529,11 +583,65 @@ namespace GENAP_MAUI.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Where you take control of your .
+        /// </summary>
+        public static string OnBoardingPage_SubTitle_1 {
+            get {
+                return ResourceManager.GetString("OnBoardingPage_SubTitle_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a finances.
+        /// </summary>
+        public static string OnBoardingPage_SubTitle_2 {
+            get {
+                return ResourceManager.GetString("OnBoardingPage_SubTitle_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a How far can you go?.
+        /// </summary>
+        public static string OnBoardingPage_SubTitle_3 {
+            get {
+                return ResourceManager.GetString("OnBoardingPage_SubTitle_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Welcome to.
+        /// </summary>
+        public static string OnBoardingWelcome_Label {
+            get {
+                return ResourceManager.GetString("OnBoardingWelcome_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Choose category.
         /// </summary>
         public static string PickCategory_PickerTitle {
             get {
                 return ResourceManager.GetString("PickCategory_PickerTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a What currency do you use day-to-day?.
+        /// </summary>
+        public static string PickDailyCurrency_Label {
+            get {
+                return ResourceManager.GetString("PickDailyCurrency_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Daily currency.
+        /// </summary>
+        public static string PickDailyCurrency_PickerTitle {
+            get {
+                return ResourceManager.GetString("PickDailyCurrency_PickerTitle", resourceCulture);
             }
         }
         
@@ -552,6 +660,33 @@ namespace GENAP_MAUI.Resources.Strings {
         public static string PickTimePeriod_PickerTitle {
             get {
                 return ResourceManager.GetString("PickTimePeriod_PickerTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a What currency do you use for trading?.
+        /// </summary>
+        public static string PickTradingCurrency_Label {
+            get {
+                return ResourceManager.GetString("PickTradingCurrency_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Trading currency.
+        /// </summary>
+        public static string PickTradingCurrency_PickerTitle {
+            get {
+                return ResourceManager.GetString("PickTradingCurrency_PickerTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a What&apos;s your name?.
+        /// </summary>
+        public static string PickUsername_Label {
+            get {
+                return ResourceManager.GetString("PickUsername_Label", resourceCulture);
             }
         }
         
@@ -615,6 +750,15 @@ namespace GENAP_MAUI.Resources.Strings {
         public static string SaveChanges_Button {
             get {
                 return ResourceManager.GetString("SaveChanges_Button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Get started.
+        /// </summary>
+        public static string Start_ButtonText {
+            get {
+                return ResourceManager.GetString("Start_ButtonText", resourceCulture);
             }
         }
         
@@ -714,6 +858,15 @@ namespace GENAP_MAUI.Resources.Strings {
         public static string TransactionValue_Label {
             get {
                 return ResourceManager.GetString("TransactionValue_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Your name....
+        /// </summary>
+        public static string UsernameEntry_PlaceHolder {
+            get {
+                return ResourceManager.GetString("UsernameEntry_PlaceHolder", resourceCulture);
             }
         }
         

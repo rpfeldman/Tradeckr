@@ -339,4 +339,55 @@
   <data name="Balance_label_Premodification" xml:space="preserve">
     <value>ㅤ</value>
   </data>
+  <data name="OnBoardingWelcome_Label" xml:space="preserve">
+    <value>Bienvenido a</value>
+  </data>
+  <data name="OnBoardingPage_SubTitle_1" xml:space="preserve">
+    <value>Donde tomas el control de tus </value>
+  </data>
+  <data name="OnBoardingPage_SubTitle_2" xml:space="preserve">
+    <value>finanzas</value>
+  </data>
+  <data name="OnBoardingPage_SubTitle_3" xml:space="preserve">
+    <value>¿Hasta dónde eres capaz de llegar?</value>
+  </data>
+  <data name="PickUsername_Label" xml:space="preserve">
+    <value>¿Cómo te llamas?</value>
+  </data>
+  <data name="UsernameEntry_PlaceHolder" xml:space="preserve">
+    <value>Tu nombre...</value>
+  </data>
+  <data name="PickDailyCurrency_Label" xml:space="preserve">
+    <value>¿Qué moneda usas en tu día a día?</value>
+  </data>
+  <data name="PickTradingCurrency_Label" xml:space="preserve">
+    <value>¿Qué moneda usas para operar?</value>
+  </data>
+  <data name="PickDailyCurrency_PickerTitle" xml:space="preserve">
+    <value>Moneda del día a día</value>
+  </data>
+  <data name="PickTradingCurrency_PickerTitle" xml:space="preserve">
+    <value>Moneda de trading</value>
+  </data>
+  <data name="CurrenciesNotice_Label_1" xml:space="preserve">
+    <value>Importante: </value>
+  </data>
+  <data name="CurrenciesNotice_Label_2" xml:space="preserve">
+    <value>tu moneda de trading será la base de la app. Como las cotizaciones se actualizan a diario, el valor de tus movimientos en otras monedas </value>
+  </data>
+  <data name="CurrenciesNotice_Label_3" xml:space="preserve">
+    <value>puede cambiar con el tiempo</value>
+  </data>
+  <data name="CurrenciesNotice_Label_4" xml:space="preserve">
+    <value>Puedes desactivar la actualización diaria </value>
+  </data>
+  <data name="CurrenciesNotice_Label_5" xml:space="preserve">
+    <value>o cambiar tu moneda base desde los ajustes.</value>
+  </data>
+  <data name="Start_ButtonText" xml:space="preserve">
+    <value>Comenzar</value>
+  </data>
+  <data name="InternetConnection_Warning" xml:space="preserve">
+    <value>Para avanzar necesitas internet. Revisa tu conexión y vuelve a intentarlo.</value>
+  </data>
 </root>
