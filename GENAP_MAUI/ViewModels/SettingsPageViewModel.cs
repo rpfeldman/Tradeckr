@@ -99,7 +99,7 @@ namespace GENAP_MAUI.ViewModels
                     CultureInfo.CurrentUICulture = culture;
                     CultureInfo.DefaultThreadCurrentUICulture = culture;
 
-                    await _customDialogsService.ShowAlertDialogAsync("Idioma", "El idioma se ha actualizado correctamente\nPara ver los cambios reinicia la app", "Aceptar");
+                    await _customDialogsService.ShowAlertDialogAsync("Idioma actualizado", "El idioma se ha actualizado correctamente\nPara ver los cambios reinicia la app", "Aceptar");
                 }
             }
 
@@ -151,9 +151,6 @@ namespace GENAP_MAUI.ViewModels
                 $"Bug title: {BugTitle}\n"+
                 $"Bug description: {BugDescription}\n\n"+
                 $"Date: {DateOnly.FromDateTime(DateTime.Today)}\n\n" +
-                $"A continuación se adjuntará la información del dispositivo. "+
-                $"Estos datos son claves para poder identificar el error. " +
-                $"Eres completamente libre de eliminar los datos que no quieras enviar."+
                 $"\n -Platform: {DeviceInfo.Platform}" +
                 $"\n -Manufacturer: {DeviceInfo.Manufacturer}" +
                 $"\n -Model: {DeviceInfo.Model}" +
