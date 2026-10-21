@@ -20,10 +20,12 @@ namespace GENAP_MAUI.ViewModels
         private bool _IsLoading;
         private bool[] AppearanceSettings = new bool[4];
         private bool[] CurrencySettings = new bool[4];
+
+        private static string[] BooleanOptions { get => AppResources.BooleanOptions.Split('_'); }
         private readonly Dictionary<bool, string> UpdateRatesOptions = new(2)
         {
-            { true, "Habilitado" },
-            { false, "Deshabilitado" }
+            { true, BooleanOptions[0] },
+            { false, BooleanOptions[1] }
         };
 
         public List<KeyValuePair<bool, string>> UpdateRatesOptionsList { get => [.. UpdateRatesOptions];  }
@@ -99,7 +101,12 @@ namespace GENAP_MAUI.ViewModels
                     CultureInfo.CurrentUICulture = culture;
                     CultureInfo.DefaultThreadCurrentUICulture = culture;
 
-                    await _customDialogsService.ShowAlertDialogAsync("Idioma", "El idioma se ha actualizado correctamente\nPara ver los cambios reinicia la app", "Aceptar");
+                    await _customDialogsService.ShowAlertDialogAsync
+                        (
+                            AppResources.LanguageChanged_AlertTitle, 
+                            AppResources.LanguageChanged_AlertContent, 
+                            AppResources.Accept_AlertButton
+                        );
                 }
             }
 
@@ -127,7 +134,12 @@ namespace GENAP_MAUI.ViewModels
 
             Log.Information($"Changes have been saved (Settings page)");
 
-            await _customDialogsService.ShowAlertDialogAsync("Configuracion", "Cambios guardados con exito", "Aceptar");
+            await _customDialogsService.ShowAlertDialogAsync
+                (
+                    AppResources.Settings_AlertTitle, 
+                    AppResources.Settings_AlertContent, 
+                    AppResources.Accept_AlertButton
+                );
         }
 
         [RelayCommand(CanExecute = nameof(ReportCanExecute))]
@@ -135,7 +147,12 @@ namespace GENAP_MAUI.ViewModels
         {
             if(DeviceInfo.Idiom == DeviceIdiom.Desktop)
             {
-                await _customDialogsService.ShowAlertDialogAsync("Error", "El reporte de errores desde la app es exclusivo de dispositivos móviles.\n\nPuedes hacer tu reporte enviando el mismo a 'ramirofeldman0@gmail.com'", "Aceptar");
+                await _customDialogsService.ShowAlertDialogAsync
+                    (
+                        AppResources.Error_AlertTitle, 
+                        AppResources.DesktopReport_AlertContent,
+                        AppResources.Accept_AlertButton
+                    );
                 return;
             }
 
@@ -143,7 +160,11 @@ namespace GENAP_MAUI.ViewModels
 
             if (!File.Exists(logPath))
             {
-                await _customDialogsService.ShowAlertDialogAsync("Error", "No es posible reportar bugs en tu dispositivo.\nPor favor, contacte con soporte tecnico", "Aceptar");
+                await _customDialogsService.ShowAlertDialogAsync(
+                        AppResources.Error_AlertTitle,
+                        AppResources.ReportNotSupported_AlertContent, 
+                        AppResources.Accept_AlertButton
+                    );
                 return;
             }
 
@@ -151,9 +172,6 @@ namespace GENAP_MAUI.ViewModels
                 $"Bug title: {BugTitle}\n"+
                 $"Bug description: {BugDescription}\n\n"+
                 $"Date: {DateOnly.FromDateTime(DateTime.Today)}\n\n" +
-                $"A continuación se adjuntará la información del dispositivo. "+
-                $"Estos datos son claves para poder identificar el error. " +
-                $"Eres completamente libre de eliminar los datos que no quieras enviar."+
                 $"\n -Platform: {DeviceInfo.Platform}" +
                 $"\n -Manufacturer: {DeviceInfo.Manufacturer}" +
                 $"\n -Model: {DeviceInfo.Model}" +
@@ -173,14 +191,24 @@ namespace GENAP_MAUI.ViewModels
             {
                 Log.Warning("Email is not supported. Advancing with file sharing (bug report)");
                 
-                await _customDialogsService.ShowAlertDialogAsync("Reporte", "Aparentemente no tienes una aplicacion predeterminada de correo electronico en tu dispositivo.\n\nPor favor, intente compartir el siguiente archivo de texto a 'ramirofeldman0@gmail.com'","Aceptar");
-
+                await _customDialogsService.ShowAlertDialogAsync
+                    (
+                        AppResources.Report_ButtonText,
+                        AppResources.DefaultEmailReport_AlertContent,
+                        AppResources.Accept_AlertButton
+                    );
+                    
 
                 ShareFile file = new(bugReportPath);
                 ShareFileRequest request = new("Bug", file);
                 await Share.Default.RequestAsync(request);
 
-               await _customDialogsService.ShowAlertDialogAsync($"Gracias, {GlobalResources.UserName}", "El equipo de Tradeckr agradece infinitamente que te hayas tomado el tiempo de realizar tu reporte\n\n¡Tu colaboración nos ayuda a ser mejores cada día!","Aceptar");
+               await _customDialogsService.ShowAlertDialogAsync
+                    (
+                       $"{AppResources.BugReportThanks_AlertTitle}{GlobalResources.UserName}", 
+                       AppResources.BugReportThanks_AlertContent,
+                       AppResources.Accept_AlertButton
+                   );
 
                 return;
             }
@@ -193,7 +221,12 @@ namespace GENAP_MAUI.ViewModels
 
             await Email.Default.ComposeAsync(emailMessage);
 
-            await _customDialogsService.ShowAlertDialogAsync($"Gracias, {GlobalResources.UserName}", "El equipo de Tradeckr agradece infinitamente que te hayas tomado el tiempo de realizar tu reporte\n\n¡Tu colaboración nos ayuda a ser mejores cada día!", "Aceptar");
+            await _customDialogsService.ShowAlertDialogAsync
+                    (
+                       $"{AppResources.BugReportThanks_AlertTitle}{GlobalResources.UserName}", 
+                       AppResources.BugReportThanks_AlertContent,
+                       AppResources.Accept_AlertButton
+                   );
         }
 
         [RelayCommand]

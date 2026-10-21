@@ -390,4 +390,114 @@
   <data name="InternetConnection_Warning" xml:space="preserve">
     <value>Para avanzar necesitas internet. Revisa tu conexión y vuelve a intentarlo.</value>
   </data>
+  <data name="AppearanceSettings_Title" xml:space="preserve">
+    <value>Apariencia e idioma</value>
+  </data>
+  <data name="Username_Label" xml:space="preserve">
+    <value>Tu nombre</value>
+  </data>
+  <data name="Username_Caption" xml:space="preserve">
+    <value>Cómo quieres que te llamemos.</value>
+  </data>
+  <data name="Theme_Label" xml:space="preserve">
+    <value>Tema</value>
+  </data>
+  <data name="Theme_Caption" xml:space="preserve">
+    <value>El aspecto visual de la app. Puedes elegir entre modo claro u oscuro.</value>
+  </data>
+  <data name="Language_Label" xml:space="preserve">
+    <value>Idioma</value>
+  </data>
+  <data name="Language_Caption" xml:space="preserve">
+    <value>El idioma en el que ves la app.</value>
+  </data>
+  <data name="MultiCurrencySettings_Title" xml:space="preserve">
+    <value>Sistema multimoneda</value>
+  </data>
+  <data name="DailyCurrency_Label" xml:space="preserve">
+    <value>Moneda del día a día</value>
+  </data>
+  <data name="DailyCurrency_Caption" xml:space="preserve">
+    <value>La moneda en la que ves y registras tus movimientos del día a día.</value>
+  </data>
+  <data name="TradingCurrency_Label" xml:space="preserve">
+    <value>Moneda de trading</value>
+  </data>
+  <data name="BaseCurrency_Caption" xml:space="preserve">
+    <value>La moneda en la que registras tus trades. Funciona como la base para el resto de las cotizaciones.</value>
+  </data>
+  <data name="RatesUpdate_Label" xml:space="preserve">
+    <value>Actualización diaria de cotizaciones</value>
+  </data>
+  <data name="RatesUpdate_Caption" xml:space="preserve">
+    <value>Actualiza el valor de las monedas cada día al abrir la app. Si lo desactivas, las cotizaciones quedan fijas.</value>
+  </data>
+  <data name="BugReportSettings_Title" xml:space="preserve">
+    <value>Reportar un error</value>
+  </data>
+  <data name="BugReport_Caption" xml:space="preserve">
+    <value>Si algo falló, envíanos un reporte. Incluye información técnica de tu dispositivo y un registro de actividad reciente para ayudarnos a encontrar el problema. Eres libre de revisar y eliminar lo que no quieras enviar.</value>
+  </data>
+  <data name="BugTitle_Label" xml:space="preserve">
+    <value>Título (obligatorio)</value>
+  </data>
+  <data name="BugTitleEntry_PlaceHolder" xml:space="preserve">
+    <value>Resume el problema en pocas palabras</value>
+  </data>
+  <data name="BugDescription_Label" xml:space="preserve">
+    <value>Descripción (opcional)</value>
+  </data>
+  <data name="BugDescriptionEntry_PlaceHolder" xml:space="preserve">
+    <value>Cuenta en detalle qué estabas haciendo</value>
+  </data>
+  <data name="Report_ButtonText" xml:space="preserve">
+    <value>Reportar</value>
+  </data>
+  <data name="StorageSettings_Title" xml:space="preserve">
+    <value>Almacenamiento y datos</value>
+  </data>
+  <data name="ResetStorage_Caption" xml:space="preserve">
+    <value>Borra todos tus movimientos, trades y categorías, pero mantiene tus preferencias. Esta acción no se puede deshacer.</value>
+  </data>
+  <data name="ResetStorage_ButtonText" xml:space="preserve">
+    <value>Reiniciar datos</value>
+  </data>
+  <data name="BooleanOptions" xml:space="preserve">
+    <value>Activado_Desactivado</value>
+  </data>
+  <data name="LanguageChanged_AlertTitle" xml:space="preserve">
+    <value>Idioma actualizado</value>
+  </data>
+  <data name="LanguageChanged_AlertContent" xml:space="preserve">
+    <value>Reinicia la app para ver el cambio.</value>
+  </data>
+  <data name="Settings_AlertTitle" xml:space="preserve">
+    <value>Ajustes actualizados</value>
+  </data>
+  <data name="Settings_AlertContent" xml:space="preserve">
+    <value>Se aplicaron los cambios y se guardaron tus nuevas preferencias.</value>
+  </data>
+  <data name="DesktopReport_AlertContent" xml:space="preserve">
+    <value>El reporte de errores desde la app está disponible solo en dispositivos móviles.
+
+Puedes enviarnos tu reporte escribiendo directamente a 'ramirofeldman0@gmail.com'.</value>
+  </data>
+  <data name="ReportNotSupported_AlertContent" xml:space="preserve">
+    <value>No es posible enviar reportes desde tu dispositivo.
+
+Por favor, contáctate con el soporte técnico.</value>
+  </data>
+  <data name="DefaultEmailReport_AlertContent" xml:space="preserve">
+    <value>No encontramos una app de correo configurada en tu dispositivo.
+
+Por favor, comparte el siguiente archivo de texto enviándolo a 'ramirofeldman0@gmail.com'.</value>
+  </data>
+  <data name="BugReportThanks_AlertTitle" xml:space="preserve">
+    <value>Gracias, </value>
+  </data>
+  <data name="BugReportThanks_AlertContent" xml:space="preserve">
+    <value>Desde el equipo de Tradeckr agradecemos enormemente que te hayas tomado el tiempo de enviarnos tu reporte.
+
+¡Tu aporte nos ayuda a mejorar cada día!</value>
+  </data>
 </root>

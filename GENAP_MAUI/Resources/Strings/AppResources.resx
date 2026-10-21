@@ -390,4 +390,115 @@
   <data name="InternetConnection_Warning" xml:space="preserve">
     <value>You need an internet connection to continue. Check your connection and try again.</value>
   </data>
+  <data name="AppearanceSettings_Title" xml:space="preserve">
+    <value>Appearance &amp; language</value>
+  </data>
+  <data name="Username_Label" xml:space="preserve">
+    <value>Your name</value>
+  </data>
+  <data name="Username_Caption" xml:space="preserve">
+    <value>What you'd like to be called.</value>
+  </data>
+  <data name="Theme_Label" xml:space="preserve">
+    <value>Theme</value>
+  </data>
+  <data name="Theme_Caption" xml:space="preserve">
+    <value>The visual appearance of the app. You can choose between light and dark mode.</value>
+  </data>
+  <data name="Language_Label" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="Language_Caption" xml:space="preserve">
+    <value>The language you see the app in.</value>
+  </data>
+  <data name="MultiCurrencySettings_Title" xml:space="preserve">
+    <value>Multi-currency</value>
+  </data>
+  <data name="DailyCurrency_Label" xml:space="preserve">
+    <value>Daily currency </value>
+  </data>
+  <data name="DailyCurrency_Caption" xml:space="preserve">
+    <value>The currency you use to view and log your daily transactions.</value>
+  </data>
+  <data name="TradingCurrency_Label" xml:space="preserve">
+    <value>Trading currency</value>
+  </data>
+  <data name="BaseCurrency_Caption" xml:space="preserve">
+    <value>The currency you use to log your trades. It acts as the base for all other exchange rates.</value>
+  </data>
+  <data name="RatesUpdate_Label" xml:space="preserve">
+    <value>Daily exchange rate updates</value>
+  </data>
+  <data name="RatesUpdate_Caption" xml:space="preserve">
+    <value>Updates currency values daily when you open the app. If turned off, exchange rates stay fixed.</value>
+  </data>
+  <data name="BugReportSettings_Title" xml:space="preserve">
+    <value>Report a bug</value>
+  </data>
+  <data name="BugReport_Caption" xml:space="preserve">
+    <value>If something went wrong, send us a report. It includes technical info about your device and a recent activity log to help us find the problem. Feel free to review and remove anything you’d rather not send.</value>
+  </data>
+  <data name="BugTitle_Label" xml:space="preserve">
+    <value>Title (required)</value>
+  </data>
+  <data name="BugTitleEntry_PlaceHolder" xml:space="preserve">
+    <value>Sum up the problem in a few words</value>
+  </data>
+  <data name="BugDescription_Label" xml:space="preserve">
+    <value>Description (optional)</value>
+  </data>
+  <data name="BugDescriptionEntry_PlaceHolder" xml:space="preserve">
+    <value>Describe in detail what you were doing</value>
+  </data>
+  <data name="Report_ButtonText" xml:space="preserve">
+    <value>Report</value>
+  </data>
+  <data name="StorageSettings_Title" xml:space="preserve">
+    <value>Data &amp; storage</value>
+  </data>
+  <data name="ResetStorage_Caption" xml:space="preserve">
+    <value>Deletes all your transactions, trades, and categories, while keeping your preferences. This can't be undone.</value>
+  </data>
+  <data name="ResetStorage_ButtonText" xml:space="preserve">
+    <value>Reset data</value>
+  </data>
+  <data name="BooleanOptions" xml:space="preserve">
+    <value>Enabled_Disabled</value>
+  </data>
+  <data name="LanguageChanged_AlertTitle" xml:space="preserve">
+    <value>Language updated</value>
+  </data>
+  <data name="LanguageChanged_AlertContent" xml:space="preserve">
+    <value>Restart the app to see the change.</value>
+  </data>
+  <data name="Settings_AlertTitle" xml:space="preserve">
+    <value>Settings updated</value>
+  </data>
+  <data name="Settings_AlertContent" xml:space="preserve">
+    <value>Your changes have been applied and your new preferences are saved.</value>
+  </data>
+  <data name="DesktopReport_AlertContent" xml:space="preserve">
+    <value>In-app bug reporting is only available on mobile devices.
+
+You can send your report directly to 'ramirofeldman0@gmail.com'.</value>
+  </data>
+  <data name="ReportNotSupported_AlertContent" xml:space="preserve">
+    <value>Unable to send bug reports from your device.
+
+Please contact technical support.</value>
+  </data>
+  <data name="DefaultEmailReport_AlertContent" xml:space="preserve">
+    <value>We couldn't find a default email app on your device.
+
+
+Please share the following text file by sending it to 'ramirofeldman0@gmail.com'.</value>
+  </data>
+  <data name="BugReportThanks_AlertTitle" xml:space="preserve">
+    <value>Thank you, </value>
+  </data>
+  <data name="BugReportThanks_AlertContent" xml:space="preserve">
+    <value>All of us at Tradeckr truly appreciate you taking the time to send your report.
+
+Your input helps us get better every day!</value>
+  </data>
 </root>

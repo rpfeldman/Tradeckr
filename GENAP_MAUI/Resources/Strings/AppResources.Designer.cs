@@ -70,6 +70,15 @@ namespace GENAP_MAUI.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Appearance &amp; language.
+        /// </summary>
+        public static string AppearanceSettings_Title {
+            get {
+                return ResourceManager.GetString("AppearanceSettings_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a .
         /// </summary>
         public static string Balance_label_Postmodification {
@@ -102,6 +111,98 @@ namespace GENAP_MAUI.Resources.Strings {
         public static string BalanceLineChart_ChartTitle {
             get {
                 return ResourceManager.GetString("BalanceLineChart_ChartTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a The currency you use to log your trades. It acts as the base for all other exchange rates..
+        /// </summary>
+        public static string BaseCurrency_Caption {
+            get {
+                return ResourceManager.GetString("BaseCurrency_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Enabled_Disabled.
+        /// </summary>
+        public static string BooleanOptions {
+            get {
+                return ResourceManager.GetString("BooleanOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Description (optional).
+        /// </summary>
+        public static string BugDescription_Label {
+            get {
+                return ResourceManager.GetString("BugDescription_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Describe in detail what you were doing.
+        /// </summary>
+        public static string BugDescriptionEntry_PlaceHolder {
+            get {
+                return ResourceManager.GetString("BugDescriptionEntry_PlaceHolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a If something went wrong, send us a report. It includes technical info about your device and a recent activity log to help us find the problem. Feel free to review and remove anything you’d rather not send..
+        /// </summary>
+        public static string BugReport_Caption {
+            get {
+                return ResourceManager.GetString("BugReport_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Report a bug.
+        /// </summary>
+        public static string BugReportSettings_Title {
+            get {
+                return ResourceManager.GetString("BugReportSettings_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a All of us at Tradeckr truly appreciate you taking the time to send your report.
+        ///
+        ///Your input helps us get better every day!.
+        /// </summary>
+        public static string BugReportThanks_AlertContent {
+            get {
+                return ResourceManager.GetString("BugReportThanks_AlertContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Thank you, .
+        /// </summary>
+        public static string BugReportThanks_AlertTitle {
+            get {
+                return ResourceManager.GetString("BugReportThanks_AlertTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Title (required).
+        /// </summary>
+        public static string BugTitle_Label {
+            get {
+                return ResourceManager.GetString("BugTitle_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Sum up the problem in a few words.
+        /// </summary>
+        public static string BugTitleEntry_PlaceHolder {
+            get {
+                return ResourceManager.GetString("BugTitleEntry_PlaceHolder", resourceCulture);
             }
         }
         
@@ -250,6 +351,24 @@ namespace GENAP_MAUI.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a The currency you use to view and log your daily transactions..
+        /// </summary>
+        public static string DailyCurrency_Caption {
+            get {
+                return ResourceManager.GetString("DailyCurrency_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Daily currency .
+        /// </summary>
+        public static string DailyCurrency_Label {
+            get {
+                return ResourceManager.GetString("DailyCurrency_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Dark.
         /// </summary>
         public static string DarkTheme {
@@ -264,6 +383,18 @@ namespace GENAP_MAUI.Resources.Strings {
         public static string Date_Label {
             get {
                 return ResourceManager.GetString("Date_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a We couldn&apos;t find a default email app on your device.
+        ///
+        ///
+        ///Please share the following text file by sending it to &apos;ramirofeldman0@gmail.com&apos;..
+        /// </summary>
+        public static string DefaultEmailReport_AlertContent {
+            get {
+                return ResourceManager.GetString("DefaultEmailReport_AlertContent", resourceCulture);
             }
         }
         
@@ -300,6 +431,17 @@ namespace GENAP_MAUI.Resources.Strings {
         public static string DeletedCategories_ActionTitle {
             get {
                 return ResourceManager.GetString("DeletedCategories_ActionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a In-app bug reporting is only available on mobile devices.
+        ///
+        ///You can send your report directly to &apos;ramirofeldman0@gmail.com&apos;..
+        /// </summary>
+        public static string DesktopReport_AlertContent {
+            get {
+                return ResourceManager.GetString("DesktopReport_AlertContent", resourceCulture);
             }
         }
         
@@ -484,6 +626,42 @@ namespace GENAP_MAUI.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a The language you see the app in..
+        /// </summary>
+        public static string Language_Caption {
+            get {
+                return ResourceManager.GetString("Language_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Language.
+        /// </summary>
+        public static string Language_Label {
+            get {
+                return ResourceManager.GetString("Language_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Restart the app to see the change..
+        /// </summary>
+        public static string LanguageChanged_AlertContent {
+            get {
+                return ResourceManager.GetString("LanguageChanged_AlertContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Language updated.
+        /// </summary>
+        public static string LanguageChanged_AlertTitle {
+            get {
+                return ResourceManager.GetString("LanguageChanged_AlertTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Light.
         /// </summary>
         public static string LightTheme {
@@ -525,6 +703,15 @@ namespace GENAP_MAUI.Resources.Strings {
         public static string Months_Caption {
             get {
                 return ResourceManager.GetString("Months_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Multi-currency.
+        /// </summary>
+        public static string MultiCurrencySettings_Title {
+            get {
+                return ResourceManager.GetString("MultiCurrencySettings_Title", resourceCulture);
             }
         }
         
@@ -718,6 +905,24 @@ namespace GENAP_MAUI.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Updates currency values daily when you open the app. If turned off, exchange rates stay fixed..
+        /// </summary>
+        public static string RatesUpdate_Caption {
+            get {
+                return ResourceManager.GetString("RatesUpdate_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Daily exchange rate updates.
+        /// </summary>
+        public static string RatesUpdate_Label {
+            get {
+                return ResourceManager.GetString("RatesUpdate_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Exchange rates updated as of .
         /// </summary>
         public static string RateUpdate_Label {
@@ -745,11 +950,67 @@ namespace GENAP_MAUI.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Report.
+        /// </summary>
+        public static string Report_ButtonText {
+            get {
+                return ResourceManager.GetString("Report_ButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Unable to send bug reports from your device.
+        ///
+        ///Please contact technical support..
+        /// </summary>
+        public static string ReportNotSupported_AlertContent {
+            get {
+                return ResourceManager.GetString("ReportNotSupported_AlertContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Reset data.
+        /// </summary>
+        public static string ResetStorage_ButtonText {
+            get {
+                return ResourceManager.GetString("ResetStorage_ButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Deletes all your transactions, trades, and categories, while keeping your preferences. This can&apos;t be undone..
+        /// </summary>
+        public static string ResetStorage_Caption {
+            get {
+                return ResourceManager.GetString("ResetStorage_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Save changes.
         /// </summary>
         public static string SaveChanges_Button {
             get {
                 return ResourceManager.GetString("SaveChanges_Button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Your changes have been applied and your new preferences are saved..
+        /// </summary>
+        public static string Settings_AlertContent {
+            get {
+                return ResourceManager.GetString("Settings_AlertContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Settings updated.
+        /// </summary>
+        public static string Settings_AlertTitle {
+            get {
+                return ResourceManager.GetString("Settings_AlertTitle", resourceCulture);
             }
         }
         
@@ -763,11 +1024,38 @@ namespace GENAP_MAUI.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Data &amp; storage.
+        /// </summary>
+        public static string StorageSettings_Title {
+            get {
+                return ResourceManager.GetString("StorageSettings_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Your money, your control..
         /// </summary>
         public static string Tagline_caption {
             get {
                 return ResourceManager.GetString("Tagline_caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a The visual appearance of the app. You can choose between light and dark mode..
+        /// </summary>
+        public static string Theme_Caption {
+            get {
+                return ResourceManager.GetString("Theme_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Theme.
+        /// </summary>
+        public static string Theme_Label {
+            get {
+                return ResourceManager.GetString("Theme_Label", resourceCulture);
             }
         }
         
@@ -826,6 +1114,15 @@ namespace GENAP_MAUI.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Trading currency.
+        /// </summary>
+        public static string TradingCurrency_Label {
+            get {
+                return ResourceManager.GetString("TradingCurrency_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Transactions.
         /// </summary>
         public static string Transaction_NavBarTitle {
@@ -858,6 +1155,24 @@ namespace GENAP_MAUI.Resources.Strings {
         public static string TransactionValue_Label {
             get {
                 return ResourceManager.GetString("TransactionValue_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a What you&apos;d like to be called..
+        /// </summary>
+        public static string Username_Caption {
+            get {
+                return ResourceManager.GetString("Username_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Your name.
+        /// </summary>
+        public static string Username_Label {
+            get {
+                return ResourceManager.GetString("Username_Label", resourceCulture);
             }
         }
         
