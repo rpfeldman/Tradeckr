@@ -806,7 +806,7 @@ namespace GENAP_MAUI.Resources.Strings {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Choose category.
+        ///   Busca una cadena traducida similar a Category.
         /// </summary>
         public static string PickCategory_PickerTitle {
             get {
@@ -842,7 +842,7 @@ namespace GENAP_MAUI.Resources.Strings {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Choose period.
+        ///   Busca una cadena traducida similar a Period.
         /// </summary>
         public static string PickTimePeriod_PickerTitle {
             get {
