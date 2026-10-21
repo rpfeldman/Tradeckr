@@ -226,7 +226,7 @@
     <value>Categoría</value>
   </data>
   <data name="PickCategory_PickerTitle" xml:space="preserve">
-    <value>Seleccionar categoría</value>
+    <value>Categoría</value>
   </data>
   <data name="Date_Label" xml:space="preserve">
     <value>Fecha</value>
@@ -277,7 +277,7 @@
     <value>Español (neutro)</value>
   </data>
   <data name="PickTimePeriod_PickerTitle" xml:space="preserve">
-    <value>Seleccionar período</value>
+    <value>Período</value>
   </data>
   <data name="GraphsPage_Title" xml:space="preserve">
     <value>Gráficos</value>
