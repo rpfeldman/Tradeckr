@@ -478,7 +478,9 @@
     <value>Se aplicaron los cambios y se guardaron tus nuevas preferencias.</value>
   </data>
   <data name="DesktopReport_AlertContent" xml:space="preserve">
-    <value>El reporte de errores desde la app está disponible solo en dispositivos móviles.\n\nPuedes enviarnos tu reporte escribiendo directamente a 'ramirofeldman0@gmail.com'.</value>
+    <value>El reporte de errores desde la app está disponible solo en dispositivos móviles.
+
+Puedes enviarnos tu reporte escribiendo directamente a 'ramirofeldman0@gmail.com'.</value>
   </data>
   <data name="ReportNotSupported_AlertContent" xml:space="preserve">
     <value>No es posible enviar reportes desde tu dispositivo.

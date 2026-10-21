@@ -478,7 +478,9 @@
     <value>Your changes have been applied and your new preferences are saved.</value>
   </data>
   <data name="DesktopReport_AlertContent" xml:space="preserve">
-    <value>In-app bug reporting is only available on mobile devices.\n\nYou can send your report directly to 'ramirofeldman0@gmail.com'.</value>
+    <value>In-app bug reporting is only available on mobile devices.
+
+You can send your report directly to 'ramirofeldman0@gmail.com'.</value>
   </data>
   <data name="ReportNotSupported_AlertContent" xml:space="preserve">
     <value>Unable to send bug reports from your device.

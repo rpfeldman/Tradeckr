@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:GENAP_MAUI.ViewModels"
              xmlns:local="clr-namespace:GENAP_MAUI"
+             xmlns:strings="clr-namespace:GENAP_MAUI.Resources.Strings"
              x:Class="GENAP_MAUI.Pages.SettingsPages.SettingsPage"
              x:DataType="vm:SettingsPageViewModel">
 
@@ -15,44 +16,44 @@
                 <VerticalStackLayout Spacing="16" Padding="0">
 
                     <VerticalStackLayout Spacing="4" Padding="0">
-                        <Label Text="Apariencia y lenguaje" Style="{StaticResource SettingsSectionTitle}" />
+                        <Label Text="{x:Static strings:AppResources.AppearanceSettings_Title}" Style="{StaticResource SettingsSectionTitle}" />
                         <BoxView Style="{StaticResource SettingsDivider}" />
                     </VerticalStackLayout>
 
                     <VerticalStackLayout Spacing="6" Padding="0">
-                        <Label Text="Tu nombre" Style="{StaticResource FieldLabel}" />
+                        <Label Text="{x:Static strings:AppResources.Username_Label}" Style="{StaticResource FieldLabel}" />
                         <Border Style="{StaticResource InputField}">
                             <Entry Text="{Binding PickedUserName}"
                                    Style="{StaticResource BaseEntry}"
-                                   Placeholder="Tu nombre..." />
+                                   Placeholder="{x:Static strings:AppResources.UsernameEntry_PlaceHolder}" />
                         </Border>
                         <Label Style="{StaticResource SettingsHint}"
-                               Text="El nombre con el que la app te saluda cada vez que entrás." />
+                               Text="{x:Static strings:AppResources.Username_Caption}" />
                     </VerticalStackLayout>
 
                     <VerticalStackLayout Spacing="6" Padding="0">
-                        <Label Text="Tema" Style="{StaticResource FieldLabel}" />
+                        <Label Text="{x:Static strings:AppResources.Theme_Label}" Style="{StaticResource FieldLabel}" />
                         <Border Style="{StaticResource InputField}">
-                            <Picker Title="Seleccionar tema"
+                            <Picker Title="{x:Static strings:AppResources.Theme_Label}"
                                     ItemsSource="{x:Static local:GlobalResources.AppThemesList}"
                                     ItemDisplayBinding="{Binding Value}"
                                     SelectedItem="{Binding PickedTheme}" />
                         </Border>
                         <Label Style="{StaticResource SettingsHint}"
-                               Text="Elegí entre modo claro u oscuro." />
+                               Text="{x:Static strings:AppResources.Theme_Caption}" />
                     </VerticalStackLayout>
 
                     <VerticalStackLayout Spacing="6" Padding="0">
-                        <Label Text="Lenguaje" Style="{StaticResource FieldLabel}" />
+                        <Label Text="{x:Static strings:AppResources.Language_Label}" Style="{StaticResource FieldLabel}" />
                         <Border Style="{StaticResource InputField}">
-                            <Picker Title="Elegir idioma" 
+                            <Picker Title="{x:Static strings:AppResources.Language_Label}" 
                                     ItemsSource="{Binding LanguagesList}"
                                     ItemDisplayBinding="{Binding Value}"
                                     SelectedItem="{Binding PickedLanguage}"/>
                             
                         </Border>
                         <Label Style="{StaticResource SettingsHint}"
-                               Text="Cambiar el idioma de la aplicación." />
+                               Text="{x:Static strings:AppResources.Language_Caption}" />
                     </VerticalStackLayout>
 
                 </VerticalStackLayout>
@@ -60,40 +61,40 @@
                 <VerticalStackLayout Spacing="16" Padding="0">
 
                     <VerticalStackLayout Spacing="4" Padding="0">
-                        <Label Text="Sistema multi-moneda" Style="{StaticResource SettingsSectionTitle}" />
+                        <Label Text="{x:Static strings:AppResources.MultiCurrencySettings_Title}" Style="{StaticResource SettingsSectionTitle}" />
                         <BoxView Style="{StaticResource SettingsDivider}" />
                     </VerticalStackLayout>
 
                     <VerticalStackLayout Spacing="6" Padding="0">
-                        <Label Text="Moneda de uso diario" Style="{StaticResource FieldLabel}" />
+                        <Label Text="{x:Static strings:AppResources.DailyCurrency_Label}" Style="{StaticResource FieldLabel}" />
                         <Border Style="{StaticResource InputField}">
-                            <Picker Title="Elegí tu moneda cotidiana"
+                            <Picker Title="{x:Static strings:AppResources.PickDailyCurrency_PickerTitle}"
                                     ItemsSource="{x:Static local:GlobalResources.Currencies}"
                                     ItemDisplayBinding="{Binding CurrencyDisplayName}"
                                     SelectedItem="{Binding PickedCommonCurrency}" />
                         </Border>
                         <Label Style="{StaticResource SettingsHint}"
-                               Text="La moneda en la que ves y registrás tus movimientos del día a día." />
+                               Text="{x:Static strings:AppResources.DailyCurrency_Caption}" />
                     </VerticalStackLayout>
 
                     <VerticalStackLayout Spacing="6" Padding="0">
-                        <Label Text="Moneda raíz (operativa)" Style="{StaticResource FieldLabel}" />
+                        <Label Text="{x:Static strings:AppResources.TradingCurrency_Label}" Style="{StaticResource FieldLabel}" />
                         <Border Style="{StaticResource InputField}">
-                            <Picker IsEnabled="False" Title="Próximamente" />
+                            <Picker IsEnabled="False" Title="{x:Static strings:AppResources.PickTradingCurrency_PickerTitle}" />
                         </Border>
                         <Label Style="{StaticResource SettingsHint}"
-                               Text="Es la base sobre la que se ajustan todas las demás monedas. Pronto vas a poder cambiarla desde acá." />
+                               Text="{x:Static strings:AppResources.BaseCurrency_Caption}" />
                     </VerticalStackLayout>
 
                     <VerticalStackLayout Spacing="6" Padding="0">
-                        <Label Text="Actualización de cotizaciones" Style="{StaticResource FieldLabel}" />
+                        <Label Text="{x:Static strings:AppResources.RatesUpdate_Label}" Style="{StaticResource FieldLabel}" />
                         <Border Style="{StaticResource InputField}">
                             <Picker ItemsSource="{Binding UpdateRatesOptionsList}"
                                     ItemDisplayBinding="{Binding Value}"
                                     SelectedItem="{Binding PickedUpdateRateOption}" />
                         </Border>
                         <Label Style="{StaticResource SettingsHint}"
-                               Text="Decidí si querés que las cotizaciones se actualicen automáticamente cada día al abrir la app." />
+                               Text="{x:Static strings:AppResources.RatesUpdate_Caption}" />
                     </VerticalStackLayout>
 
                 </VerticalStackLayout>
@@ -101,32 +102,32 @@
                 <VerticalStackLayout Spacing="16" Padding="0">
 
                     <VerticalStackLayout Spacing="4" Padding="0">
-                        <Label Text="Reportar un error" Style="{StaticResource SettingsSectionTitle}" />
+                        <Label Text="{x:Static strings:AppResources.BugReportSettings_Title}" Style="{StaticResource SettingsSectionTitle}" />
                         <BoxView Style="{StaticResource SettingsDivider}" />
                     </VerticalStackLayout>
 
                     <Label Style="{StaticResource SettingsHint}"
-                           Text="Si algo falló, contanos. Se adjunta información técnica de tu dispositivo y un registro de actividad reciente para ayudarnos a encontrar el problema. Sos libre de revisar y eliminar lo que no quieras enviar." />
+                           Text="{x:Static strings:AppResources.BugReport_Caption}" />
 
                     <VerticalStackLayout Spacing="6" Padding="0">
-                        <Label Text="Título (obligatorio)" Style="{StaticResource FieldLabel}" />
+                        <Label Text="{x:Static strings:AppResources.BugTitle_Label}" Style="{StaticResource FieldLabel}" />
                         <Border Style="{StaticResource InputField}">
                             <Entry Text="{Binding BugTitle}"
                                    Style="{StaticResource BaseEntry}"
-                                   Placeholder="Resumí el problema en pocas palabras" />
+                                   Placeholder="{x:Static strings:AppResources.BugTitleEntry_PlaceHolder}" />
                         </Border>
                     </VerticalStackLayout>
 
                     <VerticalStackLayout Spacing="6" Padding="0">
-                        <Label Text="Descripción (opcional)" Style="{StaticResource FieldLabel}" />
+                        <Label Text="{x:Static strings:AppResources.BugDescription_Label}" Style="{StaticResource FieldLabel}" />
                         <Border Style="{StaticResource InputField}">
                             <Entry Text="{Binding BugDescription}"
                                    Style="{StaticResource BaseEntry}"
-                                   Placeholder="Contá en detalle qué estabas haciendo." />
+                                   Placeholder="{x:Static strings:AppResources.BugDescriptionEntry_PlaceHolder}" />
                         </Border>
                     </VerticalStackLayout>
 
-                    <Button Text="Reportar"
+                    <Button Text="{x:Static strings:AppResources.Report_ButtonText}"
                             Style="{StaticResource ButtonSecondary}"
                             Command="{Binding ReportCommand}"
                             Margin="0,4,0,0" />
@@ -136,14 +137,14 @@
                 <VerticalStackLayout Spacing="16" Padding="0">
 
                     <VerticalStackLayout Spacing="4" Padding="0">
-                        <Label Text="Almacenamiento y datos" Style="{StaticResource SettingsSectionTitle}" />
+                        <Label Text="{x:Static strings:AppResources.StorageSettings_Title}" Style="{StaticResource SettingsSectionTitle}" />
                         <BoxView Style="{StaticResource SettingsDivider}" />
                     </VerticalStackLayout>
 
                     <Label Style="{StaticResource SettingsHint}"
-                           Text="Reiniciar borra todos tus datos —movimientos, categorías y preferencias— y devuelve la app a su estado inicial. Esta acción no se puede deshacer." />
+                           Text="{x:Static strings:AppResources.ResetStorage_Caption}" />
 
-                    <Button Text="Reiniciar almacenamiento"
+                    <Button Text="{x:Static strings:AppResources.ResetStorage_ButtonText}"
                             Style="{StaticResource ButtonDangerOutline}"
                             Command="{Binding PushNavigateCommand}"
                             CommandParameter="{x:Static local:Routes.ClearStorageConfirmation}" />
@@ -159,7 +160,7 @@
                              BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}">
             <BoxView Style="{StaticResource SettingsDivider}" />
             <Grid Padding="20,12,20,18">
-                <Button Text="Guardar cambios"
+                <Button Text="{x:Static strings:AppResources.SaveChanges_Button}"
                         Style="{StaticResource ButtonPrimary}"
                         Command="{Binding SaveCommand}" />
             </Grid>
