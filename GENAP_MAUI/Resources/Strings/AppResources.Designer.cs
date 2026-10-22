@@ -435,6 +435,105 @@ namespace GENAP_MAUI.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a The transactions were successfully deleted..
+        /// </summary>
+        public static string DeletedFixedTransactions_AlertContent {
+            get {
+                return ResourceManager.GetString("DeletedFixedTransactions_AlertContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Transactions deleted.
+        /// </summary>
+        public static string DeletedFixedTransactions_AlertTitle {
+            get {
+                return ResourceManager.GetString("DeletedFixedTransactions_AlertTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a The transaction was successfully deleted..
+        /// </summary>
+        public static string DeletedTransaction_AlertContent {
+            get {
+                return ResourceManager.GetString("DeletedTransaction_AlertContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Transaction deleted.
+        /// </summary>
+        public static string DeletedTransaction_AlertTitle {
+            get {
+                return ResourceManager.GetString("DeletedTransaction_AlertTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Delete entire series.
+        /// </summary>
+        public static string DeleteFixedTransactionSeries_ButtonText {
+            get {
+                return ResourceManager.GetString("DeleteFixedTransactionSeries_ButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Delete from here on.
+        /// </summary>
+        public static string DeleteFollowingFixedTransactions_ButtonText {
+            get {
+                return ResourceManager.GetString("DeleteFollowingFixedTransactions_ButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Are you sure you want to delete this transaction? This can&apos;t be undone..
+        /// </summary>
+        public static string DeleteTransaction_AlertContent {
+            get {
+                return ResourceManager.GetString("DeleteTransaction_AlertContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Delete transaction.
+        /// </summary>
+        public static string DeleteTransaction_AlertTitle {
+            get {
+                return ResourceManager.GetString("DeleteTransaction_AlertTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Delete transaction.
+        /// </summary>
+        public static string DeleteTransaction_ButtonText {
+            get {
+                return ResourceManager.GetString("DeleteTransaction_ButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No, cancel.
+        /// </summary>
+        public static string DeleteTransaction_CancelOption {
+            get {
+                return ResourceManager.GetString("DeleteTransaction_CancelOption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Yes, delete.
+        /// </summary>
+        public static string DeleteTransaction_DeleteTransactionOption {
+            get {
+                return ResourceManager.GetString("DeleteTransaction_DeleteTransactionOption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a In-app bug reporting is only available on mobile devices.
         ///
         ///You can send your report directly to &apos;ramirofeldman0@gmail.com&apos;..
@@ -514,6 +613,15 @@ namespace GENAP_MAUI.Resources.Strings {
         public static string FixedTransaction_Label {
             get {
                 return ResourceManager.GetString("FixedTransaction_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a This transaction is part of a recurring series. You can delete the series from here on, or entirely..
+        /// </summary>
+        public static string FixedTransactionSeries_Caption {
+            get {
+                return ResourceManager.GetString("FixedTransactionSeries_Caption", resourceCulture);
             }
         }
         
@@ -766,6 +874,15 @@ namespace GENAP_MAUI.Resources.Strings {
         public static string NewTransaction_Title {
             get {
                 return ResourceManager.GetString("NewTransaction_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Transaction not found.
+        /// </summary>
+        public static string NullTransactionError_AlertTitle {
+            get {
+                return ResourceManager.GetString("NullTransactionError_AlertTitle", resourceCulture);
             }
         }
         
@@ -1132,6 +1249,15 @@ namespace GENAP_MAUI.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Transaction details.
+        /// </summary>
+        public static string TransactionDetail_Title {
+            get {
+                return ResourceManager.GetString("TransactionDetail_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Expense saved successfully._Income saved successfully._Loss saved successfully._Gain saved successfully..
         /// </summary>
         public static string TransactionRegistered_AlertContent {
@@ -1146,6 +1272,24 @@ namespace GENAP_MAUI.Resources.Strings {
         public static string TransactionRegistered_AlertTitle {
             get {
                 return ResourceManager.GetString("TransactionRegistered_AlertTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a The transaction was successfully updated..
+        /// </summary>
+        public static string TransactionUpdated_AlertContent {
+            get {
+                return ResourceManager.GetString("TransactionUpdated_AlertContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Transaction updated.
+        /// </summary>
+        public static string TransactionUpdated_AlertTitle {
+            get {
+                return ResourceManager.GetString("TransactionUpdated_AlertTitle", resourceCulture);
             }
         }
         

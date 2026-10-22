@@ -12,14 +12,9 @@
 
     <ScrollView>
         <VerticalStackLayout Style="{StaticResource FormContainer}">
-
-            <VerticalStackLayout Spacing="4">
-                <Label Text="Detalle del movimiento" Style="{StaticResource SubHeadline}" />
-                <Label Style="{StaticResource Caption}"
-                       HorizontalTextAlignment="Center"
-                       Text="Editá los datos y guardá, o eliminá el movimiento." />
-            </VerticalStackLayout>
-
+            
+            <Label Text="Detalle del movimiento" Style="{StaticResource SubHeadline}" />
+            
             <VerticalStackLayout>
                 <Label Text="{x:Static strings:AppResources.TransactionValue_Label}" Style="{StaticResource FieldLabel}" />
                 <Border Style="{StaticResource InputField}">
