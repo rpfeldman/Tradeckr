@@ -5,6 +5,7 @@
              xmlns:model="clr-namespace:DomainModel;assembly=DomainModel"
              xmlns:local="clr-namespace:GENAP_MAUI"
              xmlns:behaviours="clr-namespace:GENAP_MAUI.ControlBehaviours"
+             xmlns:strings="clr-namespace:GENAP_MAUI.Resources.Strings"
              x:Class="GENAP_MAUI.Pages.TransactionRelatedPages.TransactionPage"
              x:DataType="vm:TransactionPageViewModel"
              BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}">
@@ -20,7 +21,7 @@
             </VerticalStackLayout>
 
             <VerticalStackLayout>
-                <Label Text="Valor del movimiento" Style="{StaticResource FieldLabel}" />
+                <Label Text="{x:Static strings:AppResources.TransactionValue_Label}" Style="{StaticResource FieldLabel}" />
                 <Border Style="{StaticResource InputField}">
                     <Grid ColumnDefinitions="Auto,*" ColumnSpacing="6">
                         <Label Grid.Column="0" Text="$"
@@ -40,7 +41,7 @@
 
                 <Border Style="{StaticResource CurrencyPickerAttached}">
                     <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
-                        <Label Grid.Column="0" Text="Moneda"
+                        <Label Grid.Column="0" Text="{x:Static strings:AppResources.Currency_PickerLabel}"
                                Style="{StaticResource CurrencyPickerHint}" />
                         <Picker Grid.Column="1"
                                 Style="{StaticResource CurrencyPickerControl}"
@@ -52,7 +53,7 @@
             </VerticalStackLayout>
 
             <VerticalStackLayout>
-                <Label Text="Categoría" Style="{StaticResource FieldLabel}" />
+                <Label Text="{x:Static strings:AppResources.Category_Label}" Style="{StaticResource FieldLabel}" />
                 <Border Style="{StaticResource InputField}">
                     <Picker ItemsSource="{Binding Categories}"
                             ItemDisplayBinding="{Binding Name, x:DataType=model:CategoryDto}"
@@ -61,13 +62,13 @@
             </VerticalStackLayout>
 
             <VerticalStackLayout>
-                <Label Text="Fecha" Style="{StaticResource FieldLabel}" />
+                <Label Text="{x:Static strings:AppResources.Date_Label}" Style="{StaticResource FieldLabel}" />
                 <Border Style="{StaticResource InputField}">
                     <DatePicker Date="{Binding PickedDate}" />
                 </Border>
             </VerticalStackLayout>
 
-            <Button Text="Guardar cambios"
+            <Button Text="{x:Static strings:AppResources.SaveChanges_Button}"
                     Command="{Binding UpdateTransactionCommand}"
                     Style="{StaticResource ButtonPrimary}" />
 
@@ -77,7 +78,7 @@
 
             <VerticalStackLayout IsVisible="{Binding Transaction.Fixed}" Spacing="8">
 
-                <Label Text="Movimiento fijo" Style="{StaticResource FieldLabel}" />
+                <Label Text="{x:Static strings:AppResources.FixedTransaction_Label}" Style="{StaticResource FieldLabel}" />
                 <Label Style="{StaticResource Caption}"
                        Text="Este movimiento pertenece a una serie fija. Podés eliminar la serie completa o solo de acá en adelante." />
 
