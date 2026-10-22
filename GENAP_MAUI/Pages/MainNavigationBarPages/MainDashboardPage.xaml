@@ -71,7 +71,7 @@
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
-                        <chart:BalanceDoughnutChart Transactions="{Binding GraphableTransactions}" DownTitle="Gastos" UpTitle="Ingresos" SubtractTradingLossFromIncome="True"/>
+                        <chart:BalanceDoughnutChart Transactions="{Binding GraphableTransactions}" DownTitle="{x:Static strings:AppResources.Income_ChartVariable}" UpTitle="{x:Static strings:AppResources.Expenses_ChartVariable}" SubtractTradingLossFromIncome="True"/>
                         <Label Text="{x:Static strings:AppResources.GoToGraphs_caption}"
                                Style="{StaticResource Caption}"
                                HorizontalOptions="End" />
