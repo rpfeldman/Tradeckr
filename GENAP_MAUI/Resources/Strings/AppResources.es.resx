@@ -500,4 +500,52 @@ Por favor, comparte el siguiente archivo de texto enviándolo a 'ramirofeldman0@
 
 ¡Tu aporte nos ayuda a mejorar cada día!</value>
   </data>
+  <data name="TransactionDetail_Title" xml:space="preserve">
+    <value>Detalle del movimiento</value>
+  </data>
+  <data name="DeleteTransaction_ButtonText" xml:space="preserve">
+    <value>Eliminar movimiento</value>
+  </data>
+  <data name="FixedTransactionSeries_Caption" xml:space="preserve">
+    <value>Este movimiento pertenece a una serie recurrente. Puedes eliminar la serie desde aquí en adelante o completa.</value>
+  </data>
+  <data name="DeleteFollowingFixedTransactions_ButtonText" xml:space="preserve">
+    <value>Eliminar desde aquí en adelante</value>
+  </data>
+  <data name="DeleteFixedTransactionSeries_ButtonText" xml:space="preserve">
+    <value>Eliminar serie completa</value>
+  </data>
+  <data name="NullTransactionError_AlertTitle" xml:space="preserve">
+    <value>Movimiento no encontrado</value>
+  </data>
+  <data name="DeleteTransaction_AlertTitle" xml:space="preserve">
+    <value>Eliminar movimiento</value>
+  </data>
+  <data name="DeleteTransaction_AlertContent" xml:space="preserve">
+    <value>¿Estás seguro de que quieres eliminar este movimiento? Esta acción no se puede deshacer.</value>
+  </data>
+  <data name="DeleteTransaction_DeleteTransactionOption" xml:space="preserve">
+    <value>Sí, eliminar</value>
+  </data>
+  <data name="DeleteTransaction_CancelOption" xml:space="preserve">
+    <value>No, cancelar</value>
+  </data>
+  <data name="DeletedTransaction_AlertTitle" xml:space="preserve">
+    <value>Movimiento eliminado</value>
+  </data>
+  <data name="DeletedTransaction_AlertContent" xml:space="preserve">
+    <value>El movimiento se eliminó correctamente.</value>
+  </data>
+  <data name="DeletedFixedTransactions_AlertTitle" xml:space="preserve">
+    <value>Movimientos eliminados</value>
+  </data>
+  <data name="DeletedFixedTransactions_AlertContent" xml:space="preserve">
+    <value>Los movimientos se eliminaron correctamente.</value>
+  </data>
+  <data name="TransactionUpdated_AlertTitle" xml:space="preserve">
+    <value>Movimiento actualizado</value>
+  </data>
+  <data name="TransactionUpdated_AlertContent" xml:space="preserve">
+    <value>El movimiento se actualizó correctamente.</value>
+  </data>
 </root>
