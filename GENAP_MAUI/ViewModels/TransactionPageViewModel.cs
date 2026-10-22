@@ -4,6 +4,7 @@ using DataServices;
 using DomainModel;
 using GENAP_MAUI.CustomViews;
 using GENAP_MAUI.InnerComponents;
+using GENAP_MAUI.Resources.Strings;
 using Microsoft.EntityFrameworkCore.Update.Internal;
 using Serilog;
 using System;
@@ -67,7 +68,17 @@ namespace GENAP_MAUI.ViewModels
             getTransactionOperation.Match
             (
                 some: (t) => Transaction = t,
-                none: async () => { await _customDialogsService.ShowAlertDialogAsync("Error", "Transaccion inexistente", "Aceptar"); await DirectNavigate(Routes.TransactionsList); }
+                none: async () => 
+                {
+                    await _customDialogsService.ShowAlertDialogAsync
+                    (
+                        AppResources.Error_AlertTitle, 
+                        AppResources.NullTransactionError_AlertTitle,  // yes, I know it says TITLE and this is the content... 
+                        AppResources.Accept_AlertButton
+                     ); 
+                    
+                    await DirectNavigate(Routes.TransactionsList); 
+                }
             );
 
             var getCategoriesOperation = await _categoryPersistenceService.GetCategoriesAsync();
@@ -75,7 +86,7 @@ namespace GENAP_MAUI.ViewModels
 
             if (!getCategoriesOperation.Success)
             {
-                await _customDialogsService.ShowAlertDialogAsync("Error", getCategoriesOperation.InnerError?.ErrorMessage!, "Aceptar");
+                await _customDialogsService.ShowAlertDialogAsync(AppResources.Error_AlertTitle, getCategoriesOperation.InnerError?.ErrorMessage!, AppResources.Accept_AlertButton);
                 return;
             }
 
@@ -130,14 +141,25 @@ namespace GENAP_MAUI.ViewModels
         [RelayCommand]
         public async Task DeleteTransaction()
         {
-            var action = await _customDialogsService.ShowDoubleActionDialogAsync("Eliminar movimiento", "¿Estas seguro de querer eliminar este movimiento?", "Si, eliminar", "No, cancelar");
+            var action = await _customDialogsService.ShowDoubleActionDialogAsync
+                (
+                    AppResources.DeleteTransaction_AlertTitle,
+                    AppResources.DeleteTransaction_AlertContent, 
+                    AppResources.DeleteTransaction_DeleteTransactionOption, 
+                    AppResources.DeleteTransaction_CancelOption
+                );
 
             if(action == 0 || action == 2) { return; }
 
             var deleteTransactionOperation = await _dataManagementService.RemoveTransactionAsync(TransactionId);
                 deleteTransactionOperation.WriteLog($"Delete transaction. ID: '{TransactionId}'");
 
-            await _customDialogsService.ShowAlertDialogAsync("Eliminar", deleteTransactionOperation.Success ? "Movimiento eliminado correctamente" : deleteTransactionOperation.InnerError?.ErrorMessage!, "Aceptar");
+            await _customDialogsService.ShowAlertDialogAsync
+                (
+                    AppResources.DeletedTransaction_AlertTitle, 
+                    deleteTransactionOperation.Success ? AppResources.DeletedTransaction_AlertContent : deleteTransactionOperation.InnerError?.ErrorMessage!, 
+                    AppResources.Accept_AlertButton
+                );
 
             await DirectNavigate(Routes.TransactionsList);
         }
@@ -150,7 +172,12 @@ namespace GENAP_MAUI.ViewModels
 
                 deleteCollectionOperation.WriteLog($"Delete a collection of fixed transactions. FromToday: '{FromToday}'");
 
-            await _customDialogsService.ShowAlertDialogAsync("Eliminar", deleteCollectionOperation.Success ? "Movimientos eliminado correctamente" : deleteCollectionOperation.InnerError?.ErrorMessage!, "Aceptar");
+            await _customDialogsService.ShowAlertDialogAsync
+                (
+                    AppResources.DeletedFixedTransactions_AlertTitle, 
+                    deleteCollectionOperation.Success ? AppResources.DeletedFixedTransactions_AlertContent : deleteCollectionOperation.InnerError?.ErrorMessage!, 
+                    AppResources.Accept_AlertButton
+                );
 
             await DirectNavigate(Routes.TransactionsList);
         }
@@ -172,7 +199,12 @@ namespace GENAP_MAUI.ViewModels
                         $" -Category: '{PickedCategory.Name}'"
                     );
 
-            await _customDialogsService.ShowAlertDialogAsync("Edicion", updateTransactionOperation.Success ? "Se ha guardado el movimiento correctamente" : updateTransactionOperation.InnerError?.ErrorMessage!, "Aceptar");
+            await _customDialogsService.ShowAlertDialogAsync
+                (
+                    AppResources.TransactionUpdated_AlertTitle,
+                    updateTransactionOperation.Success ? AppResources.TransactionUpdated_AlertContent : updateTransactionOperation.InnerError?.ErrorMessage!, 
+                    AppResources.Accept_AlertButton
+                );
         }
 
         private bool DeleteFixedTransactionCanExecute => Transaction is FixedTransactionDto;

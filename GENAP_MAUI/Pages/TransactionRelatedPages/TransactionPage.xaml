@@ -12,8 +12,8 @@
 
     <ScrollView>
         <VerticalStackLayout Style="{StaticResource FormContainer}">
-            
-            <Label Text="Detalle del movimiento" Style="{StaticResource SubHeadline}" />
+
+            <Label Text="{x:Static strings:AppResources.TransactionDetail_Title}" Style="{StaticResource SubHeadline}" />
             
             <VerticalStackLayout>
                 <Label Text="{x:Static strings:AppResources.TransactionValue_Label}" Style="{StaticResource FieldLabel}" />
@@ -67,7 +67,7 @@
                     Command="{Binding UpdateTransactionCommand}"
                     Style="{StaticResource ButtonPrimary}" />
 
-            <Button Text="Eliminar movimiento"
+            <Button Text="{x:Static strings:AppResources.DeleteTransaction_ButtonText}"
                     Command="{Binding DeleteTransactionCommand}"
                     Style="{StaticResource ButtonDestructiveOutline}" />
 
@@ -75,14 +75,14 @@
 
                 <Label Text="{x:Static strings:AppResources.FixedTransaction_Label}" Style="{StaticResource FieldLabel}" />
                 <Label Style="{StaticResource Caption}"
-                       Text="Este movimiento pertenece a una serie fija. Podés eliminar la serie completa o solo de acá en adelante." />
+                       Text="{x:Static strings:AppResources.FixedTransactionSeries_Caption}" />
 
-                <Button Text="Eliminar serie desde este día"
+                <Button Text="{x:Static strings:AppResources.DeleteFollowingFixedTransactions_ButtonText}"
                         Command="{Binding DeleteFixedTransactionCommand}"
                         CommandParameter="{x:Boolean True}"
                         Style="{StaticResource ButtonDestructiveOutline}" />
 
-                <Button Text="Eliminar serie completa"
+                <Button Text="{x:Static strings:AppResources.DeleteFixedTransactionSeries_ButtonText}"
                         Command="{Binding DeleteFixedTransactionCommand}"
                         CommandParameter="{x:Boolean False}"
                         Style="{StaticResource ButtonDestructiveOutline}" />
