@@ -45,7 +45,7 @@
             <Label x:Name="HeaderHint"
                    Style="{StaticResource Caption}"
                    HorizontalTextAlignment="Center"
-                   Text="Tocá un movimiento para ver el detalle o editarlo." />
+                   Text="{x:Static strings:AppResources.TransactionsCollection_Caption}" />
         </VerticalStackLayout>
 
         <Grid x:Name="FiltersGrid"
@@ -163,12 +163,12 @@
                                         <Label.Triggers>
                                             <DataTrigger TargetType="Label"
                                                          Binding="{Binding Depletion}" Value="False">
-                                                <Setter Property="Text" Value="Ingreso" />
+                                                <Setter Property="Text" Value="{x:Static strings:AppResources.Income_ChartVariable}" />
                                                 <Setter Property="TextColor" Value="{StaticResource IncomeGreen}" />
                                             </DataTrigger>
                                             <DataTrigger TargetType="Label"
                                                          Binding="{Binding Depletion}" Value="True">
-                                                <Setter Property="Text" Value="Pérdida" />
+                                                <Setter Property="Text" Value="{x:Static strings:AppResources.Losses_ChartVariable}" />
                                                 <Setter Property="TextColor" Value="{StaticResource ExpenseRed}" />
                                             </DataTrigger>
                                         </Label.Triggers>
