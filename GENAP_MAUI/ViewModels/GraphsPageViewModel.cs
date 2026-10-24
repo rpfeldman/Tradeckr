@@ -99,8 +99,11 @@ namespace GENAP_MAUI.ViewModels
                     Predicates =
                     [
                         _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Category != DefaultCategories.TradingCategoryName),
+
                         _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Category == DefaultCategories.TradingCategoryName),
+
                         _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false),
+
                         _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Category == DefaultCategories.TradingCategoryName),
                     ];
 
@@ -110,8 +113,11 @@ namespace GENAP_MAUI.ViewModels
                     Predicates =
                     [
                         _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date <= today && t.Category != DefaultCategories.TradingCategoryName),
+
                         _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date <= today && t.Category == DefaultCategories.TradingCategoryName),
+
                         _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date <= today),
+
                         _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date <= today && t.Category == DefaultCategories.TradingCategoryName),
                     ];
 
@@ -121,8 +127,11 @@ namespace GENAP_MAUI.ViewModels
                     Predicates =
                     [
                         _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.Month == today.Month && t.Date.Year == today.Year&& t.Category != DefaultCategories.TradingCategoryName),
+
                         _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.Month == today.Month && t.Date.Year == today.Year && t.Category == DefaultCategories.TradingCategoryName),
+
                         _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.Month == today.Month && t.Date.Year == today.Year),
+
                         _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.Month == today.Month && t.Date.Year == today.Year && t.Category == DefaultCategories.TradingCategoryName),
                     ];
                     break;
@@ -130,39 +139,49 @@ namespace GENAP_MAUI.ViewModels
 				case GlobalResources.TimePeriodsEnum.ThirtyDays:
 					Predicates =
 					[
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector,  t => t.Depletion == true && t.Date.DayOfYear >= (today.DayOfYear - 30) && t.Date <= today && t.Date.Year == today.Year && t.Category != DefaultCategories.TradingCategoryName),
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector,  t => t.Depletion == true && t.Date.DayOfYear >= (today.DayOfYear - 30) && t.Date <= today && t.Date.Year == today.Year&& t.Category == DefaultCategories.TradingCategoryName),
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector,  t => t.Depletion == false && t.Date.DayOfYear >=(today.DayOfYear - 30) && t.Date <= today && t.Date.Year == today.Year),
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector,  t => t.Depletion == false && t.Date.DayOfYear >= (today.DayOfYear - 30) && t.Date <= today && t.Date.Year == today.Year&& t.Category == DefaultCategories.TradingCategoryName),
+                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector,  t => t.Depletion == true && t.Date.DayNumber >= (today.DayNumber - 30) && t.Date <= today && t.Date.Year == today.Year && t.Category != DefaultCategories.TradingCategoryName),
+
+                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector,  t => t.Depletion == true && t.Date.DayNumber >= (today.DayNumber - 30) && t.Date <= today && t.Date.Year == today.Year && t.Category == DefaultCategories.TradingCategoryName),
+
+                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector,  t => t.Depletion == false && t.Date.DayNumber >=(today.DayNumber - 30) && t.Date <= today && t.Date.Year == today.Year),
+
+                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector,  t => t.Depletion == false && t.Date.DayNumber >= (today.DayNumber - 30) && t.Date <= today && t.Date.Year == today.Year&& t.Category == DefaultCategories.TradingCategoryName),
                     ];
 
 					break;
 
 				case GlobalResources.TimePeriodsEnum.ThreeMonths:
+
 					Predicates =
 					[
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.Month >= (today.Month-3) && t.Date.Month <= today.Month && t.Date.Year == today.Year && t.Category != DefaultCategories.TradingCategoryName),
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.Month >= (today.Month-3) && t.Date.Month <= today.Month && t.Date.Year == today.Year && t.Category == DefaultCategories.TradingCategoryName),
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.Month >=(today.Month - 3) && t.Date.Month <= today.Month && t.Date.Year == today.Year),
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.Month >= (today.Month-3) && t.Date.Month <= today.Month && t.Date.Year == today.Year && t.Category == DefaultCategories.TradingCategoryName),
+                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.DayNumber >= (today.DayNumber - 90) && t.Date <= today && t.Category != DefaultCategories.TradingCategoryName),
+
+                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.DayNumber >= (today.DayNumber-90) && t.Date <= today && t.Category == DefaultCategories.TradingCategoryName),
+
+                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.DayNumber >= (today.DayNumber-90) && t.Date <= today),
+
+                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.DayNumber >= (today.DayNumber-90) && t.Date <= today && t.Category == DefaultCategories.TradingCategoryName),
                     ];
 
 					break;
 
 				case GlobalResources.TimePeriodsEnum.Semester:
 					int MinBound;
-					int MaxBound;
 
 					if (today.Month > 6)
-					{ MinBound = 7; MaxBound = 12; }
-					else { MinBound = 1; MaxBound = 6; }
+                        MinBound = 7;
+					else 
+                        MinBound = 1; 
 
 					Predicates =
 					[
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.Month >= MinBound && t.Date.Month <= MaxBound && t.Date.Year == today.Year && t.Category != DefaultCategories.TradingCategoryName),
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.Month >= MinBound && t.Date.Month <= MaxBound && t.Date.Year == today.Year && t.Category == DefaultCategories.TradingCategoryName),
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.Month >= MinBound && t.Date.Month <= MaxBound && t.Date.Year == today.Year),
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.Month >= MinBound && t.Date.Month <= MaxBound && t.Date.Year == today.Year && t.Category == DefaultCategories.TradingCategoryName),
+                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.Month >= MinBound && t.Date <= today && t.Date.Year == today.Year && t.Category != DefaultCategories.TradingCategoryName),
+
+                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.Month >= MinBound && t.Date <= today && t.Date.Year == today.Year && t.Category == DefaultCategories.TradingCategoryName),
+
+                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.Month >= MinBound && t.Date <= today && t.Date.Year == today.Year),
+
+                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.Month >= MinBound && t.Date <= today && t.Date.Year == today.Year && t.Category == DefaultCategories.TradingCategoryName),
                     ];
 
 					break;
@@ -170,10 +189,13 @@ namespace GENAP_MAUI.ViewModels
 				case GlobalResources.TimePeriodsEnum.Year:
 					Predicates =
 					[
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.Year == today.Year && t.Category != DefaultCategories.TradingCategoryName),
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.Year == today.Year && t.Category == DefaultCategories.TradingCategoryName),
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.Year == today.Year),
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.Year == today.Year && t.Category == DefaultCategories.TradingCategoryName),
+                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.Year == today.Year && t.Date <= today && t.Category != DefaultCategories.TradingCategoryName),
+
+                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.Year == today.Year && t.Date <= today && t.Category == DefaultCategories.TradingCategoryName),
+
+                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.Year == today.Year && t.Date <= today),
+
+                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.Year == today.Year && t.Date <= today && t.Category == DefaultCategories.TradingCategoryName),
                     ];
 
 					break;
@@ -182,22 +204,17 @@ namespace GENAP_MAUI.ViewModels
                     Predicates =
                     [
                         _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date == today && t.Category != DefaultCategories.TradingCategoryName),
+
                         _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date == today && t.Category == DefaultCategories.TradingCategoryName),
+
                         _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date == today),
+
                         _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date == today && t.Category == DefaultCategories.TradingCategoryName),
                     ];
 
                     break;
 
 				default:
-                    Predicates =
-                    [
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Category != DefaultCategories.TradingCategoryName),
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Category == DefaultCategories.TradingCategoryName),
-                       _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false),
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Category == DefaultCategories.TradingCategoryName),
-                    ];
-
                     break;
 			}
 
