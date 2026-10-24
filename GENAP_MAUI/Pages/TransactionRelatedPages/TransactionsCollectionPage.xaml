@@ -5,6 +5,7 @@
              xmlns:model="clr-namespace:DomainModel;assembly=DomainModel"
              xmlns:nav="clr-namespace:GENAP_MAUI.ContentViews.Navigation"
              xmlns:local="clr-namespace:GENAP_MAUI"
+             xmlns:strings="clr-namespace:GENAP_MAUI.Resources.Strings"
              x:Class="GENAP_MAUI.Pages.TransactionRelatedPages.TransactionsCollectionPage"
              x:DataType="vm:TransactionsCollectionPageViewModel"
              BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}">
@@ -40,11 +41,11 @@
         </VisualStateManager.VisualStateGroups>
 
         <VerticalStackLayout Grid.Row="0" Spacing="4" Padding="20,20,20,0">
-            <Label Text="Movimientos" Style="{StaticResource SubHeadline}" />
+            <Label Text="{x:Static strings:AppResources.Transaction_NavBarTitle}" Style="{StaticResource SubHeadline}" />
             <Label x:Name="HeaderHint"
                    Style="{StaticResource Caption}"
                    HorizontalTextAlignment="Center"
-                   Text="Tocá un movimiento para ver el detalle o editarlo." />
+                   Text="{x:Static strings:AppResources.TransactionsCollection_Caption}" />
         </VerticalStackLayout>
 
         <Grid x:Name="FiltersGrid"
@@ -58,7 +59,7 @@
             <Border x:Name="PeriodFilter"
                     Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
                     Style="{StaticResource InputField}">
-                <Picker Title="Seleccionar período de tiempo"
+                <Picker Title="{x:Static strings:AppResources.PickTimePeriod_PickerTitle}"
                         ItemsSource="{x:Static local:GlobalResources.TimePeriodsList}"
                         ItemDisplayBinding="{Binding Value}"
                         SelectedItem="{Binding PickedTimePeriod}" />
@@ -68,7 +69,7 @@
                     Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
                     Style="{StaticResource CurrencyPickerField}">
                 <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
-                    <Label Grid.Column="0" Text="Ver en"
+                    <Label Grid.Column="0" Text="{x:Static strings:AppResources.PickerDisplay_caption}"
                            Style="{StaticResource CurrencyPickerHint}" />
                     <Picker Grid.Column="1"
                             Style="{StaticResource CurrencyPickerControl}"
@@ -162,12 +163,12 @@
                                         <Label.Triggers>
                                             <DataTrigger TargetType="Label"
                                                          Binding="{Binding Depletion}" Value="False">
-                                                <Setter Property="Text" Value="Ingreso" />
+                                                <Setter Property="Text" Value="{x:Static strings:AppResources.Income_ChartVariable}" />
                                                 <Setter Property="TextColor" Value="{StaticResource IncomeGreen}" />
                                             </DataTrigger>
                                             <DataTrigger TargetType="Label"
                                                          Binding="{Binding Depletion}" Value="True">
-                                                <Setter Property="Text" Value="Pérdida" />
+                                                <Setter Property="Text" Value="{x:Static strings:AppResources.Losses_ChartVariable}" />
                                                 <Setter Property="TextColor" Value="{StaticResource ExpenseRed}" />
                                             </DataTrigger>
                                         </Label.Triggers>

@@ -5,6 +5,7 @@ using DataServices;
 using DomainModel;
 using GENAP_MAUI.CustomViews;
 using GENAP_MAUI.InnerComponents;
+using GENAP_MAUI.Resources.Strings;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -114,7 +115,7 @@ namespace GENAP_MAUI.ViewModels
             if (GetTransactionsOperation.Success)
             {
                 Transactions = new(GetTransactionsOperation.Result!);
-            }else  { await _customDialogsService.ShowAlertDialogAsync("Error", GetTransactionsOperation.InnerError?.ErrorMessage!, "Aceptar"); }
+            }else  { await _customDialogsService.ShowAlertDialogAsync(AppResources.Error_AlertTitle, GetTransactionsOperation.InnerError?.ErrorMessage!, AppResources.Accept_AlertButton); }
         }
 
         [RelayCommand]
