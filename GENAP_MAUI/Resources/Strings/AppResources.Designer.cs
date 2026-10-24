@@ -1276,6 +1276,15 @@ namespace GENAP_MAUI.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Tap a transaction to view, edit, or delete it..
+        /// </summary>
+        public static string TransactionsCollection_Caption {
+            get {
+                return ResourceManager.GetString("TransactionsCollection_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a The transaction was successfully updated..
         /// </summary>
         public static string TransactionUpdated_AlertContent {

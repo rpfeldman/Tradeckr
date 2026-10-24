@@ -549,4 +549,7 @@ Your input helps us get better every day!</value>
   <data name="TransactionUpdated_AlertContent" xml:space="preserve">
     <value>The transaction was successfully updated.</value>
   </data>
+  <data name="TransactionsCollection_Caption" xml:space="preserve">
+    <value>Tap a transaction to view, edit, or delete it.</value>
+  </data>
 </root>

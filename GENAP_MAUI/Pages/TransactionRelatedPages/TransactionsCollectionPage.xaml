@@ -5,6 +5,7 @@
              xmlns:model="clr-namespace:DomainModel;assembly=DomainModel"
              xmlns:nav="clr-namespace:GENAP_MAUI.ContentViews.Navigation"
              xmlns:local="clr-namespace:GENAP_MAUI"
+             xmlns:strings="clr-namespace:GENAP_MAUI.Resources.Strings"
              x:Class="GENAP_MAUI.Pages.TransactionRelatedPages.TransactionsCollectionPage"
              x:DataType="vm:TransactionsCollectionPageViewModel"
              BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}">
@@ -40,7 +41,7 @@
         </VisualStateManager.VisualStateGroups>
 
         <VerticalStackLayout Grid.Row="0" Spacing="4" Padding="20,20,20,0">
-            <Label Text="Movimientos" Style="{StaticResource SubHeadline}" />
+            <Label Text="{x:Static strings:AppResources.Transaction_NavBarTitle}" Style="{StaticResource SubHeadline}" />
             <Label x:Name="HeaderHint"
                    Style="{StaticResource Caption}"
                    HorizontalTextAlignment="Center"
@@ -58,7 +59,7 @@
             <Border x:Name="PeriodFilter"
                     Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
                     Style="{StaticResource InputField}">
-                <Picker Title="Seleccionar período de tiempo"
+                <Picker Title="{x:Static strings:AppResources.PickTimePeriod_PickerTitle}"
                         ItemsSource="{x:Static local:GlobalResources.TimePeriodsList}"
                         ItemDisplayBinding="{Binding Value}"
                         SelectedItem="{Binding PickedTimePeriod}" />
@@ -68,7 +69,7 @@
                     Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
                     Style="{StaticResource CurrencyPickerField}">
                 <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
-                    <Label Grid.Column="0" Text="Ver en"
+                    <Label Grid.Column="0" Text="{x:Static strings:AppResources.PickerDisplay_caption}"
                            Style="{StaticResource CurrencyPickerHint}" />
                     <Picker Grid.Column="1"
                             Style="{StaticResource CurrencyPickerControl}"

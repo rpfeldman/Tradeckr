@@ -548,4 +548,7 @@ Por favor, comparte el siguiente archivo de texto enviándolo a 'ramirofeldman0@
   <data name="TransactionUpdated_AlertContent" xml:space="preserve">
     <value>El movimiento se actualizó correctamente.</value>
   </data>
+  <data name="TransactionsCollection_Caption" xml:space="preserve">
+    <value>Toca un movimiento para verlo, editarlo o eliminarlo.</value>
+  </data>
 </root>
