@@ -599,4 +599,7 @@ Por favor, comparte el siguiente archivo de texto enviándolo a 'ramirofeldman0@
   <data name="EmptyDoughnutChart_Label" xml:space="preserve">
     <value>Sin datos para calcular proporciones</value>
   </data>
+  <data name="DefaultCategories" xml:space="preserve">
+    <value>Comida_Sueldo_Ropa_Social_Suscripciones_Servicios básicos_Entretenimiento_Transporte_Varios_Salud_Internet_Emergencias</value>
+  </data>
 </root>

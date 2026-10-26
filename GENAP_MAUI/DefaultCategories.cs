@@ -7,8 +7,6 @@ namespace GENAP_MAUI
 {
     public static class DefaultCategories
     {
-        // TO -DO: the names should come from the translation CSV
-
         public static CategoryDto[] DefaultCategoriesList = 
         [
             new CategoryDto() {Name = "Comida", HexColor=GlobalResources.Colors[GlobalResources.ColorsEnum.Coral].HexColor},
