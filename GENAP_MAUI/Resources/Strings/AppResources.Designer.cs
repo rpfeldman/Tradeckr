@@ -207,6 +207,24 @@ namespace GENAP_MAUI.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Cancel.
+        /// </summary>
+        public static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No, go back home.
+        /// </summary>
+        public static string CancelClearStorage_ButtonText {
+            get {
+                return ResourceManager.GetString("CancelClearStorage_ButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Categories.
         /// </summary>
         public static string Categories_NavBarTitle {
@@ -270,11 +288,92 @@ namespace GENAP_MAUI.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a If you&apos;re not sure, we recommend going back..
+        /// </summary>
+        public static string ClearStorageAdvice_Caption {
+            get {
+                return ResourceManager.GetString("ClearStorageAdvice_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a This action can&apos;t be undone..
+        /// </summary>
+        public static string ClearStorageIrreversible_Label {
+            get {
+                return ResourceManager.GetString("ClearStorageIrreversible_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Are you sure you want to delete all data, or would you rather go back home?.
+        /// </summary>
+        public static string ClearStorageQuestion_Caption {
+            get {
+                return ResourceManager.GetString("ClearStorageQuestion_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a You&apos;re one step away from deleting all your transactions, trades, and categories..
+        /// </summary>
+        public static string ClearStorageWarning_Label {
+            get {
+                return ResourceManager.GetString("ClearStorageWarning_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a WARNING.
+        /// </summary>
+        public static string ClearStorageWarning_Title {
+            get {
+                return ResourceManager.GetString("ClearStorageWarning_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Steel blue_Yellow_Green_Purple_Aqua_Orange_Red_Emerald_Cyan_Indigo_Magenta.
         /// </summary>
         public static string Colors {
             get {
                 return ResourceManager.GetString("Colors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Are you completely sure? All your data will be permanently deleted..
+        /// </summary>
+        public static string ConfirmClearStorage_AlertContent {
+            get {
+                return ResourceManager.GetString("ConfirmClearStorage_AlertContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Delete all data.
+        /// </summary>
+        public static string ConfirmClearStorage_AlertTitle {
+            get {
+                return ResourceManager.GetString("ConfirmClearStorage_AlertTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Yes, delete all data.
+        /// </summary>
+        public static string ConfirmClearStorage_ButtonText {
+            get {
+                return ResourceManager.GetString("ConfirmClearStorage_ButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Delete all.
+        /// </summary>
+        public static string ConfirmClearStorage_ClearStorageOption {
+            get {
+                return ResourceManager.GetString("ConfirmClearStorage_ClearStorageOption", resourceCulture);
             }
         }
         
@@ -1137,6 +1236,24 @@ namespace GENAP_MAUI.Resources.Strings {
         public static string Start_ButtonText {
             get {
                 return ResourceManager.GetString("Start_ButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a All data was successfully deleted..
+        /// </summary>
+        public static string StorageCleared_AlertContent {
+            get {
+                return ResourceManager.GetString("StorageCleared_AlertContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Data deleted.
+        /// </summary>
+        public static string StorageCleared_AlertTitle {
+            get {
+                return ResourceManager.GetString("StorageCleared_AlertTitle", resourceCulture);
             }
         }
         
