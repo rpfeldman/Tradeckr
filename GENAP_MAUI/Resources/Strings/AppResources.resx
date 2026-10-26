@@ -582,7 +582,7 @@ Your input helps us get better every day!</value>
   <data name="ConfirmClearStorage_ClearStorageOption" xml:space="preserve">
     <value>Delete all</value>
   </data>
-  <data name="Cancel" xml:space="preserve">
+  <data name="ConfirmClearStorage_CancelOption" xml:space="preserve">
     <value>Cancel</value>
   </data>
   <data name="StorageCleared_AlertTitle" xml:space="preserve">

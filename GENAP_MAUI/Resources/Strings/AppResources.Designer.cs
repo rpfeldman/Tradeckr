@@ -207,15 +207,6 @@ namespace GENAP_MAUI.Resources.Strings {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Cancel.
-        /// </summary>
-        public static string Cancel {
-            get {
-                return ResourceManager.GetString("Cancel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Busca una cadena traducida similar a No, go back home.
         /// </summary>
         public static string CancelClearStorage_ButtonText {
@@ -365,6 +356,15 @@ namespace GENAP_MAUI.Resources.Strings {
         public static string ConfirmClearStorage_ButtonText {
             get {
                 return ResourceManager.GetString("ConfirmClearStorage_ButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Cancel.
+        /// </summary>
+        public static string ConfirmClearStorage_CancelOption {
+            get {
+                return ResourceManager.GetString("ConfirmClearStorage_CancelOption", resourceCulture);
             }
         }
         
