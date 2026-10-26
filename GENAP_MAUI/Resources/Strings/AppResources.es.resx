@@ -460,7 +460,7 @@
     <value>Borra todos tus movimientos, trades y categorías, pero mantiene tus preferencias. Esta acción no se puede deshacer.</value>
   </data>
   <data name="ResetStorage_ButtonText" xml:space="preserve">
-    <value>Reiniciar datos</value>
+    <value>Borrar datos</value>
   </data>
   <data name="BooleanOptions" xml:space="preserve">
     <value>Activado_Desactivado</value>
@@ -550,5 +550,44 @@ Por favor, comparte el siguiente archivo de texto enviándolo a 'ramirofeldman0@
   </data>
   <data name="TransactionsCollection_Caption" xml:space="preserve">
     <value>Toca un movimiento para verlo, editarlo o eliminarlo.</value>
+  </data>
+  <data name="ClearStorageWarning_Title" xml:space="preserve">
+    <value>ADVERTENCIA</value>
+  </data>
+  <data name="ClearStorageWarning_Label" xml:space="preserve">
+    <value>Estás a un paso de borrar todos tus movimientos, trades y categorías.</value>
+  </data>
+  <data name="ClearStorageIrreversible_Label" xml:space="preserve">
+    <value>Esta acción es irreversible.</value>
+  </data>
+  <data name="ClearStorageAdvice_Caption" xml:space="preserve">
+    <value>Si no estás seguro, te recomendamos volver atrás.</value>
+  </data>
+  <data name="ClearStorageQuestion_Caption" xml:space="preserve">
+    <value>¿Estás seguro de que quieres borrar todos los datos o prefieres volver al inicio?</value>
+  </data>
+  <data name="CancelClearStorage_ButtonText" xml:space="preserve">
+    <value>No, volver al inicio</value>
+  </data>
+  <data name="ConfirmClearStorage_ButtonText" xml:space="preserve">
+    <value>Sí, borrar todos los datos</value>
+  </data>
+  <data name="ConfirmClearStorage_AlertTitle" xml:space="preserve">
+    <value>Borrar todos los datos</value>
+  </data>
+  <data name="ConfirmClearStorage_AlertContent" xml:space="preserve">
+    <value>¿Estás completamente seguro? Todos tus datos se eliminarán de forma permanente.</value>
+  </data>
+  <data name="ConfirmClearStorage_ClearStorageOption" xml:space="preserve">
+    <value>Borrar todo</value>
+  </data>
+  <data name="ConfirmClearStorage_CancelOption" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="StorageCleared_AlertTitle" xml:space="preserve">
+    <value>Datos eliminados</value>
+  </data>
+  <data name="StorageCleared_AlertContent" xml:space="preserve">
+    <value>Todos los datos se eliminaron correctamente.</value>
   </data>
 </root>

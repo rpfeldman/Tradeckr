@@ -2,6 +2,7 @@
 using DataServices;
 using GENAP_MAUI.CustomViews;
 using GENAP_MAUI.InnerComponents;
+using GENAP_MAUI.Resources.Strings;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,7 +19,13 @@ namespace GENAP_MAUI.ViewModels
         [RelayCommand]
         public async Task ClearStorage()
         {
-            var alert = await _customDialogsService.ShowDoubleActionDialogAsync("Confirmar", "¿desea confirmar el reinicio de los datos?", "Si, reinciar", "No cancelar");
+            var alert = await _customDialogsService.ShowDoubleActionDialogAsync
+                (
+                    AppResources.ConfirmClearStorage_AlertTitle, 
+                    AppResources.ConfirmClearStorage_AlertContent, 
+                    AppResources.ConfirmClearStorage_ClearStorageOption, 
+                    AppResources.ConfirmClearStorage_CancelOption
+                );
 
             if (alert == 2 || alert == 0){ return; }
 
@@ -27,7 +34,7 @@ namespace GENAP_MAUI.ViewModels
 
             if (!clearStorageOperation.Success)
             {
-                await _customDialogsService.ShowAlertDialogAsync("Error", clearStorageOperation.InnerError?.ErrorMessage!, "Aceptar");
+                await _customDialogsService.ShowAlertDialogAsync(AppResources.Error_AlertTitle, clearStorageOperation.InnerError?.ErrorMessage!, AppResources.Accept_AlertButton);
                 return;
             }
 
@@ -36,7 +43,7 @@ namespace GENAP_MAUI.ViewModels
 
              if (!clearCategoriesOperation.Success)
              {
-                await _customDialogsService.ShowAlertDialogAsync("Error", clearCategoriesOperation.InnerError?.ErrorMessage!, "Aceptar");
+                await _customDialogsService.ShowAlertDialogAsync(AppResources.Error_AlertTitle, clearCategoriesOperation.InnerError?.ErrorMessage!, AppResources.Accept_AlertButton);
                 return;
              }
 
@@ -45,11 +52,16 @@ namespace GENAP_MAUI.ViewModels
 
              if (!addDefaultCategoriesOperation.Success)
              {
-                await  _customDialogsService.ShowAlertDialogAsync("Error", addDefaultCategoriesOperation.InnerError?.ErrorMessage!, "Aceptar");
+                await  _customDialogsService.ShowAlertDialogAsync(AppResources.Error_AlertTitle, addDefaultCategoriesOperation.InnerError?.ErrorMessage!, AppResources.Accept_AlertButton);
                 return;
              }
 
-            await _customDialogsService.ShowAlertDialogAsync("Datos eliminados", "Se han reiniciado los datos correctamente", "Aceptar");
+            await _customDialogsService.ShowAlertDialogAsync
+                (
+                    AppResources.StorageCleared_AlertTitle, 
+                    AppResources.StorageCleared_AlertContent, 
+                    AppResources.Accept_AlertButton
+                );
             await DirectNavigate(Routes.Dashboard);
         }
     }

@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:GENAP_MAUI.ViewModels"
              xmlns:local="clr-namespace:GENAP_MAUI"
+             xmlns:strings="clr-namespace:GENAP_MAUI.Resources.Strings"
              x:Class="GENAP_MAUI.Pages.ConfirmationPages.ClearStorageConfirmationPage"
              x:DataType="vm:ClearStorageConfirmationPageViewModel">
 
@@ -15,43 +16,43 @@
                    Style="{StaticResource WarningIconLabel}"
                    Margin="0,24,0,0" />
 
-            <Label Text="ADVERTENCIA"
+            <Label Text="{x:Static strings:AppResources.ClearStorageWarning_Title}"
                    Style="{StaticResource WarningHeadline}" />
             
             <Border Style="{StaticResource DangerCard}">
                 <VerticalStackLayout Spacing="12" Padding="0">
 
-                    <Label Text="Usted está a un paso de borrar y reiniciar todos los movimientos guardados de la aplicación."
+                    <Label Text="{x:Static strings:AppResources.ClearStorageWarning_Label}"
                            Style="{StaticResource FieldLabel}"
                            HorizontalTextAlignment="Center" />
 
-                    <Label Text="Esta acción es irreversible."
+                    <Label Text="{x:Static strings:AppResources.ClearStorageIrreversible_Label}"
                            TextColor="{StaticResource DangerRed}"
                            FontAttributes="Bold"
                            FontSize="15"
                            HorizontalOptions="Center"
                            HorizontalTextAlignment="Center" />
 
-                    <Label Text="Si no está seguro de lo que está haciendo, le recomendamos volver atrás."
+                    <Label Text="{x:Static strings:AppResources.ClearStorageAdvice_Caption}"
                            Style="{StaticResource Caption}"
                            HorizontalTextAlignment="Center" />
 
                 </VerticalStackLayout>
             </Border>
 
-            <Label Text="¿Desea continuar con el reinicio de datos o volver al menú?"
+            <Label Text="{x:Static strings:AppResources.ClearStorageQuestion_Caption}"
                    Style="{StaticResource Caption}"
                    HorizontalTextAlignment="Center"
                    Margin="0,8,0,0" />
 
             <VerticalStackLayout Spacing="12" Padding="0">
 
-                <Button Text="No, volver al menú"
+                <Button Text="{x:Static strings:AppResources.CancelClearStorage_ButtonText}"
                         Style="{StaticResource ButtonPrimary}"
                         Command="{Binding DirectNavigateCommand}"
                         CommandParameter="{x:Static local:Routes.Dashboard}" />
 
-                <Button Text="Sí, reiniciar los datos"
+                <Button Text="{x:Static strings:AppResources.ConfirmClearStorage_ButtonText}"
                         Style="{StaticResource ButtonDangerOutline}"
                         Command="{Binding ClearStorageCommand}" />
 
