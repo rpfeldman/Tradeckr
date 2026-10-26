@@ -279,6 +279,15 @@ namespace GENAP_MAUI.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a No transactions in this period.
+        /// </summary>
+        public static string ChartWithoutTransactions_Label {
+            get {
+                return ResourceManager.GetString("ChartWithoutTransactions_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a If you&apos;re not sure, we recommend going back..
         /// </summary>
         public static string ClearStorageAdvice_Caption {
@@ -649,6 +658,24 @@ namespace GENAP_MAUI.Resources.Strings {
         public static string Duration_Label {
             get {
                 return ResourceManager.GetString("Duration_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No transactions to show balance.
+        /// </summary>
+        public static string EmptyBalanceDoughnutChart_Label {
+            get {
+                return ResourceManager.GetString("EmptyBalanceDoughnutChart_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No data to calculate proportions.
+        /// </summary>
+        public static string EmptyDoughnutChart_Label {
+            get {
+                return ResourceManager.GetString("EmptyDoughnutChart_Label", resourceCulture);
             }
         }
         
