@@ -590,4 +590,13 @@ Por favor, compartí el siguiente archivo de texto enviándolo a 'ramirofeldman0
   <data name="StorageCleared_AlertContent" xml:space="preserve">
     <value>Todos los datos se eliminaron correctamente.</value>
   </data>
+  <data name="EmptyBalanceDoughnutChart_Label" xml:space="preserve">
+    <value>Sin movimientos para mostrar el balance</value>
+  </data>
+  <data name="ChartWithoutTransactions_Label" xml:space="preserve">
+    <value>Sin movimientos en este período</value>
+  </data>
+  <data name="EmptyDoughnutChart_Label" xml:space="preserve">
+    <value>Sin datos para calcular proporciones</value>
+  </data>
 </root>

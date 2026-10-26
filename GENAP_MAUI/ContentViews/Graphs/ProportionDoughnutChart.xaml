@@ -2,6 +2,7 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui"
+             xmlns:strings="clr-namespace:GENAP_MAUI.Resources.Strings"
              x:Class="GENAP_MAUI.ContentViews.Graphs.ProportionDoughnutChart"
              x:Name="Root">
 
@@ -27,7 +28,7 @@
                 BackgroundColor="Transparent" />
 
             <Label IsVisible="{Binding IsEmpty, Source={x:Reference Root}}"
-                   Text="Sin datos para calcular proporciones"
+                   Text="{x:Static strings:AppResources.EmptyDoughnutChart_Label}"
                    HorizontalOptions="Center"
                    VerticalOptions="Center"
                    HorizontalTextAlignment="Center"

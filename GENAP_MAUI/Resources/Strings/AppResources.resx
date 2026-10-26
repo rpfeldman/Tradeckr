@@ -591,4 +591,13 @@ Your input helps us get better every day!</value>
   <data name="StorageCleared_AlertContent" xml:space="preserve">
     <value>All data was successfully deleted.</value>
   </data>
+  <data name="EmptyBalanceDoughnutChart_Label" xml:space="preserve">
+    <value>No transactions to show balance</value>
+  </data>
+  <data name="ChartWithoutTransactions_Label" xml:space="preserve">
+    <value>No transactions in this period</value>
+  </data>
+  <data name="EmptyDoughnutChart_Label" xml:space="preserve">
+    <value>No data to calculate proportions</value>
+  </data>
 </root>
