@@ -600,4 +600,7 @@ Your input helps us get better every day!</value>
   <data name="EmptyDoughnutChart_Label" xml:space="preserve">
     <value>No data to calculate proportions</value>
   </data>
+  <data name="DefaultCategories" xml:space="preserve">
+    <value>Food_Salary_Clothing_Social_Subscriptions_Utilities_Entertainment_Transport_Misc_Health_Internet_Emergencies</value>
+  </data>
 </root>

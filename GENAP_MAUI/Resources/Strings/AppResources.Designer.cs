@@ -495,6 +495,15 @@ namespace GENAP_MAUI.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Food_Salary_Clothing_Social_Subscriptions_Utilities_Entertainment_Transport_Misc_Health_Internet_Emergencies.
+        /// </summary>
+        public static string DefaultCategories {
+            get {
+                return ResourceManager.GetString("DefaultCategories", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a We couldn&apos;t find a default email app on your device.
         ///
         ///
