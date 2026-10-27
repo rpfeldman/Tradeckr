@@ -552,4 +552,55 @@ Your input helps us get better every day!</value>
   <data name="TransactionsCollection_Caption" xml:space="preserve">
     <value>Tap a transaction to view, edit, or delete it.</value>
   </data>
+  <data name="ClearStorageWarning_Title" xml:space="preserve">
+    <value>WARNING</value>
+  </data>
+  <data name="ClearStorageWarning_Label" xml:space="preserve">
+    <value>You're one step away from deleting all your transactions, trades, and categories.</value>
+  </data>
+  <data name="ClearStorageIrreversible_Label" xml:space="preserve">
+    <value>This action can't be undone.</value>
+  </data>
+  <data name="ClearStorageAdvice_Caption" xml:space="preserve">
+    <value>If you're not sure, we recommend going back.</value>
+  </data>
+  <data name="ClearStorageQuestion_Caption" xml:space="preserve">
+    <value>Are you sure you want to delete all data, or would you rather go back home?</value>
+  </data>
+  <data name="CancelClearStorage_ButtonText" xml:space="preserve">
+    <value>No, go back home</value>
+  </data>
+  <data name="ConfirmClearStorage_ButtonText" xml:space="preserve">
+    <value>Yes, delete all data</value>
+  </data>
+  <data name="ConfirmClearStorage_AlertTitle" xml:space="preserve">
+    <value>Delete all data</value>
+  </data>
+  <data name="ConfirmClearStorage_AlertContent" xml:space="preserve">
+    <value>Are you completely sure? All your data will be permanently deleted.</value>
+  </data>
+  <data name="ConfirmClearStorage_ClearStorageOption" xml:space="preserve">
+    <value>Delete all</value>
+  </data>
+  <data name="ConfirmClearStorage_CancelOption" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="StorageCleared_AlertTitle" xml:space="preserve">
+    <value>Data deleted</value>
+  </data>
+  <data name="StorageCleared_AlertContent" xml:space="preserve">
+    <value>All data was successfully deleted.</value>
+  </data>
+  <data name="EmptyBalanceDoughnutChart_Label" xml:space="preserve">
+    <value>No transactions to show balance</value>
+  </data>
+  <data name="ChartWithoutTransactions_Label" xml:space="preserve">
+    <value>No transactions in this period</value>
+  </data>
+  <data name="EmptyDoughnutChart_Label" xml:space="preserve">
+    <value>No data to calculate proportions</value>
+  </data>
+  <data name="DefaultCategories" xml:space="preserve">
+    <value>Food_Salary_Clothing_Social_Subscriptions_Utilities_Entertainment_Transport_Misc_Health_Internet_Emergencies</value>
+  </data>
 </root>
