@@ -132,7 +132,7 @@
 
                 <Border Style="{StaticResource ChartCard}">
                     <VerticalStackLayout>
-                        <charts:BasicLineChart Transactions="{Binding ExpensesLog}" LineColor="{StaticResource ExpenseRed}" Title="{x:Static strings:AppResources.ExpensesLineChart_ChartTitle}"/>
+                        <charts:BasicLineChart Transactions="{Binding ExpensesLog}" LineColor="{StaticResource ExpenseRed}" Title="{x:Static strings:AppResources.ExpensesLineChart_ChartTitle}" InvertYAxis="True"/>
                     </VerticalStackLayout>
                 </Border>
 

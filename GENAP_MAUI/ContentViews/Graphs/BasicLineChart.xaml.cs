@@ -15,6 +15,8 @@ public partial class BasicLineChart : ContentView
     private static readonly SKColor GridLineColor = SKColor.Parse("#263241");
 
     private const int MinDaysVisible = 7;
+
+    private const double YAxisPaddingRatio = 0.25;
     private const double PixelsPerLabel = 80;
 
     public static readonly BindableProperty TransactionsProperty = BindableProperty.Create(
@@ -41,6 +43,19 @@ public partial class BasicLineChart : ContentView
     {
         get => (Color)GetValue(LineColorProperty);
         set => SetValue(LineColorProperty, value);
+    }
+
+    public static readonly BindableProperty InvertYAxisProperty = BindableProperty.Create(
+        nameof(InvertYAxis),
+        typeof(bool),
+        typeof(BasicLineChart),
+        false,
+        propertyChanged: OnDataChanged);
+
+    public bool InvertYAxis
+    {
+        get => (bool)GetValue(InvertYAxisProperty);
+        set => SetValue(InvertYAxisProperty, value);
     }
 
     public static readonly BindableProperty TitleProperty = BindableProperty.Create(
@@ -76,7 +91,7 @@ public partial class BasicLineChart : ContentView
 
     public ISeries[] LineSeriesCollection { get; private set; }
     public ICartesianAxis[] XAxes { get; private set; }
-    public ICartesianAxis[] YAxes { get; }
+    public ICartesianAxis[] YAxes { get; private set; }
 
     private DateOnly[] _dates = [];
     private double _lastWidth;
@@ -93,19 +108,7 @@ public partial class BasicLineChart : ContentView
             new Axis { IsVisible = false }
         ];
 
-        YAxes =
-        [
-            new Axis
-            {
-                Labeler = value => ChartFormat.CompactCurrency(value),
-                TextSize = 11,
-                LabelsPaint = new SolidColorPaint(AxisTextColor),
-                SeparatorsPaint = new SolidColorPaint(GridLineColor.WithAlpha(90))
-                {
-                    StrokeThickness = 1
-                }
-            }
-        ];
+        YAxes = [BuildYAxis(null, null)];
 
         InitializeComponent();
     }
@@ -152,8 +155,10 @@ public partial class BasicLineChart : ContentView
             _dates = [];
             LineSeriesCollection = [CreateSeries([0d], color)];
             XAxes = [new Axis { IsVisible = false }];
+            YAxes = [BuildYAxis(null, null)];
             OnPropertyChanged(nameof(LineSeriesCollection));
             OnPropertyChanged(nameof(XAxes));
+            OnPropertyChanged(nameof(YAxes));
             return;
         }
 
@@ -163,11 +168,15 @@ public partial class BasicLineChart : ContentView
         var (dates, accumulatedValues) = AccumulateByDay(transactions);
         _dates = dates;
 
+        var (minLimit, maxLimit) = CalculateYAxisLimits(accumulatedValues);
+
         LineSeriesCollection = [CreateSeries(accumulatedValues, color)];
         XAxes = [BuildXAxis()];
+        YAxes = [BuildYAxis(minLimit, maxLimit)];
 
         OnPropertyChanged(nameof(LineSeriesCollection));
         OnPropertyChanged(nameof(XAxes));
+        OnPropertyChanged(nameof(YAxes));
     }
 
     private static (DateOnly[] Dates, double[] Values) AccumulateByDay(IEnumerable<GraphableTransactionDto> transactions)
@@ -202,6 +211,35 @@ public partial class BasicLineChart : ContentView
         }
 
         return (dates.ToArray(), values.ToArray());
+    }
+
+    private static (double Min, double Max) CalculateYAxisLimits(double[] values)
+    {
+        var min = Math.Min(values.Min(), 0);
+        var max = Math.Max(values.Max(), 0);
+        var range = max - min;
+
+        var padding = range > 0
+            ? range * YAxisPaddingRatio
+            : Math.Max(Math.Abs(max) * YAxisPaddingRatio, 1);
+
+        return (min - padding, max + padding);
+    }
+    private Axis BuildYAxis(double? minLimit, double? maxLimit)
+    {
+        return new Axis
+        {
+            Labeler = value => ChartFormat.CompactCurrency(value),
+            TextSize = 11,
+            LabelsPaint = new SolidColorPaint(AxisTextColor),
+            SeparatorsPaint = new SolidColorPaint(GridLineColor.WithAlpha(90))
+            {
+                StrokeThickness = 1
+            },
+            MinLimit = minLimit,
+            MaxLimit = maxLimit,
+            IsInverted = InvertYAxis
+        };
     }
 
     private Axis BuildXAxis()
@@ -243,8 +281,10 @@ public partial class BasicLineChart : ContentView
                     color.WithAlpha(18),
                     color.WithAlpha(0)
                 },
-                new SKPoint(0.5f, 0),
-                new SKPoint(0.5f, 1)),
+
+
+                InvertYAxis ? new SKPoint(0.5f, 1) : new SKPoint(0.5f, 0),
+                InvertYAxis ? new SKPoint(0.5f, 0) : new SKPoint(0.5f, 1)),
             GeometryFill = null,
             GeometryStroke = null,
             YToolTipLabelFormatter = point =>
