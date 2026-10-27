@@ -1330,7 +1330,7 @@ namespace GENAP_MAUI.Resources.Strings {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Today_Last 30 days_This month_Last 3 months_Last 6 months_Last year_All time_Projection.
+        ///   Busca una cadena traducida similar a Today_Last 30 days_This month_Last 3 months_This half-year_This year_All time_Projection.
         /// </summary>
         public static string TimePeriods {
             get {
