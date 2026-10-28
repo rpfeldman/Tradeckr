@@ -144,7 +144,7 @@ public partial class ProportionDoughnutChart : ContentView
         }
 
         DoughnutSeries = series.ToArray();
-        CenterText = $"Total\n{totalSum.ToString("N0", CultureInfo.InvariantCulture)}$";
+        CenterText = $"Total\n{totalSum.ToString("N0", CultureInfo.CurrentCulture)}$";
 
         NotifyAll();
     }
@@ -236,9 +236,9 @@ public partial class ProportionDoughnutChart : ContentView
             DataLabelsPaint = showLabel ? CreateLabelPaint(labelColor) : null,
             DataLabelsPosition = LiveChartsCore.Measure.PolarLabelsPosition.Middle,
             DataLabelsFormatter = point =>
-                $"{percentage.ToString("N1", CultureInfo.InvariantCulture)}%",
+                $"{percentage.ToString("N1", CultureInfo.CurrentCulture)}%",
             ToolTipLabelFormatter = point =>
-                $"{tooltipName}\n{point.Coordinate.PrimaryValue.ToString("N2", CultureInfo.InvariantCulture)}$ ({percentage.ToString("N1", CultureInfo.InvariantCulture)}%)"
+                $"{tooltipName}\n{point.Coordinate.PrimaryValue.ToString("N2", CultureInfo.CurrentCulture)}$ ({percentage.ToString("N1", CultureInfo.CurrentCulture)}%)"
         };
     }
 

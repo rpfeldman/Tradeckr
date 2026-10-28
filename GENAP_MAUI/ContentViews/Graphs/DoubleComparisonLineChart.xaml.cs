@@ -105,7 +105,7 @@ public partial class DoubleComparisonLineChart : ContentView
     public ICartesianAxis[] XAxes { get; private set; }
     public ICartesianAxis[] YAxes { get; }
 
-    public string DeltaText { get; private set; } = "0,00$";
+    public string DeltaText { get; private set; } = $"{0m:N2}$";
     public Color DeltaColor { get; private set; } = Colors.White;
     public string DeltaArrow { get; private set; } = string.Empty;
 
@@ -227,7 +227,7 @@ public partial class DoubleComparisonLineChart : ContentView
 
     private void ResetDelta()
     {
-        DeltaText = "0,00$";
+        DeltaText = $"{0m:N2}$";
         DeltaColor = Colors.White;
         DeltaArrow = string.Empty;
     }
@@ -244,7 +244,7 @@ public partial class DoubleComparisonLineChart : ContentView
         var last2 = values2[^1];
         var diff = last1 - last2;
 
-        DeltaText = $"{Math.Abs(diff).ToString("N2", CultureInfo.InvariantCulture)}$";
+        DeltaText = $"{Math.Abs(diff).ToString("N2", CultureInfo.CurrentCulture)}$";
 
         if (diff > 0)
         {
@@ -328,7 +328,7 @@ public partial class DoubleComparisonLineChart : ContentView
             {
                 var index = (int)Math.Round(value);
                 if (index < 0 || index >= _dates.Length) return string.Empty;
-                return _dates[index].ToString("dd/MM", CultureInfo.InvariantCulture);
+                return ChartFormat.ShortDayMonth(_dates[index]);
             },
             TextSize = 11,
             LabelsPaint = new SolidColorPaint(AxisTextColor),
@@ -353,9 +353,9 @@ public partial class DoubleComparisonLineChart : ContentView
             {
                 var index = (int)Math.Round(point.Coordinate.SecondaryValue);
                 var dateLabel = index >= 0 && index < _dates.Length
-                    ? _dates[index].ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
+                    ? _dates[index].ToString("d")
                     : string.Empty;
-                var valueLabel = point.Coordinate.PrimaryValue.ToString("N2", CultureInfo.InvariantCulture);
+                var valueLabel = point.Coordinate.PrimaryValue.ToString("N2", CultureInfo.CurrentCulture);
                 return $"{dateLabel}\n{valueLabel}$";
             }
         };

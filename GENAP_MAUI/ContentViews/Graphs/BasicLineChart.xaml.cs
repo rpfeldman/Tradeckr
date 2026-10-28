@@ -253,7 +253,7 @@ public partial class BasicLineChart : ContentView
             {
                 var index = (int)Math.Round(value);
                 if (index < 0 || index >= _dates.Length) return string.Empty;
-                return _dates[index].ToString("dd/MM", CultureInfo.InvariantCulture);
+                return ChartFormat.ShortDayMonth(_dates[index]);
             },
             TextSize = 11,
             LabelsPaint = new SolidColorPaint(AxisTextColor),
@@ -291,9 +291,9 @@ public partial class BasicLineChart : ContentView
             {
                 var index = (int)Math.Round(point.Coordinate.SecondaryValue);
                 var dateLabel = index >= 0 && index < _dates.Length
-                    ? _dates[index].ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
+                    ? _dates[index].ToString("d")
                     : string.Empty;
-                var valueLabel = point.Coordinate.PrimaryValue.ToString("N2", CultureInfo.InvariantCulture);
+                var valueLabel = point.Coordinate.PrimaryValue.ToString("N2", CultureInfo.CurrentCulture);
                 return $"{dateLabel}\n{valueLabel}$";
             }
         };

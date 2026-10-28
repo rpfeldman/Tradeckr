@@ -225,7 +225,7 @@ public partial class BalanceLineChart : ContentView
             {
                 var index = (int)Math.Round(value);
                 if (index < 0 || index >= _dates.Length) return string.Empty;
-                return _dates[index].ToString("dd/MM");
+                return ChartFormat.ShortDayMonth(_dates[index]);
             },
             TextSize = 11,
             LabelsPaint = new SolidColorPaint(AxisTextColor),
@@ -315,7 +315,7 @@ public partial class BalanceLineChart : ContentView
             {
                 var index = (int)Math.Round(point.Coordinate.SecondaryValue);
                 var dateLabel = index >= 0 && index < _dates.Length
-                    ? _dates[index].ToString("dd/MM/yyyy")
+                    ? _dates[index].ToString("d")
                     : string.Empty;
                 return $"{dateLabel}\n{point.Coordinate.PrimaryValue:N2}$";
             }
