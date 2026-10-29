@@ -40,6 +40,14 @@ namespace GENAP_MAUI
             var dbPath = Path.Combine(FileSystem.AppDataDirectory, FilePaths.StorageFileName);
             var logPath = Path.Combine(FileSystem.AppDataDirectory, FilePaths.LogFileName);
 
+            // Reset the log file every 1 week
+            var lastLogReset = Preferences.Get(PreferenceKeys.LastLogResetKey, DateTime.Today);
+            if(DateOnly.FromDateTime(DateTime.Today).DayNumber >= DateOnly.FromDateTime(lastLogReset).DayNumber+7)
+            {
+                File.Delete(logPath);
+                Preferences.Set(PreferenceKeys.LastLogResetKey, DateTime.Today);
+            }
+
             // Logging system
             Log.Logger = new LoggerConfiguration().WriteTo.File(logPath, shared: true).MinimumLevel.Debug().CreateLogger();
 

@@ -74,6 +74,7 @@ namespace GENAP_MAUI.ViewModels
 
             Preferences.Set(PreferenceKeys.NewUserKey, false);
             Preferences.Set(PreferenceKeys.LastRateUpdateKey, DateTime.Today);
+            Preferences.Set(PreferenceKeys.LastLogResetKey, DateTime.Today);
 
             IsPingerActive = false;
 
