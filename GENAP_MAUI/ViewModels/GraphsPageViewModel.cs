@@ -5,17 +5,9 @@ using DomainModel;
 using GENAP_MAUI.CustomViews;
 using GENAP_MAUI.InnerComponents;
 using GENAP_MAUI.Resources.Strings;
-using LiveChartsCore;
-using LiveChartsCore.Defaults;
-using LiveChartsCore.SkiaSharpView;
-using Microsoft.Maui.Platform;
 using Serilog;
-using SkiaSharp;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq.Expressions;
-using System.Text;
 using static GENAP_MAUI.GlobalResources;
 
 namespace GENAP_MAUI.ViewModels
@@ -75,172 +67,168 @@ namespace GENAP_MAUI.ViewModels
 
 		public async Task ReFillGraphs(GlobalResources.TimePeriodsEnum timePeriod, CurrencyDto currency)
 		{
-            Task<OperationResult<IEnumerable<GraphableTransactionDto>>>? GetExpensesTask = null;
-            Task<OperationResult<IEnumerable<GraphableTransactionDto>>>? GetIncomeTask = null;
-            Task<OperationResult<IEnumerable<GraphableTransactionDto>>>? GetLossesTask = null;
-            Task<OperationResult<IEnumerable<GraphableTransactionDto>>>? GetProfitTask = null;
             var today = DateOnly.FromDateTime(DateTime.Today);
-			Task<OperationResult<IEnumerable<GraphableTransactionDto>>>[] Predicates = [];
 
+            Expression<Func<TransactionDto, GraphableTransactionDto>> selector = 
+                t => new
+                (
+                    t.Depletion ? CurrencyConverterService.TfuToCurrency(t.Value, currency) * -1 : CurrencyConverterService.TfuToCurrency(t.Value, currency), t.Category, t.Date
+                );
 
-			void SetTasksPointers(Task<OperationResult<IEnumerable<GraphableTransactionDto>>> getExpensesTask, Task<OperationResult<IEnumerable<GraphableTransactionDto>>> getLossesTask, Task< OperationResult<IEnumerable<GraphableTransactionDto>>> getIncomeTask, Task<OperationResult<IEnumerable<GraphableTransactionDto>>> getProfitTask) 
-			{
-				GetExpensesTask = getExpensesTask;
-                GetLossesTask = getLossesTask;
-                GetIncomeTask = getIncomeTask;
-				GetProfitTask = getProfitTask;
-			}
+            void FilterTransactions(IEnumerable<GraphableTransactionDto> transactions)
+            {
+                var length = transactions.Count();
 
-			Expression<Func<TransactionDto, GraphableTransactionDto>> selector = t => new(t.Depletion ? CurrencyConverterService.TfuToCurrency(t.Value, currency) * -1 : CurrencyConverterService.TfuToCurrency(t.Value, currency), t.Category, t.Date);
+                List<GraphableTransactionDto> expenses = new(length);
+                List<GraphableTransactionDto> losses = new(length);
+                List<GraphableTransactionDto> income = new(length);
+                List<GraphableTransactionDto> profit = new(length);
+
+                foreach (var transaction in transactions)
+                {
+                    if(transaction.SignedValue < 0)
+                    {
+                        if(transaction.Category == DefaultCategories.TradingCategoryName) { losses.Add(transaction); continue; }
+
+                        expenses.Add(transaction);
+                        continue;
+                    }
+
+                    if(transaction.Category == DefaultCategories.TradingCategoryName) { profit.Add(transaction); continue; }
+
+                    income.Add(transaction);
+                }
+
+                ExpensesLog = expenses.AsEnumerable();
+                LossesLog = losses.AsEnumerable();
+                IncomeLog = income.AsEnumerable();
+                ProfitLog = profit.AsEnumerable();
+
+                TransactionsLog = ExpensesLog.Concat(LossesLog).Concat(IncomeLog);
+                TradingLog = LossesLog.Concat(ProfitLog);
+            }
+
+            OperationResult<IEnumerable<GraphableTransactionDto>> getTransactionOperation;
 
             switch (timePeriod)
             {
-                case GlobalResources.TimePeriodsEnum.Historical:
-                    Predicates =
-                    [
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Category != DefaultCategories.TradingCategoryName),
+                case TimePeriodsEnum.Historical:
+                    getTransactionOperation = await _dataProjectionService.ProjectTransactions(selector);
 
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Category == DefaultCategories.TradingCategoryName),
+                    if (!getTransactionOperation.Success)
+                    {
+                        await _customDialogsService.ShowAlertDialogAsync(AppResources.Error_AlertTitle, getTransactionOperation.InnerError!.ErrorMessage, AppResources.Accept_AlertButton);
 
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false),
+                        return;
+                    }
 
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Category == DefaultCategories.TradingCategoryName),
-                    ];
-
-                    break;
-
-                case GlobalResources.TimePeriodsEnum.HistoricalToday:
-                    Predicates =
-                    [
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date <= today && t.Category != DefaultCategories.TradingCategoryName),
-
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date <= today && t.Category == DefaultCategories.TradingCategoryName),
-
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date <= today),
-
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date <= today && t.Category == DefaultCategories.TradingCategoryName),
-                    ];
+                    FilterTransactions(getTransactionOperation.Result!);
 
                     break;
 
-                case GlobalResources.TimePeriodsEnum.Month:
-                    Predicates =
-                    [
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.Month == today.Month && t.Date.Year == today.Year&& t.Category != DefaultCategories.TradingCategoryName),
+                case TimePeriodsEnum.HistoricalToday:
+                    getTransactionOperation = await _dataProjectionService.ProjectTransactions(selector, t => t.Date <= today);
 
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.Month == today.Month && t.Date.Year == today.Year && t.Category == DefaultCategories.TradingCategoryName),
+                    if (!getTransactionOperation.Success)
+                    {
+                        await _customDialogsService.ShowAlertDialogAsync(AppResources.Error_AlertTitle, getTransactionOperation.InnerError!.ErrorMessage, AppResources.Accept_AlertButton);
 
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.Month == today.Month && t.Date.Year == today.Year),
+                        return;
+                    }
 
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.Month == today.Month && t.Date.Year == today.Year && t.Category == DefaultCategories.TradingCategoryName),
-                    ];
-                    break;
-
-				case GlobalResources.TimePeriodsEnum.ThirtyDays:
-					Predicates =
-					[
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector,  t => t.Depletion == true && t.Date.DayNumber >= (today.DayNumber - 30) && t.Date <= today && t.Date.Year == today.Year && t.Category != DefaultCategories.TradingCategoryName),
-
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector,  t => t.Depletion == true && t.Date.DayNumber >= (today.DayNumber - 30) && t.Date <= today && t.Date.Year == today.Year && t.Category == DefaultCategories.TradingCategoryName),
-
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector,  t => t.Depletion == false && t.Date.DayNumber >=(today.DayNumber - 30) && t.Date <= today && t.Date.Year == today.Year),
-
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector,  t => t.Depletion == false && t.Date.DayNumber >= (today.DayNumber - 30) && t.Date <= today && t.Date.Year == today.Year&& t.Category == DefaultCategories.TradingCategoryName),
-                    ];
-
-					break;
-
-				case GlobalResources.TimePeriodsEnum.ThreeMonths:
-
-					Predicates =
-					[
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.DayNumber >= (today.DayNumber - 90) && t.Date <= today && t.Category != DefaultCategories.TradingCategoryName),
-
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.DayNumber >= (today.DayNumber-90) && t.Date <= today && t.Category == DefaultCategories.TradingCategoryName),
-
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.DayNumber >= (today.DayNumber-90) && t.Date <= today),
-
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.DayNumber >= (today.DayNumber-90) && t.Date <= today && t.Category == DefaultCategories.TradingCategoryName),
-                    ];
-
-					break;
-
-				case GlobalResources.TimePeriodsEnum.Semester:
-					int MinBound;
-
-					if (today.Month > 6)
-                        MinBound = 7;
-					else 
-                        MinBound = 1; 
-
-					Predicates =
-					[
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.Month >= MinBound && t.Date <= today && t.Date.Year == today.Year && t.Category != DefaultCategories.TradingCategoryName),
-
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.Month >= MinBound && t.Date <= today && t.Date.Year == today.Year && t.Category == DefaultCategories.TradingCategoryName),
-
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.Month >= MinBound && t.Date <= today && t.Date.Year == today.Year),
-
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.Month >= MinBound && t.Date <= today && t.Date.Year == today.Year && t.Category == DefaultCategories.TradingCategoryName),
-                    ];
-
-					break;
-
-				case GlobalResources.TimePeriodsEnum.Year:
-					Predicates =
-					[
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.Year == today.Year && t.Date <= today && t.Category != DefaultCategories.TradingCategoryName),
-
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.Year == today.Year && t.Date <= today && t.Category == DefaultCategories.TradingCategoryName),
-
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.Year == today.Year && t.Date <= today),
-
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.Year == today.Year && t.Date <= today && t.Category == DefaultCategories.TradingCategoryName),
-                    ];
-
-					break;
-
-				case GlobalResources.TimePeriodsEnum.Today:
-                    Predicates =
-                    [
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date == today && t.Category != DefaultCategories.TradingCategoryName),
-
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date == today && t.Category == DefaultCategories.TradingCategoryName),
-
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date == today),
-
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date == today && t.Category == DefaultCategories.TradingCategoryName),
-                    ];
+                    FilterTransactions(getTransactionOperation.Result!);
 
                     break;
 
-				default:
+                case TimePeriodsEnum.Month:
+                    getTransactionOperation = await _dataProjectionService.ProjectTransactions(selector, t => t.Date.Month == today.Month && t.Date.Year == today.Year);
+
+                    if (!getTransactionOperation.Success)
+                    {
+                        await _customDialogsService.ShowAlertDialogAsync(AppResources.Error_AlertTitle, getTransactionOperation.InnerError!.ErrorMessage, AppResources.Accept_AlertButton);
+
+                        return;
+                    }
+
+                    FilterTransactions(getTransactionOperation.Result!);
+
+                break;
+
+                case TimePeriodsEnum.ThirtyDays:
+                    getTransactionOperation = await _dataProjectionService.ProjectTransactions(selector, t => t.Date.DayNumber >= (today.DayNumber - 30) && t.Date <= today);
+
+                    if (!getTransactionOperation.Success)
+                    {
+                        await _customDialogsService.ShowAlertDialogAsync(AppResources.Error_AlertTitle, getTransactionOperation.InnerError!.ErrorMessage, AppResources.Accept_AlertButton);
+
+                        return;
+                    }
+
+                    FilterTransactions(getTransactionOperation.Result!);
+
                     break;
-			}
 
-			SetTasksPointers(Predicates[0], Predicates[1], Predicates[2], Predicates[3]);
+                case TimePeriodsEnum.ThreeMonths:
+                    getTransactionOperation = await _dataProjectionService.ProjectTransactions(selector, t => t.Date.DayNumber >= (today.DayNumber - 90) && t.Date <= today);
 
-			var TaskResults = await Task.WhenAll(GetExpensesTask ?? throw new InvalidOperationException($"{nameof(GetExpensesTask)} doesn't point to a valid task"), GetLossesTask ?? throw new InvalidOperationException($"{nameof(GetLossesTask)} doesn't point to a valid task"), GetIncomeTask ?? throw new InvalidOperationException($"{nameof(GetIncomeTask)} doesn't point to a valid task"), GetProfitTask ?? throw new InvalidOperationException($"{nameof(GetProfitTask)} doesn't point to a valid task"));
+                    if (!getTransactionOperation.Success)
+                    {
+                        await _customDialogsService.ShowAlertDialogAsync(AppResources.Error_AlertTitle, getTransactionOperation.InnerError!.ErrorMessage, AppResources.Accept_AlertButton);
 
-            if (TaskResults[0].Success)
-            {
-                ExpensesLog = TaskResults[0].Result!;
+                        return;
+                    }
+
+                    FilterTransactions(getTransactionOperation.Result!);
+
+                    break;
+
+                case TimePeriodsEnum.Semester:
+                    int MinBound = today.Month > 6 ? 7 : 1;
+
+                    getTransactionOperation = await _dataProjectionService.ProjectTransactions(selector, t => t.Date.Month >= MinBound && t.Date <= today && t.Date.Year == today.Year);
+
+                    if (!getTransactionOperation.Success)
+                    {
+                        await _customDialogsService.ShowAlertDialogAsync(AppResources.Error_AlertTitle, getTransactionOperation.InnerError!.ErrorMessage, AppResources.Accept_AlertButton);
+
+                        return;
+                    }
+
+                    FilterTransactions(getTransactionOperation.Result!);
+
+                    break;
+
+                case TimePeriodsEnum.Year:
+                    getTransactionOperation = await _dataProjectionService.ProjectTransactions(selector, t => t.Date.Year == today.Year && t.Date <= today);
+
+                    if (!getTransactionOperation.Success)
+                    {
+                        await _customDialogsService.ShowAlertDialogAsync(AppResources.Error_AlertTitle, getTransactionOperation.InnerError!.ErrorMessage, AppResources.Accept_AlertButton);
+
+                        return;
+                    }
+
+                    FilterTransactions(getTransactionOperation.Result!);
+
+                    break;
+
+                case TimePeriodsEnum.Today:
+                    getTransactionOperation = await _dataProjectionService.ProjectTransactions(selector, t => t.Date == today);
+
+                    if (!getTransactionOperation.Success)
+                    {
+                        await _customDialogsService.ShowAlertDialogAsync(AppResources.Error_AlertTitle, getTransactionOperation.InnerError!.ErrorMessage, AppResources.Accept_AlertButton);
+
+                        return;
+                    }
+
+                    FilterTransactions(getTransactionOperation.Result!);
+
+                    break;
+
+                default:
+                    break;
             }
-            if (TaskResults[1].Success)
-            {
-                LossesLog = TaskResults[1].Result!;
-            }
-            if (TaskResults[2].Success)
-            {
-                IncomeLog = TaskResults[2].Result!;
-            }
-            if (TaskResults[3].Success)
-            {
-                ProfitLog = TaskResults[3].Result!;
-            }
-
-            TransactionsLog = ExpensesLog.Concat(LossesLog).Concat(IncomeLog);
-            TradingLog = LossesLog.Concat(ProfitLog);
 
             Log.Information($"Charts filled with new data using timeperiod '{timePeriod}' and currency '{currency.IsoCode}' (GraphsPage) ");
 

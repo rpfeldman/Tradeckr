@@ -1,14 +1,8 @@
 ﻿using DomainModel;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Sqlite;
-using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Net.WebSockets;
-using System.Runtime.CompilerServices;
-using System.Text;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+
 
 namespace Repositories
 {
