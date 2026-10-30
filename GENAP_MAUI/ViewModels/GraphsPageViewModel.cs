@@ -77,10 +77,32 @@ namespace GENAP_MAUI.ViewModels
 
             void FilterTransactions(IEnumerable<GraphableTransactionDto> transactions)
             {
-                ExpensesLog = transactions.Where(t => t.SignedValue < 0 && t.Category != DefaultCategories.TradingCategoryName);
-                LossesLog = transactions.Where(t => t.SignedValue < 0 && t.Category == DefaultCategories.TradingCategoryName);
-                IncomeLog = transactions.Where(t => t.SignedValue > 0);
-                ProfitLog = transactions.Where(t => t.SignedValue > 0 && t.Category == DefaultCategories.TradingCategoryName);
+                var length = transactions.Count();
+
+                List<GraphableTransactionDto> expenses = new(length);
+                List<GraphableTransactionDto> losses = new(length);
+                List<GraphableTransactionDto> income = new(length);
+                List<GraphableTransactionDto> profit = new(length);
+
+                foreach (var transaction in transactions)
+                {
+                    if(transaction.SignedValue < 0)
+                    {
+                        if(transaction.Category == DefaultCategories.TradingCategoryName) { losses.Add(transaction); continue; }
+
+                        expenses.Add(transaction);
+                        continue;
+                    }
+
+                    if(transaction.Category == DefaultCategories.TradingCategoryName) { profit.Add(transaction); continue; }
+
+                    income.Add(transaction);
+                }
+
+                ExpensesLog = expenses.AsEnumerable();
+                LossesLog = losses.AsEnumerable();
+                IncomeLog = income.AsEnumerable();
+                ProfitLog = profit.AsEnumerable();
 
                 TransactionsLog = ExpensesLog.Concat(LossesLog).Concat(IncomeLog);
                 TradingLog = LossesLog.Concat(ProfitLog);
