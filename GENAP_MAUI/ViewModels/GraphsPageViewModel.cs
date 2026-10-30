@@ -5,17 +5,9 @@ using DomainModel;
 using GENAP_MAUI.CustomViews;
 using GENAP_MAUI.InnerComponents;
 using GENAP_MAUI.Resources.Strings;
-using LiveChartsCore;
-using LiveChartsCore.Defaults;
-using LiveChartsCore.SkiaSharpView;
-using Microsoft.Maui.Platform;
 using Serilog;
-using SkiaSharp;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq.Expressions;
-using System.Text;
 using static GENAP_MAUI.GlobalResources;
 
 namespace GENAP_MAUI.ViewModels
