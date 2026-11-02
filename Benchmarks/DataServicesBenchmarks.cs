@@ -18,11 +18,13 @@ namespace Benchmarks
     [Orderer(BenchmarkDotNet.Order.SummaryOrderPolicy.FastestToSlowest)]
     [GroupBenchmarksBy(BenchmarkDotNet.Configs.BenchmarkLogicalGroupRule.ByParams)]
     [RankColumn]
-    public class DataServicesBenchmarks
+    public class DataServicesBenchmarks 
     {
         private readonly EF_SQLite_StateStorageRepo<TransactionDto> _repo;
         private readonly DataProjectionService _dataProjectionService;
         private readonly DataRegistrationService _dataRegistrationService;
+
+        private readonly Methods GraphsPageMethods;
 
         public DataServicesBenchmarks()
         {
@@ -31,7 +33,14 @@ namespace Benchmarks
             _repo = new("BencharmStorage.db");
             _dataProjectionService = new(_repo);
             _dataRegistrationService = new(_repo);
+
+            GraphsPageMethods = new(_dataProjectionService);
         }
+
+        public CurrencyDto currencyParam = new() { ConversionRate = 1, CurrencyDisplayName = "Test currency", IsoCode = "TFU", Id = 0};
+
+        [Params(TimePeriodsEnum.Year, TimePeriodsEnum.Historical, TimePeriodsEnum.Month)]
+        public TimePeriodsEnum timePeriodParam;
 
         [GlobalSetup]
         public async void Setup()
@@ -145,30 +154,32 @@ namespace Benchmarks
         }
 
         [Benchmark]
-        public async Task test()
+        public async Task OldMethod()
         {
-            await _dataProjectionService.GetAllAsync();
+            await GraphsPageMethods.OldFillGraphs(timePeriodParam, currencyParam);
+        }
+
+        [Benchmark]
+        public async Task OptimizedMethodLINQ()
+        {
+            await GraphsPageMethods.NewFillGraphsMethodWithLINQ(timePeriodParam, currencyParam);
+        }
+
+        [Benchmark]
+        public async Task OptimizedMethodManual()
+        {
+            await GraphsPageMethods.NewFillGraphsMethodWithManualFiltering(timePeriodParam, currencyParam);
         }
     }
 
-    public sealed class Methods
+    public sealed class Methods(DataProjectionService service)
     {
-        private readonly EF_SQLite_StateStorageRepo<TransactionDto> repo;
-        private readonly DataProjectionService _dataProjectionService;
-
         public  IEnumerable<GraphableTransactionDto> ExpensesLog { get; set; } = [];
         public  IEnumerable<GraphableTransactionDto> LossesLog { get; set; } = [];
 		public IEnumerable<GraphableTransactionDto> IncomeLog { get; set; } = [];
         public IEnumerable<GraphableTransactionDto> ProfitLog { get; set; } = [];
 		public IEnumerable<GraphableTransactionDto> TransactionsLog { get; set; } = [];
         public IEnumerable<GraphableTransactionDto> TradingLog { get; set; } = [];
-
-        public Methods()
-        {
-            repo = new("");
-            _dataProjectionService = new DataProjectionService(repo);
-        }
-
         public async Task NewFillGraphsMethodWithManualFiltering(TimePeriodsEnum timePeriod, CurrencyDto currency)
 		{
             var today = DateOnly.FromDateTime(DateTime.Today);
@@ -217,7 +228,7 @@ namespace Benchmarks
             switch (timePeriod)
             {
                 case TimePeriodsEnum.Historical:
-                    getTransactionOperation = await _dataProjectionService.ProjectTransactions(selector);
+                    getTransactionOperation = await service.ProjectTransactions(selector);
 
                     if (!getTransactionOperation.Success)
                     {
@@ -229,7 +240,7 @@ namespace Benchmarks
                     break;
 
                 case TimePeriodsEnum.HistoricalToday:
-                    getTransactionOperation = await _dataProjectionService.ProjectTransactions(selector, t => t.Date <= today);
+                    getTransactionOperation = await service.ProjectTransactions(selector, t => t.Date <= today);
 
                     if (!getTransactionOperation.Success)
                     {
@@ -241,7 +252,7 @@ namespace Benchmarks
                     break;
 
                 case TimePeriodsEnum.Month:
-                    getTransactionOperation = await _dataProjectionService.ProjectTransactions(selector, t => t.Date.Month == today.Month && t.Date.Year == today.Year);
+                    getTransactionOperation = await service.ProjectTransactions(selector, t => t.Date.Month == today.Month && t.Date.Year == today.Year);
 
                     if (!getTransactionOperation.Success)
                     {
@@ -253,7 +264,7 @@ namespace Benchmarks
                 break;
 
                 case TimePeriodsEnum.ThirtyDays:
-                    getTransactionOperation = await _dataProjectionService.ProjectTransactions(selector, t => t.Date.DayNumber >= (today.DayNumber - 30) && t.Date <= today);
+                    getTransactionOperation = await service.ProjectTransactions(selector, t => t.Date.DayNumber >= (today.DayNumber - 30) && t.Date <= today);
 
                     if (!getTransactionOperation.Success)
                     {
@@ -265,7 +276,7 @@ namespace Benchmarks
                     break;
 
                 case TimePeriodsEnum.ThreeMonths:
-                    getTransactionOperation = await _dataProjectionService.ProjectTransactions(selector, t => t.Date.DayNumber >= (today.DayNumber - 90) && t.Date <= today);
+                    getTransactionOperation = await service.ProjectTransactions(selector, t => t.Date.DayNumber >= (today.DayNumber - 90) && t.Date <= today);
 
                     if (!getTransactionOperation.Success)
                     {
@@ -279,7 +290,7 @@ namespace Benchmarks
                 case TimePeriodsEnum.Semester:
                     int MinBound = today.Month > 6 ? 7 : 1;
 
-                    getTransactionOperation = await _dataProjectionService.ProjectTransactions(selector, t => t.Date.Month >= MinBound && t.Date <= today && t.Date.Year == today.Year);
+                    getTransactionOperation = await service.ProjectTransactions(selector, t => t.Date.Month >= MinBound && t.Date <= today && t.Date.Year == today.Year);
 
                     if (!getTransactionOperation.Success)
                     {
@@ -291,7 +302,7 @@ namespace Benchmarks
                     break;
 
                 case TimePeriodsEnum.Year:
-                    getTransactionOperation = await _dataProjectionService.ProjectTransactions(selector, t => t.Date.Year == today.Year && t.Date <= today);
+                    getTransactionOperation = await service.ProjectTransactions(selector, t => t.Date.Year == today.Year && t.Date <= today);
 
                     if (!getTransactionOperation.Success)
                     {
@@ -303,7 +314,7 @@ namespace Benchmarks
                     break;
 
                 case TimePeriodsEnum.Today:
-                    getTransactionOperation = await _dataProjectionService.ProjectTransactions(selector, t => t.Date == today);
+                    getTransactionOperation = await service.ProjectTransactions(selector, t => t.Date == today);
 
                     if (!getTransactionOperation.Success)
                     {
@@ -347,7 +358,7 @@ namespace Benchmarks
             switch (timePeriod)
             {
                 case TimePeriodsEnum.Historical:
-                    getTransactionOperation = await _dataProjectionService.ProjectTransactions(selector);
+                    getTransactionOperation = await service.ProjectTransactions(selector);
 
                     if (!getTransactionOperation.Success)
                     {
@@ -359,7 +370,7 @@ namespace Benchmarks
                     break;
 
                 case TimePeriodsEnum.HistoricalToday:
-                    getTransactionOperation = await _dataProjectionService.ProjectTransactions(selector, t => t.Date <= today);
+                    getTransactionOperation = await service.ProjectTransactions(selector, t => t.Date <= today);
 
                     if (!getTransactionOperation.Success)
                     {
@@ -371,7 +382,7 @@ namespace Benchmarks
                     break;
 
                 case TimePeriodsEnum.Month:
-                    getTransactionOperation = await _dataProjectionService.ProjectTransactions(selector, t => t.Date.Month == today.Month && t.Date.Year == today.Year);
+                    getTransactionOperation = await service.ProjectTransactions(selector, t => t.Date.Month == today.Month && t.Date.Year == today.Year);
 
                     if (!getTransactionOperation.Success)
                     {
@@ -383,7 +394,7 @@ namespace Benchmarks
                 break;
 
                 case TimePeriodsEnum.ThirtyDays:
-                    getTransactionOperation = await _dataProjectionService.ProjectTransactions(selector, t => t.Date.DayNumber >= (today.DayNumber - 30) && t.Date <= today);
+                    getTransactionOperation = await service.ProjectTransactions(selector, t => t.Date.DayNumber >= (today.DayNumber - 30) && t.Date <= today);
 
                     if (!getTransactionOperation.Success)
                     {
@@ -395,7 +406,7 @@ namespace Benchmarks
                     break;
 
                 case TimePeriodsEnum.ThreeMonths:
-                    getTransactionOperation = await _dataProjectionService.ProjectTransactions(selector, t => t.Date.DayNumber >= (today.DayNumber - 90) && t.Date <= today);
+                    getTransactionOperation = await service.ProjectTransactions(selector, t => t.Date.DayNumber >= (today.DayNumber - 90) && t.Date <= today);
 
                     if (!getTransactionOperation.Success)
                     {
@@ -409,7 +420,7 @@ namespace Benchmarks
                 case TimePeriodsEnum.Semester:
                     int MinBound = today.Month > 6 ? 7 : 1;
 
-                    getTransactionOperation = await _dataProjectionService.ProjectTransactions(selector, t => t.Date.Month >= MinBound && t.Date <= today && t.Date.Year == today.Year);
+                    getTransactionOperation = await service.ProjectTransactions(selector, t => t.Date.Month >= MinBound && t.Date <= today && t.Date.Year == today.Year);
 
                     if (!getTransactionOperation.Success)
                     {
@@ -421,7 +432,7 @@ namespace Benchmarks
                     break;
 
                 case TimePeriodsEnum.Year:
-                    getTransactionOperation = await _dataProjectionService.ProjectTransactions(selector, t => t.Date.Year == today.Year && t.Date <= today);
+                    getTransactionOperation = await service.ProjectTransactions(selector, t => t.Date.Year == today.Year && t.Date <= today);
 
                     if (!getTransactionOperation.Success)
                     {
@@ -433,7 +444,7 @@ namespace Benchmarks
                     break;
 
                 case TimePeriodsEnum.Today:
-                    getTransactionOperation = await _dataProjectionService.ProjectTransactions(selector, t => t.Date == today);
+                    getTransactionOperation = await service.ProjectTransactions(selector, t => t.Date == today);
 
                     if (!getTransactionOperation.Success)
                     {
@@ -475,13 +486,13 @@ namespace Benchmarks
                 case TimePeriodsEnum.Historical:
                     Predicates =
                     [
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Category !=  "Trading"),
+                        service.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Category !=  "Trading"),
 
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Category ==  "Trading"),
+                        service.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Category ==  "Trading"),
 
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false),
+                        service.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false),
 
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Category ==  "Trading"),
+                        service.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Category ==  "Trading"),
                     ];
 
                     break;
@@ -489,13 +500,13 @@ namespace Benchmarks
                 case  TimePeriodsEnum.HistoricalToday:
                     Predicates =
                     [
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date <= today && t.Category !=  "Trading"),
+                        service.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date <= today && t.Category !=  "Trading"),
 
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date <= today && t.Category ==  "Trading"),
+                        service.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date <= today && t.Category ==  "Trading"),
 
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date <= today),
+                        service.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date <= today),
 
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date <= today && t.Category ==  "Trading"),
+                        service.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date <= today && t.Category ==  "Trading"),
                     ];
 
                     break;
@@ -503,26 +514,26 @@ namespace Benchmarks
                 case  TimePeriodsEnum.Month:
                     Predicates =
                     [
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.Month == today.Month && t.Date.Year == today.Year&& t.Category !=  "Trading"),
+                        service.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.Month == today.Month && t.Date.Year == today.Year&& t.Category !=  "Trading"),
 
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.Month == today.Month && t.Date.Year == today.Year && t.Category ==  "Trading"),
+                        service.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.Month == today.Month && t.Date.Year == today.Year && t.Category ==  "Trading"),
 
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.Month == today.Month && t.Date.Year == today.Year),
+                        service.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.Month == today.Month && t.Date.Year == today.Year),
 
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.Month == today.Month && t.Date.Year == today.Year && t.Category ==  "Trading"),
+                        service.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.Month == today.Month && t.Date.Year == today.Year && t.Category ==  "Trading"),
                     ];
                     break;
 
 				case  TimePeriodsEnum.ThirtyDays:
 					Predicates =
 					[
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector,  t => t.Depletion == true && t.Date.DayNumber >= (today.DayNumber - 30) && t.Date <= today && t.Date.Year == today.Year && t.Category !=  "Trading"),
+                        service.ProjectTransactions<GraphableTransactionDto>(selector,  t => t.Depletion == true && t.Date.DayNumber >= (today.DayNumber - 30) && t.Date <= today && t.Date.Year == today.Year && t.Category !=  "Trading"),
 
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector,  t => t.Depletion == true && t.Date.DayNumber >= (today.DayNumber - 30) && t.Date <= today && t.Date.Year == today.Year && t.Category ==  "Trading"),
+                        service.ProjectTransactions<GraphableTransactionDto>(selector,  t => t.Depletion == true && t.Date.DayNumber >= (today.DayNumber - 30) && t.Date <= today && t.Date.Year == today.Year && t.Category ==  "Trading"),
 
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector,  t => t.Depletion == false && t.Date.DayNumber >=(today.DayNumber - 30) && t.Date <= today && t.Date.Year == today.Year),
+                        service.ProjectTransactions<GraphableTransactionDto>(selector,  t => t.Depletion == false && t.Date.DayNumber >=(today.DayNumber - 30) && t.Date <= today && t.Date.Year == today.Year),
 
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector,  t => t.Depletion == false && t.Date.DayNumber >= (today.DayNumber - 30) && t.Date <= today && t.Date.Year == today.Year&& t.Category ==  "Trading"),
+                        service.ProjectTransactions<GraphableTransactionDto>(selector,  t => t.Depletion == false && t.Date.DayNumber >= (today.DayNumber - 30) && t.Date <= today && t.Date.Year == today.Year&& t.Category ==  "Trading"),
                     ];
 
 					break;
@@ -531,13 +542,13 @@ namespace Benchmarks
 
 					Predicates =
 					[
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.DayNumber >= (today.DayNumber - 90) && t.Date <= today && t.Category !=  "Trading"),
+                        service.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.DayNumber >= (today.DayNumber - 90) && t.Date <= today && t.Category !=  "Trading"),
 
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.DayNumber >= (today.DayNumber-90) && t.Date <= today && t.Category ==  "Trading"),
+                        service.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.DayNumber >= (today.DayNumber-90) && t.Date <= today && t.Category ==  "Trading"),
 
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.DayNumber >= (today.DayNumber-90) && t.Date <= today),
+                        service.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.DayNumber >= (today.DayNumber-90) && t.Date <= today),
 
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.DayNumber >= (today.DayNumber-90) && t.Date <= today && t.Category ==  "Trading"),
+                        service.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.DayNumber >= (today.DayNumber-90) && t.Date <= today && t.Category ==  "Trading"),
                     ];
 
 					break;
@@ -552,13 +563,13 @@ namespace Benchmarks
 
 					Predicates =
 					[
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.Month >= MinBound && t.Date <= today && t.Date.Year == today.Year && t.Category !=  "Trading"),
+                        service.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.Month >= MinBound && t.Date <= today && t.Date.Year == today.Year && t.Category !=  "Trading"),
 
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.Month >= MinBound && t.Date <= today && t.Date.Year == today.Year && t.Category ==  "Trading"),
+                        service.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.Month >= MinBound && t.Date <= today && t.Date.Year == today.Year && t.Category ==  "Trading"),
 
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.Month >= MinBound && t.Date <= today && t.Date.Year == today.Year),
+                        service.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.Month >= MinBound && t.Date <= today && t.Date.Year == today.Year),
 
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.Month >= MinBound && t.Date <= today && t.Date.Year == today.Year && t.Category ==  "Trading"),
+                        service.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.Month >= MinBound && t.Date <= today && t.Date.Year == today.Year && t.Category ==  "Trading"),
                     ];
 
 					break;
@@ -566,13 +577,13 @@ namespace Benchmarks
 				case  TimePeriodsEnum.Year:
 					Predicates =
 					[
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.Year == today.Year && t.Date <= today && t.Category !=  "Trading"),
+                        service.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.Year == today.Year && t.Date <= today && t.Category !=  "Trading"),
 
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.Year == today.Year && t.Date <= today && t.Category ==  "Trading"),
+                        service.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date.Year == today.Year && t.Date <= today && t.Category ==  "Trading"),
 
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.Year == today.Year && t.Date <= today),
+                        service.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.Year == today.Year && t.Date <= today),
 
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.Year == today.Year && t.Date <= today && t.Category ==  "Trading"),
+                        service.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date.Year == today.Year && t.Date <= today && t.Category ==  "Trading"),
                     ];
 
 					break;
@@ -580,13 +591,13 @@ namespace Benchmarks
 				case  TimePeriodsEnum.Today:
                     Predicates =
                     [
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date == today && t.Category !=  "Trading"),
+                        service.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date == today && t.Category !=  "Trading"),
 
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date == today && t.Category ==  "Trading"),
+                        service.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == true && t.Date == today && t.Category ==  "Trading"),
 
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date == today),
+                        service.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date == today),
 
-                        _dataProjectionService.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date == today && t.Category ==  "Trading"),
+                        service.ProjectTransactions<GraphableTransactionDto>(selector, t => t.Depletion == false && t.Date == today && t.Category ==  "Trading"),
                     ];
 
                     break;

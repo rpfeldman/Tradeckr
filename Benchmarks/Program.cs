@@ -9,7 +9,7 @@ namespace Benchmarks
     {
         static void Main(string[] args)
         {
-           BenchmarkRunner.Run<GraphsPageBenchmark>();
+           BenchmarkRunner.Run<DataServicesBenchmarks>();
         }
     }
 }
