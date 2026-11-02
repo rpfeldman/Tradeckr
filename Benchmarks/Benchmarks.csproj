@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BenchmarkDotNet" Version="0.15.8" />
+    <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="3.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Components\DataServices\DataServices.csproj" />
+    <ProjectReference Include="..\Components\DomainModel\DomainModel.csproj" />
+    <ProjectReference Include="..\Components\NetworkServices\NetworkServices.csproj" />
+    <ProjectReference Include="..\Components\Repositories\Repositories.csproj" />
+  </ItemGroup>
+
+</Project>

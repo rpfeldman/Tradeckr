@@ -1,4 +1,5 @@
 <Solution>
+  <Project Path="../Benchmarks/Benchmarks.csproj" Id="bf2f3f64-ddc3-440c-8454-d05275201872" />
   <Project Path="../Components/DataServices/DataServices.csproj" Id="740f01ae-8212-438f-9ec4-b08af83a3e48" />
   <Project Path="../Components/DomainModel/DomainModel.csproj" />
   <Project Path="../Components/NetworkServices/NetworkServices.csproj" Id="b97077bd-3b17-4fa8-a8bd-fb31912b2ed7" />
