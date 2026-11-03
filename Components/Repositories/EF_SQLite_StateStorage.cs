@@ -1,6 +1,7 @@
 ﻿using DomainModel;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
 
 
@@ -341,6 +342,8 @@ namespace Repositories
             }
         }
 
+    
+        // Row-by-row 
         public async Task<OperationResult<int>> UpdateRangeAsync(T[] Entities)
         {
             using var context = new StateStorageDbContext(Options);
@@ -349,6 +352,56 @@ namespace Repositories
             {
                 context.Set<T>().UpdateRange(Entities);
                 var affectedRows = await context.SaveChangesAsync();
+
+                return OperationResult<int>.SuccessfulOperation(affectedRows);
+            }
+            catch (SqliteException ex)
+            {
+                return OperationResult<int>.FaultedOperation(RepositorieErrors.DBProviderError(ex));
+            }
+            catch (DbUpdateException ex)
+            {
+                return OperationResult<int>.FaultedOperation(RepositorieErrors.DBUpdateError(ex));
+            }
+            catch (TimeoutException ex)
+            {
+                return OperationResult<int>.FaultedOperation(RepositorieErrors.TimeoutError(ex));
+            }
+        }
+
+        // Set-based
+        public async Task<OperationResult<int>> UpdateRangeAsync(Action<UpdateSettersBuilder<T>> setter)
+        {
+            using var context = new StateStorageDbContext(Options);
+
+            try
+            {
+                var affectedRows = await context.Set<T>().ExecuteUpdateAsync(setter);
+
+                return OperationResult<int>.SuccessfulOperation(affectedRows);
+            }
+            catch (SqliteException ex)
+            {
+                return OperationResult<int>.FaultedOperation(RepositorieErrors.DBProviderError(ex));
+            }
+            catch (DbUpdateException ex)
+            {
+                return OperationResult<int>.FaultedOperation(RepositorieErrors.DBUpdateError(ex));
+            }
+            catch (TimeoutException ex)
+            {
+                return OperationResult<int>.FaultedOperation(RepositorieErrors.TimeoutError(ex));
+            }
+        }
+
+        // Set-based with filter
+        public async Task<OperationResult<int>> UpdateRangeAsync(Expression<Func<T, bool>> filter, Action<UpdateSettersBuilder<T>> setter)
+        {
+           using var context = new StateStorageDbContext(Options);
+
+            try
+            {
+                var affectedRows = await context.Set<T>().Where(filter).ExecuteUpdateAsync(setter);
 
                 return OperationResult<int>.SuccessfulOperation(affectedRows);
             }

@@ -1,4 +1,5 @@
 ﻿using DomainModel;
+using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
 
 namespace Repositories
@@ -12,6 +13,8 @@ namespace Repositories
         public Task<OperationResult> DeleteRangeAsync(TEntity[] Entities);
         public Task<OperationResult> UpdateAsync(TEntity NewEntity);
         public Task<OperationResult<int>> UpdateRangeAsync(TEntity[] Entities);
+        public Task<OperationResult<int>> UpdateRangeAsync(Action<UpdateSettersBuilder<TEntity>> setter);
+        public Task<OperationResult<int>> UpdateRangeAsync(Expression<Func<TEntity, bool>> filter, Action<UpdateSettersBuilder<TEntity>> setter);
         public Task<OperationResult<bool>> AnyAsync();
         public Task<OperationResult<bool>> AnyAsync(Expression<Func<TEntity, bool>> Predicate);
         public Task<OperationResult> ClearStorageAsync();
