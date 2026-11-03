@@ -18,5 +18,11 @@ namespace DataServices
         {
             return value / currency.ConversionRate;
         }
+        public static decimal CurrencyToCurrency(decimal value, CurrencyDto fromCurrency, CurrencyDto toCurrency) 
+        {
+            var convertedValue = CurrencyToTfu(value, fromCurrency);
+
+            return convertedValue * toCurrency.ConversionRate;
+        }
     }
 }
