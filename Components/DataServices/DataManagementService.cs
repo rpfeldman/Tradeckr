@@ -43,44 +43,10 @@ namespace DataServices
             return await _StateStorage.UpdateAsync(Transaction);
         }
 
-        public async Task<OperationResult> RenameCategoryAsync(string OldName, string NewName) 
+        public async Task<OperationResult<int>> RenameCategoryAsync(string OldName, string NewName)
         {
-            var anyTransactionOperation = await _StateStorage.AnyAsync(t => t.Category == OldName);
-
-            if (!anyTransactionOperation.Success)
-            {
-                return OperationResult.FaultedOperation(anyTransactionOperation.InnerError);
-            }
-            if (!anyTransactionOperation.Result)
-            {
-                return OperationResult.SuccessfulOperation(); // Not an error: no transactions had that name, so there was nothing to rename
-            }
-
-            var getOldTransactionsOperation = await _StateStorage.GetEntitiesAsync(t => t.Category == OldName);
-            
-            if(!getOldTransactionsOperation.Success) { return OperationResult.FaultedOperation(getOldTransactionsOperation.InnerError); }
-
-            var transactions = getOldTransactionsOperation.Result!;
-
-            foreach (var transaction in transactions)
-            {
-                transaction.Category = NewName;
-            }
-
-            var updateRangeOperation = await _StateStorage.UpdateRangeAsync(transactions.ToArray());
-
-            if (updateRangeOperation.Success)
-            {
-                if (updateRangeOperation.Result != transactions.Count())
-                {
-                    return OperationResult.FaultedOperation(ServiceErrors.PartialRegistrationError("movements", "renamed"));
-                }
-
-                return OperationResult.SuccessfulOperation();
-            }
-
-            return OperationResult.FaultedOperation(updateRangeOperation.InnerError);
-        }
+            return await _StateStorage.UpdateRangeAsync(t => t.Category == OldName, s => s.SetProperty(t => t.Category, NewName));
+        } 
 
         public async Task<OperationResult<int>> UpdateRangeAsync(Action<UpdateSettersBuilder<TransactionDto>> setter)
         {
