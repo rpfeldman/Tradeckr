@@ -1,21 +1,27 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using DataServices;
 using DomainModel;
 using GENAP_MAUI.CustomViews;
+using GENAP_MAUI.InnerComponents;
 using GENAP_MAUI.Resources.Strings;
 using Microsoft.Maui.ApplicationModel.Communication;
+using NetworkServices;
 using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace GENAP_MAUI.ViewModels
 {
-    public sealed partial class SettingsPageViewModel(CustomDialogsService customDialogsService) : BaseViewModel
+    public sealed partial class SettingsPageViewModel(CustomDialogsService customDialogsService, DataManagementService dataManagementService, CurrencyPersistenceService currencyPersistenceService) : BaseViewModel
     {
         private readonly CustomDialogsService _customDialogsService = customDialogsService;
+        private readonly DataManagementService _dataManagementService = dataManagementService;
+        private readonly CurrencyPersistenceService _currencyPersistenceService = currencyPersistenceService;
 
         private bool _IsLoading;
         private bool[] AppearanceSettings = new bool[4];
@@ -59,7 +65,10 @@ namespace GENAP_MAUI.ViewModels
         // Currency settings properties
         
         [ObservableProperty]
-        public partial CurrencyDto PickedCommonCurrency { get; set;}
+        public partial CurrencyDto PickedCommonCurrency { get; set; }
+
+        [ObservableProperty]
+        public partial CurrencyDto PickedTradingCurrency { get; set; }
 
         [ObservableProperty]
         public partial KeyValuePair<bool, string> PickedUpdateRateOption { get; set; }
@@ -119,7 +128,43 @@ namespace GENAP_MAUI.ViewModels
 
                 if (CurrencySettings[2])
                 {
-                    // TO DO
+                    Expression<Func<TransactionDto, decimal>> formula = t => t.Value * PickedTradingCurrency.ConversionRate;
+
+                    var updateTransactionsOperation = await _dataManagementService.UpdateRangeAsync
+                        (
+                        s =>
+                            s.SetProperty(t => t.Value, formula)
+                        );
+
+                    if (!updateTransactionsOperation.Success)
+                    {
+                        await _customDialogsService.ShowAlertDialogAsync(AppResources.Error_AlertTitle, updateTransactionsOperation.InnerError!.ErrorMessage, AppResources.Accept_AlertButton);
+
+                        return;
+                    }
+
+                     CurrenciesRatesService currenciesRatesService = new(PickedTradingCurrency.IsoCode);
+
+                            var updateRatesOperation = await currenciesRatesService.UpdateCurrenciesRatesAsync(GlobalResources.Currencies, DateOnly.FromDateTime(Preferences.Get(PreferenceKeys.LastRateUpdateKey, DateTime.Today)));
+
+                                updateRatesOperation.WriteLog($"Update the currencies rates");
+                    
+                            if(!updateRatesOperation.Success)
+                            {
+                                System.Diagnostics.Debug.WriteLine(updateRatesOperation.InnerError!.ErrorMessage);
+                                return;
+                            }
+
+                            var updateCurrenciesOperation = await _currencyPersistenceService.UpdateRangeAsync(GlobalResources.Currencies);
+                                updateCurrenciesOperation.WriteLog("Update the currencies rates in the storage");
+
+                            if (!updateRatesOperation.Success)
+                            {
+                                System.Diagnostics.Debug.WriteLine(updateCurrenciesOperation.InnerError!.ErrorMessage);
+                                return;
+                            }
+                             
+                    Preferences.Set(PreferenceKeys.TradingCurrencyKey, PickedTradingCurrency.Id - 1);
                 }
 
                 if (CurrencySettings[3])
@@ -239,6 +284,7 @@ namespace GENAP_MAUI.ViewModels
             PickedLanguage = LanguagesList.Where(c => c.Value == AppResources.CurrentLanguageName).FirstOrDefault();
 
             PickedCommonCurrency = GlobalResources.DefaultCommonCurrency;
+            PickedTradingCurrency = GlobalResources.DefaultTradingCurrency;
             PickedUpdateRateOption = Preferences.Get(PreferenceKeys.UpdateRatesKey, true) ? UpdateRatesOptionsList[0] : UpdateRatesOptionsList[1];
             
 
@@ -295,6 +341,18 @@ namespace GENAP_MAUI.ViewModels
            Settings_HasChanged = true;
 
             Log.Information($"Possible setting: Common currency changed to '{value.IsoCode}' (Settings page)");
+        }
+
+        partial void OnPickedTradingCurrencyChanged(CurrencyDto value)
+        {
+            if(_IsLoading) { return; }
+
+           CurrencySettings[0] = true;
+           CurrencySettings[2] = true;
+
+           Settings_HasChanged = true;
+
+            Log.Information($"Possible setting: Trading currency changed to '{value.IsoCode}' (Settings page)");
         }
 
         partial void OnPickedUpdateRateOptionChanged(KeyValuePair<bool, string> value)

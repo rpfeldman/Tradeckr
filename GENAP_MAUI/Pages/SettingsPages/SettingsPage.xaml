@@ -80,7 +80,10 @@
                     <VerticalStackLayout Spacing="6" Padding="0">
                         <Label Text="{x:Static strings:AppResources.TradingCurrency_Label}" Style="{StaticResource FieldLabel}" />
                         <Border Style="{StaticResource InputField}">
-                            <Picker IsEnabled="False" Title="{x:Static strings:AppResources.PickTradingCurrency_PickerTitle}" />
+                            <Picker Title="{x:Static strings:AppResources.PickTradingCurrency_PickerTitle}" 
+                                    ItemsSource="{x:Static local:GlobalResources.Currencies}"
+                                    ItemDisplayBinding="{Binding CurrencyDisplayName}"
+                                    SelectedItem="{Binding PickedTradingCurrency}"/>
                         </Border>
                         <Label Style="{StaticResource SettingsHint}"
                                Text="{x:Static strings:AppResources.BaseCurrency_Caption}" />
