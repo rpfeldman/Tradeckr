@@ -1,10 +1,13 @@
 ﻿using DomainModel;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
+using Microsoft.EntityFrameworkCore.Query;
 using Repositories;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Linq.Expressions;
+using System.Numerics;
 using System.Text;
 using System.Xml.Linq;
 
@@ -77,6 +80,15 @@ namespace DataServices
             }
 
             return OperationResult.FaultedOperation(updateRangeOperation.InnerError);
+        }
+
+        public async Task<OperationResult<int>> UpdateRangeAsync(Action<UpdateSettersBuilder<TransactionDto>> setter)
+        {
+            return await _StateStorage.UpdateRangeAsync(setter);
+        }
+        public async Task<OperationResult<int>> UpdateRangeAsync(Expression<Func<TransactionDto, bool>> filter, Action<UpdateSettersBuilder<TransactionDto>> setter)
+        {
+            return await _StateStorage.UpdateRangeAsync(filter, setter);
         }
 
         public async Task<OperationResult> RemoveTransactionAsync(int TransactionId)
