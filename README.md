@@ -117,7 +117,7 @@ In short: build on top of it, improve it, even sell it, as long as it stays open
 
 "GENAP" was the project's original name, before it became Tradeckr. For convenience, it was kept as the name of the main UI namespace.
 
-Fun fact: the name is a mix of two words. My partner's name is Genaro, "Gena" for short, and at the beginning this was just an app for him. **Gena + App = GENAP.**
+Fun fact: the name is a mix of two words. My co-founder’s name is Genaro, “Gena” for short, and at the beginning this was just an app for him. Gena + App = GENAP.
 
 </details>
 
