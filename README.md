@@ -1,190 +1,163 @@
-# Tradeckr 📊
 
-A **multi-platform finance management application for traders** built with C# and .NET. Tradeckr allows traders to track transactions, manage portfolios, and analyze trading activity across desktop, web, and mobile platforms.
+<div align="center">
 
-> ⚠️ **Status**: Work in progress — core architecture complete, UI/UX refinement ongoing.
+# Tradeckr
+<img src="docs/images/logo.png" alt="Tradeckr logo" width="120" />
 
----
+**Your money, your control**
 
-## Architecture
+<!-- TODO: revisar/ajustar badges -->
+![.NET](https://img.shields.io/badge/.NET-10-512BD4?logo=dotnet)
+![Platforms](https://img.shields.io/badge/platforms-Android%20%7C%20iOS%20%7C%20Windows%20%7C%20MacOs-informational)
+![License](https://img.shields.io/badge/license-GPL--3.0-blue)
+![Status](https://img.shields.io/badge/status-beta-orange)
 
-Tradeckr is built on a **layered, domain-driven architecture**:
-
-```
-GENAP_MAUI (UI Layer)
-    ↓
-Components/
-├── DataServices (Business Logic)
-├── Repositories (Data Access Abstraction)
-├── NetworkServices (External API Integration)
-└── DomainModel (Core Entities & DTOs)
-```
-
-### Key Components
-
-| Layer | Purpose | Technologies |
-|-------|---------|---------------|
-| **Presentation** | Cross-platform UI | .NET MAUI (desktop, iOS, Android) |
-| **Business Logic** | Domain operations | DataServices with OperationResult pattern |
-| **Data Access** | Abstracted persistence | Generic repository pattern with EF Core & SQLite |
-| **Domain Model** | Core entities | DTOs, strongly-typed Option/Result types |
+</div>
 
 ---
 
-## Features
+## Table of Contents
 
-### Core Functionality
-- 📌 **Transaction Management** — Record trades with categories, currencies, and metadata
-- 💾 **Multi-Storage Support** — SQLite (local), with extensible repository pattern
-- 🎯 **Portfolio Tracking** — Aggregate trades by category and currency
-- 🔄 **Result-Based Error Handling** — Railway-oriented result pattern for safe operations
-
-### Architecture Highlights
-- **Generic Repository Pattern** — `IStateStorage<T>` for any entity type
-- **Dependency Inversion** — Swappable implementations (SQLite, future SQL Server, Dapper)
-- **Type-Safe Operations** — `Option<T>` and `OperationResult<T>` for explicit error handling
-- **Platform-Agnostic** — Shared business logic across UI platforms
+- [Overview](#overview)
+- [FAQ](#faq)
+- [Architecture](#architecture)
+- [Key Decisions](#key-decisions)
+- [Benchmarks](#benchmarks)
+- [Getting Started](#getting-started)
+- [License](#license)
+- [Credits](#credits)
 
 ---
 
-## Project Structure
+## Overview
 
-```
-Components/
-├── DomainModel/              # Core types
-│   ├── TransactionDto.cs     # Trade record entity
-│   ├── CategoryDto.cs        # Transaction category
-│   ├── CurrencyDto.cs        # Currency type
-│   └── Result&Option.cs      # Error handling types
-│
-├── Repositories/             # Data access layer
-│   └── EF_SQLite_StateStorageRepo.cs   # Generic CRUD repository
-│
-├── DataServices/             # Business logic
-│   └── [Service implementations]
-│
-└── NetworkServices/          # External integrations
-    └── [API clients]
+Cross-platform personal finance manager, built for day **traders**, but made for **everyone**!
+### Features
 
-GENAP_MAUI/                  # .NET MAUI application
-├── Pages/                   # Page views
-├── ViewModels/              # MVVM view models
-├── CustomViews/             # Reusable UI components
-├── Resources/               # Strings, colors, fonts
-└── MauiProgram.cs          # DI setup & bootstrapping
-```
+- 📝 **Track your everyday money:** log your daily income and expenses in seconds.
 
----
+- 🔁 **Set it and forget it:** salary, rent, subscriptions... register recurring transactions once and Tradeckr handles the rest.
 
-## Technology Stack
+- 📈 **Wins and losses, in the same place:** keep a record of your trading profits and losses, right next to your everyday finances.
 
-- **Language**: C# 12+
-- **Frameworks**: 
-  - .NET 8+ (Core runtime)
-  - ASP.NET MAUI (Cross-platform UI)
-  - Entity Framework Core (ORM)
-- **Database**: SQLite (default), extensible to SQL Server/others
-- **Architecture**: Layered + Domain-Driven Design
-- **Error Handling**: Railway-oriented programming with custom `Result<T>` and `Option<T>`
+- 📊 **See your decisions:** charts that show where your money goes, and how your trading is really doing.
+
+- 🌎 **One place, many currencies:** see your money automatically converted to other currencies at any time.
+
+- 💱 **Always up to date:** exchange rates update daily, so you can see how your money's real value changes over time.
+
+- 🔒 **Your data stays with you:** everything is stored locally on your device. No accounts, no servers, nothing uploaded.
+
+> [!NOTE]
+> Tradeckr **does not handle real money** and is not a wallet. It only tracks your finances: no bank connections, no payments, no transfers.
+
+### Screenshots
+
+
 
 ---
 
-## Getting Started
+## FAQ
 
-### Prerequisites
-- [.NET 8 SDK](https://dotnet.microsoft.com/download) or later
-- Visual Studio 2022+ or Rider
+<details>
+<summary><b>Is it paid <i>and</i> open source?</b></summary>
 
-### Building
+Yes, and that apparent contradiction is completely on purpose.
 
-```bash
-# Clone the repository
-git clone https://github.com/rpfeldman/Tradeckr.git
-cd Tradeckr
+Of course, this means anyone can clone the repo and use the app for free. But the way I see it, that's not a problem. It's actually a sign of success: if someone takes the time to clone the repo, compile it and use it, it means I achieved what I wanted, which is people wanting to use Tradeckr.
 
-# Restore dependencies
-dotnet restore
+So go ahead: clone it, learn from it, test it, build your own version. I don't mind at all.
 
-# Build the MAUI application
-cd GENAP_MAUI
-dotnet build
-```
+And if Tradeckr ends up being part of your daily routine, consider buying it to support the project. But again, you're free to use it without paying.
 
-### Running
+</details>
 
-```bash
-# Run desktop app
-cd GENAP_MAUI
-dotnet run
-```
+<details>
+<summary><b>What is it built with?</b></summary>
+
+Tradeckr is built entirely in **C#** with **.NET 10 MAUI**, and uses these libraries:
+
+- **Entity Framework Core + SQLite:** local data storage
+- **CommunityToolkit.Mvvm:** MVVM infrastructure
+- **CommunityToolkit.Maui.MediaElement:** the splash animation
+- **LiveChartsCore + SkiaSharp:** charts
+- **Serilog:** logging
+
+</details>
+
+<details>
+<summary><b>Can I fork it?</b></summary>
+
+Of course!
+
+Feel free to fork it and make your own version.
+
+And if you do, reach out and show me! I'd be glad to see it.
+
+</details>
+
+<details>
+<summary><b>Can I fork it <i>and</i> sell it?</b></summary>
+
+Yes, you can! The license allows it, but with a few rules:
+
+- **It stays open source.** Your version must be released under the same license ([GPL-3.0](LICENSE)), and anyone who gets your app must be able to get its source code too. Taking Tradeckr and selling it as closed source is not allowed.
+- **New name, new look.** "Tradeckr", its logo and its visual identity are not part of the license. Your version needs its own name and logo.
+- **Give credit.** Keep the original copyright notice and mention that your version is based on Tradeckr.
+- **Don't pretend to be the original.** It has to be clear that your version is a modified one, not the official Tradeckr.
+
+All the details are in [NOTICE.md](NOTICE.md).
+
+In short: build on top of it, improve it, even sell it, as long as it stays open and honest about where it came from.
+
+</details>
+
+<details>
+<summary><b>What does GENAP means?</b></summary>
+
+"GENAP" was the project's original name, before it became Tradeckr. For convenience, it was kept as the name of the main UI namespace.
+
+Fun fact: the name is a mix of two words. My partner's name is Genaro, "Gena" for short, and at the beginning this was just an app for him. **Gena + App = GENAP.**
+
+</details>
+
+<details>
+<summary><b>Was it built with AI?</b></summary>
+
+Mostly no. Tradeckr was solo-developed by me, handwriting code the old-fashioned way. No AI agents writing the app for me.
+
+The whole architecture is mine: how responsibilities are split, the domains, the repository, the main systems. All of it was thought through and coded by me.
+
+Where I did use AI was the visual side. I think I'm a pretty good programmer, but not much of an artist, so I used AI as a helper to make the app look good: styles, layouts and the look of the charts.
+
+**In short:** the frontend (XAML and the LiveCharts code) was AI-assisted. The architecture and the core C# code were made by me.
+
+</details>
+
+<details>
+<summary><b>Where is my data stored? Can you see it?</b></summary>
+
+Tradeckr uses SQLite, which means all your data is stored **locally, on your device**. No accounts, no servers.
+
+So no, neither I nor any company has access to your financial information. **I can't see your income or your expenses.**
+
+The only thing worth knowing: depending on your device and settings, Android may automatically back up app data to **your own Google account**. That backup belongs to you, not to me or Tradeckr
+
+</details>
+
+<details>
+<summary><b>Want to help?</b></summary>
+
+You're more than welcome! There are a few ways to do it:
+
+- 💡 **Ideas:** if you'd like a new feature, or you spot a system that could be optimized, tell me about it.
+- 🛠️ **Code:** clone the repo, build the feature yourself and send me a pull request.
+- 🌍 **Translations:** if you speak a language Tradeckr doesn't support yet, I'd love your help adding it.
+
+For any of these, reach out at [ramirofeldman0@gmail.com](mailto:ramirofeldman0@gmail.com).
+
+</details>
 
 ---
 
-## Key Design Patterns
-
-### 1. **Generic Repository Pattern**
-```csharp
-public interface IStateStorage<T> where T : class, IEntity
-{
-    Task<OperationResult> SaveAsync(T entity);
-    Task<OperationResult<IEnumerable<T>>> GetAllAsync();
-    Task<OperationResult> DeleteAsync(int id);
-    // ... more operations
-}
-```
-
-### 2. **Result-Based Error Handling**
-Replaces exceptions with explicit `OperationResult<T>`:
-```csharp
-var result = await repository.SaveAsync(transaction);
-if (result.IsSuccess)
-{
-    // Handle success
-}
-else
-{
-    // result.Error contains error details
-}
-```
-
-### 3. **Dependency Injection**
-MauiProgram.cs configures all services:
-```csharp
-builder.Services.AddSingleton<IStateStorage<Transaction>>(
-    _ => new EF_SQLite_StateStorageRepo<Transaction>(path)
-);
-```
-
----
-
-## Development Notes
-
-- **Decimal Precision**: SQLite stores decimals as TEXT; precision configuration is database-agnostic
-- **Async Throughout**: All repository operations are async-first
-- **No Tracking**: Read operations use `.AsNoTracking()` for performance
-- **Future Extensibility**: Repository layer designed to swap EF Core for Dapper/raw SQL as needed
-
----
-
-## Roadmap
-
-- [ ] Complete UI/UX for dashboard
-- [ ] Add reporting & analytics views
-- [ ] Implement data export (CSV, PDF)
-- [ ] Add broker API integrations (market data)
-- [ ] Web backend API (ASP.NET Core)
-- [ ] Cloud sync across devices
-
----
-
-## License
-
-Licensed under the [Apache License 2.0](LICENSE).
-
----
-
-## Author
-
-**rpfeldman** — Building practical finance tools with clean architecture in mind.
-
-**Learn more**: [GitHub Profile](https://github.com/rpfeldman)
+in progress...
