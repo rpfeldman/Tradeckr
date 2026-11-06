@@ -2,7 +2,7 @@
 <div align="center">
 
 # Tradeckr
-<img src="docs/images/logo.png" alt="Tradeckr logo" width="120" />
+<img src="docs/images/Logo.png" alt="Tradeckr logo" width="120" />
 
 **Your money, your control**
 
