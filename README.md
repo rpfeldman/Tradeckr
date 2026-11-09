@@ -154,7 +154,9 @@ You're more than welcome! There are a few ways to do it:
 For any of these, reach out at [ramirofeldman0@gmail.com](mailto:ramirofeldman0@gmail.com).
 
 </details>
+
 ---
+
 ## Architecture
 
 Tradeckr uses the **MVVM** pattern, which means that the interactive behavior of each XAML page lives in a stateful object called **ViewModel**.
