@@ -318,5 +318,91 @@ I know there are some missing codes, like `0` and `9`... I'm only human after al
 
 ---
 
+## Key Decisions
+
+This section shows some of the decisions I had to make, in a summarized form.
+### TFU (Tradeckr Fixed Unit)
+
+When I decided to make Tradeckr multi-currency, I wanted a simple system where the user could see all their data converted to other currencies... but it wasn't that easy, because I ran into two problems: an economic one and a technical one.
+
+**The economic problem: rates change. A LOT.**
+
+As an Argentinian, I know how a currency's conversion rate can change every single day, so I couldn't just hardcode something like "1 USD = 1500 ARS": the app would be outdated in days.
+
+I had two options: either push an update every single day, reading the market and changing the hardcoded values by hand... or use an API that does that for me. Thankfully, there's a free and open source exchange API maintained by [fawazahmed0](https://github.com/fawazahmed0/exchange-api).
+
+**The technical problem: how do you show the same data in any currency?**
+
+How could a user see their data in other currencies, regardless of the currency they originally entered it in?
+
+And that's how the idea of the TFU came to my mind.
+
+In Tradeckr's implementation, every transaction is stored in the same unit, no matter the currency it was registered in. That unit is the **TFU**, and it's always worth the same as the root currency.
+
+**So how can you switch between currencies if every value is stored in the root currency?**
+
+Because every currency is stored with its conversion rate updated daily against the root currency. Showing a transaction in any currency is just one multiplication away.
+### The root currency is the trading currency
+
+The TFU is anchored to the currency the user trades in. A day-trader doesn't want to see their money adjusted by anyone's inflation, they want to see that it's still **there**, in the currency they operate with. Every other currency is calculated against it.
+
+**A feature for some, a bug for others.**
+
+This decision has a side effect. Let's say you're an Argentinian who trades in USD but lives your daily life in ARS. If you look at a transaction from 6 months ago in pesos, you'll probably see a different amount than the one you registered, because it's converted with **today's** rate.
+
+Maybe that's exactly what you want: it's the same **value**, just a different **amount** (thanks, inflation). Or maybe you want a perfect log of the exact amount of every transaction... in that case, you can just disable the daily rate update in the settings.
+### Rates are stored, not fetched every time
+
+Rates come from [exchange-api](https://github.com/fawazahmed0/exchange-api) and are updated once a day.
+
+The easy way would've been fetching them every time the app starts... but that would've made internet **mandatory** just to open a finance tracker, and I don't believe software should work like that. An app that lives on your device should work on your device, with or without a connection.
+
+So rates are persisted in the database. You only need internet **the very first time** you open Tradeckr, to get the initial rates. After that, you can open it on a plane, in the middle of nowhere or wherever you want: it just works with the last rates it got, and updates them the next time you're online.
+
+(I couldn't use MAUI `Preferences` for this: they don't support `decimal`, and precision is the whole point of the TFU.)
+### Changing the root currency recalculates EVERYTHING
+
+This was the last feature I implemented before the beta, and I left it for the end on purpose: the root currency is the unit **every single transaction** is stored in. Touching it means touching all of them.
+
+Think about it: if my root currency is USD and I change it to ARS without doing anything else, my 77 USD expense suddenly becomes a 77 ARS expense... a 99.9% discount nobody asked for.
+
+So when the root currency changes, every transaction has to be converted. My first thought was the obvious one: load them all, convert them one by one and save them back. But a currency conversion is just the same multiplication applied to every row, so I went with a single set-based `UPDATE` that does it directly in the database, without loading anything into memory.
+
+And of course, I measured it (see [Benchmarks](#benchmarks)).
+### Categories are just names
+
+At first, categories lived in the UI layer, with a `ColorDto` inside. But the user never *writes* a category: they pick it from a list they can edit. So categories became their own entity in the domain... and that's when the obvious "correct" idea showed up: make `TransactionDto` point to `CategoryDto` with a foreign key.
+
+I didn't. That would've complicated my life for no reason.
+
+`TransactionDto` only stores the category's **name** as a string, and that's it. No foreign keys, no relationships. And I kept it that way because each piece only knows what it needs to know:
+
+- **`TransactionDto`** only knows how to put a name on a transaction's category. It doesn't know which categories exist, and it doesn't care.
+- **`CategoryDto`** only knows its name and its hex color. It doesn't care about transactions, or about what the color is *called*.
+- **`ColorDto`** stays in the View. It doesn't know anything about money or categories: it only knows it's a color with a display name, because only the UI cares about that.
+
+The charts connect them by name: if there's a category called "Subscriptions", transactions with that name are painted with its color. If there isn't, they use a fallback color. Everything stays decoupled, and nothing breaks if a category is deleted.
+### Fixed transactions are N transactions
+
+A fixed transaction of 12 months is stored as **12 rows**, one per month. Simple enough... until you ask: how do you know those 12 rows belong together?
+
+That's where I gave every fixed transaction **two identities**:
+
+- **`Id`:** its own individual ID, like any other transaction.
+- **`FixedTransactionId`:** the ID of the **series** it belongs to, shared by all 12 rows.
+
+And each one also stores its `Duration` as a countdown: the first month has 12, the next one 11, and so on, so every occurrence knows how many months are left from it.
+
+With that, the user can work at any level they want:
+
+- Edit or delete **one** occurrence, using its `Id`.
+- Delete **from this month on**, using the `FixedTransactionId` and the countdown.
+- Delete the **whole series**, using only the `FixedTransactionId`.
+
+One catch: EF Core can't generate values for columns that aren't keys, so I generate the series ID myself.
+### Deleting everything should be hard
+
+---
+
 in progress...
 
