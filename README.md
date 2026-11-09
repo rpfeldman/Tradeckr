@@ -400,7 +400,10 @@ With that, the user can work at any level they want:
 - Delete the **whole series**, using only the `FixedTransactionId`.
 
 One catch: EF Core can't generate values for columns that aren't keys, so I generate the series ID myself.
+
 ### Deleting everything should be hard
+
+Clearing the storage is irreversible, so I made it intentionally annoying: a separate page with a big red warning, and a final confirmation before anything is deleted. If you clear your data, it's because you **really** wanted to.
 
 ---
 
