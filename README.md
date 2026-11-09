@@ -6,7 +6,6 @@
 
 **Your money, your control**
 
-<!-- TODO: revisar/ajustar badges -->
 ![.NET](https://img.shields.io/badge/.NET-10-512BD4?logo=dotnet)
 ![Platforms](https://img.shields.io/badge/platforms-Android%20%7C%20iOS%20%7C%20Windows%20%7C%20MacOs-informational)
 ![License](https://img.shields.io/badge/license-GPL--3.0-blue)
@@ -52,8 +51,6 @@ Cross-platform personal finance manager, built for day **traders**, but made for
 > Tradeckr **does not handle real money** and is not a wallet. It only tracks your finances: no bank connections, no payments, no transfers.
 
 ### Screenshots
-
-
 
 ---
 
@@ -157,9 +154,6 @@ You're more than welcome! There are a few ways to do it:
 For any of these, reach out at [ramirofeldman0@gmail.com](mailto:ramirofeldman0@gmail.com).
 
 </details>
-
----
-
 ---
 ## Architecture
 
