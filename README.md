@@ -436,5 +436,47 @@ When optimizing methods, I benchmark them with [BenchmarkDotNet](https://github.
 
 ---
 
+## Getting Started
+
+### Prerequisites
+
+- [.NET 10 SDK](https://dotnet.microsoft.com/download)
+- To run it on Android: the Android SDK (Visual Studio installs it with the MAUI workload) and an emulator or a physical device
+- *Optional:* Visual Studio 2026 with the **.NET Multi-platform App UI development** workload
+
+### Clone and run
+
+```bash
+git clone https://github.com/rpfeldman/Tradeckr.git
+cd Tradeckr/GENAP_MAUI
+./Restore.ps1
+```
+
+`Restore.ps1` restores all the NuGet packages and the required .NET workloads in one go.
+
+> [!TIP]
+> If PowerShell blocks the script, run this first:
+> ```powershell
+> Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+> ```
+> It only applies to the current terminal session.
+
+**From Visual Studio:** open `GENAP_MAUI/GENAP_MAUI.slnx`, set `GENAP_MAUI` as the startup project, pick a target (*Windows Machine* or an Android device/emulator) and press **F5**.
+
+**From the command line:**
+
+```bash
+# Windows
+dotnet build GENAP_MAUI.csproj -t:Run -f net10.0-windows10.0.19041.0
+
+# Android (with an emulator running or a device connected)
+dotnet build GENAP_MAUI.csproj -t:Run -f net10.0-android
+```
+
+> [!NOTE]
+> Building for iOS requires a Mac. If you don't have one, you can rent a cloud Mac or build it with **GitHub Actions** using a macOS runner, which is the approach I'm setting up for Tradeckr.
+
+---
+
 in progress...
 
