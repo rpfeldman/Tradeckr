@@ -489,5 +489,17 @@ If you want to fork it and sell it, please read [NOTICE](NOTICE.md) first.
 
 ---
 
-in progress...
+## Credits
 
+Co-founded, led and solo-developed by [Ramiro Pablo Feldman](https://github.com/rpfeldman).
+Conceived, distributed and co-founded by [Genaro Valentin Sgrilli](https://www.instagram.com/gena_trades/).
+
+### Special thanks
+
+- [James Montemagno](https://github.com/jamesmontemagno) and [Gerald Versluis](https://github.com/jfversluis), for the public education about .NET MAUI that made this project possible.
+- [Fawaz Ahmed](https://github.com/fawazahmed0), for creating the exchange API that made the multi-currency system possible.
+- [Beto Rodriguez](https://github.com/beto-rodriguez), for creating LiveChartsCore, which made the charts possible.
+- Everyone who has contributed to essential tools such as [BenchmarkDotNet](https://github.com/dotnet/BenchmarkDotNet), the [CommunityToolkit libraries](https://github.com/CommunityToolkit/dotnet) and [Serilog](https://github.com/serilog/serilog).
+- And of course, the whole [.NET team](https://github.com/dotnet).
+
+At the end of the day, even a solo-developed project needs hundreds of people who worked on the tools you use.
