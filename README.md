@@ -407,5 +407,34 @@ Clearing the storage is irreversible, so I made it intentionally annoying: a sep
 
 ---
 
+## Benchmarks
+
+When optimizing methods, I benchmark them with [BenchmarkDotNet](https://github.com/dotnet/BenchmarkDotNet). It gives me a realistic proof of improvement, even when the difference between two versions is just a couple of lines.
+### Why I benchmark
+
+1. **To know if a refactor REALLY worked.** Too many times we assume we improved the code just because it **looks** better, without ever measuring it.
+
+2. **To choose between two versions of the same logic.** When I refactored `GraphsPageViewModel`, I couldn't decide between filtering the data with a manual loop or with LINQ. So I measured both, and LINQ won. Notice how LINQ is usually considered the "heavy" option... and yet, sometimes it's the right call... for me, it was.
+
+3. **To prove an improvement is real before shipping it.** If I can't measure it, it's not an improvement yet, it's just a theory.
+
+### My rules
+
+1. **Test with a VARIETY of parameters.** The same method can behave very differently depending on its input, so every benchmark runs with different parameters to see how it reacts.
+
+2. **Make it hard on purpose.** Every benchmark uses a setup that pushes the methods to a difficult point. Writing a method that works with 5 rows is easy; the hard part is making it work with 1,000.
+
+3. **Don't just look at the average time.** Allocated memory and standard deviation matter just as much: a method that's fast on average but allocates a lot, or varies wildly between runs, isn't really fast.
+
+
+### Examples
+
+| Optimization                             | Speed           | Memory        | Details             |
+| ---------------------------------------- | --------------- | ------------- | ------------------- |
+| Chart data loading (4 queries → 1)       | **2.6x** faster | **3.4x** less | [Results](Benchmarks/Results/2026-11-02-GraphsPage-FillChartsMethods.md) |
+| Category rename (row-by-row → set-based) | **4.5x** faster | **86x** less  | [Results](Benchmarks/Results/2026-11-04-DataServices-RenameCategoryMethod.md) |
+
+---
+
 in progress...
 
