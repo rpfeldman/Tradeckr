@@ -478,5 +478,16 @@ dotnet build GENAP_MAUI.csproj -t:Run -f net10.0-android
 
 ---
 
+## License
+
+Licensed under the [GNU General Public License v3.0](LICENSE).
+
+If you want to fork it and sell it, please read [NOTICE](NOTICE.md) first.
+
+
+**Disclaimer:** as I mentioned before, I'd be glad if someone wants to fork the repo to learn, experiment, build new features or just use it. I think community is what makes a product big, and if someone takes my repo, I'll feel **proud**. But of course, if you want to CLONE IT for COMMERCIAL PURPOSES, you have to follow the rules in [NOTICE.md](NOTICE.md).
+
+---
+
 in progress...
 
