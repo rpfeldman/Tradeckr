@@ -52,6 +52,162 @@ Cross-platform personal finance manager, built for day **traders**, but made for
 
 ### Screenshots
 
+> [!TIP]
+> Screenshots follow your GitHub theme: switch between light and dark mode to see both.
+
+#### Android
+
+<div align="center">
+
+<table>
+<tr>
+<td align="center">
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/screenshots/android/dark/android-dashboard-dark.png">
+  <img src="docs/images/screenshots/android/light/android-dashboard-light.png" alt="Android dashboard screen" width="250">
+</picture>
+
+<b>Dashboard</b>
+
+</td>
+<td align="center">
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/screenshots/android/dark/android-transaction-dark.png">
+  <img src="docs/images/screenshots/android/light/android-transaction-light.png" alt="Android transaction screen" width="250">
+</picture>
+
+<b>Transaction</b>
+
+</td>
+<td align="center">
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/screenshots/android/dark/android-expense-dark.png">
+  <img src="docs/images/screenshots/android/light/android-expense-light.png" alt="Android expense screen" width="250">
+</picture>
+
+<b>Expenses</b>
+
+</td>
+</tr>
+<tr>
+<td align="center">
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/screenshots/android/dark/android-trade-dark.png">
+  <img src="docs/images/screenshots/android/light/android-trade-light.png" alt="Android trade screen" width="250">
+</picture>
+
+<b>Trade</b>
+
+</td>
+<td align="center">
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/screenshots/android/dark/android-balance-trend-dark.png">
+  <img src="docs/images/screenshots/android/light/android-balance-trend-light.png" alt="Android balance trend screen" width="250">
+</picture>
+
+<b>Balance trend</b>
+
+</td>
+<td align="center">
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/screenshots/android/dark/android-pnl-dark.png">
+  <img src="docs/images/screenshots/android/light/android-pnl-light.png" alt="Android PNL screen" width="250">
+</picture>
+
+<b>PnL</b>
+
+</td>
+</tr>
+</table>
+
+</div>
+
+<details>
+<summary><b>Windows</b></summary>
+
+<br>
+
+<div align="center">
+
+<table>
+<tr>
+<td align="center">
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/screenshots/windows/dark/windows-dashboard-dark.png">
+  <img src="docs/images/screenshots/windows/light/windows-dashboard-light.png" alt="Windows dashboard screen" width="420">
+</picture>
+
+<b>Dashboard</b>
+
+</td>
+<td align="center">
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/screenshots/windows/dark/windows-transaction-dark.png">
+  <img src="docs/images/screenshots/windows/light/windows-transaction-light.png" alt="Windows transaction screen" width="420">
+</picture>
+
+<b>Transaction</b>
+
+</td>
+</tr>
+<tr>
+<td align="center">
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/screenshots/windows/dark/windows-expense-dark.png">
+  <img src="docs/images/screenshots/windows/light/windows-expense-light.png" alt="Windows expense screen" width="420">
+</picture>
+
+<b>Expenses</b>
+
+</td>
+<td align="center">
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/screenshots/windows/dark/windows-trade-dark.png">
+  <img src="docs/images/screenshots/windows/light/windows-trade-light.png" alt="Windows trade screen" width="420">
+</picture>
+
+<b>Trade</b>
+
+</td>
+</tr>
+<tr>
+<td align="center">
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/screenshots/windows/dark/windows-balance-trend-dark.png">
+  <img src="docs/images/screenshots/windows/light/windows-balance-trend-light.png" alt="Windows balance trend screen" width="420">
+</picture>
+
+<b>Balance trend</b>
+
+</td>
+<td align="center">
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/screenshots/windows/dark/windows-pnl-dark.png">
+  <img src="docs/images/screenshots/windows/light/windows-pnl-light.png" alt="Windows PNL screen" width="420">
+</picture>
+
+<b>PnL</b>
+
+</td>
+</tr>
+</table>
+
+</div>
+
+</details>
+
 ---
 
 ## FAQ
