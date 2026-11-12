@@ -65,7 +65,7 @@ Cross-platform personal finance manager, built for day **traders**, but made for
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/images/screenshots/android/dark/android-dashboard-dark.png">
-  <img src="docs/images/screenshots/android/light/android-dashboard-light.png" alt="Android dashboard screen" width="250">
+  <img src="docs/images/screenshots/android/light/android-dashboard-light.png" alt="Android dashboard screen" width="190">
 </picture>
 
 <b>Dashboard</b>
@@ -75,7 +75,7 @@ Cross-platform personal finance manager, built for day **traders**, but made for
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/images/screenshots/android/dark/android-transaction-dark.png">
-  <img src="docs/images/screenshots/android/light/android-transaction-light.png" alt="Android transaction screen" width="250">
+  <img src="docs/images/screenshots/android/light/android-transaction-light.png" alt="Android transaction screen" width="190">
 </picture>
 
 <b>Transaction</b>
@@ -84,40 +84,40 @@ Cross-platform personal finance manager, built for day **traders**, but made for
 <td align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/images/screenshots/android/dark/android-expense-dark.png">
-  <img src="docs/images/screenshots/android/light/android-expense-light.png" alt="Android expense screen" width="250">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/screenshots/android/dark/android-income-dark.png">
+  <img src="docs/images/screenshots/android/light/android-income-light.png" alt="Android income screen" width="190">
 </picture>
 
-<b>Expenses</b>
+<b>Income</b>
 
 </td>
-</tr>
-<tr>
 <td align="center">
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/images/screenshots/android/dark/android-trade-dark.png">
-  <img src="docs/images/screenshots/android/light/android-trade-light.png" alt="Android trade screen" width="250">
+  <img src="docs/images/screenshots/android/light/android-trade-light.png" alt="Android trade screen" width="190">
 </picture>
 
 <b>Trade</b>
 
 </td>
-<td align="center">
+</tr>
+<tr>
+<td align="center" colspan="2">
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/images/screenshots/android/dark/android-balance-trend-dark.png">
-  <img src="docs/images/screenshots/android/light/android-balance-trend-light.png" alt="Android balance trend screen" width="250">
+  <img src="docs/images/screenshots/android/light/android-balance-trend-light.png" alt="Android balance trend screen" width="400">
 </picture>
 
 <b>Balance trend</b>
 
 </td>
-<td align="center">
+<td align="center" colspan="2">
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/images/screenshots/android/dark/android-pnl-dark.png">
-  <img src="docs/images/screenshots/android/light/android-pnl-light.png" alt="Android PNL screen" width="250">
+  <img src="docs/images/screenshots/android/light/android-pnl-light.png" alt="Android pnl screen" width="400">
 </picture>
 
 <b>PnL</b>
@@ -163,7 +163,7 @@ Cross-platform personal finance manager, built for day **traders**, but made for
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/images/screenshots/windows/dark/windows-expense-dark.png">
-  <img src="docs/images/screenshots/windows/light/windows-expense-light.png" alt="Windows expense screen" width="420">
+  <img src="docs/images/screenshots/windows/light/windows-expense-light.png" alt="Windows expenses screen" width="420">
 </picture>
 
 <b>Expenses</b>
@@ -195,7 +195,7 @@ Cross-platform personal finance manager, built for day **traders**, but made for
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/images/screenshots/windows/dark/windows-pnl-dark.png">
-  <img src="docs/images/screenshots/windows/light/windows-pnl-light.png" alt="Windows PNL screen" width="420">
+  <img src="docs/images/screenshots/windows/light/windows-pnl-light.png" alt="Windows pnl screen" width="420">
 </picture>
 
 <b>PnL</b>
