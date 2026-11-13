@@ -12,10 +12,16 @@ namespace DataServices
 
         public static decimal TfuToCurrency(decimal value, CurrencyDto currency)
         {
+            if(currency.ConversionRate <= 0)
+                throw new ArgumentException($"{nameof(currency.ConversionRate)} must be a positive number");
+
             return value * currency.ConversionRate;
         }
         public static decimal CurrencyToTfu(decimal value, CurrencyDto currency) 
         {
+            if(currency.ConversionRate <= 0)
+                throw new ArgumentException($"{nameof(currency.ConversionRate)} must be a positive number");
+
             return value / currency.ConversionRate;
         }
         public static decimal CurrencyToCurrency(decimal value, CurrencyDto fromCurrency, CurrencyDto toCurrency) 
