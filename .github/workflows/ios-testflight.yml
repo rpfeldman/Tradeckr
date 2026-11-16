@@ -1,0 +1,67 @@
+
+name: iOS → TestFlight
+
+on:
+  workflow_dispatch:
+
+env:
+  PROJECT_PATH: GENAP_MAUI/GENAP_MAUI.csproj   # ruta al .csproj desde la raíz del repo
+  DOTNET_VERSION: 10.0.x
+
+jobs:
+  build-and-upload:
+    # DÓNDE corre: una Mac virtual de GitHub, nueva y vacía en cada ejecución.
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Select Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Install MAUI iOS workload
+        run: dotnet workload install maui-ios
+
+      - name: Import signing certificate
+        uses: apple-actions/import-codesign-certs@v3
+        with:
+          p12-file-base64: ${{ secrets.IOS_P12_BASE64 }}
+          p12-password: ${{ secrets.IOS_P12_PASSWORD }}
+
+      - name: Install provisioning profile
+        run: |
+          for dir in "$HOME/Library/MobileDevice/Provisioning Profiles" "$HOME/Library/Developer/Xcode/UserData/Provisioning Profiles"; do
+            mkdir -p "$dir"
+            echo "${{ secrets.IOS_PROVISION_BASE64 }}" | base64 --decode > "$dir/Tradeckr_AppStore.mobileprovision"
+          done
+
+      - name: Build .ipa
+        run: >
+          dotnet publish ${{ env.PROJECT_PATH }}
+          -f net10.0-ios
+          -c Release
+          -p:RuntimeIdentifier=ios-arm64
+          -p:ArchiveOnBuild=true
+          -p:CodesignKey="Apple Distribution"
+          -p:CodesignProvision="Tradeckr AppStore"
+          -p:ApplicationVersion=${{ github.run_number }}
+
+      - name: Find .ipa
+        id: ipa
+        run: echo "path=$(find . -name '*.ipa' -path '*publish*' | head -n 1)" >> "$GITHUB_OUTPUT"
+
+      - name: Upload to TestFlight
+        uses: apple-actions/upload-testflight-build@v3
+        with:
+          app-path: ${{ steps.ipa.outputs.path }}
+          issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
+          api-key-id: ${{ secrets.APPSTORE_KEY_ID }}
+          api-private-key: ${{ secrets.APPSTORE_P8 }}
