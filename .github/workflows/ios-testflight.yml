@@ -5,12 +5,11 @@ on:
   workflow_dispatch:
 
 env:
-  PROJECT_PATH: GENAP_MAUI/GENAP_MAUI.csproj   # ruta al .csproj desde la raíz del repo
+  PROJECT_PATH: GENAP_MAUI/GENAP_MAUI.csproj   
   DOTNET_VERSION: 10.0.x
 
 jobs:
   build-and-upload:
-    # DÓNDE corre: una Mac virtual de GitHub, nueva y vacía en cada ejecución.
     runs-on: macos-latest
 
     steps:
@@ -27,8 +26,8 @@ jobs:
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
-      - name: Install MAUI iOS workload
-        run: dotnet workload install maui-ios
+      - name: Restore workloads
+        run: dotnet workload restore ${{ env.PROJECT_PATH }}
 
       - name: Import signing certificate
         uses: apple-actions/import-codesign-certs@v3
