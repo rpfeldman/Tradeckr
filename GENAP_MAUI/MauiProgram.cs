@@ -38,7 +38,7 @@ namespace GENAP_MAUI
 
             // Paths
             var dbPath = Path.Combine(FileSystem.AppDataDirectory, FilePaths.StorageFileName);
-            var logPath = Path.Combine(FileSystem.AppDataDirectory, FilePaths.LogFileName);
+            var logPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), FilePaths.LogFileName);
 
             // Reset the log file every 1 week
             var lastLogReset = Preferences.Get(PreferenceKeys.LastLogResetKey, DateTime.Today);
