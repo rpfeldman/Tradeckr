@@ -4,7 +4,8 @@
              xmlns:local="clr-namespace:GENAP_MAUI"
              xmlns:strings="clr-namespace:GENAP_MAUI.Resources.Strings"
              x:Class="GENAP_MAUI.ContentViews.Navigation.BottomNavigationBar"
-             x:Name="Root">
+             x:Name="Root"
+             VerticalOptions="End">
 
     <Grid HeightRequest="92" VerticalOptions="End">
 

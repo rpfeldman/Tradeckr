@@ -970,6 +970,7 @@
     <Style TargetType="Page" ApplyToDerivedTypes="True">
         <Setter Property="Padding" Value="0"/>
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}" />
+        <Setter Property="Shell.NavBarIsVisible" Value="False" />
     </Style>
 
     <Style TargetType="Shell" ApplyToDerivedTypes="True">
