@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:GENAP_MAUI"
              xmlns:behaviours="clr-namespace:GENAP_MAUI.ControlBehaviours"
              xmlns:strings="clr-namespace:GENAP_MAUI.Resources.Strings"
+             Shell.NavBarIsVisible="True"
              x:Class="GENAP_MAUI.Pages.TransactionRelatedPages.TransactionPage"
              x:DataType="vm:TransactionPageViewModel"
              BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}">

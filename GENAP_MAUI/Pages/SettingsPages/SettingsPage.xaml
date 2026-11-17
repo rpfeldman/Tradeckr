@@ -4,6 +4,7 @@
              xmlns:vm="clr-namespace:GENAP_MAUI.ViewModels"
              xmlns:local="clr-namespace:GENAP_MAUI"
              xmlns:strings="clr-namespace:GENAP_MAUI.Resources.Strings"
+             Shell.NavBarIsVisible="True"
              x:Class="GENAP_MAUI.Pages.SettingsPages.SettingsPage"
              x:DataType="vm:SettingsPageViewModel">
 
