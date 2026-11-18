@@ -86,6 +86,17 @@ namespace GENAP_MAUI
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
+
+#if IOS
+        Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("NoNativeBorder", (handler, view) =>
+            handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None);
+
+        Microsoft.Maui.Handlers.PickerHandler.Mapper.AppendToMapping("NoNativeBorder", (handler, view) =>
+            handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None);
+
+        Microsoft.Maui.Handlers.DatePickerHandler.Mapper.AppendToMapping("NoNativeBorder", (handler, view) =>
+            handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None);
+#endif
             return builder.Build();
         }
     }
