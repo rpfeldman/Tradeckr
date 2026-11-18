@@ -36,14 +36,6 @@ namespace GENAP_MAUI
                     fonts.AddFont("Symbols.ttf", "Symbols");
                 });
 
-            builder.ConfigureMauiHandlers(handlers =>
-            {
-            #if IOS || MACCATALYST
-                handlers.AddHandler<Microsoft.Maui.Controls.CollectionView,
-                                    Microsoft.Maui.Controls.Handlers.Items.CollectionViewHandler>();
-            #endif
-            });
-
             // Paths
             var dbPath = Path.Combine(FileSystem.AppDataDirectory, FilePaths.StorageFileName);
             var logPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), FilePaths.LogFileName);
