@@ -51,6 +51,13 @@ namespace GENAP_MAUI
             // Logging system
             Log.Logger = new LoggerConfiguration().WriteTo.File(logPath, shared: true).MinimumLevel.Debug().CreateLogger();
 
+             // To catch unhandled exceptions
+            AppDomain.CurrentDomain.UnhandledException += (sender, e) => 
+            {
+                Log.Fatal(e.ExceptionObject as Exception, "Unhandled exception");
+                Log.CloseAndFlush();
+            };
+
             // CommunityToolkit views and related
             builder.Services.AddSingleton<CustomDialogsService>();
             builder.Services.AddTransientPopup<AlertDialogPopup, AlertDialogPopupViewModel>();
@@ -88,6 +95,12 @@ namespace GENAP_MAUI
 #endif
 
 #if IOS
+        ObjCRuntime.Runtime.MarshalManagedException += (sender, args) =>
+        {
+            Log.Fatal(args.Exception, "Unhandled exception (iOS)");
+            Log.CloseAndFlush();
+        };
+
         Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("NoNativeBorder", (handler, view) =>
             handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None);
 

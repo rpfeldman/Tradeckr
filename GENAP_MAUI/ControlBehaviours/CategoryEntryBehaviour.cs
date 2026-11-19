@@ -26,7 +26,8 @@ namespace GENAP_MAUI.ControlBehaviours
 
         private void Entry_TextChanged(object? sender, TextChangedEventArgs e)
         {
-            if (IsFormatting){ return; }
+            if (e.NewTextValue is null) return;
+            if (IsFormatting) return;
 
             IsFormatting = true;
 
