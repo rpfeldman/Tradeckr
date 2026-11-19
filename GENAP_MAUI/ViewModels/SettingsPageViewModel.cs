@@ -201,9 +201,7 @@ namespace GENAP_MAUI.ViewModels
                 return;
             }
 
-            var logPath = Path.Combine(FileSystem.AppDataDirectory, FilePaths.LogFileName);
-
-            if (!File.Exists(logPath))
+            if (!File.Exists(FilePaths.LogFilePath))
             {
                 await _customDialogsService.ShowAlertDialogAsync(
                         AppResources.Error_AlertTitle,
@@ -226,7 +224,7 @@ namespace GENAP_MAUI.ViewModels
                 $"\n -Culture: {CultureInfo.CurrentCulture}\n\n"; 
                                 
                                 
-            string applicationLog = await File.ReadAllTextAsync(logPath);
+            string applicationLog = await File.ReadAllTextAsync(FilePaths.LogFilePath);
 
             var bugReportPath = Path.Combine(FileSystem.AppDataDirectory, "BugReport.txt");
 
