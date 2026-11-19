@@ -507,7 +507,7 @@ namespace GENAP_MAUI.Resources.Strings {
         ///   Busca una cadena traducida similar a We couldn&apos;t find a default email app on your device.
         ///
         ///
-        ///Please share the following text file by sending it to &apos;ramirofeldman0@gmail.com&apos;..
+        ///Please share the following text file by sending it to &apos;{0}&apos;..
         /// </summary>
         public static string DefaultEmailReport_AlertContent {
             get {
@@ -653,7 +653,7 @@ namespace GENAP_MAUI.Resources.Strings {
         /// <summary>
         ///   Busca una cadena traducida similar a In-app bug reporting is only available on mobile devices.
         ///
-        ///You can send your report directly to &apos;ramirofeldman0@gmail.com&apos;..
+        ///You can send your report directly to &apos;{0}&apos;..
         /// </summary>
         public static string DesktopReport_AlertContent {
             get {
