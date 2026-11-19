@@ -480,7 +480,7 @@
   <data name="DesktopReport_AlertContent" xml:space="preserve">
     <value>El reporte de errores desde la app está disponible solo en dispositivos móviles.
 
-Podés enviarnos tu reporte escribiendo directamente a 'ramirofeldman0@gmail.com'.</value>
+Podés enviarnos tu reporte escribiendo directamente a '{0}'.</value>
   </data>
   <data name="ReportNotSupported_AlertContent" xml:space="preserve">
     <value>No es posible enviar reportes desde tu dispositivo.
@@ -490,7 +490,7 @@ Por favor, contactate con el soporte técnico.</value>
   <data name="DefaultEmailReport_AlertContent" xml:space="preserve">
     <value>No encontramos una app de correo configurada en tu dispositivo.
 
-Por favor, compartí el siguiente archivo de texto enviándolo a 'ramirofeldman0@gmail.com'.</value>
+Por favor, compartí el siguiente archivo de texto enviándolo a '{0}'.</value>
   </data>
   <data name="BugReportThanks_AlertTitle" xml:space="preserve">
     <value>Gracias, </value>

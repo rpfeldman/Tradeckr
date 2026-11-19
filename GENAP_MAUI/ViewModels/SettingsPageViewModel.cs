@@ -195,7 +195,7 @@ namespace GENAP_MAUI.ViewModels
                 await _customDialogsService.ShowAlertDialogAsync
                     (
                         AppResources.Error_AlertTitle, 
-                        AppResources.DesktopReport_AlertContent,
+                        string.Format(AppResources.DesktopReport_AlertContent, ContactConst.BugReportMail),
                         AppResources.Accept_AlertButton
                     );
                 return;
@@ -237,7 +237,7 @@ namespace GENAP_MAUI.ViewModels
                 await _customDialogsService.ShowAlertDialogAsync
                     (
                         AppResources.Report_ButtonText,
-                        AppResources.DefaultEmailReport_AlertContent,
+                        string.Format(AppResources.DefaultEmailReport_AlertContent, ContactConst.BugReportMail),
                         AppResources.Accept_AlertButton
                     );
                     
@@ -256,7 +256,7 @@ namespace GENAP_MAUI.ViewModels
                 return;
             }
 
-            EmailMessage emailMessage = new(BugTitle, BugDescription, ["ramirofeldman0@gmail.com"]); // TEMPORARY MAIL
+            EmailMessage emailMessage = new(BugTitle, BugDescription, [ContactConst.BugReportMail]); // TEMPORARY MAIL
             var attachment = new EmailAttachment(bugReportPath);
 
            emailMessage.Attachments ??= [];

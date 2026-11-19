@@ -480,7 +480,7 @@
   <data name="DesktopReport_AlertContent" xml:space="preserve">
     <value>In-app bug reporting is only available on mobile devices.
 
-You can send your report directly to 'ramirofeldman0@gmail.com'.</value>
+You can send your report directly to '{0}'.</value>
   </data>
   <data name="ReportNotSupported_AlertContent" xml:space="preserve">
     <value>Unable to send bug reports from your device.
@@ -491,7 +491,7 @@ Please contact technical support.</value>
     <value>We couldn't find a default email app on your device.
 
 
-Please share the following text file by sending it to 'ramirofeldman0@gmail.com'.</value>
+Please share the following text file by sending it to '{0}'.</value>
   </data>
   <data name="BugReportThanks_AlertTitle" xml:space="preserve">
     <value>Thank you, </value>
