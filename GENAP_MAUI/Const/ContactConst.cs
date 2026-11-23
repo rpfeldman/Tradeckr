@@ -6,6 +6,6 @@ namespace GENAP_MAUI
 {
     public static class ContactConst
     {
-        public const string BugReportMail = "ramirofeldman0@gmail.com";
+        public const string BugReportMail = "bugs@tradeckr.com";
     }
 }
