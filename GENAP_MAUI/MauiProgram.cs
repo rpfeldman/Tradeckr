@@ -105,6 +105,17 @@ namespace GENAP_MAUI
 
         Microsoft.Maui.Handlers.DatePickerHandler.Mapper.AppendToMapping("NoNativeBorder", (handler, view) =>
             handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None);
+#elif ANDROID
+        var transparentTint = Android.Content.Res.ColorStateList.ValueOf(Android.Graphics.Color.Transparent);
+
+        Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("NoNativeBorder", (handler, view) =>
+            handler.PlatformView.BackgroundTintList = transparentTint);
+
+        Microsoft.Maui.Handlers.PickerHandler.Mapper.AppendToMapping("NoNativeBorder", (handler, view) =>
+            handler.PlatformView.BackgroundTintList = transparentTint);
+
+        Microsoft.Maui.Handlers.DatePickerHandler.Mapper.AppendToMapping("NoNativeBorder", (handler, view) =>
+            handler.PlatformView.BackgroundTintList = transparentTint);
 #endif
             return builder.Build();
         }
