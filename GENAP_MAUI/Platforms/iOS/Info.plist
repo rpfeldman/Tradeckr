@@ -33,7 +33,7 @@
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/appicon.appiconset</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.8.0</string>
+	<string>pre-beta 1.0.0</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>UIApplicationSceneManifest</key>
